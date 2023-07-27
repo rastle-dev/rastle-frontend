@@ -11,8 +11,7 @@
     "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript",
-    "plugin:prettier/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "overrides": [],
   "parser": "@typescript-eslint/parser",
