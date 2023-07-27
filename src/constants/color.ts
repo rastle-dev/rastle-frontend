@@ -10,7 +10,7 @@ const COLORS = {
     500: "#626273",
     600: "#464656",
   },
-  BLUE: "#7798FC",
+  BLUE: "#4395F6",
 };
 
 export default COLORS;

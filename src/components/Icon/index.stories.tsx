@@ -12,9 +12,15 @@ export default {
 export function Cart() {
   return <Icon iconName="cart" color={COLORS.BLACK} />;
 }
+
+export function Person() {
+  return <Icon iconName="person" color ={COLORS.BLACK} />
+}
+
 export function ControlTest(args: any) {
   return <Icon {...args} />;
 }
+
 ControlTest.args = {
   iconName: "cart",
 };
