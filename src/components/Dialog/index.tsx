@@ -6,8 +6,9 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 interface DialogProps {
   /** 다이얼로그 제목 */
   title?: string;
-  /** 클릭했을 때 호출할 함수 */
+  /** 쇼핑 계속하기 버튼 클릭했을 때 호출할 함수 */
   onClickShopButton?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  /** 장바구니로 가기 버튼 클릭했을 때 호출할 함수 */
   onClickBasketButton?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -18,6 +19,7 @@ const DarkWrapper = styled.div<{}>`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: S-Core Dream;
 `;
 
 const WhiteWrapper = styled.div<{}>`
@@ -30,7 +32,6 @@ const WhiteWrapper = styled.div<{}>`
     margin-top: 2.4rem;
     font-size: 1.6rem;
     font-weight: 300;
-    font-family: S-Core Dream;
     font-style: normal;
   }
 `;
@@ -46,7 +47,6 @@ const StyledShopButton = styled.div<{
 }>`
   margin-right: 1.54rem;
   color: #000;
-  font-family: S-Core Dream;
   font-size: 0.9rem;
   font-style: normal;
   font-weight: 330;
@@ -62,7 +62,6 @@ const StyledBasketButton = styled.div<{
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }>`
   color: #000;
-  font-family: S-Core Dream;
   font-size: 0.9rem;
   font-style: normal;
   font-weight: 300;

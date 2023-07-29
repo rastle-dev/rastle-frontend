@@ -11,14 +11,12 @@ interface ColorButtonProps {
   size?: number;
   /** icon 색 조정 */
   color?: string;
-  /** border 조정 */
-  border?: number;
+  /** 버튼의 type : 클릭 | 클릭X */
   buttonType: ButtonType;
 }
 
 const Wrapper = styled.div<{
   size: number;
-  border: number;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   buttonType: ButtonType;
 }>`
@@ -53,17 +51,11 @@ const Inner = styled.div<{
 export default function ColorButton({
   size = 2,
   color = "black",
-  border = 0.1,
   onClick,
   buttonType = "default",
 }: ColorButtonProps) {
   return (
-    <Wrapper
-      buttonType={buttonType}
-      size={size}
-      border={border}
-      onClick={onClick}
-    >
+    <Wrapper buttonType={buttonType} size={size} onClick={onClick}>
       <Inner size={size} color={color}></Inner>
     </Wrapper>
   );
