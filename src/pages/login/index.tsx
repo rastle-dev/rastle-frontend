@@ -1,5 +1,12 @@
-// 경로 /login
+import React from "react";
+import DefaultLayout from "@/components/Layout/DefaultLayout";
 
-export default function Login() {
-  return <h1>로그인페이지</h1>;
+function Login() {
+  return (
+    <DefaultLayout>
+      <div>로그인</div>
+    </DefaultLayout>
+  );
 }
+
+export default Login;

@@ -1,4 +1,12 @@
-// 경로 /login
-export default function Home() {
-  return <h1>Shop</h1>;
+import React from "react";
+import MainLayout from "@/components/Layout/MainLayout";
+
+function Shop() {
+  return (
+    <MainLayout>
+      <div>메인레이아웃 test</div>
+    </MainLayout>
+  );
 }
+
+export default Shop;
