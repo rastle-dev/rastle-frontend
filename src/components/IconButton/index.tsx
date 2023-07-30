@@ -3,37 +3,46 @@ import styled from "styled-components";
 import Icons from "../../constants/icon";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-interface IconProps {
+interface IconButtonProps {
   /** 아이콘 이름 */
   iconName: string;
-  size?: string;
+  /** 클릭했을 때 호출할 함수 */
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  /** icon 사이즈 */
+  iconSize?: string;
+  /** icon 색 조정 */
   color?: string;
+  /** border 조정 */
   border?: number;
 }
-const Wrapper = styled.div`
-  background-color: transparent;
+const Wrapper = styled.button<{}>`
+  padding: 0;
+  background-color: white;
+  border: none;
 `;
+
 const StyledIcon = styled.i<{ border: number }>`
   ${({ border }) => `
    -webkit-text-stroke: ${border}px;
 `}
 `;
 
-function Icon({
+function IconButton({
   iconName,
-  size = "1.5rem",
+  iconSize = "1.5rem",
   color,
   border = 0.1,
-}: IconProps) {
+  onClick,
+}: IconButtonProps) {
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick}>
       <StyledIcon
         className={Icons[iconName]}
-        style={{ fontSize: size, color }}
+        style={{ fontSize: iconSize, color }}
         border={border}
       />
     </Wrapper>
   );
 }
 
-export default Icon;
+export default IconButton;
