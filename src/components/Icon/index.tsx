@@ -19,12 +19,7 @@ const StyledIcon = styled.i<{ border: number }>`
 `}
 `;
 
-function Icon({
-  iconName,
-  size = "1.5rem",
-  color,
-  border = 0.1,
-}: IconProps) {
+function Icon({ iconName, size = "1.5rem", color, border = 0.1 }: IconProps) {
   return (
     <Wrapper>
       <StyledIcon

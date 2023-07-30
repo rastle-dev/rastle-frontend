@@ -1,9 +1,5 @@
-//경로 /login
+// 경로 /login
 
 export default function Login() {
-  return (
-    <>
-      <h1>로그인페이지</h1>
-    </>
-  );
+  return <h1>로그인페이지</h1>;
 }

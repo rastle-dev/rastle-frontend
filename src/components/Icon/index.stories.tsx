@@ -13,6 +13,8 @@ export function Cart() {
   return <Icon iconName="cart" color={COLORS.BLACK} />;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export function Person() {
   return <Icon iconName="person" color ={COLORS.BLACK} />
 }

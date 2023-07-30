@@ -12,12 +12,13 @@
   },
   "dependencies": {
     "@storybook/addon-knobs": "^7.0.2",
+    "@tanstack/react-query": "^4.32.0",
     "@types/node": "20.4.4",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "@types/styled-components": "^5.1.26",
     "bootstrap-icons": "^1.10.5",
-    "eslint": "8.45.0",
+    "eslint": "^8.46.0",
     "eslint-config-next": "13.4.12",
     "next": "13.4.12",
     "react": "18.2.0",
@@ -25,6 +26,12 @@
     "string-width": "^6.1.0",
     "styled-components": "^6.0.5",
     "typescript": "5.1.6"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.1.0",
@@ -35,11 +42,15 @@
     "@storybook/nextjs": "^7.1.0",
     "@storybook/react": "^7.1.0",
     "@storybook/testing-library": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0",
     "eslint-plugin-storybook": "^0.6.13",
-    "prettier": "3.0.0",
+    "prettier": "^3.0.0",
     "storybook": "^7.1.0"
   }
 }

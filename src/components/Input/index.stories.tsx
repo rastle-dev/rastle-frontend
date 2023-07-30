@@ -17,6 +17,7 @@ export function CheckBox() {
 export function LabelInput() {
   return <Input size={30} value="label" label="label" />;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ControlTest(args: any) {
   return <Input {...args} />;
 }

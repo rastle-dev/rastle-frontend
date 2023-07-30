@@ -17,6 +17,7 @@ export function Shop() {
 export function Size() {
   return <Button title="M" type="size" />;
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ControlTest(args: any) {
   return <Button {...args} />;
 }
