@@ -9,7 +9,7 @@ const Container = styled.div`
   background-color: white;
   p {
     font-weight: 200;
-    font-size: 2rem;
+    font-size: 3.125rem;
   }
 `;
 const Home = styled.div`
