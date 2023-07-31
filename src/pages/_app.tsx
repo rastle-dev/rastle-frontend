@@ -40,12 +40,12 @@ font-family: "EscoreDream", sans-serif ;
 }
 @media (min-width: 1920px) and (max-width: 2559px) {
   html {
-    font-size: 17px;
+    font-size: 12px;
   }
 }
 @media (min-width: 2560px) {
   html {
-    font-size: 18px;
+    font-size: 13px;
   }
 }
 @font-face {
