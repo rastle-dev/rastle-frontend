@@ -8,6 +8,7 @@ type ButtonProps = {
   type?: ButtonType;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
 };
 
 const Wrapper = styled.button<{
@@ -16,15 +17,13 @@ const Wrapper = styled.button<{
   className?: string;
 }>`
   ${({ type, disabled }) => `
-    width:  ${
-      { default: "26.25rem", shop: "10.275rem", size: "7.12rem" }[type]
-    };
+    width:  ${{ default: "35rem", shop: "10.275rem", size: "7.12rem" }[type]};
     font-size: ${
       { default: "1.25rem", shop: "1.25rem", size: "1.875rem" }[type]
     };
      padding: ${
        {
-         default: "1.2rem 0 1.2rem 0",
+         default: "1.6rem 0 1.6rem 0",
          shop: "1.17rem 0 1.17rem 0",
          size: "0.5rem 0 0.5rem 0",
        }[type]
@@ -61,9 +60,15 @@ export default function Button({
   type = "default",
   disabled = false,
   onClick,
+  className,
 }: ButtonProps) {
   return (
-    <Wrapper type={type} onClick={onClick} disabled={disabled}>
+    <Wrapper
+      className={className}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {title}
     </Wrapper>
   );
