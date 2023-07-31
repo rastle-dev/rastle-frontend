@@ -1,7 +1,5 @@
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
-import Icon from "./index";
-import COLORS from "../../constants/color";
 import Dialog from "./index";
 
 export default {
@@ -10,11 +8,12 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-//default
+// default
 export function dialog() {
   return <Dialog />;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ControlTest(args: any) {
   return <Dialog {...args} />;
 }
