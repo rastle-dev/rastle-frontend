@@ -1,9 +1,13 @@
 // 경로 / 홈화면
 import React from "react";
-import Link from "next/link";
 
-import Navbar from "@/components/Navbar";
+import MainHeader from "@/components/Layout/MainHeader";
+import MainLayout from "@/components/Layout/MainLayout";
 
 export default function Home() {
-  return <Navbar />;
+  return (
+    <MainLayout>
+      <div>홈 화면입니다.</div>
+    </MainLayout>
+  );
 }

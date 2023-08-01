@@ -10,6 +10,7 @@ const Full = styled.div`
   font-size: 1.5rem;
   flex-direction: column;
   background-color: white;
+  padding-top: 5.5rem; /* header때문에 추가 */
 `;
 
 const Inner = styled.div`
