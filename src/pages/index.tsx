@@ -2,17 +2,8 @@
 import React from "react";
 import Link from "next/link";
 
+import Navbar from "@/components/Navbar";
+
 export default function Home() {
-  return (
-    <div>
-      <li>
-        <ul>
-          <Link href="/login">로그인</Link>
-        </ul>
-        <ul>
-          <Link href="/shop">쇼핑하기</Link>
-        </ul>
-      </li>
-    </div>
-  );
+  return <Navbar />;
 }
