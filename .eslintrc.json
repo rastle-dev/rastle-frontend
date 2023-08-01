@@ -32,6 +32,7 @@
     "react/jsx-filename-extension": [
       2,
       { "extensions": [".js", ".ts", ".tsx"] }
-    ]
+    ],
+    "@typescript-eslint/no-explicit-any": "off" //eslint any 규칙 수정
   }
 }
