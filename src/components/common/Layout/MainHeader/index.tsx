@@ -30,7 +30,7 @@ export default function MainHeader() {
           <CenterElement>rastle_</CenterElement>
         </Link>
         <RightElemet>
-          <Link href="/login">
+          <Link href="/signup">
             <span>log in</span>
           </Link>
           <Link href="/cart">

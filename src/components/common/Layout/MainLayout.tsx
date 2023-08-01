@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { ReactNode } from "react";
-import DefaultHeader from "@/components/Layout/DefaultHeader";
+import MainHeader from "@/components/common/Layout/MainHeader";
 
 const Full = styled.div`
   width: 100%;
@@ -10,6 +10,7 @@ const Full = styled.div`
   font-size: 1.5rem;
   flex-direction: column;
   background-color: white;
+  padding-top: 5.5rem; /* header때문에 추가 */
 `;
 
 const Inner = styled.div`
@@ -19,17 +20,18 @@ const Inner = styled.div`
   display: flex;
   justify-content: center;
 `;
-interface DefaultLayoutProps {
+interface MainLayoutProps {
   children: ReactNode;
 }
 
-function DefaultLayout({ children }: DefaultLayoutProps) {
+function MainLayout({ children }: MainLayoutProps) {
   return (
     <Full>
-      <DefaultHeader />
+      <MainHeader />
       <Inner>{children}</Inner>
+      {/* <Footer /> */}
     </Full>
   );
 }
 
-export default DefaultLayout;
+export default MainLayout;

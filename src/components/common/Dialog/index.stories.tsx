@@ -1,7 +1,7 @@
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
 import Icon from "./index";
-import COLORS from "../../constants/color";
+import COLORS from "../../../constants/color";
 import Dialog from "./index";
 
 export default {
