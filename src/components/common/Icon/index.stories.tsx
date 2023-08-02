@@ -1,7 +1,7 @@
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
 import Icon from "./index";
-import COLORS from "../../constants/color";
+import COLORS from "../../../constants/color";
 
 export default {
   title: "components/Icon", // 스토리북에서 보여질 그룹과 경로를 명시
@@ -16,7 +16,7 @@ export function Cart() {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 export function Person() {
-  return <Icon iconName="person" color ={COLORS.BLACK} />
+  return <Icon iconName="person" color={COLORS.BLACK} />;
 }
 
 export function ControlTest(args: any) {

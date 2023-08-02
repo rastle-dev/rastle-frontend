@@ -5,6 +5,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { createGlobalStyle } from "styled-components";
+import DefaultLayout from "@/components/common/Layout/DefaultLayout";
+import MainLayout from "@/components/common/Layout/MainLayout";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -104,11 +106,30 @@ font-family: "EscoreDream", sans-serif ;
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const getLayout = (Comp: React.ComponentType<any>) => {
+    // DefaultLayout을 띄울 page 이름을 해당 컴포넌트에 선언하면 됩니다.
+    // 선언 방식 : LoginPage.displayName = "Login";
+    if (Comp.displayName === "Login" || Comp.displayName === "Signup") {
+      return (
+        <DefaultLayout>
+          <Comp {...pageProps} />
+        </DefaultLayout>
+      );
+    }
+    return (
+      <MainLayout>
+        <Comp {...pageProps} />
+      </MainLayout>
+    );
+  };
+
+  const Layout = <>{getLayout(Component)}</>;
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
         <GlobalStyle />
-        <Component {...pageProps} />
+        {Layout}
       </Hydrate>
     </QueryClientProvider>
   );
