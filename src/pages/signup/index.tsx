@@ -5,4 +5,4 @@ export default function Page() {
   return <Signup />;
 }
 
-Page.displayName = "Signup";
+Page.displayName = "User";
