@@ -25,6 +25,16 @@ font-family: "EscoreDream", sans-serif ;
   font-weight: 500;
   box-sizing: border-box;
 }
+@media (max-width: 374px) {
+  html {
+    font-size: 7.5px;
+  }
+}
+@media (min-width: 375px) and (max-width: 767px) {
+  html {
+    font-size: 8px;
+  }
+}
 @media (min-width: 768px) and (max-width: 1024px) {
   html {
     font-size: 9px;
@@ -32,7 +42,7 @@ font-family: "EscoreDream", sans-serif ;
 }
 @media (min-width: 1025px) and (max-width: 1440px) {
   html {
-    font-size: 10px;
+    font-size: 11px;
   }
 }
 @media (min-width: 1441px) and (max-width: 1919px) {
