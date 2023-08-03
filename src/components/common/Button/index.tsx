@@ -40,7 +40,7 @@ const Wrapper = styled.button<{
          size: `1px solid ${COLORS.WHITE}`,
        }[type]
      };
-     color: ${(disabled && "#E6E6E6") || COLORS.BLACK};
+     color: ${(disabled && "#9B9B9B") || COLORS.BLACK};
     &:hover{
       background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
       cursor: ${disabled ? "default" : "pointer"};
@@ -49,6 +49,7 @@ const Wrapper = styled.button<{
       };
       color: ${(disabled && "1px solid #E6E6E6") || `${COLORS.BLACK}`};
     }
+    cursor: ${disabled ? "default" : "pointer"};
 `}
   box-sizing: border-box;
   text-align: center;

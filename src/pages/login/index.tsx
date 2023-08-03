@@ -29,7 +29,7 @@ export default function Login() {
             type={input.type}
           />
         ))}
-        <Button title="로그인" width="35rem" />
+        <Button title="로그인" width="35rem" disabled />
       </S.Wrapper>
       <S.Box>
         {buttons.map((button, index) => (
