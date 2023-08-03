@@ -25,13 +25,13 @@ const Wrapper = styled.button<{
     };
      padding: ${
        {
-         default: "1.6rem 0 1.6rem 0",
+         default: "1.5rem 0 1.5rem 0",
          shop: "1.17rem 0 1.17rem 0",
          size: "0.5rem 0 0.5rem 0",
        }[type]
      };
      background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
-     border-radius: ${{ default: "15px", shop: "5px", size: "none" }[type]}; 
+     border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]}; 
      border: ${
        (disabled && "1px solid #E6E6E6") ||
        {

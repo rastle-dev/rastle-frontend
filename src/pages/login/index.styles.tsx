@@ -26,7 +26,7 @@ export const Header = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  margin-top: 6.75rem;
+  margin-top: 8rem;
   width: 36rem;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@ export const Wrapper = styled.div`
 export const Box = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 0;
+  margin-top: 1rem;
 `;
 export const Line = styled.div`
   width: 1px;
@@ -52,7 +52,7 @@ export const StyledButton = styled(Button)`
   font-size: 1rem;
 `;
 export const SNSLogin = styled.div`
-  margin-top: 3.375rem;
+  margin-top: 2.7rem;
   width: 36rem;
   display: flex;
   flex-direction: column;
@@ -61,13 +61,13 @@ export const SNSLogin = styled.div`
 `;
 export const NAVERLogo = styled.div`
   width: 35rem;
-  border-radius: 15px;
+  border-radius: 12px;
   cursor: pointer;
   border: 1px solid ${COLORS.GREY[200]};
   img {
     width: 2.7rem;
     height: 2.7rem;
-    margin: 0.85rem 0 0.85rem 1.375rem;
+    margin: 1rem 0 1rem 1.375rem;
   }
   div {
     font-size: 1rem;
@@ -78,13 +78,13 @@ export const NAVERLogo = styled.div`
 `;
 export const KAKAOLogo = styled.div`
   width: 35rem;
-  border-radius: 15px;
+  border-radius: 12px;
   cursor: pointer;
   border: 1px solid ${COLORS.GREY[200]};
   img {
     width: 2.5rem;
     height: 2.5rem;
-    margin: 0.85rem 0 0.85rem 1.375rem;
+    margin: 1.1rem 0 1.1rem 1.375rem;
   }
   div {
     font-size: 1rem;
