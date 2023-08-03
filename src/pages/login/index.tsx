@@ -1,13 +1,20 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
-import * as S from "./index.styles";
 import SNSLogin from "@/components/Login/sns";
+import * as S from "./index.styles";
+
 export default function Login() {
+  const router = useRouter();
   const buttons = [
     { title: "이메일 가입", width: "11.6875rem" },
     { title: "비밀번호 찾기", width: "11.75rem" },
-    { title: "비회원 주문 조회", width: "11.4375rem" },
+    {
+      title: "비회원 주문 조회",
+      width: "11.4375rem",
+      onClick: () => router.push("/guest"),
+    },
   ];
   const inputs = [
     { size: 35, placeholder: "예) rastle@rastle.com", label: "이메일 주소" },
@@ -34,7 +41,11 @@ export default function Login() {
       <S.Box>
         {buttons.map((button, index) => (
           <React.Fragment key={button.title}>
-            <S.StyledButton title={button.title} width={button.width} />
+            <S.StyledButton
+              title={button.title}
+              width={button.width}
+              onClick={button.onClick}
+            />
             {index < buttons.length - 1 && <S.Line />}
           </React.Fragment>
         ))}
@@ -44,4 +55,4 @@ export default function Login() {
   );
 }
 
-Login.displayName = "Login";
+Login.displayName = "User";
