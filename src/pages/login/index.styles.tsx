@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import Button from "@/components/Button";
 import COLORS from "../../constants/color";
+import Button from "@/components/common/Button";
 
 export const Container = styled.div`
   width: 36rem;
-  border: 1px solid blue;
 `;
 
 export const Header = styled.div`
@@ -37,7 +36,7 @@ export const Wrapper = styled.div`
 export const Box = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 0rem;
+  margin-top: 0;
 `;
 export const Line = styled.div`
   width: 1px;
@@ -51,4 +50,46 @@ export const StyledButton = styled(Button)`
     border: none;
   }
   font-size: 1rem;
+`;
+export const SNSLogin = styled.div`
+  margin-top: 3.375rem;
+  width: 36rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.375rem;
+  align-items: center;
+`;
+export const NAVERLogo = styled.div`
+  width: 35rem;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px solid ${COLORS.GREY[200]};
+  img {
+    width: 2.7rem;
+    height: 2.7rem;
+    margin: 0.85rem 0 0.85rem 1.375rem;
+  }
+  div {
+    font-size: 1rem;
+    padding: 1.6rem 0 1.6rem 0;
+  }
+  display: flex;
+  gap: 10rem;
+`;
+export const KAKAOLogo = styled.div`
+  width: 35rem;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px solid ${COLORS.GREY[200]};
+  img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0.85rem 0 0.85rem 1.375rem;
+  }
+  div {
+    font-size: 1rem;
+    padding: 1.6rem 0 1.6rem 0;
+  }
+  display: flex;
+  gap: 10rem;
 `;
