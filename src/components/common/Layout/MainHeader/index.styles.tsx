@@ -2,12 +2,11 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 5.5rem;
   background-color: white;
-  //border-bottom: 1px solid;
   position: fixed;
   top: 0;
   z-index: 999;
+  height: 5.5rem;
 `;
 
 const InnerNav = styled.div`
