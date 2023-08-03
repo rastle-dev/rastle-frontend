@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import COLORS from "../../constants/color";
 import Button from "@/components/common/Button";
+import COLORS from "../../constants/color";
 
 export const Container = styled.div`
   width: 36rem;
