@@ -14,7 +14,7 @@ const Wrapper = styled.button<{
   type: ButtonType;
   disabled: boolean;
   className?: string;
-}>`입
+}>`
   ${({ type, disabled }) => `
     width:  ${
       {

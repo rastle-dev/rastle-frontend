@@ -23,5 +23,5 @@ export function ControlTest(args: any) {
 }
 ControlTest.args = {
   title: "기본",
-  type: "size",
+  label: "size",
 };
