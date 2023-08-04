@@ -1,5 +1,5 @@
-import * as S from "@/pages/login/index.styles";
 import React from "react";
+import * as S from "@/pages/login/index.styles";
 
 export default function SNSLogin() {
   return (
