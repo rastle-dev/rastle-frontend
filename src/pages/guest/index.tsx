@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
+import PATH from "@/constants/path";
 import * as S from "./index.styles";
 
 export default function Guest() {
@@ -25,7 +26,7 @@ export default function Guest() {
         <S.AskMember>아직 회원이 아니신가요?</S.AskMember>
         <S.Signup
           onClick={() => {
-            router.push("/signup");
+            router.push(PATH.SIGNUP);
           }}
         >
           회원가입 하러 가기

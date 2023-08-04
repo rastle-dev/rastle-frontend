@@ -10,12 +10,14 @@ const Full = styled.div`
   font-size: 1.5rem;
   flex-direction: column;
   background-color: white;
+  height: 100vh;
 `;
 
 const Inner = styled.div`
   width: 88%;
   display: flex;
   justify-content: center;
+  align-content: center;
 `;
 interface DefaultLayoutProps {
   children: ReactNode;

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import SNSLogin from "@/components/Login/sns";
+import PATH from "@/constants/path";
 import * as S from "./index.styles";
 
 export default function Login() {
@@ -13,7 +14,7 @@ export default function Login() {
     {
       title: "비회원 주문 조회",
       width: "11.4375rem",
-      onClick: () => router.push("/guest"),
+      onClick: () => router.push(PATH.GUEST),
     },
   ];
   const inputs = [
