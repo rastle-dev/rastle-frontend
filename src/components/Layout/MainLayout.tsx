@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { ReactNode } from "react";
 import MainHeader from "@/components/Layout/MainHeader";
+import Footer from "@/components/Layout/Footer";
 
 const Full = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ function MainLayout({ children }: MainLayoutProps) {
     <Full>
       <MainHeader />
       <Inner>{children}</Inner>
-      {/* <Footer /> */}
+      <Footer />
     </Full>
   );
 }
