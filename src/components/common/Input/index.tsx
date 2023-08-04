@@ -54,6 +54,8 @@ type InputProps = {
   readOnly?: boolean;
   /** input의 입력 조건 */
   message?: string;
+  /** classname */
+  className?: string;
 };
 
 export default function Input({
@@ -66,6 +68,7 @@ export default function Input({
   size = 26.25,
   readOnly = false,
   message = "",
+  className,
 }: InputProps) {
   return (
     <Wrapper>
@@ -77,6 +80,7 @@ export default function Input({
         placeholder={placeholder.toString()}
         size={size}
         readOnly={readOnly}
+        className={className}
       />
       {message.length > 0 && <Message> {message}</Message>}
     </Wrapper>
