@@ -8,6 +8,9 @@ const Container = styled.div`
   align-items: center;
   background-color: white;
   height: 5.5rem;
+  position: fixed;
+  top: 0;
+  z-index: 999;
 `;
 const Home = styled.div`
   font-weight: 200;
