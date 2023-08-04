@@ -5,8 +5,8 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { createGlobalStyle } from "styled-components";
-import DefaultLayout from "@/components/common/Layout/DefaultLayout";
-import MainLayout from "@/components/common/Layout/MainLayout";
+import DefaultLayout from "@/components/Layout/DefaultLayout";
+import MainLayout from "@/components/Layout/MainLayout";
 
 const GlobalStyle = createGlobalStyle`
 html,

@@ -1,5 +1,5 @@
 import React from "react";
-import MainLayout from "@/components/common/Layout/MainLayout";
+import MainLayout from "@/components/Layout/MainLayout";
 
 function Shop() {
   return (
