@@ -1,8 +1,8 @@
 import React from "react";
-import Signup from "@/components/signup";
+import Signup from "@/components/Signup";
 
 export default function Page() {
   return <Signup />;
 }
 
-Page.displayName = "Signup";
+Page.displayName = "User";

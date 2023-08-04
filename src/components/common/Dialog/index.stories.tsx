@@ -10,7 +10,7 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-//default
+// default
 export function dialog() {
   return <Dialog />;
 }

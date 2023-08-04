@@ -2,58 +2,45 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "../../../constants/color";
 
-type ButtonType = "default" | "shop" | "size" | "small";
+type ButtonType = "default" | "shop" | "size";
 type ButtonProps = {
   title?: string;
   type?: ButtonType;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  className?: string;
+  width?: string;
 };
 
 const Wrapper = styled.button<{
   type: ButtonType;
   disabled: boolean;
   className?: string;
+  width: string;
 }>`
-  ${({ type, disabled }) => `
-    width:  ${
-      {
-        default: "26.25rem",
-        shop: "10.275rem",
-        size: "7.12rem",
-        small: "4.125rem",
-      }[type]
-    };
+  ${({ type, width, disabled }) => `
+    width: ${width};
     font-size: ${
-      {
-        default: "1.25rem",
-        shop: "1.25rem",
-        size: "1.875rem",
-        small: "1rem",
-      }[type]
+      { default: "1.25rem", shop: "1.25rem", size: "1.875rem" }[type]
     };
      padding: ${
        {
-         default: "1.2rem 0 1.2rem 0",
+         default: "1.5rem 0 1.5rem 0",
          shop: "1.17rem 0 1.17rem 0",
          size: "0.5rem 0 0.5rem 0",
-         small: "0.4rem 0 0.4rem 0",
        }[type]
      };
      background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
-     border-radius: ${
-       { default: "15px", shop: "5px", size: "none", small: "5px" }[type]
-     }; 
+     border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]}; 
      border: ${
        (disabled && "1px solid #E6E6E6") ||
        {
          default: `1px solid ${COLORS.BLACK}`,
          shop: `1px solid ${COLORS.BLACK}`,
          size: `1px solid ${COLORS.WHITE}`,
-         small: `1px solid ${COLORS.BLACK}`,
        }[type]
      };
-     color: ${(disabled && "#E6E6E6") || COLORS.BLACK};
+     color: ${(disabled && "#9B9B9B") || COLORS.BLACK};
     &:hover{
       background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
       cursor: ${disabled ? "default" : "pointer"};
@@ -62,6 +49,7 @@ const Wrapper = styled.button<{
       };
       color: ${(disabled && "1px solid #E6E6E6") || `${COLORS.BLACK}`};
     }
+    cursor: ${disabled ? "default" : "pointer"};
 `}
   box-sizing: border-box;
   text-align: center;
@@ -75,9 +63,17 @@ export default function Button({
   type = "default",
   disabled = false,
   onClick,
+  className,
+  width,
 }: ButtonProps) {
   return (
-    <Wrapper type={type} onClick={onClick} disabled={disabled}>
+    <Wrapper
+      className={className}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      width={width!}
+    >
       {title}
     </Wrapper>
   );

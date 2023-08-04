@@ -7,10 +7,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  p {
-    font-weight: 200;
-    font-size: 2rem;
-  }
+  height: 5.5rem;
 `;
 const Home = styled.div`
   font-weight: 200;
@@ -20,7 +17,6 @@ const Home = styled.div`
 function DefaultHeader() {
   return (
     <Container>
-      <p>rastle_</p>
       <Home>Home</Home>
     </Container>
   );
