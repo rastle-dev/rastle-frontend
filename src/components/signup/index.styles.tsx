@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import Button from "@/components/common/Button";
+import Input from "@/components/common/Input";
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 8.38rem;
 
   h2 {
     font-size: 1rem;
@@ -16,9 +17,9 @@ export const Title = styled.h1`
   text-align: center;
   font-size: 3.4375rem;
   font-weight: 500;
-  flex-shrink: 0;
   line-height: normal;
-  padding-bottom: 3.81rem;
+  padding-bottom: 3.5rem;
+  margin: 0;
 `;
 
 export const InputWithButtonDiv = styled.div`
@@ -43,8 +44,8 @@ export const ButtonWrapper = styled.div`
 export const CheckBoxWithText = styled.div`
   display: flex;
   flex-direction: row;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
   justify-content: flex-start;
   align-items: center;
 
@@ -59,8 +60,26 @@ export const CheckBoxWithText = styled.div`
   }
 `;
 
-export const SignupButton = styled.div`
+export const SignupButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const StyledButton = styled(Button)`
+  border-radius: 0.625rem;
+  width: 5.3rem;
+  padding: 0.62rem;
+  font-size: 1rem;
+`;
+
+export const SignupButton = styled(Button)`
+  width: 35rem;
+  height: 4.375rem;
+  flex-shrink: 0;
+`;
+
+export const StyledInput = styled(Input)`
+  padding: 0;
+  margin: 0;
 `;

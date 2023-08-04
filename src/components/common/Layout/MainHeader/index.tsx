@@ -7,6 +7,7 @@ import {
   CenterElement,
   RightElemet,
 } from "./index.styles";
+import PATH from "@/constants/path";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -30,10 +31,10 @@ export default function MainHeader() {
           <CenterElement>rastle_</CenterElement>
         </Link>
         <RightElemet>
-          <Link href="/signup">
+          <Link href={PATH.LOGIN}>
             <span>log in</span>
           </Link>
-          <Link href="/cart">
+          <Link href={PATH.CART}>
             <span>cart</span>
           </Link>
         </RightElemet>

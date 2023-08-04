@@ -9,7 +9,11 @@ import * as S from "./index.styles";
 export default function Login() {
   const router = useRouter();
   const buttons = [
-    { title: "이메일 가입", width: "11.6875rem" },
+    {
+      title: "이메일 가입",
+      width: "11.6875rem",
+      onClick: () => router.push(PATH.SIGNUP),
+    },
     { title: "비밀번호 찾기", width: "11.75rem" },
     {
       title: "비회원 주문 조회",
