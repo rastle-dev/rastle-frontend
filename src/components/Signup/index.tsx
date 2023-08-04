@@ -1,6 +1,5 @@
 import React from "react";
 import Input from "@/components/common/Input";
-import Button from "@/components/common/Button";
 import * as S from "./index.styles";
 import { StyledInput } from "./index.styles";
 

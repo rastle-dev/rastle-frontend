@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { ReactNode } from "react";
-import MainHeader from "@/components/common/Layout/MainHeader";
+import MainHeader from "@/components/Layout/MainHeader";
 
 const Full = styled.div`
   width: 100%;
