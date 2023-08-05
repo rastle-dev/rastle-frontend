@@ -58,6 +58,7 @@ export default function Login() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>("전체");
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const filteredProducts =
