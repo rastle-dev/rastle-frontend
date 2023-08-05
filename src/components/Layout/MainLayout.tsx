@@ -15,11 +15,12 @@ const Full = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 88%;
+  width: 100%;
   //height: 100vh;
   border: 1px solid red;
   display: flex;
   justify-content: center;
+  margin-bottom: 10rem;
 `;
 interface MainLayoutProps {
   children: ReactNode;

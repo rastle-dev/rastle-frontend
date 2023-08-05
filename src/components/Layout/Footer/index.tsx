@@ -8,7 +8,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  position: fixed;
+  //position: fixed;
   bottom: 0;
   z-index: 999;
   padding: 1rem 0 3rem 0;
