@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import PATH from "@/constants/path";
 import {
   Wrapper,
   InnerNav,
@@ -7,7 +8,6 @@ import {
   CenterElement,
   RightElemet,
 } from "./index.styles";
-import PATH from "@/constants/path";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
