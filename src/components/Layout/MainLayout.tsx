@@ -15,9 +15,7 @@ const Full = styled.div`
 `;
 
 const Inner = styled.div`
-  width: 88%;
-  //height: 100vh;
-  border: 1px solid red;
+  width: 100%;
   display: flex;
   justify-content: center;
 `;
