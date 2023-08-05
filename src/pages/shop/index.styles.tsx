@@ -21,3 +21,29 @@ export const Line = styled.div`
   color: ${COLORS.GREY[200]};
   width: 100%;
 `;
+export const ProductList = styled.div`
+  display: grid;
+  width: 92%;
+  grid-template-columns: repeat(auto-fill, minmax(23%, auto));
+  padding-top: 4.8rem;
+  column-gap: 2rem;
+  row-gap: 8rem;
+`;
+export const Product = styled.div`
+  height: 43.25rem;
+  background-color: transparent;
+`;
+export const Img = styled.img`
+  height: 32.375rem;
+  width: 28.6rem;
+`;
+export const Price = styled.div`
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-top: 2rem;
+`;
+export const Name = styled.div`
+  font-size: 1.5rem;
+  padding-top: 2rem;
+  font-weight: 200;
+`;

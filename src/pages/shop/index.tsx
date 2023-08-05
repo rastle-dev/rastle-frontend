@@ -60,6 +60,11 @@ export default function Login() {
     setActiveCategory(category);
   };
 
+  const filteredProducts =
+    activeCategory === "전체"
+      ? ProductList
+      : ProductList.filter((p) => p.category === activeCategory);
+
   return (
     <S.Container>
       <S.Header>
@@ -71,6 +76,26 @@ export default function Login() {
         />
       </S.Header>
       <S.Line />
+      <S.ProductList>
+        {filteredProducts.map((product) => (
+          <S.Product>
+            <S.Img
+              src={product.defaultImg}
+              alt={product.productName}
+              onMouseEnter={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                target.src = product.hoverImg;
+              }}
+              onMouseLeave={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                target.src = product.defaultImg;
+              }}
+            />
+            <S.Name>{product.productName}</S.Name>
+            <S.Price>{product.price}원</S.Price>
+          </S.Product>
+        ))}
+      </S.ProductList>
     </S.Container>
   );
 }
