@@ -76,6 +76,11 @@ export default function Login() {
         />
       </S.Header>
       <S.Line />
+      {activeCategory === "1차 마켓" && (
+        <S.FirstMarketDescription>
+          1차 마켓 오픈 ( 8.12 ~ 8.15 )
+        </S.FirstMarketDescription>
+      )}
       <S.ProductList>
         {filteredProducts.map((product) => (
           <S.Product>
@@ -92,6 +97,7 @@ export default function Login() {
               }}
             />
             <S.Name>{product.productName}</S.Name>
+            {product.category === "이벤트" && <S.Event>EVENT!! </S.Event>}
             <S.Price>{product.price}원</S.Price>
           </S.Product>
         ))}

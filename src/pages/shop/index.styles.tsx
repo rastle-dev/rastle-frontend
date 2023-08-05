@@ -21,6 +21,13 @@ export const Line = styled.div`
   color: ${COLORS.GREY[200]};
   width: 100%;
 `;
+export const FirstMarketDescription = styled.div`
+  padding-top: 3rem;
+  width: 92%;
+  font-weight: 200;
+  font-size: 2.5rem;
+`;
+
 export const ProductList = styled.div`
   display: grid;
   width: 92%;
@@ -40,10 +47,16 @@ export const Img = styled.img`
 export const Price = styled.div`
   font-size: 1.5rem;
   font-weight: 600;
-  padding-top: 2rem;
+  padding-top: 1rem;
 `;
 export const Name = styled.div`
   font-size: 1.5rem;
-  padding-top: 2rem;
+  padding-top: 1rem;
   font-weight: 200;
+`;
+export const Event = styled.div`
+  font-size: 1.5rem;
+  padding-top: 1rem;
+  color: ${COLORS.RED};
+  font-weight: 300;
 `;
