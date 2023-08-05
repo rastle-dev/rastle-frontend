@@ -3,35 +3,55 @@ import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import * as S from "./index.styles";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
-
 const ProductList = [
-  {
-    category: "1차",
-    productName: "틴 워시드 버뮤다 데님 팬츠",
-    price: 45800,
-    defaultImg: "",
-    hoverImg: "",
-  },
   {
     category: "1차 마켓",
     productName: "틴 워시드 버뮤다 데님 팬츠",
-    price: 45800,
-    defaultImg: "",
-    hoverImg: "",
+    price: "45,800",
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
+  },
+  {
+    category: "1차 마켓",
+    productName: "트랙 샌딩 워시드 와이드 흑청 데님 틴 워시드 버뮤다 데님 팬츠",
+    price: "45,800",
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
   },
   {
     category: "이전 마켓",
     productName: "틴 워시드 버뮤다 데님 팬츠",
-    price: 45800,
-    defaultImg: "",
-    hoverImg: "",
+    price: "45,800",
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
   },
   {
     category: "이벤트",
     productName: "틴 워시드 버뮤다 데님 팬츠",
     price: 0,
-    defaultImg: "",
-    hoverImg: "",
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
+  },
+  {
+    category: "이벤트",
+    productName: "틴 워시드 버뮤다 데님 팬츠",
+    price: 0,
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
+  },
+  {
+    category: "이벤트",
+    productName: "틴 워시드 버뮤다 데님 팬츠",
+    price: 0,
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
+  },
+  {
+    category: "이벤트",
+    productName: "틴 워시드 버뮤다 데님 팬츠",
+    price: 0,
+    defaultImg: "/example_1.png",
+    hoverImg: "/example_2.png",
   },
 ];
 export default function Login() {
@@ -39,6 +59,7 @@ export default function Login() {
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);
   };
+
   return (
     <S.Container>
       <S.Header>
