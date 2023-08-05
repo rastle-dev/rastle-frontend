@@ -78,7 +78,7 @@ export default function Login() {
       <S.Line />
       {activeCategory === "1차 마켓" && (
         <S.FirstMarketDescription>
-          1차 마켓 오픈 ( 8.12 ~ 8.15 )
+          1차 마켓 오픈 ( 8.12 ~ 8.15 ) 🔥
         </S.FirstMarketDescription>
       )}
       <S.ProductList>

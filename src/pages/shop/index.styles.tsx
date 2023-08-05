@@ -10,6 +10,9 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   width: 92%;
+  position: fixed;
+  background-color: ${COLORS.WHITE};
+
   h1 {
     font-size: 2.5rem;
     font-weight: 200;
@@ -19,13 +22,14 @@ export const Header = styled.div`
 export const Line = styled.div`
   border: 0.5px solid;
   color: ${COLORS.GREY[200]};
+  padding-top: 20.3rem;
   width: 100%;
 `;
 export const FirstMarketDescription = styled.div`
   padding-top: 3rem;
   width: 92%;
   font-weight: 200;
-  font-size: 2.5rem;
+  font-size: 2rem;
 `;
 
 export const ProductList = styled.div`
@@ -33,6 +37,7 @@ export const ProductList = styled.div`
   width: 92%;
   grid-template-columns: repeat(auto-fill, minmax(23%, auto));
   padding-top: 4.8rem;
+
   column-gap: 2rem;
   row-gap: 8rem;
 `;
