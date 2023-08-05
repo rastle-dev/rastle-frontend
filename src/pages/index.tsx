@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import Button from "@/components/common/Button";
+import ItemElement from "@/components/ItemElement";
+import COLORS from "@/constants/color";
 
 const StyledHome = styled.div`
   position: relative;
@@ -42,6 +44,7 @@ const TextWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
@@ -74,6 +77,69 @@ export const StyledButton = styled(Button)`
 `;
 
 /** ShopLayer 컴포넌트 스타일링 */
+const ShopWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  //padding: 0rem 4.3rem 0 4.3rem;
+  padding: 0rem 4.3rem 0 4.3rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+`;
+
+const ShopTitle = styled.div`
+  font-size: 2.5rem;
+  padding: 9.63rem 0 7.75rem 0;
+  font-weight: 200;
+
+  span {
+    color: ${COLORS.RED};
+    font-weight: 700;
+  }
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2%;
+  padding-bottom: 6rem;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 1%;
+    //justify-content: center;
+    width: 100%;
+  }
+`;
+const ViewMore = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+
+  span {
+    font-size: 1.875rem;
+    font-weight: 200;
+    cursor: pointer;
+
+    &:hover {
+      font-weight: 500;
+    }
+  }
+`;
+const StyledBorderLine = styled.div`
+  margin-top: 2rem;
+  border: 0.3px solid ${COLORS.GREY["300"]};
+  width: 100%;
+`;
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
 function TopLayer() {
@@ -101,11 +167,104 @@ function TopLayer() {
 }
 
 function ShopLayer() {
-  return <div></div>;
+  const items = [
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "틴 워시드 버뮤다 데님 팬츠",
+      price: "45,800원",
+    },
+    {
+      imageUrl: "/image/homeDesktop2.jpg",
+      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      price: "53,400원",
+    },
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "스토퍼 윈드브레이커",
+      price: "34,200원",
+    },
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      price: "53,400원",
+    },
+
+    // Add more items as needed
+  ];
+
+  return (
+    <ShopWrapper>
+      <ShopTitle>1차 마켓 오픈 (8.12 ~ 8.15)</ShopTitle>
+      <ItemContainer>
+        {items.map((item) => (
+          <ItemElement
+            key={item.itemName}
+            imageUrl={item.imageUrl}
+            itemName={item.itemName}
+            // event={item.event}
+            price={item.price}
+          />
+        ))}
+      </ItemContainer>
+      <ViewMore>
+        <span>더 많은 상품 보러가기</span>
+      </ViewMore>
+      <StyledBorderLine />
+    </ShopWrapper>
+  );
 }
 
 function EventLayer() {
-  return <div />;
+  const items = [
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "틴 워시드 버뮤다 데님 팬츠",
+      event: "EVENT!!",
+      price: "45,800원",
+    },
+    {
+      imageUrl: "/image/homeDesktop2.jpg",
+      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      event: "EVENT!!",
+      price: "53,400원",
+    },
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "스토퍼 윈드브레이커",
+      event: "EVENT!!",
+      price: "34,200원",
+    },
+    {
+      imageUrl: "/image/homeMobile1.jpg",
+      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      event: "EVENT!!",
+      price: "53,400원",
+    },
+
+    // Add more items as needed
+  ];
+
+  return (
+    <ShopWrapper>
+      <ShopTitle>
+        회원가입하고 <span>EVENT</span> 참여 !!
+      </ShopTitle>
+      <ItemContainer>
+        {items.map((item) => (
+          <ItemElement
+            key={item.itemName}
+            imageUrl={item.imageUrl}
+            itemName={item.itemName}
+            event={item.event}
+            price={item.price}
+          />
+        ))}
+      </ItemContainer>
+      <ViewMore>
+        <span>더 많은 상품 보러가기</span>
+      </ViewMore>
+    </ShopWrapper>
+  );
 }
 
 export default function Home() {
