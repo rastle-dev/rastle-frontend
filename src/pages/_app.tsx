@@ -47,23 +47,23 @@ font-family: "EscoreDream", sans-serif ;
 }
 @media (min-width: 1441px) and (max-width: 1919px) {
   html {
-    font-size: 11px;
+    font-size: 12px;
   }
 }
 @media (min-width: 1920px) and (max-width: 2559px) {
   html {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 @media (min-width: 2560px) {
   html {
-    font-size: 13px;
+    font-size: 14px;
   }
 }
 @font-face {
   font-family: 'EscoreDream';
   src: url("/font/SCDream1.otf") format('opentype');
-  font-weight: 800;
+  font-weight: 100;
 }
 @font-face {
   font-family: 'EscoreDream';
