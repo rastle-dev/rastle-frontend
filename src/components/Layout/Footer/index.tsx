@@ -2,13 +2,12 @@ import styled from "styled-components";
 import React from "react";
 
 const Container = styled.div`
-  width: 88%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: white;
-  position: fixed;
   bottom: 0;
   z-index: 999;
   padding: 1rem 0 3rem 0;
