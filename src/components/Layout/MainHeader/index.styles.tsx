@@ -56,7 +56,7 @@ const MenuIcon = styled(IconButton)`
   display: none;
 
   @media (max-width: 769px) {
-    font-size: 2rem;
+    font-size: 3rem;
     cursor: pointer;
   }
 `;
@@ -103,7 +103,7 @@ const PersonIcon = styled(IconButton)`
   display: none;
 
   @media (max-width: 769px) {
-    font-size: 2rem;
+    font-size: 3rem;
     cursor: pointer;
   }
 `;

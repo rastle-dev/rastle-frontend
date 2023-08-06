@@ -37,7 +37,7 @@ const StyledIcon = styled.i<{ border: number }>`
 
 function IconButton({
   iconName,
-  iconSize = "1.5rem",
+  iconSize = "2.5rem",
   color,
   border = 0.1,
   onClick,
