@@ -11,6 +11,7 @@ const COLORS = {
     600: "#464656",
   },
   BLUE: "#4395F6",
+  RED: "#FF0000",
 };
 
 export default COLORS;
