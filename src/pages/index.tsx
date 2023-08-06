@@ -27,21 +27,24 @@ function TopLayer() {
   );
 }
 
+export type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
+
 type ProductItem = {
-  imageUrl: string;
-  itemName: string;
-  event?: string;
+  defaultImg: string;
+  hoverImg?: string;
+  productName: string;
   price: string;
+  category?: ProductCategory;
 };
 
 type ProductLayerProps = {
   items: ProductItem[];
-  type: ProductType;
 };
 
-type ProductType = "shop" | "event";
-
-function ProductLayer({ items, type }: ProductLayerProps) {
+function ProductLayer({ items }: ProductLayerProps) {
+  const type = items.some((item) => item.category === "이벤트")
+    ? "event"
+    : "shop";
   return (
     <S.ProductWrapper>
       {type === "event" ? (
@@ -54,11 +57,12 @@ function ProductLayer({ items, type }: ProductLayerProps) {
       <S.ItemContainer>
         {items.map((item) => (
           <ItemElement
-            key={item.itemName}
-            imageUrl={item.imageUrl}
-            itemName={item.itemName}
-            event={item.event}
+            key={item.productName}
+            defaultImg={item.defaultImg}
+            hoverImg={item.hoverImg}
+            productName={item.productName}
             price={item.price}
+            category={item.category}
           />
         ))}
       </S.ItemContainer>
@@ -71,54 +75,65 @@ function ProductLayer({ items, type }: ProductLayerProps) {
 }
 
 export default function Home() {
-  const shopItems = [
+  const shopItems: ProductItem[] = [
     {
-      imageUrl: "/image/product1.jpg",
-      itemName: "틴 워시드 버뮤다 데님 팬츠",
+      category: "1차 마켓",
+      defaultImg: "/image/product1.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "틴 워시드 버뮤다 데님 팬츠",
       price: "45,800원",
     },
     {
-      imageUrl: "/image/product2.jpg",
-      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      category: "1차 마켓",
+      defaultImg: "/image/product2.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
       price: "53,400원",
     },
     {
-      imageUrl: "/image/product3.jpg",
-      itemName: "스토퍼 윈드브레이커",
+      category: "1차 마켓",
+      defaultImg: "/image/product3.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "스토퍼 윈드브레이커",
       price: "34,200원",
     },
     {
-      imageUrl: "/image/product4.jpg",
-      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
+      category: "1차 마켓",
+      defaultImg: "/image/product4.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
       price: "53,400원",
     },
   ];
 
-  const eventItems = [
+  const eventItems: ProductItem[] = [
     {
-      imageUrl: "/image/product5.jpg",
-      itemName: "틴 워시드 버뮤다 데님 팬츠",
-      event: "EVENT!!",
+      defaultImg: "/image/product5.jpg",
+      productName: "틴 워시드 버뮤다 데님 팬츠",
+      hoverImg: "/image/product5.jpg",
       price: "0원",
+      category: "이벤트",
     },
     {
-      imageUrl: "/image/product6.jpg",
-      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      event: "EVENT!!",
+      defaultImg: "/image/product6.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
       price: "0원",
+      category: "이벤트",
     },
     {
-      imageUrl: "/image/homeMobile1.jpg",
-      itemName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      event: "EVENT!!",
+      defaultImg: "/image/homeMobile1.jpg",
+      hoverImg: "/image/product5.jpg",
+      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
       price: "0원",
+      category: "이벤트",
     },
   ];
   return (
     <S.StyledHome>
       <TopLayer />
-      <ProductLayer items={shopItems} type="shop" />
-      <ProductLayer items={eventItems} type="event" />
+      <ProductLayer items={shopItems} />
+      <ProductLayer items={eventItems} />
     </S.StyledHome>
   );
 }

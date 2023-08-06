@@ -10,6 +10,8 @@ export const StyledHome = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 /** TopLayer 컴포넌트 스타일링*/
@@ -81,12 +83,6 @@ export const ProductWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //padding: 0rem 4.3rem 0 4.3rem;
-  padding: 0rem 4.3rem 0 4.3rem;
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
 `;
 
 export const ProductTitle = styled.div`
@@ -101,18 +97,20 @@ export const ProductTitle = styled.div`
 `;
 
 export const ItemContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 2%;
+  display: grid;
+  //flex-direction: row;
+  width: 88%;
+  //justify-content: flex-start;
+  //align-items: flex-start;
+  grid-template-columns: repeat(4, 1fr);
+  //gap: 2%;
   padding-bottom: 6rem;
+  column-gap: 1%;
 
   @media (max-width: 768px) {
-    flex-wrap: wrap;
-    gap: 1%;
-    width: 100%;
+    //flex-wrap: wrap;
+    //gap: 1%;
+    //width: 100%;
   }
 `;
 export const ViewMore = styled.div`

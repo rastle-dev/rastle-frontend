@@ -10,13 +10,13 @@ export default function Login() {
   const router = useRouter();
   const buttons = [
     {
-      itemName: "이메일 가입",
+      productName: "이메일 가입",
       width: "11.6875rem",
       onClick: () => router.push(PATH.SIGNUP),
     },
-    { itemName: "비밀번호 찾기", width: "11.75rem" },
+    { productName: "비밀번호 찾기", width: "11.75rem" },
     {
-      itemName: "비회원 주문 조회",
+      productName: "비회원 주문 조회",
       width: "11.4375rem",
       onClick: () => router.push(PATH.GUEST),
     },
@@ -45,9 +45,9 @@ export default function Login() {
       </S.Wrapper>
       <S.Box>
         {buttons.map((button, index) => (
-          <React.Fragment key={button.itemName}>
+          <React.Fragment key={button.productName}>
             <S.StyledButton
-              title={button.itemName}
+              title={button.productName}
               width={button.width}
               onClick={button.onClick}
             />
