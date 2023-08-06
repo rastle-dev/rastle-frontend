@@ -53,7 +53,7 @@ export const ProductList = styled.div`
     width: 90%;
   }
   padding-top: 4.8rem;
-  column-gap: 2rem;
+  column-gap: 1%;
   row-gap: 8rem;
 `;
 export const Product = styled.div`
