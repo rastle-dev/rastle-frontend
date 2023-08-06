@@ -7,7 +7,12 @@ import {
   LeftElement,
   CenterElement,
   RightElemet,
+  MenuIcon,
+  MenuDiv,
+  PersonIcon,
+  PersonDiv,
 } from "./index.styles";
+import COLORS from "@/constants/color";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -20,6 +25,9 @@ export default function MainHeader() {
   return (
     <Wrapper>
       <InnerNav>
+        <MenuDiv>
+          <MenuIcon iconName="menu" color={COLORS.BLACK} />
+        </MenuDiv>
         <LeftElement>
           {navList.map(({ name, href }) => (
             <li key={name}>
@@ -27,17 +35,22 @@ export default function MainHeader() {
             </li>
           ))}
         </LeftElement>
-        <Link href="/">
-          <CenterElement>rastle_</CenterElement>
-        </Link>
+        <CenterElement>
+          <Link href="/">
+            <span>rastle_</span>{" "}
+          </Link>
+        </CenterElement>
         <RightElemet>
           <Link href={PATH.LOGIN}>
-            <span>log in</span>
+            <span>LOG IN</span>
           </Link>
           <Link href={PATH.CART}>
-            <span>cart</span>
+            <span>CART</span>
           </Link>
         </RightElemet>
+        <PersonDiv>
+          <PersonIcon iconName="person" color={COLORS.BLACK} />
+        </PersonDiv>
       </InnerNav>
     </Wrapper>
   );

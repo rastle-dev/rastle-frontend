@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import IconButton from "@/components/common/IconButton";
 
 const Wrapper = styled.div`
+  //width: 92%;
   width: 100%;
   background-color: white;
   position: fixed;
@@ -12,21 +14,21 @@ const Wrapper = styled.div`
 const InnerNav = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
-  padding: 0 3.2rem;
+  padding: 0 4.5rem;
+  position: relative;
 `;
 
 const LeftElement = styled.ul`
   list-style: none;
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
-  flex-grow: 1;
-  flex-basis: 0;
 
   li {
-    margin-right: 2.2rem;
+    padding-right: 2.2rem;
     font-size: 1.17rem;
   }
 
@@ -35,19 +37,45 @@ const LeftElement = styled.ul`
     color: black;
     font-weight: 200;
   }
+
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
 
-const CenterElement = styled.h2`
-  font-size: 3rem;
-  font-weight: 200;
-  flex-grow: 2;
-  flex-shrink: 0;
-  flex-basis: 0;
+const MenuDiv = styled.div`
+  position: absolute;
+  left: 1.5rem; /* Adjust the value as per your requirement */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+`;
+
+const MenuIcon = styled(IconButton)`
+  display: none;
+
+  @media (max-width: 769px) {
+    font-size: 3rem;
+    cursor: pointer;
+  }
+`;
+
+const CenterElement = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  span {
+    font-size: 3rem;
+    font-weight: 200;
+  }
 `;
 
 const RightElemet = styled.div`
-  flex-grow: 1;
-  flex-basis: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -57,5 +85,36 @@ const RightElemet = styled.div`
     font-size: 1.17rem;
     font-weight: 200;
   }
+
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
-export { Wrapper, InnerNav, LeftElement, CenterElement, RightElemet };
+
+const PersonDiv = styled.div`
+  position: absolute;
+  right: 1.5rem; /* Adjust the value as per your requirement */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 1000;
+`;
+const PersonIcon = styled(IconButton)`
+  display: none;
+
+  @media (max-width: 769px) {
+    font-size: 3rem;
+    cursor: pointer;
+  }
+`;
+export {
+  Wrapper,
+  InnerNav,
+  LeftElement,
+  CenterElement,
+  RightElemet,
+  MenuIcon,
+  MenuDiv,
+  PersonIcon,
+  PersonDiv,
+};
