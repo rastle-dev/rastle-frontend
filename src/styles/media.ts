@@ -1,15 +1,15 @@
-export const mediaQuery = (maxWidth: number) => {
-  return `@media screen and (max-width: ${maxWidth}px)`;
+export const mediaQuery = (minWidth: number, maxWidth: number) => {
+  return `@media screen and (min-width: ${minWidth}px) and (max-width: ${maxWidth}px)`;
 };
 
 const media = {
-  xxsmall: mediaQuery(300),
-  xsmall: mediaQuery(500),
-  small: mediaQuery(768),
-  medium: mediaQuery(1024),
-  large: mediaQuery(1300),
-  xlarge: mediaQuery(1440),
-  xxlarge: mediaQuery(1919),
+  xxsmall: mediaQuery(0, 350),
+  xsmall: mediaQuery(351, 500),
+  small: mediaQuery(501, 1024),
+  // medium: mediaQuery(769, 1024),
+  large: mediaQuery(1025, 1300),
+  xlarge: mediaQuery(1301, 1440),
+  xxlarge: mediaQuery(1441, 1919),
 };
 
 export default media;
