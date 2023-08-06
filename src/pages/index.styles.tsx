@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Button from "@/components/common/Button";
 import COLORS from "@/constants/color";
+import media from "@/styles/media";
 
 export const StyledHome = styled.div`
   position: relative;
@@ -100,25 +101,29 @@ export const ItemContainer = styled.div`
   display: grid;
   //flex-direction: row;
   width: 88%;
-  //justify-content: flex-start;
-  //align-items: flex-start;
   grid-template-columns: repeat(4, 1fr);
-  //gap: 2%;
-  padding-bottom: 6rem;
-  column-gap: 1%;
-
-  @media (max-width: 768px) {
-    //flex-wrap: wrap;
-    //gap: 1%;
-    //width: 100%;
+  ${media.small} {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 95%;
   }
+
+  ${media.xsmall} {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 95%;
+  }
+
+  padding-bottom: 4.8rem;
+  column-gap: 1%;
+  row-gap: 8rem;
 `;
 export const ViewMore = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: flex-end;
-  width: 100%;
+  width: 88%;
 
   span {
     font-size: 1.875rem;

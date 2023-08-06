@@ -11,20 +11,8 @@ type ItemElementProps = {
   category?: ProductCategory;
 };
 
-// const Wrapper = styled.div``;
-
 const ItemWrapper = styled.div`
-  //display: flex;
-  //width: 24.99%;
-  //padding-bottom: 2.5rem;
-  //
-  //flex-direction: column;
-  //align-items: flex-start;
   width: 100%;
-
-  @media (max-width: 767px) {
-    width: 49.5%;
-  }
 `;
 
 const StyledImage = styled.img`
