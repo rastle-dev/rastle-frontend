@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PATH from "@/constants/path";
 import {
   Wrapper,
@@ -22,8 +22,23 @@ const navList = [
 ];
 
 export default function MainHeader() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      setIsScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper scrolled={isScrolled}>
       <InnerNav>
         <MenuDiv>
           <MenuIcon iconName="menu" color={COLORS.BLACK} />

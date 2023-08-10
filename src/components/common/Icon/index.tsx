@@ -9,25 +9,28 @@ interface IconProps {
   size?: string;
   color?: string;
   border?: number;
+  opacity?: number;
 }
-const Wrapper = styled.div`
-  background-color: transparent;
-`;
+
 const StyledIcon = styled.i<{ border: number }>`
   ${({ border }) => `
    -webkit-text-stroke: ${border}px;
 `}
 `;
 
-function Icon({ iconName, size = "1.5rem", color, border = 0.1 }: IconProps) {
+function Icon({
+  iconName,
+  size = "1.5rem",
+  color,
+  border = 0.1,
+  opacity,
+}: IconProps) {
   return (
-    <Wrapper>
-      <StyledIcon
-        className={Icons[iconName]}
-        style={{ fontSize: size, color }}
-        border={border}
-      />
-    </Wrapper>
+    <StyledIcon
+      className={Icons[iconName]}
+      style={{ fontSize: size, color, opacity }}
+      border={border}
+    />
   );
 }
 

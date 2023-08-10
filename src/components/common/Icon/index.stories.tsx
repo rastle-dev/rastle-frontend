@@ -13,6 +13,10 @@ export function Cart() {
   return <Icon iconName="cart" color={COLORS.BLACK} />;
 }
 
+export function Arrow() {
+  return <Icon size="1rem" iconName="arrowLeft" color={COLORS.BLACK} />;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 export function Person() {

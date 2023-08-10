@@ -19,14 +19,9 @@ interface IconButtonProps {
 }
 const Wrapper = styled.button<{ hideOnDesktop: boolean }>`
   padding: 0;
-
-  background-color: white;
+  background-color: transparent;
   border: none;
   cursor: pointer;
-
-  // @media (min-width: 769px) {
-  //   display: ${({ hideOnDesktop }) => (hideOnDesktop ? "none" : "block")};
-  // }
 `;
 
 const StyledIcon = styled.i<{ border: number }>`
