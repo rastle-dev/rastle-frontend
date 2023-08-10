@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import COLORS from "@/constants/color";
+import Button from "@/components/common/Button";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -8,7 +10,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid red;
+  //border: 1px solid red;
 `;
 
 export const TopLayer = styled.div`
@@ -16,46 +18,116 @@ export const TopLayer = styled.div`
   justify-content: flex-start;
   flex-direction: row;
   width: 100%;
-  padding: 16px;
 `;
 
 export const ImageLayer = styled.div`
   width: 50%;
   height: auto;
   padding-right: 3.72rem;
-  border-right: 1px solid black;
+  border-right: 1px solid ${COLORS.GREY["300"]};
 `;
 
 export const ProductContent = styled.div`
   width: 50%;
+  padding-left: 3.78rem;
   display: flex;
   flex-direction: column;
 `;
 
 export const Title = styled.div`
-  background-color: lightblue; /* 임시 스타일 */
+  font-size: 2.27rem;
+  font-weight: 200;
+  padding-bottom: 0.82rem;
 `;
 
 export const Price = styled.div`
-  background-color: lightgreen; /* 임시 스타일 */
+  font-size: 2.27273rem;
+  font-weight: 500;
+  padding-bottom: 2.27rem;
 `;
 
-export const Color = styled.div`
-  background-color: lightpink; /* 임시 스타일 */
+export const ColorText = styled.div`
+  font-size: 1.45455rem;
+  padding-bottom: 0.64rem;
 `;
 
-export const Size = styled.div`
-  background-color: lightyellow; /* 임시 스타일 */
+export const ColorList = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.19rem;
+  padding-bottom: 2.55rem;
 `;
 
-export const ProductCount = styled.div`
-  background-color: lightcoral; /* 임시 스타일 */
+export const SizeText = styled.div`
+  font-size: 1.45455rem;
+  padding-bottom: 0.64rem;
+`;
+export const SizeButtonList = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.19rem;
+  padding-bottom: 2.55rem;
 `;
 
+export const StyledButton = styled(Button)`
+  font-size: 1.18182rem;
+  font-weight: 200;
+  width: 7.90909rem;
+  height: 2.54545rem;
+`;
+
+export const ProductCountText = styled.div`
+  font-size: 1.45rem;
+  font-weight: 200;
+  padding-bottom: 1.18rem;
+  border-bottom: 1px solid ${COLORS.BLACK};
+`;
+
+export const ProductCountInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid ${COLORS.BLACK};
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+`;
+export const ProductCountLeftInfo = styled.div``;
+export const ProductCountTitle = styled.div`
+  color: ${COLORS.GREY.상세페이지};
+  font-size: 1.45rem;
+  font-weight: 200;
+  padding-bottom: 0.64rem;
+`;
+export const ProductCountColor = styled.span`
+  font-size: 1.45455rem;
+  font-weight: 300;
+`;
+export const ProudctCountSize = styled.span`
+  font-size: 1.45455rem;
+  font-weight: 300;
+`;
+export const ProductCountRightInfo = styled.div``;
+export const ProductCountButton = styled.div``;
+export const ProductCountDelete = styled.div``;
 export const TotalPrice = styled.div`
-  background-color: lightseagreen; /* 임시 스타일 */
+  font-size: 1.45rem;
+  font-weight: 200;
+  padding-bottom: 1.73rem;
+  padding-top: 3.36rem;
+`;
+export const Pay = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.73rem;
 `;
 
-export const Pay = styled.div`
-  background-color: lightsalmon; /* 임시 스타일 */
+export const StyledPayButton = styled(Button)`
+  font-size: 1.45rem;
+  font-weight: 200;
+  flex-grow: 1;
+  width: 14rem;
+  height: 4.8rem;
+  color: ${COLORS.GREY.상세페이지};
 `;

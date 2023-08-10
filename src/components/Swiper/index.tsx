@@ -6,7 +6,6 @@ import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import styled from "styled-components";
-import ICONS from "@/constants/icon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
 
@@ -48,8 +47,8 @@ interface ImageGalleryProps {
   images: string[];
 }
 
-const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
-  const swiperRef = useRef<SwiperCore>(null);
+const ImageSwiper: React.FC<ImageGalleryProps> = ({ images }) => {
+  const swiperRef = useRef<SwiperCore | null>(null);
 
   const handlePrevClick = () => {
     if (swiperRef.current) {
@@ -64,7 +63,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   };
 
   const handleSwiperInit = (swiper: SwiperCore) => {
-    // @ts-ignore
     swiperRef.current = swiper;
   };
 
@@ -84,7 +82,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
       ref={swiperRef}
     >
       {images.map((image, index) => (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={image}>
           <StyledImage src={image} alt={`Image ${index + 1}`} />
         </SwiperSlide>
       ))}
@@ -118,4 +116,4 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
   );
 };
 
-export default ImageGallery;
+export default ImageSwiper;
