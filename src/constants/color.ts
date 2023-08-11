@@ -13,6 +13,8 @@ const COLORS = {
   },
   BLUE: "#4395F6",
   RED: "#FF0000",
+  GREEN: "#00ff04",
+  YELLOW: "#f7ff00",
 };
 
 export default COLORS;

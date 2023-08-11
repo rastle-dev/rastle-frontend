@@ -9,6 +9,7 @@ const ICONS: IconProps = {
   menu: "bi bi-list",
   arrowRight: "bi bi-chevron-right",
   arrowLeft: "bi bi-chevron-left",
+  delete: "bi bi-x-circle-fill",
 };
 
 export default ICONS;

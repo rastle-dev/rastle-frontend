@@ -8,6 +8,7 @@ import "swiper/components/pagination/pagination.min.css";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
+import media from "@/styles/media";
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -18,6 +19,33 @@ const StyledSwiper = styled(Swiper)`
   .swiper-button-prev::after {
     display: none;
   }
+
+  ${media.mobile} {
+    width: 100%;
+    height: auto;
+    padding-bottom: 3.72rem;
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      display: none; // 화살표 숨기기
+    }
+  }
+
+  .swiper-pagination-bullets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .swiper-pagination-bullet {
+      margin: 0 0.25rem;
+    }
+  }
+
+\` ;
 `;
 
 const StyledImage = styled.img`

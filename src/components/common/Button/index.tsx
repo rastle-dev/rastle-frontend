@@ -10,6 +10,8 @@ type ButtonProps = {
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   width?: string;
+  /** 버튼 활성화 (onClick)을 감지하기 위한 props*/
+  isActive?: boolean;
 };
 
 const Wrapper = styled.button<{
@@ -17,8 +19,9 @@ const Wrapper = styled.button<{
   disabled: boolean;
   className?: string;
   width: string;
+  isActive?: boolean;
 }>`
-  ${({ type, width, disabled }) => `
+  ${({ type, width, disabled, isActive }) => `
     width: ${width};
     font-size: ${
       { default: "1.25rem", shop: "1.25rem", size: "1.875rem" }[type]
@@ -32,6 +35,8 @@ const Wrapper = styled.button<{
      };
      background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
      border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]}; 
+     
+      display: ${isActive ? `none` : `none`};
      border: ${
        (disabled && "1px solid #E6E6E6") ||
        {
@@ -50,6 +55,7 @@ const Wrapper = styled.button<{
       color: ${(disabled && "1px solid #E6E6E6") || `${COLORS.BLACK}`};
     }
     cursor: ${disabled ? "default" : "pointer"};
+    
 `}
   box-sizing: border-box;
   text-align: center;
@@ -73,6 +79,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       width={width!}
+      isActive
     >
       {title}
     </Wrapper>
