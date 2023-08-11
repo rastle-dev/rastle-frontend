@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Icons from "../../../constants/icon";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 type ButtonType = "default" | "clicked";
@@ -23,6 +22,7 @@ const Wrapper = styled.div<{
   ${({ size, buttonType }) => `
   width: ${size}rem;
   height: ${size}rem;
+  padding : 0.15rem;
   display : flex;
   justify-content: center;
   align-items : center;
@@ -37,13 +37,12 @@ const Wrapper = styled.div<{
 
 const Inner = styled.div<{
   color: string;
-  size: number;
 }>`
-  ${({ color, size }) => `
+  ${({ color }) => `
   background-color: ${color};
-  width: ${size - size / 10}rem;
-  height : ${size - size / 10}rem;
-  // border: 0.1px solid #9B9B9B;
+  width : 100%;
+  height : 100%;
+  border: 0.1px solid #9B9B9B;
 
 `}
 `;
@@ -56,7 +55,7 @@ export default function ColorButton({
 }: ColorButtonProps) {
   return (
     <Wrapper buttonType={buttonType} size={size} onClick={onClick}>
-      <Inner size={size} color={color}></Inner>
+      <Inner color={color} />
     </Wrapper>
   );
 }

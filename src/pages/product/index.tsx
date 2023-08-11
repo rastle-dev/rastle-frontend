@@ -56,6 +56,7 @@ export default function Product() {
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
               />
             ))}
+            <ColorButton size={3} color={COLORS.YELLOW} buttonType="clicked" />
           </S.ColorList>
           <S.SizeText>사이즈</S.SizeText>
           <S.SizeButtonList>
