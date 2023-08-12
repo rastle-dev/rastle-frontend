@@ -94,16 +94,22 @@ export const SizeButtonList = styled.div`
 export const SizeButton = styled(Button)`
   font-size: 1.18182rem;
   font-weight: 200;
-  width: 7.90909rem;
-  height: 2.54545rem;
+  width: 8rem;
+  height: 2.5rem;
   border: 0.5px solid ${COLORS.GREY.상세페이지};
 
   /* 버튼이 클릭된 상태일 때의 스타일 */
   ${({ isActive }) =>
     isActive &&
     `
-    border: 1px solid ${COLORS.BLACK}; /* 클릭된 상태의 border 스타일 */
+    border: 1.5px solid ${COLORS.BLACK}; /* 클릭된 상태의 border 스타일 */
   `}
+
+  ${media.mobile} {
+    width: 8rem;
+    height: 4rem;
+    font-size: 1.5rem;
+  }
 `;
 
 export const ProductCountText = styled.div`
@@ -141,10 +147,11 @@ export const ProductCountRightInfo = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const ProductCountButton = styled.input`
+export const ProductCountButton = styled.input.attrs({
+  type: "number",
+})`
   width: 4.18rem;
-  height: 2rem;
-  margin-right: 0.5rem;
+  height: auto;
 
   /* 기본적으로 화살표 버튼 보이도록 설정 */
   -moz-appearance: textfield; /* Firefox */
@@ -155,10 +162,44 @@ export const ProductCountButton = styled.input`
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     opacity: 1; /* 항상 표시되도록 설정 */
+    width : auto;
+    appearance: none; /* 시도해보세요 */
   }
+
+  &[type="number"] {
+    -webkit-appearance: textfield;
+  }
+  
+  
 
 \` ;
 `;
+
+export const NumberInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: auto;
+  margin-right: 1rem;
+`;
+
+export const CountUpButton = styled.img`
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+export const CountDownButton = styled.img`
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+
+export const Count = styled.span`
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+`;
+
 export const ProductCountDelete = styled.div``;
 export const TotalPrice = styled.div`
   font-size: 1.45rem;

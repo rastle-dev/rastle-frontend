@@ -1,77 +1,125 @@
 import React, { useState } from "react";
 import ImageSwiper from "@/components/Swiper";
-import * as S from "./index.styles";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
+import * as S from "./index.styles";
 
 export default function Product() {
   // 상태 변수들
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [showProductCount, setShowProductCount] = useState(false);
+
+  interface SelectedProduct {
+    title?: string;
+    price?: number;
+    color?: string | null;
+    size?: string | null;
+    count: number;
+  }
+
+  // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
+  const jsonData = {
+    images: [
+      "/image/product5.jpg",
+      "/image/product6.jpg",
+      "/image/product1.jpg",
+      "/image/whiteBackground.png",
+    ],
+    title: "틴 워시드 버뮤다 데님 팬츠",
+    price: 56200,
+    colors: [COLORS.WHITE, COLORS.BLACK, COLORS.BLUE],
+    sizes: ["M", "L"],
+    remain: {
+      M: 3,
+      L: 4,
+    },
+    imageDetails: ["/image/product5.jpg", "/image/homeDesktop2.jpg"],
+  };
+
+  // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
+  const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
+    title: jsonData.title,
+    price: jsonData.price,
+    color: null,
+    size: null,
+    count: 0, // 기본 수량
+  });
 
   // 컬러 버튼 클릭 핸들러
   const handleColorClick = (color: string) => {
-    setSelectedColor(color);
-    setSelectedSize(null); // 사이즈 선택 초기화
-    setShowProductCount(false); // "수량" 부분 숨김
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      color,
+      size: null,
+      count: 0,
+    }));
+    // setShowProductCount(false); // "수량" 부분 숨김
   };
 
   // 사이즈 버튼 클릭 핸들러
   const handleSizeClick = (size: string) => {
-    setSelectedSize(size);
-    setShowProductCount(true); // "수량" 부분 보이기
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      size,
+      count: 1, // 사이즈를 고르면 count가 1 증가함
+    }));
   };
-  const images = [
-    "/image/product5.jpg",
-    "/image/product6.jpg",
-    "/image/product1.jpg",
-    "/image/whiteBackground.png",
-    // 추가적인 이미지 경로를 여기에 추가합니다
-  ];
 
-  const colors = [COLORS.WHITE, COLORS.BLACK, COLORS.BLUE];
+  const inputChangeHandler = (event: any) => {
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      count: event.target.value,
+    }));
+  };
 
-  const sizes = ["M", "L"];
+  const handleIncrement = () => {
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      count: prevProduct.count + 1,
+    }));
+  };
 
+  const handleDecrement = () => {
+    setSelectedProduct((prevProduct) => ({
+      ...prevProduct,
+      count: prevProduct.count - 1,
+    }));
+  };
+  console.log(selectedProduct);
   return (
     <S.Wrapper>
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSwiper images={images} />
+          <ImageSwiper images={jsonData.images} />
         </S.ImageLayer>
         <S.ProductContent>
-          <S.Title>틴 워시드 버뮤다 데님 팬츠</S.Title>
-          <S.Price>56,200원</S.Price>
+          <S.Title>{jsonData.title}</S.Title>
+          <S.Price>{jsonData.price}원</S.Price>
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
-            {colors.map((color) => (
+            {jsonData.colors.map((color) => (
               <ColorButton
                 key={color}
                 size={3}
-                buttonType="default"
+                clicked={color === selectedProduct.color}
                 color={color}
-                // isActive={selectedColor === color} // isActive 설정
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
               />
             ))}
-            <ColorButton size={3} color={COLORS.YELLOW} buttonType="clicked" />
           </S.ColorList>
           <S.SizeText>사이즈</S.SizeText>
           <S.SizeButtonList>
-            {sizes.map((size) => (
+            {jsonData.sizes.map((size) => (
               <S.SizeButton
                 key={size}
                 title={size}
                 type="size"
                 onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
-                disabled={!selectedColor} // 컬러 선택 전에는 비활성화
-                isActive={selectedSize === size}
+                disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
+                isActive={selectedProduct.size === size}
               />
             ))}
           </S.SizeButtonList>
-          {showProductCount && (
+          {selectedProduct.count > 0 && (
             <>
               {/* "수량"과 이후 컨텐츠 */}
               <S.ProductCountText>수량</S.ProductCountText>
@@ -84,7 +132,22 @@ export default function Product() {
                   <S.ProudctCountSize>L</S.ProudctCountSize>
                 </S.ProductCountLeftInfo>
                 <S.ProductCountRightInfo>
-                  <S.ProductCountButton type="number" min={1} />
+                  <S.ProductCountButton
+                    type="number"
+                    min={1}
+                    value={selectedProduct.count}
+                    onChange={inputChangeHandler}
+                  />
+                  <S.NumberInputContainer>
+                    <S.CountUpButton
+                      src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
+                      onClick={handleIncrement}
+                    />
+                    <S.CountDownButton
+                      src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
+                      onClick={handleDecrement}
+                    />
+                  </S.NumberInputContainer>
                   <S.ProductCountDelete>
                     <Icon
                       size="1.2rem"

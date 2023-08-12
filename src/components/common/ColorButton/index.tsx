@@ -11,28 +11,23 @@ interface ColorButtonProps {
   /** icon 색 조정 */
   color?: string;
   /** 버튼의 type : 클릭 | 클릭X */
-  buttonType: ButtonType;
+  clicked?: boolean;
 }
 
 const Wrapper = styled.div<{
   size: number;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
-  buttonType: ButtonType;
+  clicked?: boolean;
 }>`
-  ${({ size, buttonType }) => `
+  ${({ size, clicked }) => `
   width: ${size}rem;
   height: ${size}rem;
-  padding : 0.15rem;
+  padding : 0.1rem;
   display : flex;
   justify-content: center;
   align-items : center;
-  border: ${
-    {
-      default: "1px solid #9B9B9B",
-      clicked: "1px solid #000",
-    }[buttonType]
-  };
-`}
+  border: ${clicked ? `1px solid black` : `1px solid #e0e0e0`};
+  `}
 `;
 
 const Inner = styled.div<{
@@ -51,10 +46,10 @@ export default function ColorButton({
   size = 2,
   color = "black",
   onClick,
-  buttonType = "default",
+  clicked = false,
 }: ColorButtonProps) {
   return (
-    <Wrapper buttonType={buttonType} size={size} onClick={onClick}>
+    <Wrapper clicked={clicked} size={size} onClick={onClick}>
       <Inner color={color} />
     </Wrapper>
   );
