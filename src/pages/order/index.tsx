@@ -36,6 +36,21 @@ const OrdererInfo = [
   { meta: "이메일", data: "ham9893@naver.com" },
 ];
 export default function Order() {
+  const buttons = [
+    { id: 1, clicked: false, default: "기본 배송지" },
+    { id: 2, clicked: false, default: "신규 배송지" },
+  ];
+  const deliveryInputs = [
+    { label: "받는 분", placeholder: "함민혁" },
+    { label: "우편번호", size: 75, title: "검색하기" },
+    { label: "상세 주소" },
+    { label: "연락처", placeholder: "010-3009-2255" },
+  ];
+  const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
+
+  const handleButtonClick = (index: any) => {
+    setClickedButtonIndex(index);
+  };
   return (
     <S.Temp>
       <S.Container>
@@ -67,6 +82,38 @@ export default function Order() {
               </S.Box>
             ))}
           </S.OrdererInfo>
+          <h2>배송 주소</h2>
+          <S.AddressSettingBox>
+            {buttons.map((button, index) => (
+              <S.AddressButton
+                key={button.id}
+                onClick={() => handleButtonClick(index)}
+              >
+                <S.StyledCheckbox>
+                  <S.ClickBox isChecked={index === clickedButtonIndex} />
+                </S.StyledCheckbox>
+                <p>{button.default}</p>
+              </S.AddressButton>
+            ))}
+          </S.AddressSettingBox>
+          {deliveryInputs.map((input) => (
+            <S.DeliveryBox key={input.label}>
+              {input.size ? (
+                <S.Postal>
+                  <S.DeliveryInput label={input.label} size={input.size} />
+                  <S.PostalButtonWrapper>
+                    <S.PostalButton title={input.title} />
+                  </S.PostalButtonWrapper>
+                </S.Postal>
+              ) : (
+                <S.DeliveryInput
+                  label={input.label}
+                  placeholder={input.placeholder}
+                  size={input.size}
+                />
+              )}
+            </S.DeliveryBox>
+          ))}
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>

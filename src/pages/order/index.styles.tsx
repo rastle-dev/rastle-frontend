@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
-
+import Button from "@/components/common/Button";
+import ColorButton from "@/components/common/ColorButton";
+interface ClickBoxProps {
+  isChecked: boolean;
+}
 export const Temp = styled.div`
   width: 100%;
   background-color: #f5f5f5;
@@ -89,8 +93,56 @@ export const Data = styled.div`
   font-weight: 400;
   font-size: 1.1rem;
 `;
+export const AddressSettingBox = styled.div`
+  display: flex;
+  p {
+    font-size: 1.16px;
+  }
+  gap: 1.27rem;
+`;
+export const AddressButton = styled.div`
+  display: flex;
+  gap: 0.82rem;
+  cursor: pointer;
+`;
+export const StyledCheckbox = styled.div`
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  border: 2px solid ${COLORS.GREY[300]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const ClickBox = styled.div<ClickBoxProps>`
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: ${(props) => (props.isChecked ? "black" : "white")};
+  border-radius: 50%;
+`;
+export const DeliveryBox = styled.div`
+  padding-top: 3rem;
+  font-size: 1.333rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
 
 export const DeliveryInput = styled(Input)`
   font-size: 1.333rem;
   width: ${(props) => (props.label === "우편번호" ? "100%" : "100%")};
+`;
+export const Postal = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+export const PostalButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+export const PostalButton = styled(Button)`
+  padding: 1rem 3rem 1rem 3rem;
+  height: 3rem;
+  font-size: 1rem;
 `;
