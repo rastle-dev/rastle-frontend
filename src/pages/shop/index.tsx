@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
-import * as S from "./index.styles";
 import ItemElement from "@/components/ItemElement";
+import * as S from "./index.styles";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 
@@ -64,7 +64,7 @@ const ProductList: ProductItem[] = [
     hoverImg: "/example_2.png",
   },
 ];
-export default function Login() {
+export default function Shop() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>("전체");
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);

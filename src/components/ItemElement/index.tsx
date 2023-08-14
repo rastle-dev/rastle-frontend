@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import * as S from "@/pages/shop/index.styles";
+
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 type ItemElementProps = {
   defaultImg: string;
