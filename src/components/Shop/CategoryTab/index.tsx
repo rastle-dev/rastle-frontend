@@ -17,9 +17,9 @@ const TabContainer = styled.div`
 
 const TabItem = styled.div<{ active: boolean }>`
   display: flex;
-  color: ${(props) => (props.active ? COLORS.BLUE : COLORS.BLACK)};
+  color: ${(props) => (props.active ? COLORS.블루 : COLORS.블랙)};
   border-bottom: ${(props) =>
-    props.active ? `1px solid ${COLORS.BLACK}` : "none"};
+    props.active ? `1px solid ${COLORS.블랙}` : "none"};
   cursor: pointer;
   padding-bottom: 3.375rem;
   font-weight: 200;

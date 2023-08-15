@@ -10,9 +10,10 @@ interface IconProps {
   color?: string;
   border?: number;
   opacity?: number;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const StyledIcon = styled.i<{ border: number }>`
+const StyledIcon = styled.i<{ border?: number }>`
   ${({ border }) => `
    -webkit-text-stroke: ${border}px;
 `}
@@ -24,12 +25,14 @@ function Icon({
   color,
   border = 0.1,
   opacity,
+  onClick,
 }: IconProps) {
   return (
     <StyledIcon
       className={Icons[iconName]}
       style={{ fontSize: size, color, opacity }}
       border={border}
+      onClick={onClick}
     />
   );
 }

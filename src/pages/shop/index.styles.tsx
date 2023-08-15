@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   width: 88%;
   //position: fixed;
-  background-color: ${COLORS.WHITE};
+  background-color: ${COLORS.화이트};
   h1 {
     font-size: 2.5rem;
     font-weight: 200;
@@ -52,6 +52,7 @@ export const ProductList = styled.div`
     row-gap: 2.5rem;
     width: 90%;
   }
+
   padding-top: 4.8rem;
   column-gap: 1%;
   row-gap: 8rem;
@@ -77,6 +78,6 @@ export const Name = styled.div`
 export const Event = styled.div`
   font-size: 1.5rem;
   padding-top: 1rem;
-  color: ${COLORS.RED};
+  color: ${COLORS.레드};
   font-weight: 300;
 `;

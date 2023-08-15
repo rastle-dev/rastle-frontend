@@ -22,9 +22,10 @@ export const TopLayer = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
-  width: 100%;
+  width: 85%;
 
   ${media.mobile} {
+    width: 95%;
     flex-direction: column;
   }
 `;
@@ -32,7 +33,8 @@ export const TopLayer = styled.div`
 export const ImageLayer = styled.div`
   width: 50%;
   height: auto;
-  padding-right: 3.72rem;
+  padding-right: 5.3rem;
+  //padding-left: 5.3rem;
   border-right: 1px solid ${COLORS.GREY["300"]};
 
   ${media.mobile} {
@@ -57,43 +59,90 @@ export const ProductContent = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 2.27rem;
-  font-weight: 200;
-  padding-bottom: 0.82rem;
+  font-size: 2.18rem;
+  font-weight: 400;
+  padding-bottom: 2.82rem;
 `;
 
 export const Price = styled.div`
-  font-size: 2.27273rem;
+  font-size: 1.8rem;
   font-weight: 500;
   padding-bottom: 2.27rem;
+
+  ${media.mobile} {
+    border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
+    width: 100%;
+    padding: 0;
+  }
+`;
+export const MobileLine = styled.div`
+  ${media.mobile} {
+    border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
+    width: 100%;
+    padding: 0;
+  }
+`;
+
+export const DiscountPrice = styled.div`
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding-bottom: 2.82rem;
+
+  h4 {
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0.91rem;
+    color: ${COLORS.GREY.상세페이지};
+    text-decoration: line-through;
+    font-size: 1.6rem;
+  }
+
+  span {
+    color: ${COLORS.레드};
+    font-size: 1.8rem;
+  }
+
+  ${media.mobile} {
+  }
+`;
+
+export const TextDetail = styled.div`
+  margin-bottom: 1rem;
+  div {
+    font-size: 1.2rem;
+    padding: 0.3rem;
+    font-weight: 400;
+  }
 `;
 
 export const ColorText = styled.div`
-  font-size: 1.45455rem;
+  font-size: 1.2rem;
+  font-weight: 400;
   padding-bottom: 0.64rem;
 `;
 
 export const ColorList = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 1.19rem;
+  gap: 1.36rem;
   padding-bottom: 2.55rem;
 `;
 
 export const SizeText = styled.div`
-  font-size: 1.45455rem;
-  padding-bottom: 0.64rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding-bottom: 1.18rem;
 `;
 export const SizeButtonList = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 1.19rem;
-  padding-bottom: 2.55rem;
+  gap: 0.91rem;
+  padding-bottom: 2.27rem;
 `;
 
 export const SizeButton = styled(Button)`
   font-size: 1.18182rem;
-  font-weight: 200;
+  font-weight: 400;
   width: 8rem;
   height: 2.5rem;
   border: 0.5px solid ${COLORS.GREY.상세페이지};
@@ -102,7 +151,7 @@ export const SizeButton = styled(Button)`
   ${({ isActive }) =>
     isActive &&
     `
-    border: 1.5px solid ${COLORS.BLACK}; /* 클릭된 상태의 border 스타일 */
+    border: 1.5px solid ${COLORS.블랙}; /* 클릭된 상태의 border 스타일 */
   `}
 
   ${media.mobile} {
@@ -113,33 +162,33 @@ export const SizeButton = styled(Button)`
 `;
 
 export const ProductCountText = styled.div`
-  font-size: 1.45rem;
-  font-weight: 200;
+  font-size: 1.2rem;
+  font-weight: 400;
   padding-bottom: 1.18rem;
-  border-bottom: 1px solid ${COLORS.BLACK};
+  border-bottom: 1px solid ${COLORS.블랙};
 `;
 
 export const ProductCountInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid ${COLORS.BLACK};
-  padding-bottom: 1rem;
-  padding-top: 1rem;
+  border-bottom: 1px solid ${COLORS.블랙};
+  padding-bottom: 0.82rem;
+  padding-top: 0.82rem;
 `;
 export const ProductCountLeftInfo = styled.div``;
 export const ProductCountTitle = styled.div`
   color: ${COLORS.GREY.상세페이지};
-  font-size: 1.45rem;
-  font-weight: 200;
-  padding-bottom: 0.64rem;
+  font-size: 1.18rem;
+  font-weight: 400;
+  padding-bottom: 0.18rem;
 `;
 export const ProductCountColor = styled.span`
-  font-size: 1.45455rem;
+  font-size: 1.18rem;
   font-weight: 300;
 `;
 export const ProudctCountSize = styled.span`
-  font-size: 1.45455rem;
+  font-size: 1.18rem;
   font-weight: 300;
 `;
 export const ProductCountRightInfo = styled.div`
@@ -161,14 +210,9 @@ export const ProductCountButton = styled.input.attrs({
 
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
-    opacity: 1; /* 항상 표시되도록 설정 */
-    width : auto;
     appearance: none; /* 시도해보세요 */
   }
-
-  &[type="number"] {
-    -webkit-appearance: textfield;
-  }
+  
   
   
 
@@ -202,26 +246,38 @@ export const Count = styled.span`
 
 export const ProductCountDelete = styled.div``;
 export const TotalPrice = styled.div`
-  font-size: 1.45rem;
-  font-weight: 200;
+  font-size: 1.3rem;
+  font-weight: 400;
   padding-bottom: 1.73rem;
-  padding-top: 3.36rem;
+  padding-top: 2rem;
 `;
 export const Pay = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1.73rem;
+  gap: 1.18rem;
 `;
 
 export const StyledPayButton = styled(Button)`
-  font-size: 1.45rem;
-  font-weight: 200;
+  font-size: 1.35rem;
+  font-weight: 400;
   flex-grow: 1;
-  width: 14rem;
+  width: 22rem;
   height: 4.8rem;
-  color: ${COLORS.GREY.상세페이지};
+  color: ${COLORS.블랙};
+  border: 0.5px solid #000;
+  border-radius: 0.45455rem;
+`;
+export const StyledBuyButton = styled(Button)`
+  font-size: 1.35rem;
+  font-weight: 400;
+  flex-grow: 1;
+  width: 22rem;
+  height: 4.8rem;
+  color: ${COLORS.화이트};
+  background-color: ${COLORS.블랙};
+  border-radius: 0.45455rem;
 `;
 
 export const ProductDetailList = styled.div`

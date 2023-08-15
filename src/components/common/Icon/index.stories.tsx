@@ -10,17 +10,17 @@ export default {
 };
 
 export function Cart() {
-  return <Icon iconName="cart" color={COLORS.BLACK} />;
+  return <Icon iconName="cart" color={COLORS.블랙} />;
 }
 
 export function Arrow() {
-  return <Icon size="1rem" iconName="arrowLeft" color={COLORS.BLACK} />;
+  return <Icon size="1rem" iconName="arrowLeft" color={COLORS.블랙} />;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 export function Person() {
-  return <Icon iconName="person" color={COLORS.BLACK} />;
+  return <Icon iconName="person" color={COLORS.블랙} />;
 }
 
 export function ControlTest(args: any) {

@@ -1,6 +1,6 @@
 const COLORS = {
-  WHITE: "#FFF",
-  BLACK: "#000",
+  화이트: "#FFF",
+  블랙: "#000",
   GREY: {
     50: "#F9F9F9",
     100: "#F5F5F9",
@@ -11,10 +11,10 @@ const COLORS = {
     600: "#464656",
     상세페이지: "#9B9B9B",
   },
-  BLUE: "#4395F6",
-  RED: "#FF0000",
-  GREEN: "#00ff04",
-  YELLOW: "#f7ff00",
+  블루: "#4395F6",
+  레드: "#FF0000",
+  그린: "#00ff04",
+  옐로우: "#f7ff00",
 };
 
 export default COLORS;

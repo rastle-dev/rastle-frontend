@@ -26,14 +26,14 @@ const StyledImage = styled.img`
 const ItemName = styled.div`
   font-size: 1.5rem;
   padding-top: 1rem;
-  font-weight: 200;
+  font-weight: 400;
   width: 100%;
 `;
 
 const Event = styled.div`
   font-size: 1.5rem;
   padding-top: 1rem;
-  color: ${COLORS.RED};
+  color: ${COLORS.레드};
   font-weight: 300;
 `;
 

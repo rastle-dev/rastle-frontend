@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-type ButtonType = "default" | "clicked";
 interface ColorButtonProps {
   /** 클릭했을 때 호출할 함수 */
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
@@ -44,7 +43,7 @@ const Inner = styled.div<{
 
 export default function ColorButton({
   size = 2,
-  color = "black",
+  color = "블랙",
   onClick,
   clicked = false,
 }: ColorButtonProps) {

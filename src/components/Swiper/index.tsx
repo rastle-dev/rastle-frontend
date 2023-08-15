@@ -13,7 +13,7 @@ import media from "@/styles/media";
 SwiperCore.use([Navigation, Pagination]);
 
 const StyledSwiper = styled(Swiper)`
-  width: 90%;
+  width: 100%;
 
   .swiper-button-next::after,
   .swiper-button-prev::after {
@@ -122,7 +122,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = ({ images }) => {
             <Icon
               size="1rem"
               iconName="arrowLeft"
-              color={COLORS.BLACK}
+              color={COLORS.블랙}
               opacity={0.7}
             />
           </ArrowIcon>
@@ -134,7 +134,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = ({ images }) => {
             <Icon
               size="1rem"
               iconName="arrowRight"
-              color={COLORS.BLACK}
+              color={COLORS.블랙}
               opacity={0.7}
             />
           </ArrowIcon>

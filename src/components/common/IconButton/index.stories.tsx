@@ -12,19 +12,19 @@ export default {
 
 //default
 export function CartButton() {
-  return <IconButton iconName="cart" color={COLORS.BLACK} />;
+  return <IconButton iconName="cart" color={COLORS.블랙} />;
 }
 
 export function InstagramButton() {
-  return <IconButton iconName="instagram" color={COLORS.BLACK} />;
+  return <IconButton iconName="instagram" color={COLORS.블랙} />;
 }
 
 export function PersonButton() {
-  return <IconButton iconName="person" color={COLORS.BLACK} />;
+  return <IconButton iconName="person" color={COLORS.블랙} />;
 }
 
 export function MenuButton() {
-  return <IconButton iconName="menu" color={COLORS.BLACK} />;
+  return <IconButton iconName="menu" color={COLORS.블랙} />;
 }
 
 export function ControlTest(args: any) {

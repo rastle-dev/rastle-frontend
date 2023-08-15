@@ -47,7 +47,7 @@ font-family: "EscoreDream", sans-serif ;
 }
 @media (min-width: 1441px) and (max-width: 1919px) {
   html {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 @media (min-width: 1920px) and (max-width: 2559px) {

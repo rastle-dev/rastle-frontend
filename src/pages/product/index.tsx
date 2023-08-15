@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageSwiper from "@/components/Swiper";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
@@ -8,12 +8,14 @@ import * as S from "./index.styles";
 export default function Product() {
   // 상태 변수들
 
+  // 단일 선택 제품정보
   interface SelectedProduct {
     title?: string;
-    price?: number;
+    price: number;
     color?: string | null;
     size?: string | null;
     count: number;
+    key?: string;
   }
 
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
@@ -26,7 +28,7 @@ export default function Product() {
     ],
     title: "틴 워시드 버뮤다 데님 팬츠",
     price: 56200,
-    colors: [COLORS.WHITE, COLORS.BLACK, COLORS.BLUE],
+    colors: ["화이트", "블랙", "블루"],
     sizes: ["M", "L"],
     remain: {
       M: 3,
@@ -44,6 +46,11 @@ export default function Product() {
     count: 0, // 기본 수량
   });
 
+  // 선택된 제품 정보들을 관리하는 상태 변수
+  const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
+    [],
+  );
+
   // 컬러 버튼 클릭 핸들러
   const handleColorClick = (color: string) => {
     setSelectedProduct((prevProduct) => ({
@@ -52,16 +59,42 @@ export default function Product() {
       size: null,
       count: 0,
     }));
-    // setShowProductCount(false); // "수량" 부분 숨김
   };
 
   // 사이즈 버튼 클릭 핸들러
   const handleSizeClick = (size: string) => {
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
-      size,
-      count: 1, // 사이즈를 고르면 count가 1 증가함
-    }));
+    if (selectedProduct.color === null) {
+      alert("색깔을 먼저 선택하세요");
+    } else {
+      setSelectedProduct((prevProduct) => ({
+        ...prevProduct,
+        size,
+        count: 1, // 사이즈를 고르면 count가 1 증가함
+      }));
+
+      const newProduct: SelectedProduct = {
+        title: jsonData.title,
+        price: jsonData.price,
+        color: selectedProduct.color,
+        size,
+        count: 1, // 사이즈를 고르면 count가 1 증가함
+        key: `${size}-${selectedProduct.color}`, // 문자열로 결합
+      };
+
+      // 이미 동일한 color와 size를 가진 제품이 있는지 확인
+
+      const hasDuplicate = selectedProducts.some(
+        (product) =>
+          product.color === newProduct.color &&
+          product.size === newProduct.size,
+      );
+
+      if (!hasDuplicate) {
+        // 이전에 선택된 제품 정보들과 새로운 제품 정보를 합쳐서 새로운 배열 생성
+        const updatedProducts = [...selectedProducts, newProduct];
+        setSelectedProducts(updatedProducts);
+      }
+    }
   };
 
   const inputChangeHandler = (event: any) => {
@@ -71,20 +104,58 @@ export default function Product() {
     }));
   };
 
-  const handleIncrement = () => {
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
-      count: prevProduct.count + 1,
-    }));
+  const handleIncrement = (key: string | undefined) => {
+    setSelectedProducts((prevProducts) => {
+      return prevProducts.map((product) => {
+        if (product.key === key) {
+          return {
+            ...product,
+            count: product.count + 1,
+          };
+        }
+        return product;
+      });
+    });
   };
 
-  const handleDecrement = () => {
-    setSelectedProduct((prevProduct) => ({
-      ...prevProduct,
-      count: prevProduct.count - 1,
-    }));
+  // TODO:의성) 1 미만일때 alert 창 띄우기
+  const handleDecrement = (key: string | undefined) => {
+    setSelectedProducts((prevProducts) => {
+      return prevProducts.map((product) => {
+        if (product.key === key && product.count > 1) {
+          return {
+            ...product,
+            count: product.count - 1,
+          };
+        }
+        return product;
+      });
+    });
   };
+
+  const handleDelete = (key: string | undefined) => {
+    setSelectedProducts((prevProducts) => {
+      return prevProducts.filter((product) => product.key !== key);
+    });
+  };
+
+  function calculateTotalPrice(products: SelectedProduct[]) {
+    return products.reduce(
+      (total, product) => total + product.price * product.count,
+      0,
+    );
+  }
+
+  function calculateTotalCount(products: SelectedProduct[]) {
+    return products.reduce(
+      (totalCount, product) => totalCount + product.count,
+      0,
+    );
+  }
+
+  console.log(selectedProducts);
   console.log(selectedProduct);
+
   return (
     <S.Wrapper>
       <S.TopLayer>
@@ -93,7 +164,18 @@ export default function Product() {
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{jsonData.title}</S.Title>
-          <S.Price>{jsonData.price}원</S.Price>
+          {/*<S.Price>{jsonData.price.toLocaleString()}원</S.Price>*/}
+          <S.DiscountPrice>
+            <h4>{jsonData.price.toLocaleString()}원</h4>
+            <span>10% </span>
+            {jsonData.price.toLocaleString()}원
+          </S.DiscountPrice>
+          <S.MobileLine />
+          {/*<S.TextDetail>*/}
+          {/*  <div>- 전체적으로 오버한 스타일</div>*/}
+          {/*  <div>- 여름 가을에 입기 좋은 반팔티</div>*/}
+          {/*  <div>- 주인장 추천..! 되게 이쁨</div>*/}
+          {/*</S.TextDetail>*/}
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
             {jsonData.colors.map((color) => (
@@ -101,7 +183,7 @@ export default function Product() {
                 key={color}
                 size={3}
                 clicked={color === selectedProduct.color}
-                color={color}
+                color={COLORS[color]}
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
               />
             ))}
@@ -114,54 +196,62 @@ export default function Product() {
                 title={size}
                 type="size"
                 onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
-                disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
+                // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
                 isActive={selectedProduct.size === size}
               />
             ))}
           </S.SizeButtonList>
-          {selectedProduct.count > 0 && (
+          {selectedProducts.length > 0 && (
             <>
-              {/* "수량"과 이후 컨텐츠 */}
               <S.ProductCountText>수량</S.ProductCountText>
-              <S.ProductCountInfo>
-                <S.ProductCountLeftInfo>
-                  <S.ProductCountTitle>
-                    틴 워시드 버뮤다 데님 팬츠
-                  </S.ProductCountTitle>
-                  <S.ProductCountColor>블랙 / </S.ProductCountColor>
-                  <S.ProudctCountSize>L</S.ProudctCountSize>
-                </S.ProductCountLeftInfo>
-                <S.ProductCountRightInfo>
-                  <S.ProductCountButton
-                    type="number"
-                    min={1}
-                    value={selectedProduct.count}
-                    onChange={inputChangeHandler}
-                  />
-                  <S.NumberInputContainer>
-                    <S.CountUpButton
-                      src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
-                      onClick={handleIncrement}
-                    />
-                    <S.CountDownButton
-                      src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
-                      onClick={handleDecrement}
-                    />
-                  </S.NumberInputContainer>
-                  <S.ProductCountDelete>
-                    <Icon
-                      size="1.2rem"
-                      iconName="delete"
-                      color={COLORS.GREY.상세페이지}
-                    />
-                  </S.ProductCountDelete>
-                </S.ProductCountRightInfo>
-              </S.ProductCountInfo>
-              <S.TotalPrice>총 상품 금액: 128,000(4개)</S.TotalPrice>
+              {selectedProducts.map((product) => (
+                <React.Fragment key={`${product.size}-${product.color}`}>
+                  <S.ProductCountInfo>
+                    <S.ProductCountLeftInfo>
+                      <S.ProductCountTitle>{product.title}</S.ProductCountTitle>
+                      <S.ProductCountColor>
+                        {product.color} /{" "}
+                      </S.ProductCountColor>
+                      <S.ProudctCountSize>{product.size}</S.ProudctCountSize>
+                    </S.ProductCountLeftInfo>
+                    <S.ProductCountRightInfo>
+                      <S.ProductCountButton
+                        type="number"
+                        min={1}
+                        value={product.count}
+                        onChange={(event) => inputChangeHandler(event)}
+                      />
+                      <S.NumberInputContainer>
+                        <S.CountUpButton
+                          src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
+                          onClick={() => handleIncrement(product.key)}
+                        />
+                        <S.CountDownButton
+                          src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
+                          onClick={() => handleDecrement(product.key)}
+                        />
+                      </S.NumberInputContainer>
+                      <S.ProductCountDelete>
+                        <Icon
+                          size="1.2rem"
+                          iconName="delete"
+                          color={COLORS.GREY.상세페이지}
+                          onClick={() => handleDelete(product.key)}
+                        />
+                      </S.ProductCountDelete>
+                    </S.ProductCountRightInfo>
+                  </S.ProductCountInfo>
+                </React.Fragment>
+              ))}
             </>
           )}
+          <S.TotalPrice>
+            총 상품 금액:{" "}
+            {calculateTotalPrice(selectedProducts).toLocaleString()}원 (
+            {calculateTotalCount(selectedProducts)}개)
+          </S.TotalPrice>
           <S.Pay>
-            <S.StyledPayButton title="구매하기" type="shop" />
+            <S.StyledBuyButton title="구매하기" type="shop" />
             <S.StyledPayButton title="장바구니에 담기" type="shop" />
             <S.StyledPayButton title="N Pay 구매하기" type="shop" />
           </S.Pay>

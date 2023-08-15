@@ -41,7 +41,7 @@ export default function MainHeader() {
     <Wrapper scrolled={isScrolled}>
       <InnerNav>
         <MenuDiv>
-          <MenuIcon iconName="menu" color={COLORS.BLACK} />
+          <MenuIcon iconName="menu" color={COLORS.블랙} />
         </MenuDiv>
         <LeftElement>
           {navList.map(({ name, href }) => (
@@ -64,7 +64,7 @@ export default function MainHeader() {
           </Link>
         </RightElemet>
         <PersonDiv>
-          <PersonIcon iconName="person" color={COLORS.BLACK} />
+          <PersonIcon iconName="person" color={COLORS.블랙} />
         </PersonDiv>
       </InnerNav>
     </Wrapper>

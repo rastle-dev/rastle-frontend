@@ -33,26 +33,26 @@ const Wrapper = styled.button<{
          size: "0.5rem 0 0.5rem 0",
        }[type]
      };
-     background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
+     background-color: ${(disabled && "#E6E6E6") || COLORS.화이트};
      border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]}; 
      
       display: ${isActive ? `none` : `none`};
      border: ${
        (disabled && "1px solid #E6E6E6") ||
        {
-         default: `1px solid ${COLORS.BLACK}`,
-         shop: `1px solid ${COLORS.BLACK}`,
-         size: `1px solid ${COLORS.WHITE}`,
+         default: `1px solid ${COLORS.블랙}`,
+         shop: `1px solid ${COLORS.블랙}`,
+         size: `1px solid ${COLORS.화이트}`,
        }[type]
      };
-     color: ${(disabled && "#9B9B9B") || COLORS.BLACK};
+     color: ${(disabled && "#9B9B9B") || COLORS.블랙};
     &:hover{
-      background-color: ${(disabled && "#E6E6E6") || COLORS.WHITE};
+      background-color: ${(disabled && "#F5F5F5") || COLORS.화이트};
       cursor: ${disabled ? "default" : "pointer"};
       border: ${
-        (disabled && "1px solid #E6E6E6") || `1px solid ${COLORS.BLACK}`
+        (disabled && "1px solid #E6E6E6") || `1px solid ${COLORS.블랙}`
       };
-      color: ${(disabled && "1px solid #E6E6E6") || `${COLORS.BLACK}`};
+      color: ${(disabled && "1px solid #E6E6E6") || `${COLORS.블랙}`};
     }
     cursor: ${disabled ? "default" : "pointer"};
     

@@ -57,7 +57,7 @@ export const TextWrapper = styled.div`
 
 export const Text = styled.span`
   font-size: 1.5rem;
-  font-weight: 200;
+  font-weight: 400;
 `;
 
 export const TextInstagram = styled.span`
@@ -69,7 +69,7 @@ export const TextInstagram = styled.span`
 export const StyledButton = styled(Button)`
   margin-top: 3.25rem;
   font-size: 1.5rem;
-  font-weight: 200;
+  font-weight: 400;
   background-color: rgba(0, 0, 0, 0.15);
   height: 3.125rem;
   color: white;
@@ -89,10 +89,10 @@ export const ProductWrapper = styled.div`
 export const ProductTitle = styled.div`
   font-size: 2.5rem;
   padding: 9.63rem 0 7.75rem 0;
-  font-weight: 200;
+  font-weight: 400;
 
   span {
-    color: ${COLORS.RED};
+    color: ${COLORS.레드};
     font-weight: 700;
   }
 `;
@@ -127,7 +127,7 @@ export const ViewMore = styled.div`
 
   span {
     font-size: 1.875rem;
-    font-weight: 200;
+    font-weight: 400;
     cursor: pointer;
 
     &:hover {
