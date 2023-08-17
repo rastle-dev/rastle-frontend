@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import * as S from "./index.styles";
 import Input from "@/components/common/Input";
-import { DeliveryInput } from "./index.styles";
-import Button from "@/components/common/Button";
-
-type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
+import * as S from "./index.styles";
 
 type ProductItem = {
   productName: string;
@@ -114,6 +110,10 @@ export default function Order() {
               )}
             </S.DeliveryBox>
           ))}
+          <S.SettingDefaultAddress>
+            <Input type="checkbox" />
+            <p>기본 배송지로 설정하기</p>
+          </S.SettingDefaultAddress>
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>

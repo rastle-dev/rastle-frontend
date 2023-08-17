@@ -2,7 +2,7 @@ import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
-import ColorButton from "@/components/common/ColorButton";
+
 interface ClickBoxProps {
   isChecked: boolean;
 }
@@ -145,4 +145,22 @@ export const PostalButton = styled(Button)`
   padding: 1rem 3rem 1rem 3rem;
   height: 3rem;
   font-size: 1rem;
+`;
+
+export const SettingDefaultAddress = styled.div`
+  display: flex;
+  padding-top: 3rem;
+  align-items: center;
+  cursor: pointer;
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: 200;
+  }
+  input {
+    width: 1rem;
+    margin: 0 0.5rem 0 0;
+    cursor: pointer;
+  }
 `;
