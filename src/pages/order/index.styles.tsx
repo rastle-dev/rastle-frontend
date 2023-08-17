@@ -165,6 +165,27 @@ export const SettingDefaultAddress = styled.div`
   }
 `;
 
+export const OrderCommentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 4.2rem 0 8.4rem 0;
+  width: 100%;
+  h3 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  input {
+    width: 100%;
+  }
+  p {
+    margin: 0;
+    padding-top: 0.8rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: ${COLORS.GREY[400]};
+  }
+`;
+
 export const PaymentInfoWrapper = styled.div`
   border-top: 2px solid;
   border-bottom: 2px solid;

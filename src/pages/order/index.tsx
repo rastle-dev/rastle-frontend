@@ -118,6 +118,13 @@ export default function Order() {
             <Input type="checkbox" />
             <p>기본 배송지로 설정하기</p>
           </S.SettingDefaultAddress>
+          <S.OrderCommentWrapper>
+            <h3>배송 시 요청 사항</h3>
+            <Input />
+            <p>
+              제주 및 도서 산간 지역의 배송은 추가 배송비가 발생할 수 있습니다.
+            </p>
+          </S.OrderCommentWrapper>
           <S.PaymentInfoWrapper>
             <h2>결제 정보</h2>
             <S.PaymentInfoBox>
