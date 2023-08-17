@@ -25,7 +25,7 @@ export const TopLayer = styled.div`
   width: 85%;
 
   ${media.mobile} {
-    width: 95%;
+    width: 100%;
     flex-direction: column;
   }
 `;
@@ -61,7 +61,11 @@ export const ProductContent = styled.div`
 export const Title = styled.div`
   font-size: 2.18rem;
   font-weight: 400;
-  padding-bottom: 2.82rem;
+  padding-bottom: 2rem;
+
+  ${media.mobile} {
+    padding-bottom: 1.5rem;
+  }
 `;
 
 export const Price = styled.div`
@@ -69,13 +73,6 @@ export const Price = styled.div`
   font-weight: 500;
   padding-bottom: 2.27rem;
 
-  ${media.mobile} {
-    border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
-    width: 100%;
-    padding: 0;
-  }
-`;
-export const MobileLine = styled.div`
   ${media.mobile} {
     border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
     width: 100%;
@@ -103,6 +100,11 @@ export const DiscountPrice = styled.div`
   }
 
   ${media.mobile} {
+    border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
+    width: 100%;
+    padding: 0;
+    padding-bottom: 1.91rem;
+    margin-bottom: 1.45rem;
   }
 `;
 
@@ -268,6 +270,11 @@ export const StyledPayButton = styled(Button)`
   color: ${COLORS.블랙};
   border: 0.5px solid #000;
   border-radius: 0.45455rem;
+
+  ${media.mobile} {
+    flex-grow: 1;
+    width: 40%;
+  }
 `;
 export const StyledBuyButton = styled(Button)`
   font-size: 1.35rem;
@@ -278,6 +285,27 @@ export const StyledBuyButton = styled(Button)`
   color: ${COLORS.화이트};
   background-color: ${COLORS.블랙};
   border-radius: 0.45455rem;
+
+  ${media.mobile} {
+    flex-grow: 1;
+    width: 40%;
+  }
+`;
+
+export const StyledNpayButton = styled(Button)`
+  font-size: 1.35rem;
+  font-weight: 400;
+  flex-grow: 1;
+  width: 22rem;
+  height: 4.8rem;
+  color: ${COLORS.블랙};
+  border: 0.5px solid #000;
+  border-radius: 0.45455rem;
+
+  ${media.mobile} {
+    flex-grow: 1;
+    width: 100%;
+  }
 `;
 
 export const ProductDetailList = styled.div`

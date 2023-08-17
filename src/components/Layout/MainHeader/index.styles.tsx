@@ -51,18 +51,21 @@ const LeftElement = styled.ul`
 `;
 
 const MenuDiv = styled.div`
-  position: absolute;
-  left: 1.5rem; /* Adjust the value as per your requirement */
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  background-color: transparent;
-  z-index: 1000;
+  display: none;
+
+  @media (max-width: 769px) {
+    display: inline;
+    position: absolute;
+    left: 1.5rem; /* Adjust the value as per your requirement */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background-color: transparent;
+    z-index: 1000;
+  }
 `;
 
 const MenuIcon = styled(IconButton)`
-  display: none;
-
   @media (max-width: 769px) {
     font-size: 3rem;
     cursor: pointer;
@@ -101,12 +104,17 @@ const RightElemet = styled.div`
 `;
 
 const PersonDiv = styled.div`
-  position: absolute;
-  right: 1.5rem; /* Adjust the value as per your requirement */
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  z-index: 1000;
+  display: none;
+
+  @media (max-width: 769px) {
+    display: inline;
+    position: absolute;
+    right: 1.5rem; /* Adjust the value as per your requirement */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1000;
+  }
 `;
 const PersonIcon = styled(IconButton)`
   display: none;

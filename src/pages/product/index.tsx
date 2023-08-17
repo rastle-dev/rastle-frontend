@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ImageSwiper from "@/components/Swiper";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
@@ -170,12 +170,6 @@ export default function Product() {
             <span>10% </span>
             {jsonData.price.toLocaleString()}원
           </S.DiscountPrice>
-          <S.MobileLine />
-          {/*<S.TextDetail>*/}
-          {/*  <div>- 전체적으로 오버한 스타일</div>*/}
-          {/*  <div>- 여름 가을에 입기 좋은 반팔티</div>*/}
-          {/*  <div>- 주인장 추천..! 되게 이쁨</div>*/}
-          {/*</S.TextDetail>*/}
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
             {jsonData.colors.map((color) => (
@@ -183,6 +177,7 @@ export default function Product() {
                 key={color}
                 size={3}
                 clicked={color === selectedProduct.color}
+                // @ts-ignore
                 color={COLORS[color]}
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
               />
@@ -253,7 +248,7 @@ export default function Product() {
           <S.Pay>
             <S.StyledBuyButton title="구매하기" type="shop" />
             <S.StyledPayButton title="장바구니에 담기" type="shop" />
-            <S.StyledPayButton title="N Pay 구매하기" type="shop" />
+            <S.StyledNpayButton title="N Pay 구매하기" type="shop" />
           </S.Pay>
         </S.ProductContent>
       </S.TopLayer>

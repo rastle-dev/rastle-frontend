@@ -107,6 +107,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = ({ images }) => {
           navigation: false,
         },
       }}
+      // @ts-ignore
       ref={swiperRef}
     >
       {images.map((image, index) => (
