@@ -95,8 +95,11 @@ export const Data = styled.div`
 `;
 export const AddressSettingBox = styled.div`
   display: flex;
+  align-items: center;
   p {
-    font-size: 1.16px;
+    margin: 0;
+    padding-top: 0.03rem;
+    font-size: 1.16rem;
   }
   gap: 1.27rem;
 `;
@@ -189,9 +192,9 @@ export const OrderCommentWrapper = styled.div`
 export const PaymentInfoWrapper = styled.div`
   border-top: 2px solid;
   border-bottom: 2px solid;
-
   padding-top: 2.5rem;
   padding-bottom: 9.5rem;
+  margin-bottom: 2.5rem;
 `;
 export const PaymentInfoBox = styled.div`
   border-top: 1px solid;
@@ -226,4 +229,45 @@ export const TotalPrice = styled.div`
   font-size: 1.4rem;
   font-weight: 600;
   color: ${COLORS.BLUE};
+`;
+
+export const PaymentOptions = styled.div`
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  p {
+    margin: 0;
+    padding-top: 0.03rem;
+    font-size: 1.16rem;
+  }
+  gap: 1.27rem;
+  padding-bottom: 11rem;
+`;
+export const PaymentOptionsButton = styled.div`
+  display: flex;
+  gap: 0.82rem;
+  cursor: pointer;
+`;
+export const PaymentOptionsCheckbox = styled.div`
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 50%;
+  border: 2px solid ${COLORS.GREY[300]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PaymentOptionsClickBox = styled.div<ClickBoxProps>`
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: ${(props) => (props.isChecked ? "black" : "white")};
+  border-radius: 50%;
+`;
+export const PaymentButton = styled(Button)`
+  background-color: ${COLORS.BLACK};
+  color: ${COLORS.WHITE};
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 16rem;
 `;

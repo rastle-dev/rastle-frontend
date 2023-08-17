@@ -36,9 +36,14 @@ const PriceInfo = [
   { meta: "할인 금액", data: "0원" },
 ];
 export default function Order() {
-  const buttons = [
+  const DeliveryButtons = [
     { id: 1, clicked: false, default: "기본 배송지" },
     { id: 2, clicked: false, default: "신규 배송지" },
+  ];
+  const PaymentOptionsButtons = [
+    { id: 1, clicked: false, default: "신용/체크 카드" },
+    { id: 2, clicked: false, default: "카카오페이" },
+    { id: 3, clicked: false, default: "토스페이" },
   ];
   const deliveryInputs = [
     { label: "받는 분", placeholder: "함민혁" },
@@ -46,10 +51,16 @@ export default function Order() {
     { label: "상세 주소" },
     { label: "연락처", placeholder: "010-3009-2255" },
   ];
-  const [clickedButtonIndex, setClickedButtonIndex] = useState(null);
+  const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
+    useState(null);
+  const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
+    useState(null);
 
-  const handleButtonClick = (index: any) => {
-    setClickedButtonIndex(index);
+  const handleDeliveryButtonClick = (index: any) => {
+    setClickedDeliveryButtonIndex(index);
+  };
+  const handlePaymentButtonClick = (index: any) => {
+    setClickedPaymentButtonIndex(index);
   };
   return (
     <S.Temp>
@@ -84,13 +95,15 @@ export default function Order() {
           </S.OrdererInfo>
           <h2>배송 주소</h2>
           <S.AddressSettingBox>
-            {buttons.map((button, index) => (
+            {DeliveryButtons.map((button, index) => (
               <S.AddressButton
                 key={button.id}
-                onClick={() => handleButtonClick(index)}
+                onClick={() => handleDeliveryButtonClick(index)}
               >
                 <S.StyledCheckbox>
-                  <S.ClickBox isChecked={index === clickedButtonIndex} />
+                  <S.ClickBox
+                    isChecked={index === clickedDeliveryButtonIndex}
+                  />
                 </S.StyledCheckbox>
                 <p>{button.default}</p>
               </S.AddressButton>
@@ -140,6 +153,23 @@ export default function Order() {
               <S.TotalPrice>86,600원</S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
+          <h2>결제 방법</h2>
+          <S.PaymentOptions>
+            {PaymentOptionsButtons.map((button, index) => (
+              <S.PaymentOptionsButton
+                key={button.id}
+                onClick={() => handlePaymentButtonClick(index)}
+              >
+                <S.PaymentOptionsCheckbox>
+                  <S.PaymentOptionsClickBox
+                    isChecked={index === clickedPaymentButtonIndex}
+                  />
+                </S.PaymentOptionsCheckbox>
+                <p>{button.default}</p>
+              </S.PaymentOptionsButton>
+            ))}
+          </S.PaymentOptions>
+          <S.PaymentButton title="결제하기" />
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>
