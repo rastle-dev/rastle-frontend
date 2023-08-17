@@ -164,3 +164,45 @@ export const SettingDefaultAddress = styled.div`
     cursor: pointer;
   }
 `;
+
+export const PaymentInfoWrapper = styled.div`
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+
+  padding-top: 2.5rem;
+  padding-bottom: 9.5rem;
+`;
+export const PaymentInfoBox = styled.div`
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  padding: 1.79rem 0 1.79rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+export const PriceCategory = styled.div`
+  font-size: 1rem;
+  font-weight: 400;
+`;
+export const Price = styled.div`
+  font-size: 1rem;
+  font-weight: 200;
+`;
+export const Total = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2.6rem;
+`;
+export const TotalInfo = styled.div`
+  font-size: 1.4rem;
+  font-weight: 500;
+`;
+export const TotalPrice = styled.div`
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: ${COLORS.BLUE};
+`;

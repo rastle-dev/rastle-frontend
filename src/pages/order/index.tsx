@@ -31,6 +31,10 @@ const OrdererInfo = [
   { meta: "연락처", data: "010-3009-2255" },
   { meta: "이메일", data: "ham9893@naver.com" },
 ];
+const PriceInfo = [
+  { meta: "상품 합계", data: "86,600원" },
+  { meta: "할인 금액", data: "0원" },
+];
 export default function Order() {
   const buttons = [
     { id: 1, clicked: false, default: "기본 배송지" },
@@ -114,6 +118,21 @@ export default function Order() {
             <Input type="checkbox" />
             <p>기본 배송지로 설정하기</p>
           </S.SettingDefaultAddress>
+          <S.PaymentInfoWrapper>
+            <h2>결제 정보</h2>
+            <S.PaymentInfoBox>
+              {PriceInfo.map((info) => (
+                <div>
+                  <S.PriceCategory>{info.meta}</S.PriceCategory>
+                  <S.Price>{info.data}</S.Price>
+                </div>
+              ))}
+            </S.PaymentInfoBox>
+            <S.Total>
+              <S.TotalInfo>결제 금액</S.TotalInfo>
+              <S.TotalPrice>86,600원</S.TotalPrice>
+            </S.Total>
+          </S.PaymentInfoWrapper>
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>
