@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "./index.styles";
 
@@ -8,6 +9,10 @@ type ProductItem = {
   amount: number;
   size: string;
   color: string;
+};
+type Address = {
+  address: string | undefined;
+  zonecode: number | undefined;
 };
 
 const ProductList: ProductItem[] = [
@@ -45,23 +50,51 @@ export default function Order() {
     { id: 2, clicked: false, default: "카카오페이" },
     { id: 3, clicked: false, default: "토스페이" },
   ];
-  const deliveryInputs = [
-    { label: "받는 분", placeholder: "함민혁" },
-    { label: "우편번호", size: 75, title: "검색하기" },
-    { label: "상세 주소" },
-    { label: "연락처", placeholder: "010-3009-2255" },
-  ];
   const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
     useState(null);
   const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
     useState(null);
-
+  const [openPostcode, setOpenPostcode] = useState<boolean>(false);
+  const [postalAdderss, setAddress] = useState<Address>({
+    address: undefined,
+    zonecode: undefined,
+  });
   const handleDeliveryButtonClick = (index: any) => {
     setClickedDeliveryButtonIndex(index);
   };
+
   const handlePaymentButtonClick = (index: any) => {
     setClickedPaymentButtonIndex(index);
   };
+  const handlePostal = {
+    // 버튼 클릭 이벤트
+    clickButton: () => {
+      setOpenPostcode((current) => !current);
+    },
+    // 주소 선택 이벤트
+    selectAddress: (data: any) => {
+      // eslint-disable-next-line no-console
+      console.log(`
+                주소: ${data.address},
+                우편번호: ${data.zonecode}
+            `);
+      setAddress({ address: data.address, zonecode: data.zonecode });
+      setOpenPostcode(false);
+    },
+  };
+  const deliveryInputs = [
+    { label: "받는 분", placeholder: "함민혁" },
+    {
+      label: "우편번호",
+      size: 75,
+      title: "검색하기",
+      onClick: handlePostal,
+      value: postalAdderss.zonecode,
+    },
+    { label: "주소", value: postalAdderss.address },
+    { label: "상세 주소" },
+    { label: "연락처", placeholder: "010-3009-2255" },
+  ];
   return (
     <S.Temp>
       <S.Container>
@@ -72,7 +105,10 @@ export default function Order() {
           <h2>제품 정보</h2>
           {ProductList.map((item) => (
             <S.Product>
-              <S.Thumbnail src="/example_1.png" alt="/example_1.png" />
+              <S.Thumbnail
+                src="/image/product1.jpg"
+                alt="/image/product1.jpg"
+              />
               <S.Info>
                 <S.ProductName>{item.productName}</S.ProductName>
                 <S.NumPrice>
@@ -113,9 +149,16 @@ export default function Order() {
             <S.DeliveryBox key={input.label}>
               {input.size ? (
                 <S.Postal>
-                  <S.DeliveryInput label={input.label} size={input.size} />
+                  <S.DeliveryInput
+                    label={input.label}
+                    size={input.size}
+                    value={input.value}
+                  />
                   <S.PostalButtonWrapper>
-                    <S.PostalButton title={input.title} />
+                    <S.PostalButton
+                      title={input.title}
+                      onClick={() => handlePostal.clickButton()}
+                    />
                   </S.PostalButtonWrapper>
                 </S.Postal>
               ) : (
@@ -123,6 +166,13 @@ export default function Order() {
                   label={input.label}
                   placeholder={input.placeholder}
                   size={input.size}
+                  value={input.value}
+                />
+              )}
+              {input.size && openPostcode && (
+                <DaumPostcode
+                  onComplete={handlePostal.selectAddress} // 값을 선택할 경우 실행되는 이벤트
+                  autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
                 />
               )}
             </S.DeliveryBox>

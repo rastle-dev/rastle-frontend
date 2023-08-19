@@ -2,24 +2,27 @@ import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
+import media from "@/styles/media";
 
 interface ClickBoxProps {
   isChecked: boolean;
 }
 export const Temp = styled.div`
   width: 100%;
-  background-color: #f5f5f5;
+  //background-color: #f5f5f5;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 export const Container = styled.div`
-  width: 62%;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: white;
   //border: 1px solid red;
+  ${media.small} {
+    width: 100%;
+  }
 `;
 
 export const Header = styled.div`
@@ -88,6 +91,12 @@ export const Meta = styled.div`
   font-weight: 200;
   font-size: 1.1rem;
   width: 3.4rem;
+  ${media.small} {
+    width: 5rem;
+  }
+  ${media.xsmall} {
+    width: 5rem;
+  }
 `;
 export const Data = styled.div`
   font-weight: 400;
@@ -138,6 +147,7 @@ export const DeliveryInput = styled(Input)`
 export const Postal = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 `;
 export const PostalButtonWrapper = styled.div`
   display: flex;
@@ -146,8 +156,16 @@ export const PostalButtonWrapper = styled.div`
 `;
 export const PostalButton = styled(Button)`
   padding: 1rem 3rem 1rem 3rem;
-  height: 3rem;
+  //height: 3rem;
+  border-radius: 10px;
   font-size: 1rem;
+  width: 11rem;
+  ${media.small} {
+    width: 13rem;
+  }
+  ${media.xsmall} {
+    width: 13rem;
+  }
 `;
 
 export const SettingDefaultAddress = styled.div`
