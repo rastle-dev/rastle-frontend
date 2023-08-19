@@ -73,11 +73,6 @@ export default function Order() {
     },
     // 주소 선택 이벤트
     selectAddress: (data: any) => {
-      // eslint-disable-next-line no-console
-      console.log(`
-                주소: ${data.address},
-                우편번호: ${data.zonecode}
-            `);
       setAddress({ address: data.address, zonecode: data.zonecode });
       setOpenPostcode(false);
     },
