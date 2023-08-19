@@ -13,6 +13,7 @@ import {
   PersonDiv,
 } from "./index.styles";
 import COLORS from "@/constants/color";
+import LazyLink from "@/components/LazyLink";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -46,22 +47,22 @@ export default function MainHeader() {
         <LeftElement>
           {navList.map(({ name, href }) => (
             <li key={name}>
-              <Link href={href}>{name}</Link>
+              <LazyLink href={href}>{name}</LazyLink>
             </li>
           ))}
         </LeftElement>
         <CenterElement>
-          <Link href="/">
+          <LazyLink href="/">
             <span>rastle_</span>{" "}
-          </Link>
+          </LazyLink>
         </CenterElement>
         <RightElemet>
-          <Link href={PATH.LOGIN}>
+          <LazyLink href={PATH.LOGIN}>
             <span>LOG IN</span>
-          </Link>
-          <Link href={PATH.CART}>
+          </LazyLink>
+          <LazyLink href={PATH.CART}>
             <span>CART</span>
-          </Link>
+          </LazyLink>
         </RightElemet>
         <PersonDiv>
           <PersonIcon iconName="person" color={COLORS.블랙} />
