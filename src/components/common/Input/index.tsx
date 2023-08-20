@@ -28,6 +28,7 @@ const InputWrapper = styled.input<{ size: number }>`
     font-weight: 200;
   }
   outline: none;
+  border-radius: 0;
 `;
 
 const Message = styled.p`

@@ -7,6 +7,8 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-top: 5.5rem;
+  padding-top: 2rem;
 `;
 
 export const Header = styled.div`

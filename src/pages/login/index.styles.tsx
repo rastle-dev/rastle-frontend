@@ -14,7 +14,7 @@ export const Header = styled.div`
   h1 {
     margin: 0;
     font-size: 3.4375rem;
-    font-weight: 500;
+    font-weight: 200;
     text-align: center;
   }
   h3 {

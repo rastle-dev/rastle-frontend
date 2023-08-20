@@ -19,7 +19,6 @@ const Inner = styled.div`
   //height: 100vh;
   display: flex;
   justify-content: center;
-  margin-bottom: 10rem;
 `;
 interface MainLayoutProps {
   children: ReactNode;
