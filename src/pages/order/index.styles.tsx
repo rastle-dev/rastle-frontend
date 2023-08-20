@@ -8,6 +8,7 @@ interface ClickBoxProps {
   isChecked: boolean;
 }
 export const Temp = styled.div`
+  margin-top: 5.5rem;
   padding-top: 2rem;
   width: 100%;
   background-color: #f5f5f5;
