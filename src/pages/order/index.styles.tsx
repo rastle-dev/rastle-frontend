@@ -8,8 +8,9 @@ interface ClickBoxProps {
   isChecked: boolean;
 }
 export const Temp = styled.div`
+  padding-top: 2rem;
   width: 100%;
-  //background-color: #f5f5f5;
+  background-color: #f5f5f5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,24 +20,36 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: white;
-  //border: 1px solid red;
-  ${media.small} {
+  ${media.xsmall} {
     width: 100%;
   }
+  margin-bottom: 15rem;
 `;
 
 export const Header = styled.div`
   width: 79%;
   background-color: ${COLORS.WHITE};
+  ${media.small} {
+    width: 92%;
+  }
+  ${media.xsmall} {
+    width: 92%;
+  }
   h1 {
     font-size: 2.5rem;
     font-weight: 200;
-    padding: 8rem 0 4.27rem 0;
+    padding: 4rem 0 4.27rem 0;
     margin: 0;
   }
 `;
 export const InfoWrapper = styled.div`
   width: 81%;
+  ${media.small} {
+    width: 92%;
+  }
+  ${media.xsmall} {
+    width: 92%;
+  }
   background-color: ${COLORS.WHITE};
   h2 {
     font-size: 1.666rem;
@@ -51,7 +64,8 @@ export const Product = styled.div`
 `;
 export const Thumbnail = styled.img`
   width: 7.7rem;
-  height: 8.4rem;
+  height: auto;
+  aspect-ratio: 0.77;
   border-radius: 0.45455rem;
 `;
 export const Info = styled.div`
@@ -59,16 +73,15 @@ export const Info = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   gap: 1.2rem;
+  width: 100%;
 `;
 export const ProductName = styled.div`
   font-size: 1.333rem;
   font-weight: 400;
-  //padding-bottom: 1.545rem;
 `;
 export const NumPrice = styled.div`
   font-size: 1.333rem;
   font-weight: 200;
-  //padding-bottom: 1.18rem;
 `;
 export const SizeColor = styled.div`
   font-size: 1.333rem;
@@ -76,7 +89,6 @@ export const SizeColor = styled.div`
 `;
 
 export const OrdererInfo = styled.div`
-  //border: 1px solid red;
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -142,7 +154,7 @@ export const DeliveryBox = styled.div`
 
 export const DeliveryInput = styled(Input)`
   font-size: 1.333rem;
-  width: ${(props) => (props.label === "우편번호" ? "100%" : "100%")};
+  width: 100%;
 `;
 export const Postal = styled.div`
   display: flex;
@@ -156,15 +168,14 @@ export const PostalButtonWrapper = styled.div`
 `;
 export const PostalButton = styled(Button)`
   padding: 1rem 3rem 1rem 3rem;
-  //height: 3rem;
   border-radius: 10px;
   font-size: 1rem;
   width: 11rem;
   ${media.small} {
-    width: 13rem;
+    width: 10.5rem;
   }
   ${media.xsmall} {
-    width: 13rem;
+    width: 10.5em;
   }
 `;
 
