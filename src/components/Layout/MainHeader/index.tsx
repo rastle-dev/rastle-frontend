@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PATH from "@/constants/path";
 import {
   Wrapper,
@@ -13,6 +13,7 @@ import {
   PersonDiv,
 } from "./index.styles";
 import COLORS from "@/constants/color";
+import LazyLink from "@/components/LazyLink";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -22,34 +23,49 @@ const navList = [
 ];
 
 export default function MainHeader() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset;
+      setIsScrolled(scrollTop > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper scrolled={isScrolled}>
       <InnerNav>
         <MenuDiv>
-          <MenuIcon iconName="menu" color={COLORS.BLACK} />
+          <MenuIcon iconName="menu" color={COLORS.블랙} />
         </MenuDiv>
         <LeftElement>
           {navList.map(({ name, href }) => (
             <li key={name}>
-              <Link href={href}>{name}</Link>
+              <LazyLink href={href}>{name}</LazyLink>
             </li>
           ))}
         </LeftElement>
         <CenterElement>
-          <Link href="/">
+          <LazyLink href="/">
             <span>rastle_</span>{" "}
-          </Link>
+          </LazyLink>
         </CenterElement>
         <RightElemet>
-          <Link href={PATH.LOGIN}>
+          <LazyLink href={PATH.LOGIN}>
             <span>LOG IN</span>
-          </Link>
-          <Link href={PATH.CART}>
+          </LazyLink>
+          <LazyLink href={PATH.CART}>
             <span>CART</span>
-          </Link>
+          </LazyLink>
         </RightElemet>
         <PersonDiv>
-          <PersonIcon iconName="person" color={COLORS.BLACK} />
+          <PersonIcon iconName="person" color={COLORS.블랙} />
         </PersonDiv>
       </InnerNav>
     </Wrapper>

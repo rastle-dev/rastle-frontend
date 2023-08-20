@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream1.otf") format('opentype');
+    font-weight: 100;
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream2.otf") format('opentype');
+    font-weight: 200;
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream3.otf") format('opentype');
+    font-weight: 300;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream4.otf") format('opentype');
+    font-weight: 400;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream5.otf") format('opentype');
+    font-weight: 500;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream6.otf") format('opentype');
+    font-weight: 600;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream7.otf") format('opentype');
+    font-weight: 700;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream8.otf") format('opentype');
+    font-weight: 800;
+
+}
+@font-face {
+    font-family: 'EscoreDream';
+    src: url("../../public/font/SCDream9.otf") format('opentype');
+    font-weight: 900;
+}

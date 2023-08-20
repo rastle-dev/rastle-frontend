@@ -41,7 +41,7 @@ export const Box = styled.div`
 export const Line = styled.div`
   width: 1px;
   height: 0.9375rem;
-  background-color: ${COLORS.BLACK};
+  background-color: ${COLORS.블랙};
 `;
 
 export const StyledButton = styled(Button)`

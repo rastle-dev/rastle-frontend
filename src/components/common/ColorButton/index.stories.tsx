@@ -12,19 +12,19 @@ export default {
 
 //default
 export function BlackButton() {
-  return <ColorButton buttonType={"default"} color={COLORS.BLACK} />;
+  return <ColorButton color={COLORS.블랙} />;
 }
 
 export function BlackButtonClicked() {
-  return <ColorButton buttonType={"clicked"} color={COLORS.BLACK} />;
+  return <ColorButton color={COLORS.블랙} />;
 }
 
 export function BlueButton() {
-  return <ColorButton buttonType={"default"} color={COLORS.BLUE} />;
+  return <ColorButton color={COLORS.블루} />;
 }
 
 export function BlueButtonClicked() {
-  return <ColorButton buttonType={"clicked"} color={COLORS.BLUE} />;
+  return <ColorButton color={COLORS.블루} />;
 }
 
 export function ControlTest(args: any) {

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 import COLORS from "@/constants/color";
+import PATH from "@/constants/path";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 type ItemElementProps = {
@@ -24,14 +26,14 @@ const StyledImage = styled.img`
 const ItemName = styled.div`
   font-size: 1.5rem;
   padding-top: 1rem;
-  font-weight: 200;
+  font-weight: 400;
   width: 100%;
 `;
 
 const Event = styled.div`
   font-size: 1.5rem;
   padding-top: 1rem;
-  color: ${COLORS.RED};
+  color: ${COLORS.레드};
   font-weight: 300;
 `;
 
@@ -48,6 +50,8 @@ function ItemElement({
   hoverImg,
   category,
 }: ItemElementProps) {
+  const router = useRouter();
+
   return (
     <ItemWrapper>
       <StyledImage
@@ -62,6 +66,9 @@ function ItemElement({
         onMouseLeave={(e) => {
           const target = e.currentTarget as HTMLImageElement;
           target.src = defaultImg;
+        }}
+        onClick={() => {
+          router.push(PATH.PRODUCT);
         }}
       />
       <ItemName>{productName}</ItemName>
