@@ -315,6 +315,11 @@ export const ProductDetailList = styled.div`
   align-items: center;
   margin-top: 3rem;
   gap: 3rem;
+  width: 60%;
+
+  ${media.mobile} {
+    width: 100%;
+  }
 `;
 
 export const ProductDetail = styled.img`

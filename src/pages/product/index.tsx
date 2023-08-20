@@ -64,7 +64,7 @@ export default function Product() {
   // 사이즈 버튼 클릭 핸들러
   const handleSizeClick = (size: string) => {
     if (selectedProduct.color === null) {
-      alert("색깔을 먼저 선택하세요");
+      alert("색상을 먼저 선택하세요");
     } else {
       setSelectedProduct((prevProduct) => ({
         ...prevProduct,

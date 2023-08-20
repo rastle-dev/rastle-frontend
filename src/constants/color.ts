@@ -15,6 +15,11 @@ const COLORS = {
   레드: "#FF0000",
   그린: "#00ff04",
   옐로우: "#f7ff00",
+
+  WHITE: "#FFF",
+  BLACK: "#000",
+  BLUE: "#4395F6",
+  RED: "#FF0000",
 };
 
 export default COLORS;
