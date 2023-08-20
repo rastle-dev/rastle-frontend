@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Icons from "../../../constants/icon";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-type ButtonType = "default" | "clicked";
 interface ColorButtonProps {
   /** 클릭했을 때 호출할 함수 */
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,51 +10,46 @@ interface ColorButtonProps {
   /** icon 색 조정 */
   color?: string;
   /** 버튼의 type : 클릭 | 클릭X */
-  buttonType: ButtonType;
+  clicked?: boolean;
 }
 
 const Wrapper = styled.div<{
   size: number;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
-  buttonType: ButtonType;
+  clicked?: boolean;
 }>`
-  ${({ size, buttonType }) => `
+  ${({ size, clicked }) => `
   width: ${size}rem;
   height: ${size}rem;
+  padding : 0.1rem;
   display : flex;
   justify-content: center;
   align-items : center;
-  border: ${
-    {
-      default: "1px solid #9B9B9B",
-      clicked: "1px solid #000",
-    }[buttonType]
-  };
-`}
+  border: ${clicked ? `1px solid black` : `1px solid #e0e0e0`};
+  `}
 `;
 
 const Inner = styled.div<{
   color: string;
-  size: number;
 }>`
-  ${({ color, size }) => `
+  ${({ color }) => `
   background-color: ${color};
-  width: ${size - size / 10}rem;
-  height : ${size - size / 10}rem;
-  // border: 0.1px solid #9B9B9B;
+  width : 100%;
+  height : 100%;
+  border: 0.1px solid #9B9B9B;
 
 `}
 `;
 
 export default function ColorButton({
   size = 2,
-  color = "black",
+  color = "블랙",
   onClick,
-  buttonType = "default",
+  clicked = false,
 }: ColorButtonProps) {
   return (
-    <Wrapper buttonType={buttonType} size={size} onClick={onClick}>
-      <Inner size={size} color={color}></Inner>
+    <Wrapper clicked={clicked} size={size} onClick={onClick}>
+      <Inner color={color} />
     </Wrapper>
   );
 }

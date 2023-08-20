@@ -7,6 +7,7 @@ import {
 import { createGlobalStyle } from "styled-components";
 import DefaultLayout from "@/components/Layout/DefaultLayout";
 import MainLayout from "@/components/Layout/MainLayout";
+import "../styles/font.css";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -47,7 +48,7 @@ font-family: "EscoreDream", sans-serif ;
 }
 @media (min-width: 1441px) and (max-width: 1919px) {
   html {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 @media (min-width: 1920px) and (max-width: 2559px) {
@@ -59,57 +60,6 @@ font-family: "EscoreDream", sans-serif ;
   html {
     font-size: 14px;
   }
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream1.otf") format('opentype');
-  font-weight: 100;
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream2.otf") format('opentype');
-  font-weight: 200;
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream3.otf") format('opentype');
-  font-weight: 300;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream4.otf") format('opentype');
-  font-weight: 400;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream5.otf") format('opentype');
-  font-weight: 500;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream6.otf") format('opentype');
-  font-weight: 600;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream7.otf") format('opentype');
-  font-weight: 700;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream8.otf") format('opentype');
-  font-weight: 800;
-
-}
-@font-face {
-  font-family: 'EscoreDream';
-  src: url("/font/SCDream9.otf") format('opentype');
-  font-weight: 900;
 }
 `;
 

@@ -46,7 +46,7 @@ export const Box = styled.div`
     font-weight: 300;
   }
   button {
-    color: ${COLORS.BLACK};
+    color: ${COLORS.블랙};
     font-weight: 300;
     cursor: pointer;
   }
@@ -57,7 +57,7 @@ export const AskMember = styled.div`
   font-weight: 300;
 `;
 export const Signup = styled.div`
-  color: ${COLORS.BLACK};
+  color: ${COLORS.블랙};
   font-weight: 300;
   cursor: pointer;
 `;

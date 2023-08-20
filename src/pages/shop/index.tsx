@@ -64,7 +64,7 @@ const ProductList: ProductItem[] = [
     hoverImg: "/example_2.png",
   },
 ];
-export default function Login() {
+export default function Shop() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>("전체");
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);

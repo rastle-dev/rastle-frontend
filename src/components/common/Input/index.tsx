@@ -5,7 +5,7 @@ import COLORS from "../../../constants/color";
 const Wrapper = styled.div``;
 const Label = styled.div`
   font-size: 1rem;
-  color: ${COLORS.BLACK};
+  color: ${COLORS.블랙};
   padding: 0 0 0.1rem 0.2rem;
 `;
 
@@ -19,9 +19,9 @@ const InputWrapper = styled.input<{ size: number }>`
   // border-bottom:
   //   ${(props) =>
     props.onChange
-      ? `0.07rem solid ${COLORS.BLACK}`
+      ? `0.07rem solid ${COLORS.블랙}`
       : `0.14rem solid ${COLORS.GREY[300]}`};
-  color: ${COLORS.BLACK};
+  color: ${COLORS.블랙};
   font-size: 1rem;
   ::placeholder {
     color: ${COLORS.GREY[400]};
@@ -32,7 +32,7 @@ const InputWrapper = styled.input<{ size: number }>`
 
 const Message = styled.p`
   font-size: 1rem;
-  color: ${COLORS.BLACK};
+  color: ${COLORS.블랙};
 `;
 
 type InputProps = {
