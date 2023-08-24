@@ -1,6 +1,7 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import PATH from "@/constants/path";
+import COLORS from "@/constants/color";
+import LazyLink from "@/components/LazyLink";
 import {
   Wrapper,
   InnerNav,
@@ -12,8 +13,6 @@ import {
   PersonIcon,
   PersonDiv,
 } from "./index.styles";
-import COLORS from "@/constants/color";
-import LazyLink from "@/components/LazyLink";
 
 const navList = [
   { name: "SHOP", href: "/shop" },

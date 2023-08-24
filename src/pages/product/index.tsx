@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import ImageSwiper from "@/components/Swiper";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
-import * as S from "./index.styles";
+import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
+import * as S from "@/styles/product/index.styles";
 
 export default function Product() {
   // 상태 변수들
@@ -160,7 +160,7 @@ export default function Product() {
     <S.Wrapper>
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSwiper images={jsonData.images} />
+          <ImageSliderPage images={jsonData.images} />
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{jsonData.title}</S.Title>

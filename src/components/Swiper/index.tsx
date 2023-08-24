@@ -75,7 +75,7 @@ interface ImageGalleryProps {
   images: string[];
 }
 
-const ImageSwiper: React.FC<ImageGalleryProps> = ({ images }) => {
+const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const handlePrevClick = () => {

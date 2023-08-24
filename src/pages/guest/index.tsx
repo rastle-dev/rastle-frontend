@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import PATH from "@/constants/path";
-import * as S from "./index.styles";
+import * as S from "@/styles/guest/index.styles";
 
 export default function Guest() {
   const router = useRouter();

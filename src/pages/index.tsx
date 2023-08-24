@@ -1,6 +1,6 @@
 import React from "react";
 import ItemElement from "@/components/ItemElement";
-import * as S from "./index.styles";
+import * as S from "@/styles/index/index.styles";
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
 function TopLayer() {
