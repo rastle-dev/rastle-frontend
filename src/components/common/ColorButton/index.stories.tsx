@@ -1,6 +1,5 @@
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
-import Icon from "./index";
 import COLORS from "../../../constants/color";
 import ColorButton from "./index";
 
@@ -10,7 +9,7 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-//default
+// default
 export function BlackButton() {
   return <ColorButton color={COLORS.블랙} />;
 }
