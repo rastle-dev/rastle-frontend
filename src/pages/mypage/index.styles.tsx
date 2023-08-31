@@ -72,10 +72,9 @@ export const TabMenu = styled.div`
 `;
 export const Table = styled.div`
   //margin-top: 4.1rem;
-  border: 1px solid;
+  border-bottom: 1px solid;
   //width: 90%;
   width: 90rem;
-  height: 50vh;
 `;
 export const Select = styled(Input)`
   width: 2rem;
@@ -100,15 +99,39 @@ export const TableContent = styled.div`
 `;
 export const ProductInfo = styled.div`
   display: grid;
-  grid-template-columns: 3.2rem 10rem 24rem 13.8rem 9.8rem 11.5rem 11rem 6.2rem;
+  grid-template-columns: 3.2rem 10rem 25rem 13.8rem 9.8rem 11.5rem 11rem 6.2rem;
+  align-items: center;
+  margin: 1.9rem 0 1.9rem 0;
+  p {
+    font-size: 1.45rem;
+    font-weight: 200;
+  }
 `;
 export const Img = styled.img`
   width: 7.5rem;
   height: 8.2rem;
 `;
-export const TextInfo = styled.div``;
-export const SelectTab = styled.div``;
+export const TextInfo = styled.div`
+  width: 24rem;
+  padding-right: 1rem;
+  p {
+    font-size: 1.45rem;
+    font-weight: 500;
+    margin: 0;
+  }
+`;
+export const SelectTab = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.36rem;
+`;
 export const SelectButton = styled(Button)`
   margin: 0;
-  padding: 0;
+  text-align: center;
+  padding: 0.5rem 0 0.5rem 0;
+  font-weight: 200;
+  font-size: 1rem;
+  width: 6.2rem;
+  border-radius: 0;
+  border: 0.5px solid;
 `;

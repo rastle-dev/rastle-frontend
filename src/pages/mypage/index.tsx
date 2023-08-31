@@ -7,39 +7,32 @@ import Button from "@/components/common/Button";
 
 type ProductItem = {
   defaultImg: string;
-  hoverImg?: string;
   productName: string;
   price: string;
-  category?: ProductCategory;
+  size: string;
+  color: string;
 };
 const shopItems: ProductItem[] = [
   {
-    category: "1차 마켓",
     defaultImg: "/image/product1.jpg",
-    hoverImg: "/image/product5.jpg",
     productName: "틴 워시드 버뮤다 데님 팬츠",
     price: "45,800원",
+    size: "L",
+    color: "인디고",
   },
   {
-    category: "1차 마켓",
     defaultImg: "/image/product2.jpg",
-    hoverImg: "/image/product5.jpg",
     productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
     price: "53,400원",
+    size: "L",
+    color: "인디고",
   },
   {
-    category: "1차 마켓",
     defaultImg: "/image/product3.jpg",
-    hoverImg: "/image/product5.jpg",
     productName: "스토퍼 윈드브레이커",
     price: "34,200원",
-  },
-  {
-    category: "1차 마켓",
-    defaultImg: "/image/product4.jpg",
-    hoverImg: "/image/product5.jpg",
-    productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-    price: "53,400원",
+    size: "L",
+    color: "인디고",
   },
 ];
 export default function Mypage() {
@@ -92,16 +85,26 @@ export default function Mypage() {
                   <S.SelectButton title="X 삭제" />
                 </S.SelectTab>
               </S.ProductInfo>
-              {/*{shopItems.map((item) => (*/}
-              {/*    <ItemElement*/}
-              {/*        key={item.productName}*/}
-              {/*        defaultImg={item.defaultImg}*/}
-              {/*        hoverImg={item.hoverImg}*/}
-              {/*        productName={item.productName}*/}
-              {/*        price={item.price}*/}
-              {/*        category={item.category}*/}
-              {/*    />*/}
-              {/*))}*/}
+              {shopItems.map((item) => (
+                <S.ProductInfo>
+                  <S.Select type="checkbox" />
+                  <S.Img src={item.defaultImg} />
+                  <S.TextInfo>
+                    <p>{item.productName}</p>
+                    <p>
+                      {item.size}/{item.color}
+                    </p>
+                  </S.TextInfo>
+                  <p>{item.price}</p>
+                  <p>2개</p>
+                  <p>3,000원</p>
+                  <p>42,900원</p>
+                  <S.SelectTab>
+                    <S.SelectButton title="주문하기" />
+                    <S.SelectButton title="X 삭제" />
+                  </S.SelectTab>
+                </S.ProductInfo>
+              ))}
             </S.TableContent>
           </S.Table>
         </S.Content>
