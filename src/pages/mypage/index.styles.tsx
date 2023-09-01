@@ -36,7 +36,6 @@ export const Sidebar = styled.div`
 export const Content = styled.div`
   flex: 83;
   padding: 4.1rem 0 0 2rem;
-  //border: 1px solid blue;
   h2 {
     font-size: 1.63rem;
     margin: 0;
@@ -52,12 +51,16 @@ export const Menu = styled.div`
     padding-bottom: 1.63rem;
   }
 `;
-export const SubMenu = styled.div`
+export const Box = styled.div``;
+export const SubMenu = styled.div<{ active: boolean }>`
+  color: ${(props) => (props.active ? COLORS.블랙 : COLORS.GREY[300])};
   font-size: 1.36rem;
   padding-bottom: 1.18rem;
+  cursor: pointer;
+  font-weight: 200;
 `;
 export const TabMenu = styled.div`
-  width: 90rem;
+  width: 90.5rem;
   display: flex;
   gap: 1rem;
   justify-content: right;
@@ -71,10 +74,8 @@ export const TabMenu = styled.div`
   }
 `;
 export const Table = styled.div`
-  //margin-top: 4.1rem;
   border-bottom: 1px solid;
-  //width: 90%;
-  width: 90rem;
+  width: 90.5rem;
 `;
 export const Select = styled(Input)`
   width: 2rem;
@@ -83,19 +84,16 @@ export const TableHeader = styled.div`
   border-bottom: 1px solid;
   display: grid;
   align-items: center;
-  //justify-content: center;
   grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
   p {
     margin: 1rem 0 1rem 0;
-    //padding: ;
     font-size: 1.45rem;
     font-weight: 500;
-    //border: 1px solid;
   }
 `;
 export const TableContent = styled.div`
   //display: grid;
-  //grid-template-columns: 15rem 19rem 8rem 8rem 8rem 8rem;
+  grid-template-columns: 15rem 19rem 8rem 8rem 8rem 8rem;
 `;
 export const ProductInfo = styled.div`
   display: grid;
@@ -134,4 +132,18 @@ export const SelectButton = styled(Button)`
   width: 6.2rem;
   border-radius: 0;
   border: 0.5px solid;
+`;
+export const TotalPrice = styled.div`
+  display: flex;
+  justify-content: right;
+  font-size: 1.45rem;
+  padding: 2.2rem 0 2.2rem 0;
+  width: 90.5rem;
+  p {
+    margin: 0;
+    font-weight: 200;
+    padding: 0 0.5rem 0 0.5rem;
+  }
+  div {
+  }
 `;
