@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
@@ -34,6 +34,13 @@ const shopItems: ProductItem[] = [
     size: "L",
     color: "인디고",
   },
+  {
+    defaultImg: "/image/product1.jpg",
+    productName: "틴 워시드 버뮤다 데님 팬츠",
+    price: "45,800원",
+    size: "L",
+    color: "인디고",
+  },
 ];
 const TabMenu = styled.div`
   width: 90.5rem;
@@ -50,9 +57,7 @@ const TabMenu = styled.div`
   }
 `;
 const Table = styled.div`
-  //margin-top: 4.1rem;
   border-bottom: 1px solid;
-  //width: 90%;
   width: 90.5rem;
 `;
 const Select = styled(Input)`
@@ -62,20 +67,14 @@ const TableHeader = styled.div`
   border-bottom: 1px solid;
   display: grid;
   align-items: center;
-  //justify-content: center;
   grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
   p {
     margin: 1rem 0 1rem 0;
-    //padding: ;
     font-size: 1.45rem;
     font-weight: 500;
-    //border: 1px solid;
   }
 `;
-const TableContent = styled.div`
-  //display: grid;
-  //grid-template-columns: 15rem 19rem 8rem 8rem 8rem 8rem;
-`;
+const TableContent = styled.div``;
 const ProductInfo = styled.div`
   display: grid;
   grid-template-columns: 3.2rem 10rem 25rem 13.8rem 9.8rem 11.5rem 11rem 6.2rem;
@@ -129,6 +128,28 @@ const TotalPrice = styled.div`
   }
 `;
 export default function Cart() {
+  const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
+  const handleProductCheckboxChange = (item: ProductItem) => {
+    // 항목이 이미 선택되었는지 확인
+    const isSelected = selectedItems.includes(item);
+
+    // 이미 선택된 경우 선택 해제하고, 그렇지 않은 경우 selectedItems 배열에 추가합니다.
+    if (isSelected) {
+      setSelectedItems(
+        selectedItems.filter((selectedItem) => selectedItem !== item),
+      );
+    } else {
+      setSelectedItems([...selectedItems, item]);
+    }
+  };
+  const handleHeaderCheckboxChange = () => {
+    // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
+    if (selectedItems.length === shopItems.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(shopItems);
+    }
+  };
   return (
     <div>
       <h2>장바구니</h2>
@@ -138,31 +159,23 @@ export default function Cart() {
       </TabMenu>
       <Table>
         <TableHeader>
-          <Select type="checkbox" />
+          <Select
+            type="checkbox"
+            checked={selectedItems.length === shopItems.length}
+            onChange={handleHeaderCheckboxChange}
+          />{" "}
           {menuList.map((menu) => (
             <p>{menu}</p>
           ))}
         </TableHeader>
         <TableContent>
-          <ProductInfo>
-            <Select type="checkbox" />
-            <Img src="/image/product4.jpg" />
-            <TextInfo>
-              <p>틴 워시드 버뮤다 데님 팬츠</p>
-              <p>L/인디고</p>
-            </TextInfo>
-            <p>38,900원</p>
-            <p>2개</p>
-            <p>3,000원</p>
-            <p>42,900원</p>
-            <SelectTab>
-              <SelectButton title="주문하기" />
-              <SelectButton title="X 삭제" />
-            </SelectTab>
-          </ProductInfo>
           {shopItems.map((item) => (
             <ProductInfo>
-              <Select type="checkbox" />
+              <Select
+                type="checkbox"
+                checked={selectedItems.includes(item)}
+                onChange={() => handleProductCheckboxChange(item)}
+              />
               <Img src={item.defaultImg} />
               <TextInfo>
                 <p>{item.productName}</p>
