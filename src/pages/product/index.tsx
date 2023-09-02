@@ -20,7 +20,6 @@ export default function Product() {
     selectedProducts,
     jsonData,
   } = useProduct();
-  // 상태 변수들
 
   return (
     <S.Wrapper>

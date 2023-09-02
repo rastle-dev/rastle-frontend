@@ -103,7 +103,7 @@ export const Meta = styled.div`
   color: ${COLORS.GREY[400]};
   font-weight: 200;
   font-size: 1.1rem;
-  width: 3.4rem;
+  //width: 7rem;
   ${media.small} {
     width: 5rem;
   }
