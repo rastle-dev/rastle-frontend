@@ -57,6 +57,7 @@ type InputProps = {
   message?: string;
   /** classname */
   className?: string;
+  checked?: boolean;
 };
 
 export default function Input({
@@ -70,6 +71,7 @@ export default function Input({
   readOnly = false,
   message = "",
   className,
+  checked,
 }: InputProps) {
   return (
     <Wrapper>
@@ -82,6 +84,7 @@ export default function Input({
         size={size}
         readOnly={readOnly}
         className={className}
+        checked={checked}
       />
       {message.length > 0 && <Message> {message}</Message>}
     </Wrapper>

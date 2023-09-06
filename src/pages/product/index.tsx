@@ -164,7 +164,7 @@ export default function Product() {
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{jsonData.title}</S.Title>
-          {/*<S.Price>{jsonData.price.toLocaleString()}원</S.Price>*/}
+          {/* <S.Price>{jsonData.price.toLocaleString()}원</S.Price> */}
           <S.DiscountPrice>
             <h4>{jsonData.price.toLocaleString()}원</h4>
             <span>10% </span>
