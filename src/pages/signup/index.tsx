@@ -1,6 +1,8 @@
 import React from "react";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/signup/index.styles";
+
+const checkEmailCode = async () => {};
 const inputData = [
   {
     label: "이메일주소",
@@ -8,6 +10,9 @@ const inputData = [
     placeholder: "예) rastle@rastle.com",
     buttonTitle: "전송",
     buttonType: "small",
+    onClick: () => {
+      checkEmailCode();
+    },
   },
   {
     label: "인증번호",
@@ -46,7 +51,10 @@ export default function Signup() {
                 label={data.label}
               />
               <S.ButtonWrapper>
-                <S.StyledButton title={data.buttonTitle} />
+                <S.StyledButton
+                  title={data.buttonTitle}
+                  onClick={data.onClick}
+                />
               </S.ButtonWrapper>
             </S.InputWithButtonDiv>
           ) : (
