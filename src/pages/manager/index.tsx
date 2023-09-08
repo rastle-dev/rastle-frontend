@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
 `;
 
 export const HeaderTitle = styled.h1`
-  font-size: 2rem;
+  font-size: 3rem;
 `;
 
 export const ManageList = styled.ul`
@@ -29,7 +29,8 @@ export const ManageList = styled.ul`
   display: flex;
   justify-content: flex-start;
   margin: 0;
-  padding: 1rem 0 0 0;
+  padding: 0 0 0.5rem 0;
+  border-bottom: 1px solid grey;
 
   li {
     padding-right: 2.2rem;
