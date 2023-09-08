@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import media from "@/styles/media";
 import LazyLink from "@/components/LazyLink";
+import UserManagement from "@/components/Manager/UserManagement";
+import CategoryManagement from "@/components/Manager/CategoryManagement";
+import ProductManagement from "@/components/Manager/ProductManagement";
+import Dashboard from "@/components/Manager/Dashboard";
+import OrderManagement from "@/components/Manager/OrderManagement";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -42,6 +47,10 @@ export const ManageList = styled.ul`
   }
 `;
 
+export const ManageMentDetail = styled.div`
+  padding-top: 3rem;
+`;
+
 const managementList = [
   { name: "회원관리" },
   { name: "카테고리 관리" },
@@ -66,11 +75,13 @@ export default function Manager() {
           </button>
         ))}
       </ManageList>
-      {selectedItem === "회원관리" && <UserManagement />}
-      {selectedItem === "카테고리 관리" && <CategoryManagement />}
-      {selectedItem === "상품관리" && <ProductManagement />}
-      {selectedItem === "주문관리" && <OrderManagement />}
-      {selectedItem === "대시보드" && <Dashboard />}
+      <ManageMentDetail>
+        {selectedItem === "회원관리" && <UserManagement />}
+        {selectedItem === "카테고리 관리" && <CategoryManagement />}
+        {selectedItem === "상품관리" && <ProductManagement />}
+        {selectedItem === "주문관리" && <OrderManagement />}
+        {selectedItem === "대시보드" && <Dashboard />}
+      </ManageMentDetail>
     </Wrapper>
   );
 }
