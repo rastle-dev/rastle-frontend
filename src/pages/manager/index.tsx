@@ -7,6 +7,7 @@ import CategoryManagement from "@/components/Manager/CategoryManagement";
 import ProductManagement from "@/components/Manager/ProductManagement";
 import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
+import TotalManagement from "@/components/Manager/TotalManagement";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -52,6 +53,7 @@ export const ManageMentDetail = styled.div`
 `;
 
 const managementList = [
+  { name: "전체통계" },
   { name: "회원관리" },
   { name: "카테고리 관리" },
   { name: "상품관리" },
@@ -60,7 +62,7 @@ const managementList = [
 ];
 
 export default function Manager() {
-  const [selectedItem, setSelectedItem] = useState<string>();
+  const [selectedItem, setSelectedItem] = useState<string>("전체통계");
 
   const onClickList = (name: string) => {
     setSelectedItem(name);
@@ -76,6 +78,7 @@ export default function Manager() {
         ))}
       </ManageList>
       <ManageMentDetail>
+        {selectedItem === "전체통계" && <TotalManagement />}
         {selectedItem === "회원관리" && <UserManagement />}
         {selectedItem === "카테고리 관리" && <CategoryManagement />}
         {selectedItem === "상품관리" && <ProductManagement />}
