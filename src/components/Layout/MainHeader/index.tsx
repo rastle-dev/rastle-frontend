@@ -1,6 +1,8 @@
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import PATH from "@/constants/path";
+import COLORS from "@/constants/color";
+import LazyLink from "@/components/LazyLink";
+import useLogin from "@/hooks/useLogin";
 import {
   Wrapper,
   InnerNav,
@@ -12,8 +14,6 @@ import {
   PersonIcon,
   PersonDiv,
 } from "./index.styles";
-import COLORS from "@/constants/color";
-import LazyLink from "@/components/LazyLink";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -24,7 +24,7 @@ const navList = [
 
 export default function MainHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const { logout } = useLogin();
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
@@ -57,7 +57,12 @@ export default function MainHeader() {
           </LazyLink>
         </CenterElement>
         <RightElemet>
-          <LazyLink href={PATH.LOGIN}>
+          <LazyLink
+            href={PATH.LOGIN}
+            onClick={() => {
+              logout();
+            }}
+          >
             <span>LOG IN</span>
           </LazyLink>
           <LazyLink href={PATH.CART}>
