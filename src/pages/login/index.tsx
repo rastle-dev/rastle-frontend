@@ -4,17 +4,30 @@ import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import SNSLogin from "@/components/Login/sns";
 import PATH from "@/constants/path";
-import * as S from "@/styles/login/index.styles";
+import useLogin from "@/hooks/useLogin";
+import * as S from "./index.styles";
 
 export default function Login() {
   const router = useRouter();
+  const {
+    email,
+    onChangeEmail,
+    password,
+    onChangePassword,
+    mutateLogin,
+    logout,
+  } = useLogin();
   const buttons = [
     {
       productName: "이메일 가입",
       width: "11.6875rem",
       onClick: () => router.push(PATH.SIGNUP),
     },
-    { productName: "비밀번호 찾기", width: "11.75rem" },
+    {
+      productName: "비밀번호 찾기",
+      width: "11.75rem",
+      onClick: () => logout(),
+    },
     {
       productName: "비회원 주문 조회",
       width: "11.4375rem",
@@ -22,8 +35,20 @@ export default function Login() {
     },
   ];
   const inputs = [
-    { size: 35, placeholder: "예) rastle@rastle.com", label: "이메일 주소" },
-    { size: 35, label: "비밀번호", type: "password" },
+    {
+      size: 35,
+      placeholder: "예) rastle@rastle.com",
+      label: "이메일 주소",
+      value: email,
+      onChange: onChangeEmail,
+    },
+    {
+      size: 35,
+      label: "비밀번호",
+      type: "password",
+      value: password,
+      onChange: onChangePassword,
+    },
   ];
   return (
     <S.Container>
@@ -39,9 +64,17 @@ export default function Login() {
             placeholder={input.placeholder}
             label={input.label}
             type={input.type}
+            onChange={input.onChange}
           />
         ))}
-        <Button title="로그인" width="35rem" disabled />
+        <Button
+          title="로그인"
+          width="35rem"
+          onClick={() => {
+            mutateLogin.mutate({ email, password });
+            // login();
+          }}
+        />
       </S.Wrapper>
       <S.Box>
         {buttons.map((button, index) => (
