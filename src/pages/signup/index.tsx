@@ -1,8 +1,8 @@
 import React from "react";
 import Input from "@/components/common/Input";
-import * as S from "./index.styles";
-import { StyledInput } from "./index.styles";
+import * as S from "@/styles/signup/index.styles";
 
+const checkEmailCode = async () => {};
 const inputData = [
   {
     label: "이메일주소",
@@ -10,6 +10,9 @@ const inputData = [
     placeholder: "예) rastle@rastle.com",
     buttonTitle: "전송",
     buttonType: "small",
+    onClick: () => {
+      checkEmailCode();
+    },
   },
   {
     label: "인증번호",
@@ -48,7 +51,10 @@ export default function Signup() {
                 label={data.label}
               />
               <S.ButtonWrapper>
-                <S.StyledButton title={data.buttonTitle} />
+                <S.StyledButton
+                  title={data.buttonTitle}
+                  onClick={data.onClick}
+                />
               </S.ButtonWrapper>
             </S.InputWithButtonDiv>
           ) : (
@@ -64,7 +70,7 @@ export default function Signup() {
       ))}
 
       <S.CheckBoxWithText>
-        <StyledInput size={1.125} type="checkbox" />
+        <S.StyledInput size={1.125} type="checkbox" />
         <h3>개인정보 수집 및 이용 동의 (필수)</h3>
         <h3>자세히</h3>
       </S.CheckBoxWithText>

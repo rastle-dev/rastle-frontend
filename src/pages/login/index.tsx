@@ -5,8 +5,7 @@ import Button from "@/components/common/Button";
 import SNSLogin from "@/components/Login/sns";
 import PATH from "@/constants/path";
 import useLogin from "@/hooks/useLogin";
-import * as S from "./index.styles";
-
+import * as S from "@/styles/login/index.styles";
 export default function Login() {
   const router = useRouter();
   const {

@@ -1,7 +1,7 @@
 import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
-import * as S from "./index.styles";
+import * as S from "@/styles/order/index.styles";
 import useOrder from "../../hooks/useOrder";
 
 export default function Order() {

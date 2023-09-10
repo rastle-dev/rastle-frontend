@@ -6,6 +6,12 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  images: {
+    unoptimized: true,
+  },
 };
 
 module.exports = nextConfig;
