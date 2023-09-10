@@ -159,7 +159,6 @@ export default function CreateProduct() {
   const [category2, setCategory2] = useState("");
   const [hasEvent, setHasEvent] = useState(false);
   const [productPrice, setProductPrice] = useState("");
-  const [hasDiscount, setHasDiscount] = useState(false);
   const [discountPercent, setDiscountPercent] = useState("");
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
@@ -185,10 +184,6 @@ export default function CreateProduct() {
 
   const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProductPrice(e.target.value);
-  };
-
-  const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasDiscount(e.target.checked);
   };
 
   const handleDiscountPercentChange = (
@@ -294,6 +289,32 @@ export default function CreateProduct() {
         />
       </ProductDetail>
       <ProductDetail>
+        <label htmlFor="productPrice">일반 가격:</label>
+        <ProductPriceInput
+          type="number"
+          id="productPrice"
+          value={productPrice}
+          onChange={(e) => handleProductPriceChange(e)}
+        />
+      </ProductDetail>
+      <ProductDetail>
+        <label htmlFor="discountPercent">할인 퍼센트:</label>
+        <DiscountPercentInput
+          type="number"
+          id="discountPercent"
+          value={discountPercent}
+          onChange={(e) => handleDiscountPercentChange(e)}
+        />
+      </ProductDetail>
+      <ProductDetail>
+        <label>이벤트 유무:</label>
+        <EventCheckbox
+          type="checkbox"
+          checked={hasEvent}
+          onChange={(e) => handleEventChange(e)}
+        />
+      </ProductDetail>
+      <ProductDetail>
         <label htmlFor="category1">카테고리 1 선택:</label>
         <ProductCategory1Select
           id="category1"
@@ -315,42 +336,6 @@ export default function CreateProduct() {
           <option value="category2-option2">카테고리 2 옵션 2</option>
         </ProductCategory2Select>
       </ProductDetail>
-      <ProductDetail>
-        <label>이벤트 유무:</label>
-        <EventCheckbox
-          type="checkbox"
-          checked={hasEvent}
-          onChange={(e) => handleEventChange(e)}
-        />
-      </ProductDetail>
-      <ProductDetail>
-        <label htmlFor="productPrice">일반 가격:</label>
-        <ProductPriceInput
-          type="number"
-          id="productPrice"
-          value={productPrice}
-          onChange={(e) => handleProductPriceChange(e)}
-        />
-      </ProductDetail>
-      <ProductDetail>
-        <label>할인 유무:</label>
-        <DiscountCheckbox
-          type="checkbox"
-          checked={hasDiscount}
-          onChange={(e) => handleDiscountChange(e)}
-        />
-      </ProductDetail>
-      {hasDiscount && (
-        <ProductDetail>
-          <label htmlFor="discountPercent">할인 퍼센트:</label>
-          <DiscountPercentInput
-            type="number"
-            id="discountPercent"
-            value={discountPercent}
-            onChange={(e) => handleDiscountPercentChange(e)}
-          />
-        </ProductDetail>
-      )}
       <ColorInputs>
         {colors.map((color, index) => (
           <ProductDetail key={index}>
