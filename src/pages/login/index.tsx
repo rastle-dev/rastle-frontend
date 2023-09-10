@@ -15,7 +15,6 @@ export default function Login() {
     password,
     onChangePassword,
     mutateLogin,
-    login,
     logout,
   } = useLogin();
   const buttons = [
@@ -51,7 +50,6 @@ export default function Login() {
       onChange: onChangePassword,
     },
   ];
-  console.log("email,password", email, password);
   return (
     <S.Container>
       <S.Header>
