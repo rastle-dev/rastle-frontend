@@ -81,28 +81,23 @@ async function resetTokenAndReattemptRequest(error: any) {
 
     // 이미 엑세스 토큰을 가져오고 있는지 판단
     if (!isAlreadyFetchingAccessToken) {
+      console.log("리이슈ㅠ1");
       isAlreadyFetchingAccessToken = true;
-      await axios
+      await unAuthorizationClient
         // 재발급 요청하고 새로 받은 액세스 토큰을 로컬 스토리지에 저장
-        .post(API.REISSUE, { token: localStorage.getItem("accessToken") })
-        .then(
-          ({
-            data,
-          }: {
-            data: {
-              accessToken: string;
-              grantType: string;
-              accessTokenExpiresIn: number;
-            };
-          }) => {
-            localStorage.setItem("accessToken", data.accessToken);
-            isAlreadyFetchingAccessToken = false;
-            onAccessTokenFetched(data.accessToken);
-          },
-        )
+        .post(API.REISSUE)
+        .then(({ headers }: { headers: any }) => {
+          console.log("넘어왔나?", headers);
+          const token = headers.authorization.replace("Bearer ", "");
+          console.log("리이슈 체킹", token);
+          localStorage.setItem("accessToken", token);
+          isAlreadyFetchingAccessToken = false;
+          onAccessTokenFetched(token);
+        })
         .catch((err) => {
           // 요청 실패시
           // toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
+          console.log("토큰 재발급 실패~~~~~");
           handleUnauthorized();
           return Promise.reject(err);
         });
@@ -122,6 +117,10 @@ authorizationClient.interceptors.response.use(
   },
   // 서버로부터 받은 응답이 에러인 경우
   async function (error) {
+    console.log("error", error);
+    console.log("에러를 잡아줘", error.message);
+    console.log("에러를 잡아줘", error.message.includes("401"));
+    console.log("에러를 잡아줘", error.response.data.errorCode);
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
       error.response.data.errorCode === 401 &&

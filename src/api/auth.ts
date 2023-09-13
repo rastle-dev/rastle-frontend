@@ -9,6 +9,6 @@ export const authLogin = async (userLoginData: object) => {
   return headers;
 };
 export const authLogout = async () => {
-  const { data } = await authorizationClient.get(API.LOGOUT);
+  const { data } = await authorizationClient.post(API.LOGOUT);
   return data;
 };
