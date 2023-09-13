@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import React from "react";
+import { useRouter } from "next/router";
+import PATH from "@/constants/path";
 
 const Container = styled.div`
   width: 88%;
@@ -15,12 +17,20 @@ const Container = styled.div`
 const Home = styled.div`
   font-weight: 200;
   font-size: 1.5rem;
+  cursor: pointer;
 `;
 
 function DefaultHeader() {
+  const router = useRouter();
   return (
     <Container>
-      <Home>Home</Home>
+      <Home
+        onClick={() => {
+          router.push(PATH.HOME);
+        }}
+      >
+        Home
+      </Home>
     </Container>
   );
 }
