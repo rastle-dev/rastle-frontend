@@ -6,6 +6,8 @@ import SNSLogin from "@/components/Login/sns";
 import PATH from "@/constants/path";
 import useLogin from "@/hooks/useLogin";
 import * as S from "@/styles/login/index.styles";
+import errorMsg from "@/components/Toast/error";
+
 export default function Login() {
   const router = useRouter();
   const {
@@ -70,8 +72,11 @@ export default function Login() {
           title="로그인"
           width="35rem"
           onClick={() => {
-            mutateLogin.mutate({ email, password });
-            // login();
+            if (!(email && password)) {
+              errorMsg("아이디 및 비밀번호를 확인해주세요");
+            } else {
+              mutateLogin.mutate({ email, password });
+            }
           }}
         />
       </S.Wrapper>
