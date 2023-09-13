@@ -8,6 +8,7 @@ import { createGlobalStyle } from "styled-components";
 import DefaultLayout from "@/components/Layout/DefaultLayout";
 import MainLayout from "@/components/Layout/MainLayout";
 import "../styles/font.css";
+import StyledContainer from "@/components/Toast/container";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -87,6 +88,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <StyledContainer
+        className="toast"
+        position="top-center"
+        closeButton={false}
+      />
       <Hydrate state={pageProps.dehydratedState}>
         <GlobalStyle />
         {Layout}
