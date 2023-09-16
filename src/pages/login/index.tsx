@@ -5,6 +5,7 @@ import PATH from "@/constants/path";
 import useLogin from "@/hooks/useLogin";
 import * as S from "@/styles/login/index.styles";
 import errorMsg from "@/components/Toast/error";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const router = useRouter();
@@ -68,6 +69,7 @@ export default function Login() {
           width="100%"
           onClick={() => {
             if (!(email && password)) {
+              toast.dismiss();
               errorMsg("아이디 및 비밀번호를 확인해주세요");
             } else {
               mutateLogin.mutate({ email, password });
