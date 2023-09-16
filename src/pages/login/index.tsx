@@ -9,14 +9,8 @@ import errorMsg from "@/components/Toast/error";
 
 export default function Login() {
   const router = useRouter();
-  const {
-    email,
-    onChangeEmail,
-    password,
-    onChangePassword,
-    mutateLogin,
-    logout,
-  } = useLogin();
+  const { email, onChangeEmail, password, onChangePassword, mutateLogin } =
+    useLogin();
   const buttons = [
     {
       productName: "이메일 가입",
@@ -26,7 +20,7 @@ export default function Login() {
     {
       productName: "비밀번호 찾기",
       width: "12.3rem",
-      onClick: () => logout(),
+      // onClick: () => logout(),
     },
     {
       productName: "비회원 주문 조회",
