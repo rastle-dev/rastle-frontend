@@ -57,12 +57,7 @@ export default function MainHeader() {
           </LazyLink>
         </CenterElement>
         <RightElemet>
-          <LazyLink
-            href={PATH.LOGIN}
-            onClick={() => {
-              logout();
-            }}
-          >
+          <LazyLink href={PATH.LOGIN}>
             <span>LOG IN</span>
           </LazyLink>
           <LazyLink href={PATH.CART}>

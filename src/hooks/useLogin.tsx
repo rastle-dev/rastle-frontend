@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 import useInput from "@/hooks/useInput";
 import { authLogin, authLogout } from "@/api/auth";
 import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
-import { toast } from "react-toastify";
+import toastMsg from "@/components/Toast";
 
 export default function useLogin() {
   const router = useRouter();
@@ -35,7 +36,8 @@ export default function useLogin() {
       console.log("local", localStorage);
       await authLogout();
       localStorage.clear();
-      // toastMsg("로그아웃 되었습니다!");
+      toastMsg("로그아웃 되었습니다!");
+      router.push(PATH.HOME);
     } catch (err) {
       console.log(err);
     }

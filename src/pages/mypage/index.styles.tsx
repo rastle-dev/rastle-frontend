@@ -51,6 +51,20 @@ export const Menu = styled.div`
     padding-bottom: 1.63rem;
   }
 `;
+export const Logout = styled(Button)`
+  border: none;
+  padding-right: 2rem;
+  font-size: 1.2rem;
+  color: red;
+  width: 7rem;
+  font-weight: 300;
+  margin-top: 4rem;
+  &:hover {
+    border: none;
+    color: red;
+    font-weight: 500;
+  }
+`;
 export const Box = styled.div``;
 export const SubMenu = styled.div<{ active: boolean }>`
   color: ${(props) => (props.active ? COLORS.블랙 : COLORS.GREY[300])};

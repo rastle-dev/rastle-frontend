@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import * as S from "./index.styles";
+import useLogin from "@/hooks/useLogin";
 
 const shoppingTabs = [
   { label: "주문 내역", category: "쇼핑 정보" },
@@ -13,6 +14,7 @@ const myTabs = [
 ];
 export default function Mypage() {
   const [activeTab, setActiveTab] = useState("주문 내역");
+  const { logout } = useLogin();
 
   const handleTabClick = (tab: any) => {
     setActiveTab(tab);
@@ -32,7 +34,6 @@ export default function Mypage() {
         return null;
     }
   };
-
   return (
     <S.Container>
       <h1>MYPAGE</h1>
@@ -58,6 +59,7 @@ export default function Mypage() {
               </S.Box>
             ))}
           </S.Menu>
+          <S.Logout title="로그아웃" onClick={() => logout()} />
         </S.Sidebar>
         <S.Content> {renderTabContent()}</S.Content>
       </S.Wrapper>
