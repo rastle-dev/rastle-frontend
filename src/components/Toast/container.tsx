@@ -11,7 +11,7 @@ const StyledContainer = styled(ToastContainer)`
       position: fixed;
       top: 3rem;
       left: 50%;
-      width: 70%;
+      width: 75%;
       transform: translateX(-50%);
     }
     max-width: 575px;
@@ -30,6 +30,9 @@ const StyledContainer = styled(ToastContainer)`
     margin: 0;
     color: white;
     font-size: 1rem;
+    ${media.mobile} {
+      font-size: 1.5rem;
+    }
   }
 `;
 

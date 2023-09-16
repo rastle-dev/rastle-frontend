@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
@@ -7,12 +8,16 @@ const Label = styled.div`
   font-size: 1rem;
   color: ${COLORS.블랙};
   padding: 0 0 0.1rem 0.2rem;
+  ${media.xsmall} {
+    font-size: 1.5rem;
+  }
 `;
 
 const InputWrapper = styled.input<{ size: number }>`
   ${({ size }) => `
     width: ${size}rem;
 `}
+  width: 100%;
   padding: 0.9rem 0.2rem;
   border: none;
   border-bottom: 0.07rem solid ${COLORS.GREY[300]};
@@ -73,8 +78,10 @@ export default function Input({
   className,
   checked,
 }: InputProps) {
+  const isCheckbox = type === "checkbox"; // 체크박스인지 확인
+
   return (
-    <Wrapper>
+    <Wrapper style={{ width: isCheckbox ? "auto" : "100%" }}>
       {!labelHidden && <Label>{label}</Label>}
       <InputWrapper
         value={value}

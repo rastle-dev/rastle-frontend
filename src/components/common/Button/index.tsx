@@ -10,7 +10,7 @@ type ButtonProps = {
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   width?: string;
-  /** 버튼 활성화 (onClick)을 감지하기 위한 props*/
+  /** 버튼 활성화 (onClick)을 감지하기 위한 props */
   isActive?: boolean;
 };
 
