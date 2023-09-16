@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 
@@ -38,7 +38,15 @@ export const ButtonWrapper = styled.div`
   margin-left: 0.7rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  margin-top: 2rem;
+`;
+
+export const ButtonTimerWrapper = styled.div`
+  margin-left: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 2rem;
 `;
 
 export const CheckBoxWithText = styled.div`
@@ -82,4 +90,25 @@ export const SignupButton = styled(Button)`
 export const StyledInput = styled(Input)`
   padding: 0;
   margin: 0;
+`;
+
+const fadeInDown = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+`;
+export const CodeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-top: 2.19rem;
+  opacity: 0;
+  &.show-text {
+    opacity: 1;
+    animation: ${fadeInDown} 0.7s forwards;
+  }
 `;

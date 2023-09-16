@@ -3,6 +3,10 @@ const AUTH = "/auth/";
 const LOGIN = "login";
 const REFRESH = "refreshAccessToken";
 const LOGOUT = "/logout";
+const EMAILCERTIFICATE = "emailCertification";
+const EMAILCHECK = "emailCertificationCheck";
+const EMAILDUPLICATE = "checkEmail/";
+const SIGNUP = "signup";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -10,5 +14,9 @@ const API = {
   LOGIN: `${AUTH}${LOGIN}`,
   REISSUE: `${AUTH}${REFRESH}`,
   LOGOUT: `${LOGOUT}`,
+  EMAILCERTIFICATE: `${AUTH}${EMAILCERTIFICATE}`,
+  EMAILCHECK: `${AUTH}${EMAILCHECK}`,
+  EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
+  SIGNUP: `${AUTH}${SIGNUP}`,
 };
 export default API;
