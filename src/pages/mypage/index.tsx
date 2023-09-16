@@ -3,6 +3,7 @@ import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import * as S from "./index.styles";
 import useLogin from "@/hooks/useLogin";
+import LoginInfo from "@/components/Mypage/loginInfo";
 
 const shoppingTabs = [
   { label: "주문 내역", category: "쇼핑 정보" },
@@ -27,7 +28,7 @@ export default function Mypage() {
       case "장바구니":
         return <Cart />;
       case "로그인 정보":
-        return <OrderList />;
+        return <LoginInfo />;
       case "기본 배송지":
         return <OrderList />;
       default:

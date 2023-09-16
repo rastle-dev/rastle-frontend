@@ -6,18 +6,14 @@ import Button from "@/components/common/Button";
 // eslint-disable-next-line import/prefer-default-export
 export const Container = styled.div`
   width: 100%;
-  //height: 200px;
-  //display: flex;
-  //align-items: center;
-  //flex-direction: column;
   margin-top: 5.5rem;
-  //border: 1px solid red;
   padding-top: 2rem;
   h1 {
     font-size: 2.5rem;
     font-weight: 200;
     padding: 4rem 0 5rem 7.84rem;
   }
+  margin-bottom: 20rem;
 `;
 export const Wrapper = styled.div`
   display: flex;
@@ -31,6 +27,7 @@ export const Sidebar = styled.div`
   align-items: center;
   gap: 4.1rem;
   //border: 1px solid red;
+  //border-right: 1px solid ${COLORS.GREY[200]};
   padding-top: 4.1rem;
 `;
 export const Content = styled.div`
