@@ -24,28 +24,43 @@ export default function useSignup() {
   const [privateChecked, setPrivateChecked] = useState(false);
   // yslim162@naver.com
 
+  // Function to reset emailMessage
+  const resetEmailMessage = () => {
+    if (duplicateCheck) {
+      setEmailMessage(""); // Reset the message
+      setDuplicateCheck(false);
+    }
+  };
+
+  // Attach the resetEmailMessage function to the onChangeEmail handler
+  const onChangeEmailHandler = (newEmail: string) => {
+    onChangeEmail(newEmail); // Assuming onChangeEmail is provided by useInput
+    resetEmailMessage(); // Reset emailMessage
+  };
+
   /** TODO:) 백엔드 data 수정하면 고쳐야함*/
   const checkEmailDuplicated = async () => {
     const data = await authCheckEmailDuplicate(email);
     if (data.data) {
-      console.log(data);
       return true;
     }
+
     return false;
   };
 
   const sendEmailCode = async () => {
     const duplicated = await checkEmailDuplicated();
-    if (duplicated) {
+    if (!duplicated) {
       setEmailButton("재전송");
       setShowText(true);
       const data = await authSendEmail({ email });
       if (data) {
         console.log(data);
+        setDuplicateCheck(false);
       }
     } else {
-      setEmailMessage("이미 가입된 이메일입니다");
       setDuplicateCheck(true);
+      setEmailMessage("이미 가입된 이메일입니다");
     }
   };
 
@@ -84,6 +99,7 @@ export default function useSignup() {
   return {
     username,
     onChangeUserName,
+    onChangeEmailHandler,
     email,
     onChangeEmail,
     code,

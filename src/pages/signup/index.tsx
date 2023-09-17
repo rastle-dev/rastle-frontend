@@ -26,6 +26,7 @@ export default function Signup() {
   const {
     username,
     onChangeUserName,
+    onChangeEmailHandler,
     email,
     onChangeEmail,
     onChangeCode,
@@ -61,12 +62,12 @@ export default function Signup() {
       size: 28.75,
       placeholder: "예) rastle@rastle.com",
       // buttonTitle: "전송",
-      onChange: onChangeEmail,
+      onChange: onChangeEmailHandler,
       message:
         email.length > 0 && !isValidEmail(email)
           ? "이메일 형식이 틀렸습니다"
           : emailMessage,
-      inValid: email.length > 0 && !isValidEmail(email) && !duplicateCheck,
+      inValid: email.length > 0 && (!isValidEmail(email) || duplicateCheck),
       isCertification: {
         title: emailButton,
         disabled: (email.length > 0 && !isValidEmail(email)) || codeMatch,
