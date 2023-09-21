@@ -4,23 +4,24 @@ import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
-const Label = styled.div`
+const Label = styled.div<{ inValid?: boolean }>`
   font-size: 1rem;
-  color: ${COLORS.블랙};
+  color: ${(props) => (props.inValid ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
   ${media.xsmall} {
     font-size: 1.5rem;
   }
 `;
 
-const InputWrapper = styled.input<{ size: number }>`
+const InputWrapper = styled.input<{ size: number; inValid?: boolean }>`
   ${({ size }) => `
     width: ${size}rem;
 `}
   width: 100%;
   padding: 0.9rem 0.2rem;
   border: none;
-  border-bottom: 0.07rem solid ${COLORS.GREY[300]};
+  border-bottom: 0.07rem solid
+    ${(props) => (props.inValid ? COLORS.RED : COLORS.GREY[300])};
   // border-bottom:
   //   ${(props) =>
     props.onChange
@@ -36,9 +37,10 @@ const InputWrapper = styled.input<{ size: number }>`
   border-radius: 0;
 `;
 
-const Message = styled.p`
-  font-size: 1rem;
-  color: ${COLORS.블랙};
+const Message = styled.p<{ inValid?: boolean }>`
+  font-size: 0.7rem;
+  margin-bottom: 0;
+  color: ${(props) => (props.inValid ? COLORS.RED : COLORS.블랙)};
 `;
 
 type InputProps = {
@@ -63,6 +65,8 @@ type InputProps = {
   /** classname */
   className?: string;
   checked?: boolean;
+  color?: string;
+  inValid?: boolean;
 };
 
 export default function Input({
@@ -77,13 +81,14 @@ export default function Input({
   message = "",
   className,
   checked,
+  color = "black",
+  inValid = false,
 }: InputProps) {
   const isCheckbox = type === "checkbox"; // 체크박스인지 확인
 
   return (
     <Wrapper style={{ width: isCheckbox ? "auto" : "100%" }}>
-      {!labelHidden && <Label>{label}</Label>}
-      <InputWrapper
+      {!labelHidden && <Label inValid={inValid}>{label}</Label>}      <InputWrapper
         value={value}
         onChange={onChange}
         type={type}
@@ -92,8 +97,9 @@ export default function Input({
         readOnly={readOnly}
         className={className}
         checked={checked}
+        inValid={inValid}
       />
-      {message.length > 0 && <Message> {message}</Message>}
+      {message.length > 0 && <Message inValid={inValid}> {message}</Message>}
     </Wrapper>
   );
 }
