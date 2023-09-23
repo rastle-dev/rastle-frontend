@@ -8,6 +8,7 @@ import ProductManagement from "@/components/Manager/ProductManagement";
 import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
 import TotalManagement from "@/components/Manager/TotalManagement";
+import MarketManagement from "@/components/Manager/MarketManagement";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -57,6 +58,7 @@ const managementList = [
   { name: "전체통계" },
   { name: "회원관리" },
   { name: "카테고리 관리" },
+  { name: "마켓 관리" },
   { name: "상품관리" },
   { name: "주문관리" },
   { name: "대시보드" },
@@ -82,6 +84,7 @@ export default function Manager() {
         {selectedItem === "전체통계" && <TotalManagement />}
         {selectedItem === "회원관리" && <UserManagement />}
         {selectedItem === "카테고리 관리" && <CategoryManagement />}
+        {selectedItem === "마켓 관리" && <MarketManagement />}
         {selectedItem === "상품관리" && <ProductManagement />}
         {selectedItem === "주문관리" && <OrderManagement />}
         {selectedItem === "대시보드" && <Dashboard />}
