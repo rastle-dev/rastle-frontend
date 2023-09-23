@@ -5,12 +5,15 @@ import Input from "@/components/common/Input";
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-
+  //height: 55rem;
+  //overflow: scroll; // 세로 스크롤 사용
+  padding-right: 1rem;
   h2 {
     font-size: 1rem;
     flex-shrink: 0;
     font-weight: 600;
   }
+  margin-bottom: 10rem;
 `;
 
 export const Title = styled.h1`
@@ -85,6 +88,12 @@ export const SignupButton = styled(Button)`
   width: 35rem;
   height: 4.375rem;
   flex-shrink: 0;
+  //color: white;
+  //background-color: black;
+  //&:hover {
+  //  color: white;
+  //  background-color: black;
+  //}
 `;
 
 export const StyledInput = styled(Input)`

@@ -52,12 +52,6 @@ export default function Signup() {
 
   const inputData: InputProps[] = [
     {
-      label: "성함",
-      size: 35,
-      placeholder: "성함을 입력해주세요",
-      onChange: onChangeUserName,
-    },
-    {
       label: "이메일주소",
       size: 28.75,
       placeholder: "예) rastle@rastle.com",
@@ -113,6 +107,12 @@ export default function Signup() {
           ? "비밀번호가 일치하지 않습니다."
           : "",
       inValid: password !== passwordCheck && passwordCheck.length > 0,
+    },
+    {
+      label: "이름",
+      size: 35,
+      placeholder: "예) 홍레슬",
+      onChange: onChangeUserName,
     },
     {
       label: "휴대폰 번호",

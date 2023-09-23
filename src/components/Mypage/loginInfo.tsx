@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import * as S from "@/styles/login/index.styles";
-import useLogin from "@/hooks/useLogin";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import media from "@/styles/media";
+import useMypage from "@/hooks/useMypage";
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,8 +71,7 @@ const DeleteButton = styled(Button)`
   }
 `;
 export default function LoginInfo() {
-  const { email, onChangeEmail, password, onChangePassword, mutateLogin } =
-    useLogin();
+  const { email, password, onChangePassword } = useMypage();
   const inputs = [
     {
       label: "이메일 주소",
@@ -91,6 +90,7 @@ export default function LoginInfo() {
       onChange: onChangePassword,
     },
   ];
+  console.log(password);
   return (
     <div>
       <h2>로그인 정보</h2>
