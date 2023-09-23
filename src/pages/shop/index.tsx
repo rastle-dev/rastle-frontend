@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
+import SwiperComponent from "@/components/Shop/codySwiper";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 
@@ -88,9 +89,13 @@ export default function Shop() {
       </S.Header>
       <S.Line />
       {activeCategory === "1차 마켓" && (
-        <S.FirstMarketDescription>
-          1차 마켓 오픈 ( 8.12 ~ 8.15 ) 🔥
-        </S.FirstMarketDescription>
+        <S.CurrentMarketWrapper>
+          <S.FirstMarketDescription>
+            1차 마켓 : 캐주얼한 꾸안꾸 🤘
+          </S.FirstMarketDescription>
+          <SwiperComponent />
+          <h2>제품 정보</h2>
+        </S.CurrentMarketWrapper>
       )}
       <S.ProductList>
         {filteredProducts.map((item) => (

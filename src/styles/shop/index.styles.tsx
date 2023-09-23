@@ -27,10 +27,19 @@ export const Line = styled.div`
   //padding-top: 20.4rem;
   width: 100%;
 `;
+export const CurrentMarketWrapper = styled.div`
+  width: 88%;
+  h2 {
+    padding-top: 4rem;
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 0;
+  }
+`;
 export const FirstMarketDescription = styled.div`
   padding-top: 3rem;
   width: 88%;
-  font-weight: 200;
+  font-weight: 400;
   ${media.xsmall} {
     width: 95%;
   }
