@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useInput from "@/hooks/useInput";
 import {
   authSendEmail,
@@ -5,7 +6,6 @@ import {
   authCheckEmailDuplicate,
   authSignUp,
 } from "@/api/auth";
-import { useState } from "react";
 
 export default function useSignup() {
   const [username, onChangeUserName] = useInput("");
@@ -38,7 +38,7 @@ export default function useSignup() {
     resetEmailMessage(); // Reset emailMessage
   };
 
-  /** TODO:) 백엔드 data 수정하면 고쳐야함*/
+  /** TODO:) 백엔드 data 수정하면 고쳐야함 */
   const checkEmailDuplicated = async () => {
     const data = await authCheckEmailDuplicate(email);
     if (data.data) {

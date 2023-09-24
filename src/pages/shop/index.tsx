@@ -94,7 +94,7 @@ export default function Shop() {
       : ProductList.filter((p) => p.category === activeCategory);
 
   console.log("marketImagesData", marketImagesData?.data[19].imageUrls);
-  console.log("currentMarketData", currentMarketData?.data.content[0]);
+  console.log("currentMarketData", currentMarketData);
 
   return (
     <S.Container>
