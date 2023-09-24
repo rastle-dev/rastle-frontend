@@ -1,39 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
-import { authLogin, authLogout } from "@/api/auth";
+import { authLogout, changePassword, deletMe } from "@/api/auth";
 import PATH from "@/constants/path";
-import errorMsg from "@/components/Toast/error";
 import toastMsg from "@/components/Toast";
+import errorMsg from "@/components/Toast/error";
 
 export default function useMypage() {
   const router = useRouter();
-  const [password, onChangePassword] = useInput("");
   const [email, onChangeEmail] = useInput("");
+  const [clickable, setClickable] = useState(false);
 
-  // yslim162@naver.com
-  const mutateLogin = useMutation(["login"], authLogin, {
-    onSuccess: async (response) => {
-      // HTTP 응답에서 "Authorization" 헤더 값을 추출
-      const token = response.authorization.replace("Bearer ", "");
-      localStorage.setItem("accessToken", token);
-      // toastMsg("로그인 성공!");
-      router.push(PATH.HOME);
-    },
-    onError: ({
-      response: {
-        data: { errorCode, message },
-      },
-    }) => {
-      toast.dismiss();
-      errorMsg("이메일 및 비밀번호를 확인해주세요");
-      console.log(`${errorCode} / ${message}`);
-    },
-  });
   const logout = async () => {
     try {
-      console.log("local", localStorage);
       await authLogout();
       localStorage.clear();
       toastMsg("로그아웃 되었습니다!");
@@ -43,12 +24,38 @@ export default function useMypage() {
     }
   };
 
+  const mutateChangePassword = useMutation(["changePassword"], changePassword, {
+    onSuccess: async () => {
+      toastMsg("비밀번호가 변경되었습니다!");
+    },
+    onError: ({
+      response: {
+        data: { errorCode, message },
+      },
+    }) => {
+      toast.dismiss();
+      errorMsg("새로운 비밀번호를 다시 입력해주세요.");
+      console.log(`${errorCode} / ${message}`);
+    },
+  });
+  const deleteUser = async () => {
+    try {
+      await deletMe();
+      toastMsg("회원 탈퇴가 완료되었습니다.");
+      localStorage.clear();
+      router.push(PATH.HOME);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return {
-    mutateLogin,
-    password,
-    onChangePassword,
     email,
     onChangeEmail,
     logout,
+    clickable,
+    setClickable,
+    mutateChangePassword,
+    deleteUser,
   };
 }

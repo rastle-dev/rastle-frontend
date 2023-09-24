@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
+import SwiperComponent from "@/components/Shop/codySwiper";
+import useShop from "@/hooks/useShop";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { getMarketImages, loadCurrentMarket } from "@/api/shop";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 
@@ -66,6 +71,18 @@ const ProductList: ProductItem[] = [
 ];
 export default function Shop() {
   const [activeCategory, setActiveCategory] = useState<ProductCategory>("전체");
+  // const { mutateMarketImages, mutateCurrentMarket } = useShop();
+
+  const { data: marketImagesData } = useQuery(
+    [QUERYKEYS.LOAD_MARKET_IMAGES],
+    getMarketImages,
+  );
+
+  const { data: currentMarketData } = useQuery(
+    [QUERYKEYS.LOAD_CURRENT_MARKET],
+    loadCurrentMarket,
+  );
+
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -75,6 +92,9 @@ export default function Shop() {
     activeCategory === "전체"
       ? ProductList
       : ProductList.filter((p) => p.category === activeCategory);
+
+  console.log("marketImagesData", marketImagesData?.data[19].imageUrls);
+  console.log("currentMarketData", currentMarketData);
 
   return (
     <S.Container>
@@ -88,16 +108,20 @@ export default function Shop() {
       </S.Header>
       <S.Line />
       {activeCategory === "1차 마켓" && (
-        <S.FirstMarketDescription>
-          1차 마켓 오픈 ( 8.12 ~ 8.15 ) 🔥
-        </S.FirstMarketDescription>
+        <S.CurrentMarketWrapper>
+          <S.FirstMarketDescription>
+            1차 마켓 : {marketImagesData.data[19].description}
+          </S.FirstMarketDescription>
+          <SwiperComponent imgUrls={marketImagesData.data[19].imageUrls} />
+          <h2>제품 정보</h2>
+        </S.CurrentMarketWrapper>
       )}
       <S.ProductList>
-        {filteredProducts.map((item) => (
+        {currentMarketData?.data.content.map((item: any) => (
           <ItemElement
             key={item.productName}
-            defaultImg={item.defaultImg}
-            hoverImg={item.hoverImg}
+            defaultImg={item.mainThumbnail}
+            hoverImg={item.subThumbnail}
             productName={item.productName}
             price={item.price}
             category={item.category}

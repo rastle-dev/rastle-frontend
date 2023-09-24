@@ -28,7 +28,6 @@ export default function Signup() {
     onChangeUserName,
     onChangeEmailHandler,
     email,
-    onChangeEmail,
     onChangeCode,
     password,
     onChangePassword,

@@ -1,10 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
+import QUERYKEYS from "@/constants/querykey";
+import { deletMe, loadMe } from "@/api/auth";
+import useSignup from "@/hooks/useSignup";
+
+interface ButtonProps {
+  inValid: boolean;
+}
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,10 +21,10 @@ const Wrapper = styled.div`
   padding-top: 4rem;
   width: 50%;
 `;
-const Box = styled.div`
+const Box = styled.div<ButtonProps>`
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: ${({ inValid }) => (inValid ? "center" : "flex-end")};
 `;
 const PasswordInput = styled(Input)`
   width: 95%;
@@ -71,33 +79,56 @@ const DeleteButton = styled(Button)`
   }
 `;
 export default function LoginInfo() {
-  const { email, password, onChangePassword } = useMypage();
+  const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
+    useSignup();
+  const { mutateChangePassword, deleteUser } = useMypage();
+  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  console.log("회원정보", data);
+  console.log("비번", passwordCheck);
   const inputs = [
     {
-      label: "이메일 주소",
-      value: email,
+      label: "이름",
+      value: data?.data.userName,
     },
     {
-      placeholder: "●●●●●●●●",
+      label: "이메일 주소",
+      value: data?.data.email,
+    },
+    {
+      placeholder: "새로운 비밀번호를 입력해주세요!",
       label: "비밀번호",
       type: "password",
       onChange: onChangePassword,
+      message:
+        password.length > 0 && password.length < 8
+          ? "영문, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상 16자 이하 입력해주세요."
+          : "",
+      inValid: password.length > 0 && password.length < 8,
+    },
+    {
+      label: "비밀번호 확인",
+      type: "password",
       buttonTitle: "변경",
+      onChange: onChangePasswordCheck,
+      message:
+        password !== passwordCheck && passwordCheck.length > 0
+          ? "비밀번호가 일치하지 않습니다."
+          : "",
+      inValid: password !== passwordCheck && passwordCheck.length > 0,
     },
     {
       label: "전화번호",
-      value: "010-3009-2255",
+      value: data?.data.phoneNumber,
       onChange: onChangePassword,
     },
   ];
-  console.log(password);
   return (
     <div>
       <h2>로그인 정보</h2>
       {inputs.map((input) => (
         <Wrapper>
           {input.buttonTitle ? (
-            <Box>
+            <Box inValid={input.inValid}>
               <PasswordInput
                 key={input.label}
                 placeholder={input.placeholder}
@@ -105,8 +136,18 @@ export default function LoginInfo() {
                 type={input.type}
                 value={input.value}
                 onChange={input.onChange}
+                message={input.message}
+                inValid={input.inValid}
               />
-              <PasswordChangeButton title="변경" />
+              <PasswordChangeButton
+                title="변경"
+                onClick={() => {
+                  mutateChangePassword.mutate({ newPassword: password });
+                }}
+                disabled={
+                  !(password === passwordCheck && passwordCheck.length > 0)
+                }
+              />
             </Box>
           ) : (
             <S.StyledInput
@@ -116,12 +157,14 @@ export default function LoginInfo() {
               type={input.type}
               value={input.value}
               onChange={input.onChange}
+              message={input.message}
+              inValid={input.inValid}
             />
           )}
         </Wrapper>
       ))}
       <DeleteButtonWrapper>
-        <DeleteButton title="탈퇴하기" />
+        <DeleteButton title="탈퇴하기" onClick={deleteUser} />
       </DeleteButtonWrapper>
     </div>
   );

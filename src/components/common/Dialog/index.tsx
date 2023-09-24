@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Icons from "../../../constants/icon";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 interface DialogProps {

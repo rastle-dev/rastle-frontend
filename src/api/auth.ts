@@ -14,7 +14,7 @@ export const authLogout = async () => {
   return data;
 };
 
-//회원가입
+// 회원가입
 export const authSendEmail = async (emailData: object) => {
   const { data } = await unAuthorizationClient.post(
     API.EMAILCERTIFICATE,
@@ -41,5 +41,22 @@ export const authCheckEmailDuplicate = async (emailData: object) => {
 
 export const authSignUp = async (userSignUpData: object) => {
   const { data } = await unAuthorizationClient.post(API.SIGNUP, userSignUpData);
+  return data;
+};
+export const loadMe = async () => {
+  const { data } = await authorizationClient.get(API.MEMBER);
+  return data;
+};
+
+export const changePassword = async (newPassword: any) => {
+  const { data } = await authorizationClient.put(
+    API.CHANGEPASSWORD,
+    newPassword,
+  );
+  return data;
+};
+
+export const deletMe = async () => {
+  const { data } = await authorizationClient.delete(API.MEMBER);
   return data;
 };
