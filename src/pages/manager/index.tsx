@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import media from "@/styles/media";
-import LazyLink from "@/components/LazyLink";
 import UserManagement from "@/components/Manager/UserManagement";
 import CategoryManagement from "@/components/Manager/CategoryManagement";
 import ProductManagement from "@/components/Manager/ProductManagement";
