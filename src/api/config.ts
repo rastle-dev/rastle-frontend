@@ -10,6 +10,7 @@ const LOGOUT = "logout";
 const MARKET = "/market";
 const PRODUCT = "/product";
 const CURRENTMARKET = "/currentMarket";
+const MEMBER = "/member";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -24,5 +25,6 @@ const API = {
   MARKET: `${MARKET}`,
   PRODUCT: `${PRODUCT}`,
   CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
+  MEMBER: `${MEMBER}`,
 };
 export default API;

@@ -43,3 +43,7 @@ export const authSignUp = async (userSignUpData: object) => {
   const { data } = await unAuthorizationClient.post(API.SIGNUP, userSignUpData);
   return data;
 };
+export const loadMe = async () => {
+  const { data } = await authorizationClient.post(API.SIGNUP);
+  return data;
+};
