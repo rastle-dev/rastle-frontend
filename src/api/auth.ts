@@ -44,6 +44,14 @@ export const authSignUp = async (userSignUpData: object) => {
   return data;
 };
 export const loadMe = async () => {
-  const { data } = await authorizationClient.post(API.SIGNUP);
+  const { data } = await authorizationClient.get(API.MEMBER);
+  return data;
+};
+
+export const changePassword = async (newPassword: any) => {
+  const { data } = await authorizationClient.put(
+    API.CHANGEPASSWORD,
+    newPassword,
+  );
   return data;
 };

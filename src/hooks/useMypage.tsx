@@ -1,19 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
-import { authLogin, authLogout } from "@/api/auth";
+import { authLogout, changePassword } from "@/api/auth";
 import PATH from "@/constants/path";
-import errorMsg from "@/components/Toast/error";
 import toastMsg from "@/components/Toast";
+import errorMsg from "@/components/Toast/error";
 
 export default function useMypage() {
   const router = useRouter();
-  const [password, onChangePassword] = useInput("");
   const [email, onChangeEmail] = useInput("");
+  const [clickable, setClickable] = useState(false);
+
   const logout = async () => {
     try {
-      console.log("local", localStorage);
       await authLogout();
       localStorage.clear();
       toastMsg("로그아웃 되었습니다!");
@@ -23,11 +24,36 @@ export default function useMypage() {
     }
   };
 
+  const mutateChangePassword = useMutation(["changePassword"], changePassword, {
+    onSuccess: async () => {
+      toastMsg("비밀번호가 변경되었습니다!");
+    },
+    onError: ({
+      response: {
+        data: { errorCode, message },
+      },
+    }) => {
+      toast.dismiss();
+      errorMsg("새로운 비밀번호를 다시 입력해주세요.");
+      console.log(`${errorCode} / ${message}`);
+    },
+  });
+  // const deleteUser = async () => {
+  //   try {
+  //     await deleteMe();
+  //     toastMsg("회원 탈퇴가 완료되었습니다.");
+  //     localStorage.clear();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   return {
-    password,
-    onChangePassword,
     email,
     onChangeEmail,
     logout,
+    clickable,
+    setClickable,
+    mutateChangePassword,
   };
 }
