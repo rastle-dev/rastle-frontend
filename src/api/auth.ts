@@ -14,7 +14,7 @@ export const authLogout = async () => {
   return data;
 };
 
-//회원가입
+// 회원가입
 export const authSendEmail = async (emailData: object) => {
   const { data } = await unAuthorizationClient.post(
     API.EMAILCERTIFICATE,

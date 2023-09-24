@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 // 슬라이드 데이터
-const slides = ["a", "b", "c", "d", "e", "f", "g"];
 
 const SwiperContainer = styled.div`
   width: 88%;
@@ -43,16 +42,28 @@ const SwiperSlide = styled.div`
   font-size: 24px;
   margin-right: 10px; /* 슬라이드 간의 간격 설정 */
 `;
+const MarketIMG = styled.img`
+  width: 100%;
+  height: auto;
+  aspect-ratio: 0.77;
+`;
 
-const SwiperComponent: React.FC = () => {
+interface SwiperComponentProps {
+  imgUrls: string;
+}
+
+function SwiperComponent({ imgUrls }: SwiperComponentProps) {
+  const slides = imgUrls.split(",");
   return (
     <SwiperContainer>
       <SwiperWrapper>
-        {slides.map((slide) => (
-          <SwiperSlide key={slide}>{`Slide ${slide}`}</SwiperSlide>
+        {slides.map((slide, index) => (
+          <SwiperSlide key={slide}>
+            <MarketIMG src={slide} alt={`마켓제품 ${index + 1}`} />
+          </SwiperSlide>
         ))}
       </SwiperWrapper>
     </SwiperContainer>
   );
-};
+}
 export default SwiperComponent;

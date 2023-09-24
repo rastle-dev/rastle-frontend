@@ -7,6 +7,9 @@ const EMAILCHECK = "emailCertificationCheck";
 const EMAILDUPLICATE = "checkEmail/";
 const SIGNUP = "signup";
 const LOGOUT = "logout";
+const MARKET = "/market";
+const PRODUCT = "/product";
+const CURRENTMARKET = "/currentMarket";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -18,5 +21,8 @@ const API = {
   EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
   SIGNUP: `${AUTH}${SIGNUP}`,
   LOGOUT: `${AUTH}${LOGOUT}`,
+  MARKET: `${MARKET}`,
+  PRODUCT: `${PRODUCT}`,
+  CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
 };
 export default API;
