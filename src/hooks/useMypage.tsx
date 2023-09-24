@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
-import { authLogout, changePassword } from "@/api/auth";
+import { authLogout, changePassword, deletMe } from "@/api/auth";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
@@ -38,15 +38,16 @@ export default function useMypage() {
       console.log(`${errorCode} / ${message}`);
     },
   });
-  // const deleteUser = async () => {
-  //   try {
-  //     await deleteMe();
-  //     toastMsg("회원 탈퇴가 완료되었습니다.");
-  //     localStorage.clear();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const deleteUser = async () => {
+    try {
+      await deletMe();
+      toastMsg("회원 탈퇴가 완료되었습니다.");
+      localStorage.clear();
+      router.push(PATH.HOME);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     email,
@@ -55,5 +56,6 @@ export default function useMypage() {
     clickable,
     setClickable,
     mutateChangePassword,
+    deleteUser,
   };
 }

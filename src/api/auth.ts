@@ -55,3 +55,8 @@ export const changePassword = async (newPassword: any) => {
   );
   return data;
 };
+
+export const deletMe = async () => {
+  const { data } = await authorizationClient.delete(API.MEMBER);
+  return data;
+};

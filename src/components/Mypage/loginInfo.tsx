@@ -7,7 +7,7 @@ import Input from "@/components/common/Input";
 import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
 import QUERYKEYS from "@/constants/querykey";
-import { loadMe } from "@/api/auth";
+import { deletMe, loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 
 interface ButtonProps {
@@ -81,7 +81,7 @@ const DeleteButton = styled(Button)`
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
-  const { mutateChangePassword } = useMypage();
+  const { mutateChangePassword, deleteUser } = useMypage();
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   console.log("회원정보", data);
   console.log("비번", passwordCheck);
@@ -164,7 +164,7 @@ export default function LoginInfo() {
         </Wrapper>
       ))}
       <DeleteButtonWrapper>
-        <DeleteButton title="탈퇴하기" />
+        <DeleteButton title="탈퇴하기" onClick={deleteUser} />
       </DeleteButtonWrapper>
     </div>
   );
