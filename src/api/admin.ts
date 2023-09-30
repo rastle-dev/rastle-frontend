@@ -8,6 +8,17 @@ export const adminCreateCategory = async (categoryData: object) => {
   return data;
 };
 
+export const adminUpdateCategory = async (
+  categoryId: number | undefined,
+  categoryData: object,
+) => {
+  const { data } = await authorizationClient.patch(
+    `${API.CATEGORY}/${categoryId}`,
+    categoryData,
+  );
+  return data;
+};
+
 export const adminCreateMarket = async (marketData: object) => {
   const { data } = await authorizationClient.post(API.CREATEMARKET, marketData);
   return data;

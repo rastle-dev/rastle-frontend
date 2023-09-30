@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { adminGetCategory } from "@/api/admin";
 
-const Title = styled.div`
+const Title = styled.h1`
   margin: 0;
   font-size: 2.2rem;
   padding-bottom: 2rem;

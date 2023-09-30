@@ -13,7 +13,6 @@ export default function useCreateCategory() {
         const data = await adminCreateCategory({ name });
         console.log(data);
         alert("카테고리 생성을 성공했습니다");
-        setName("");
       } else {
         alert("카테고리 추가가 취소되었습니다");
       }

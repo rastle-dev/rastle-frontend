@@ -16,6 +16,7 @@ const MAINTHUMBNAIL = "/mainThumbnail";
 const SUBTHUMBNAIL = "/subThumbnail";
 const MAINIMAGES = "/mainImages";
 const DETAILIMAGES = "/detailImages";
+const UPDATECATEGORY = "/detailImages";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
