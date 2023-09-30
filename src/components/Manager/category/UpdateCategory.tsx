@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import useCreateCategory from "@/hooks/manager/category/useCreateCategory";
 import Input from "@/components/common/Input";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -20,15 +19,6 @@ const CategorySubtitle = styled.div`
   font-size: 1.7rem;
   color: red;
   font-weight: 400;
-`;
-
-const CategoryDetail = styled.div`
-  margin: 0;
-  padding-bottom: 1rem;
-
-  label {
-    margin-right: 0.5rem;
-  }
 `;
 
 const CategoryList = styled.ul`
@@ -64,6 +54,7 @@ export default function UpdateCategory() {
     onChangeName,
     handleCategoryClick,
     selectedCategory,
+    deleteCategory,
   } = useUpdateCategory();
 
   const { data: categoryData } = useQuery(
@@ -75,10 +66,11 @@ export default function UpdateCategory() {
 
   return (
     <div>
-      <Title>카테고리 수정</Title>
+      <Title>카테고리 수정/삭제</Title>
       <CategorySubtitle>수정할 카테고리를 선택하세요</CategorySubtitle>
       <CategoryList>
         {categoryData?.data.map((category: Category) => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
           <li key={category.id} onClick={() => handleCategoryClick(category)}>
             {category.name}
           </li>
@@ -89,6 +81,9 @@ export default function UpdateCategory() {
       <StyledInput size={30} onChange={onChangeName} />
       <button type="button" onClick={updateCategory}>
         카테고리 수정
+      </button>
+      <button type="button" onClick={deleteCategory}>
+        카테고리 삭제
       </button>
     </div>
   );

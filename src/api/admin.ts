@@ -1,7 +1,7 @@
 // import { unAuthorizationClient } from ".";
 // 관리자 api
-import { authorizationClient, unAuthorizationClient } from ".";
 import API from "@/api/config";
+import { authorizationClient } from ".";
 
 export const adminCreateCategory = async (categoryData: object) => {
   const { data } = await authorizationClient.post(API.CATEGORY, categoryData);
@@ -15,6 +15,13 @@ export const adminUpdateCategory = async (
   const { data } = await authorizationClient.patch(
     `${API.CATEGORY}/${categoryId}`,
     categoryData,
+  );
+  return data;
+};
+
+export const adminDeleteCategory = async (categoryId: number | undefined) => {
+  const { data } = await authorizationClient.delete(
+    `${API.CATEGORY}/${categoryId}`,
   );
   return data;
 };

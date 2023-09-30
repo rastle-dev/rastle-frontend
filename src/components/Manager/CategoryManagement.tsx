@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TotalManagement from "@/components/Manager/TotalManagement";
-import UserManagement from "@/components/Manager/UserManagement";
-import ProductManagement from "@/components/Manager/ProductManagement";
-import OrderManagement from "@/components/Manager/OrderManagement";
-import Dashboard from "@/components/Manager/Dashboard";
 import CreateCategory from "@/components/Manager/category/CreateCategory";
 import UpdateCategory from "@/components/Manager/category/UpdateCategory";
-import DeleteCategory from "@/components/Manager/category/DeleteCategory";
 
 const Title = styled.div`
   margin: 0;
@@ -46,8 +40,7 @@ export const ManageMentDetail = styled.div`
 
 const managementList = [
   { name: "카테고리 추가" },
-  { name: "카테고리 수정" },
-  { name: "카테고리 삭제" },
+  { name: "카테고리 수정/삭제" },
 ];
 
 export default function CategoryManagement() {
@@ -69,8 +62,7 @@ export default function CategoryManagement() {
       </ManageList>
       <ManageMentDetail>
         {selectedItem === "카테고리 추가" && <CreateCategory />}
-        {selectedItem === "카테고리 수정" && <UpdateCategory />}
-        {selectedItem === "카테고리 삭제" && <DeleteCategory />}
+        {selectedItem === "카테고리 수정/삭제" && <UpdateCategory />}
       </ManageMentDetail>
     </div>
   );

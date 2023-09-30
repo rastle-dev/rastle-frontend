@@ -2,7 +2,7 @@ import { adminCreateCategory } from "@/api/admin";
 import useInput from "@/hooks/useInput";
 
 export default function useCreateCategory() {
-  const [name, onChangeName, setName] = useInput("");
+  const [name, onChangeName] = useInput("");
 
   console.log(name);
   const createCategory = async () => {

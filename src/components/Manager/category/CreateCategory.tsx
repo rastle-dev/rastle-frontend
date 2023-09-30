@@ -21,6 +21,28 @@ const CategoryDetail = styled.div`
   }
 `;
 
+const CategoryList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  li {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+    &:hover {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+  }
+`;
+
+const StyledInput = styled(Input)`
+  font-size: 2rem;
+`;
+
 interface Category {
   id: number;
   name: string;
@@ -39,15 +61,15 @@ export default function CreateCategory() {
   return (
     <div>
       <Title>카테고리 추가</Title>
-      <CategoryDetail>
-        <h3>현재 카테고리</h3>
+      <h3>현재 카테고리</h3>
+      <CategoryList>
         {categoryData?.data.map((category: Category) => (
           <li key={category.id}>{category.name}</li>
         ))}
-      </CategoryDetail>
+      </CategoryList>
       <p>상의, 하의, 악세서리, 아우터 등을 추가하세요</p>
       <CategoryDetail>
-        <Input size={30} onChange={onChangeName} />
+        <StyledInput size={30} onChange={onChangeName} />
       </CategoryDetail>
       <button type="button" onClick={createCategory}>
         카테고리 생성
