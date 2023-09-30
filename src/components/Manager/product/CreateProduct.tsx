@@ -1,5 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Input from "@/components/common/Input";
+import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
+import {
+  adminAddDetailImage,
+  adminAddMainImage,
+  adminAddMainThumbnailImage,
+  adminAddSubThumbnailImage,
+  adminGetCategory,
+  adminGetMarket,
+} from "@/api/admin";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
 
 const Title = styled.div`
   margin: 0;
@@ -154,43 +166,34 @@ const PreviewImages = styled.div`
 `;
 
 export default function CreateProduct() {
-  const [productName, setProductName] = useState("");
-  const [category1, setCategory1] = useState("");
-  const [category2, setCategory2] = useState("");
-  const [hasEvent, setHasEvent] = useState(false);
-  const [productPrice, setProductPrice] = useState("");
-  const [discountPercent, setDiscountPercent] = useState("");
-  const [colors, setColors] = useState<string[]>([""]);
-  const [sizes, setSizes] = useState<string[]>([""]);
-  const [thumbnail, setThumbnail] = useState("");
-  const [secondImage, setSecondImage] = useState("");
-  const [additionalImages, setAdditionalImages] = useState<string[]>([]);
+  const {
+    onChangeName,
+    onChangePrice,
+    onChangeDiscount,
+    eventCategory,
+    marketId,
+    categoryId,
+    handleEventChange,
+    handleMarketChange,
+    handleCategoryChange,
+    colors,
+    setColors,
+    sizes,
+    setSizes,
+    showImageUpload,
+    onChangeDisplayOrder,
+    createProduct,
+    productId,
+  } = useCreateProduct();
 
-  const handleProductNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductName(e.target.value);
-  };
-
-  const handleCategory1Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory1(e.target.value);
-  };
-
-  const handleCategory2Change = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory2(e.target.value);
-  };
-
-  const handleEventChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHasEvent(e.target.checked);
-  };
-
-  const handleProductPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProductPrice(e.target.value);
-  };
-
-  const handleDiscountPercentChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setDiscountPercent(e.target.value);
-  };
+  const [mainThumbnail, setMainThumbnail] = useState("");
+  const [mainThumbnailFile, setMainThumbnailFile] = useState<File[]>([]);
+  const [subThumbnail, setSubThumbnail] = useState("");
+  const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
+  const [mainImages, setMainImages] = useState<string[]>([]);
+  const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
+  const [detailImages, setDetailImages] = useState<string[]>([]);
+  const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
 
   const handleColorChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -218,39 +221,13 @@ export default function CreateProduct() {
     setSizes([...sizes, ""]);
   };
 
-  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setThumbnail(reader.result as string);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSecondImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setSecondImage(reader.result as string);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleAdditionalImagesChange = (
+  const handleMainThumbnailChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { files } = e.target;
 
     if (files && files.length > 0) {
-      const newImages: string[] = [...additionalImages];
+      const newImages: File[] = [...mainThumbnailFile];
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -259,8 +236,10 @@ export default function CreateProduct() {
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(reader.result as string);
-            setAdditionalImages(newImages);
+            newImages.push(file);
+
+            setMainThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
+            setMainThumbnail(reader.result as string);
           };
 
           reader.readAsDataURL(file);
@@ -269,6 +248,166 @@ export default function CreateProduct() {
     }
   };
 
+  const addMainThumbnailImages = async () => {
+    const formData = new FormData();
+
+    // 이미지 파일들을 FormData에 추가
+    for (let i = 0; i < mainThumbnailFile.length; i++) {
+      formData.append("mainThumbnail", mainThumbnailFile[i]);
+    }
+
+    try {
+      // 서버로 FormData를 포함한 POST 요청 보내기
+      const data = await adminAddMainThumbnailImage(productId, formData);
+
+      // 서버 응답 처리
+      console.log(data);
+    } catch (error) {
+      // 오류 처리
+      console.error("이미지 업로드 오류:", error);
+    }
+  };
+
+  const handleSubThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const newImages: File[] = [...subThumbnailFile];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            newImages.push(file);
+
+            setSubThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
+            setSubThumbnail(reader.result as string);
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  };
+
+  const addSubThumbnailImages = async () => {
+    const formData = new FormData();
+
+    // 이미지 파일들을 FormData에 추가
+    for (let i = 0; i < subThumbnailFile.length; i++) {
+      formData.append("subThumbnail", subThumbnailFile[i]);
+    }
+
+    try {
+      // 서버로 FormData를 포함한 POST 요청 보내기
+      const data = await adminAddSubThumbnailImage(productId, formData);
+
+      // 서버 응답 처리
+      console.log(data);
+    } catch (error) {
+      // 오류 처리
+      console.error("이미지 업로드 오류:", error);
+    }
+  };
+
+  const handleMainImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const newImages: File[] = [...mainImageFiles];
+      const newPreviews: string[] = [...mainImages];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            newImages.push(file);
+            newPreviews.push(reader.result as string);
+
+            setMainImageFiles(newImages.slice(0, 10)); // 최대 3개까지만 유지
+            setMainImages(newPreviews.slice(0, 10));
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  };
+  const addMainImages = async () => {
+    const formData = new FormData();
+
+    // 이미지 파일들을 FormData에 추가
+    for (let i = 0; i < mainImageFiles.length; i++) {
+      formData.append("mainImages", mainImageFiles[i]);
+    }
+
+    try {
+      // 서버로 FormData를 포함한 POST 요청 보내기
+      const data = await adminAddMainImage(productId, formData);
+
+      // 서버 응답 처리
+      console.log(data);
+    } catch (error) {
+      // 오류 처리
+      console.error("이미지 업로드 오류:", error);
+    }
+  };
+
+  const handleDetailImagesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (files && files.length > 0) {
+      const newImages: File[] = [...detailImageFiles];
+      const newPreviews: string[] = [...detailImages];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onloadend = () => {
+            newImages.push(file);
+            newPreviews.push(reader.result as string);
+
+            setDetailImageFiles(newImages); // 최대 3개까지만 유지
+            setDetailImages(newPreviews);
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+  };
+
+  const addDetailImages = async () => {
+    const formData = new FormData();
+
+    // 이미지 파일들을 FormData에 추가
+    for (let i = 0; i < detailImageFiles.length; i++) {
+      formData.append("detailImages", detailImageFiles[i]);
+    }
+
+    try {
+      // 서버로 FormData를 포함한 POST 요청 보내기
+      const data = await adminAddDetailImage(productId, formData);
+
+      // 서버 응답 처리
+      console.log(data);
+    } catch (error) {
+      // 오류 처리
+      console.error("이미지 업로드 오류:", error);
+    }
+  };
+
+  console.log(sizes);
+  console.log(colors);
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -276,64 +415,72 @@ export default function CreateProduct() {
     // 상품 정보 및 이미지 등을 서버로 데이터를 전송하거나 상태를 업데이트하세요.
   };
 
+  console.log(eventCategory);
+
+  const { data: marketData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_MARKET],
+    adminGetMarket,
+  );
+
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
+  );
+
+  console.log(marketData);
+  console.log(categoryData);
   return (
     <div>
       <Title>새로운 상품 추가</Title>
-      <ProductDetail>
-        <label htmlFor="productName">상품명:</label>
-        <ProductNameInput
-          type="text"
-          id="productName"
-          value={productName}
-          onChange={(e) => handleProductNameChange(e)}
-        />
-      </ProductDetail>
-      <ProductDetail>
-        <label htmlFor="productPrice">일반 가격:</label>
-        <ProductPriceInput
-          type="number"
-          id="productPrice"
-          value={productPrice}
-          onChange={(e) => handleProductPriceChange(e)}
-        />
-      </ProductDetail>
-      <ProductDetail>
-        <label htmlFor="discountPercent">할인 퍼센트:</label>
-        <DiscountPercentInput
-          type="number"
-          id="discountPercent"
-          value={discountPercent}
-          onChange={(e) => handleDiscountPercentChange(e)}
-        />
-      </ProductDetail>
+      <Input label="상품명" size={30} onChange={onChangeName} />
+      <Input
+        type="number"
+        label="일반가격"
+        size={30}
+        onChange={onChangePrice}
+      />
+      <Input
+        type="number"
+        label="할인퍼센트"
+        size={30}
+        onChange={onChangeDiscount}
+      />
+      <Input
+        type="number"
+        label="출력순서"
+        size={30}
+        onChange={onChangeDisplayOrder}
+      />
       <ProductDetail>
         <label>이벤트 유무:</label>
-        <EventCheckbox
-          type="checkbox"
-          checked={hasEvent}
-          onChange={(e) => handleEventChange(e)}
-        />
+        <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
       </ProductDetail>
       <ProductDetail>
-        <label htmlFor="category1">카테고리 1 선택:</label>
+        <label htmlFor="category1">마켓 선택:</label>
         <ProductCategory1Select
           id="category1"
-          value={category1}
-          onChange={(e) => handleCategory1Change(e)}
+          value={marketId}
+          onChange={(e) => handleMarketChange(e)}
         >
-          <option value="category1-option1">카테고리 1 옵션 1</option>
-          <option value="category1-option2">카테고리 1 옵션 2</option>
+          {marketData?.data.map((market) => (
+            <option key={market.id} value={market.id}>
+              {market.name}
+            </option>
+          ))}
         </ProductCategory1Select>
       </ProductDetail>
       <ProductDetail>
-        <label htmlFor="category2">카테고리 2 선택:</label>
+        <label htmlFor="category2">카테고리 선택:</label>
         <ProductCategory2Select
           id="category2"
-          value={category2}
-          onChange={(e) => handleCategory2Change(e)}
+          value={categoryId}
+          onChange={(e) => handleCategoryChange(e)}
         >
-          <option value="category2-option1">카테고리 2 옵션 1</option>
-          <option value="category2-option2">카테고리 2 옵션 2</option>
+          {categoryData?.data.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
         </ProductCategory2Select>
       </ProductDetail>
       <ColorInputs>
@@ -362,56 +509,94 @@ export default function CreateProduct() {
         ))}
         <button onClick={addSizeInput}>사이즈 추가</button>
       </SizeInputs>
-      <ProductDetail>
-        <label>썸네일 지정:</label>
-        <ThumbnailInput
-          type="file"
-          accept="image/*"
-          onChange={handleThumbnailChange}
-        />
-        {thumbnail && (
-          <img
-            src={thumbnail}
-            alt="썸네일 이미지 미리보기"
-            style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
-          />
-        )}
-      </ProductDetail>
-      <ProductDetail>
-        <label>2번째 사진 지정:</label>
-        <SecondImageInput
-          type="file"
-          accept="image/*"
-          onChange={handleSecondImageChange}
-        />
-        {secondImage && (
-          <img
-            src={secondImage}
-            alt="2번째 이미지 미리보기"
-            style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
-          />
-        )}
-      </ProductDetail>
-      <ProductDetail>
-        <label>이미지 추가:</label>
-        <AdditionalImagesInput
-          type="file"
-          accept="image/*"
-          multiple // 여러 이미지 업로드 가능하도록
-          onChange={handleAdditionalImagesChange}
-        />
-        <PreviewImages>
-          {additionalImages.map((preview, index) => (
-            <img
-              key={index}
-              src={preview}
-              alt={`추가 이미지 미리보기 ${index}`}
-              style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
+
+      <button onClick={createProduct}>상품 생성</button>
+      {showImageUpload ? (
+        <div>
+          <ProductDetail>
+            <label>썸네일 지정:</label>
+            <ThumbnailInput
+              type="file"
+              accept="image/*"
+              onChange={handleMainThumbnailChange}
             />
-          ))}
-        </PreviewImages>
-      </ProductDetail>
-      <button onClick={handleSubmit}>상품 생성</button>
+            {mainThumbnail && (
+              <img
+                src={mainThumbnail}
+                alt="썸네일 이미지 미리보기"
+                style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
+              />
+            )}
+          </ProductDetail>
+          <button onClick={addMainThumbnailImages}>메인썸네일 추가하기</button>
+          <ProductDetail>
+            <label>2번째 사진 지정:</label>
+            <SecondImageInput
+              type="file"
+              accept="image/*"
+              onChange={handleSubThumbnailChange}
+            />
+            {subThumbnail && (
+              <img
+                src={subThumbnail}
+                alt="2번째 이미지 미리보기"
+                style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
+              />
+            )}
+          </ProductDetail>
+          <button onClick={addSubThumbnailImages}>서브썸네일 추가하기</button>
+          <ProductDetail>
+            <label>메인 이미지 추가:</label>
+            <AdditionalImagesInput
+              type="file"
+              accept="image/*"
+              multiple // 여러 이미지 업로드 가능하도록
+              onChange={handleMainImagesChange}
+            />
+            <PreviewImages>
+              {mainImages.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`추가 이미지 미리보기 ${index}`}
+                  style={{
+                    maxWidth: "200px",
+                    maxHeight: "250px",
+                    margin: "5px",
+                  }}
+                />
+              ))}
+            </PreviewImages>
+          </ProductDetail>
+          <button onClick={addMainImages}>메인 사진들(10장)추가하기</button>
+          <ProductDetail>
+            <label>디테일 이미지 추가:</label>
+            <AdditionalImagesInput
+              type="file"
+              accept="image/*"
+              multiple // 여러 이미지 업로드 가능하도록
+              onChange={handleDetailImagesChange}
+            />
+            <PreviewImages>
+              {detailImages.map((preview, index) => (
+                <img
+                  key={index}
+                  src={preview}
+                  alt={`추가 이미지 미리보기 ${index}`}
+                  style={{
+                    maxWidth: "200px",
+                    maxHeight: "250px",
+                    margin: "5px",
+                  }}
+                />
+              ))}
+            </PreviewImages>
+          </ProductDetail>
+          <button onClick={addDetailImages}>디테일 사진들 추가하기</button>
+          <br />
+          <button onClick={handleSubmit}>상품 생성</button>
+        </div>
+      ) : null}
     </div>
   );
 }

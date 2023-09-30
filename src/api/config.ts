@@ -11,6 +11,11 @@ const ADMIN = "/admin/";
 const CATEGORY = "category";
 const MARKET = "market";
 const IMAGES = "/images";
+const PRODUCT = "product";
+const MAINTHUMBNAIL = "/mainThumbnail";
+const SUBTHUMBNAIL = "/subThumbnail";
+const MAINIMAGES = "/mainImages";
+const DETAILIMAGES = "/detailImages";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -25,5 +30,12 @@ const API = {
   CATEGORY: `${ADMIN}${CATEGORY}`,
   CREATEMARKET: `${ADMIN}${MARKET}`,
   IMAGES: `${IMAGES}`,
+  GETCATEGORY: `/${CATEGORY}`,
+  GETMARKET: `/${MARKET}`,
+  CREATEPRODUCT: `${ADMIN}${PRODUCT}`,
+  MAINTHUMBNAIL: `${MAINTHUMBNAIL}`,
+  SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,
+  MAINIMAGES: `${MAINIMAGES}`,
+  DETAILIMAGES: `${DETAILIMAGES}`,
 };
 export default API;
