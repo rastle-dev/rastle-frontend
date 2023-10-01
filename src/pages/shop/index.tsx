@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
 import SwiperComponent from "@/components/Shop/codySwiper";
-import useShop from "@/hooks/useShop";
-import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { getMarketImages, loadCurrentMarket } from "@/api/shop";
+import {
+  getMarketImages,
+  loadCurrentMarket,
+  loadMarketProduct,
+} from "@/api/shop";
 
 type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
 
@@ -82,6 +85,10 @@ export default function Shop() {
     [QUERYKEYS.LOAD_CURRENT_MARKET],
     loadCurrentMarket,
   );
+  const { data: productData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT],
+    loadMarketProduct,
+  );
 
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);
@@ -93,8 +100,8 @@ export default function Shop() {
       ? ProductList
       : ProductList.filter((p) => p.category === activeCategory);
 
-  console.log("marketImagesData", marketImagesData?.data[19].imageUrls);
-  console.log("currentMarketData", currentMarketData);
+  // console.log("marketImagesData", marketImagesData?.data[19].imageUrls);
+  console.log("productData", productData);
 
   return (
     <S.Container>
