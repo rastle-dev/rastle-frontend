@@ -130,7 +130,7 @@ export default function UserManagement() {
           </tr>
         </TableHead>
         <tbody>
-          {userData.map((user: any) => (
+          {userData?.map((user: any) => (
             <TableRow key={user.id}>
               {columnHeaders.map((header) => (
                 <TableCell key={header}>
