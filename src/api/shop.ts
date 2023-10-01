@@ -10,3 +10,8 @@ export const loadCurrentMarket = async () => {
   const { data } = await unAuthorizationClient.get(API.CURRENTMARKET);
   return data;
 };
+
+export const loadMarketProduct = async () => {
+  const { data } = await unAuthorizationClient.get(API.PRODUCT);
+  return data;
+};

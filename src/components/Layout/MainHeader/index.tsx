@@ -56,7 +56,7 @@ export default function MainHeader() {
         </CenterElement>
         <RightElemet>
           <LazyLink href={PATH.LOGIN}>
-            <span>LOG IN</span>
+            <span>LOGIN</span>
           </LazyLink>
           <LazyLink href={PATH.CART}>
             <span>CART</span>
