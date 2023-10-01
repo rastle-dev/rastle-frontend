@@ -8,7 +8,7 @@ import {
   adminAddMainThumbnailImage,
   adminAddSubThumbnailImage,
   adminGetCategory,
-  adminGetMarket,
+  adminGetBundle,
 } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -417,9 +417,9 @@ export default function CreateProduct() {
 
   console.log(eventCategory);
 
-  const { data: marketData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_MARKET],
-    adminGetMarket,
+  const { data: bundleData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_SET],
+    adminGetBundle,
   );
 
   const { data: categoryData } = useQuery(
@@ -427,7 +427,7 @@ export default function CreateProduct() {
     adminGetCategory,
   );
 
-  console.log(marketData);
+  console.log(bundleData);
   console.log(categoryData);
   return (
     <div>
@@ -455,6 +455,7 @@ export default function CreateProduct() {
         <label>이벤트 유무:</label>
         <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
       </ProductDetail>
+      트
       <ProductDetail>
         <label htmlFor="category1">마켓 선택:</label>
         <ProductCategory1Select
@@ -462,7 +463,7 @@ export default function CreateProduct() {
           value={marketId}
           onChange={(e) => handleMarketChange(e)}
         >
-          {marketData?.data.map((market) => (
+          {bundleData?.data.content.map((market) => (
             <option key={market.id} value={market.id}>
               {market.name}
             </option>
@@ -509,7 +510,6 @@ export default function CreateProduct() {
         ))}
         <button onClick={addSizeInput}>사이즈 추가</button>
       </SizeInputs>
-
       <button onClick={createProduct}>상품 생성</button>
       {showImageUpload ? (
         <div>

@@ -17,6 +17,7 @@ const SUBTHUMBNAIL = "/subThumbnail";
 const MAINIMAGES = "/mainImages";
 const DETAILIMAGES = "/detailImages";
 const UPDATECATEGORY = "/detailImages";
+const BUNDLE = "bundle";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -29,10 +30,10 @@ const API = {
   EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
   SIGNUP: `${AUTH}${SIGNUP}`,
   CATEGORY: `${ADMIN}${CATEGORY}`,
-  CREATEMARKET: `${ADMIN}${MARKET}`,
+  BUNDLE: `${ADMIN}${BUNDLE}`,
   IMAGES: `${IMAGES}`,
   GETCATEGORY: `/${CATEGORY}`,
-  GETMARKET: `/${MARKET}`,
+  GETBUNDLE: `/${BUNDLE}`,
   CREATEPRODUCT: `${ADMIN}${PRODUCT}`,
   MAINTHUMBNAIL: `${MAINTHUMBNAIL}`,
   SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,

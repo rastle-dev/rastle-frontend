@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateMarket from "@/components/Manager/market/CreateMarket";
-import UpdateMarket from "@/components/Manager/market/UpdateMarket";
-import DeleteMarket from "@/components/Manager/market/DeleteMarket";
+import CreateBundle from "@/components/Manager/market/CreateBundle";
+import UpdateBundle from "@/components/Manager/market/UpdateBundle";
 
 const Title = styled.div`
   margin: 0;
@@ -39,13 +38,9 @@ export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
-const managementList = [
-  { name: "마켓 추가" },
-  { name: "마켓 수정" },
-  { name: "마켓 삭제" },
-];
+const managementList = [{ name: "세트 추가" }, { name: "세트 수정" }];
 
-export default function MarketManagement() {
+export default function BundleManagement() {
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
 
   const onClickList = (name: string) => {
@@ -54,7 +49,7 @@ export default function MarketManagement() {
 
   return (
     <div>
-      <Title>마켓 관리</Title>
+      <Title>세트 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
           <button type="button" key={name} onClick={() => onClickList(name)}>
@@ -63,9 +58,8 @@ export default function MarketManagement() {
         ))}
       </ManageList>
       <ManageMentDetail>
-        {selectedItem === "마켓 추가" && <CreateMarket />}
-        {selectedItem === "마켓 수정" && <UpdateMarket />}
-        {selectedItem === "마켓 삭제" && <DeleteMarket />}
+        {selectedItem === "세트 추가" && <CreateBundle />}
+        {selectedItem === "세트 수정" && <UpdateBundle />}
       </ManageMentDetail>
     </div>
   );

@@ -1,6 +1,6 @@
 import {
   adminCreateCategory,
-  adminCreateMarket,
+  adminCreateBundle,
   adminCreateProduct,
 } from "@/api/admin";
 import useInput from "@/hooks/useInput";

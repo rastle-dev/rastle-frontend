@@ -26,12 +26,30 @@ export const adminDeleteCategory = async (categoryId: number | undefined) => {
   return data;
 };
 
-export const adminCreateMarket = async (marketData: object) => {
-  const { data } = await authorizationClient.post(API.CREATEMARKET, marketData);
+export const adminCreateBundle = async (marketData: object) => {
+  const { data } = await authorizationClient.post(API.BUNDLE, marketData);
   return data;
 };
 
-export const adminAddMarketImages = async (
+export const adminUpdateBundle = async (
+  bundleId: number | undefined,
+  bundleData: object,
+) => {
+  const { data } = await authorizationClient.patch(
+    `${API.BUNDLE}/${bundleId}`,
+    bundleData,
+  );
+  return data;
+};
+
+export const adminDeleteBundle = async (bundleId: number | undefined) => {
+  const { data } = await authorizationClient.delete(
+    `${API.BUNDLE}/${bundleId}`,
+  );
+  return data;
+};
+
+export const adminAddBundleImages = async (
   marketId: number | undefined,
   imageData: FormData,
 ) => {
@@ -39,15 +57,30 @@ export const adminAddMarketImages = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.post(
-    `${API.CREATEMARKET}/${marketId}${API.IMAGES}`,
+    `${API.BUNDLE}/${marketId}${API.IMAGES}`,
     imageData,
     { headers },
   );
   return data;
 };
 
-export const adminGetMarket = async () => {
-  const { data } = await authorizationClient.get(API.GETMARKET);
+export const adminUpdateBundleImages = async (
+  bundleId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
+    `${API.BUNDLE}/${bundleId}${API.IMAGES}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
+export const adminGetBundle = async () => {
+  const { data } = await authorizationClient.get(API.GETBUNDLE);
   return data;
 };
 

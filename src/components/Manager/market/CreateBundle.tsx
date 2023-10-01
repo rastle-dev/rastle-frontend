@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import useCreateMarket from "@/hooks/manager/market/useCreateMarket";
+import useCreateBundle from "@/hooks/manager/bundle/useCreateBundle";
 import Input from "@/components/common/Input";
+import Image from "next/image";
 
 const Title = styled.div`
   margin: 0;
@@ -37,28 +38,33 @@ const PreviewImages = styled.div`
   margin-top: 1rem;
 `;
 
-export default function CreateMarket() {
+const EventCheckbox = styled.input`
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+`;
+
+export default function CreateBundle() {
   const {
     description,
     previewImages,
-    handleCategoryDescriptionChange,
+    handleBundleDescriptionChange,
     handleImageUpload,
     onChangeName,
     onChangeStartDate,
-    onChangeEndDate,
     onChangeStartHour,
     onChangeStartMinute,
     onChangeStartSecond,
-    createMarket,
+    createBundle,
     showImageUpload,
-    addMarketImages,
-  } = useCreateMarket();
+    addBundleImages,
+    handleEventChange,
+  } = useCreateBundle();
 
   return (
     <div>
-      <Title>마켓 추가</Title>
+      <Title>세트 추가</Title>
       <CategoryDetail>
-        <Input label="마켓이름" size={30} onChange={onChangeName} />
+        <Input label="세트 이름" size={30} onChange={onChangeName} />
       </CategoryDetail>
       <CategoryDetail>
         <Input
@@ -66,14 +72,6 @@ export default function CreateMarket() {
           placeholder="2023-08-23형식"
           size={30}
           onChange={onChangeStartDate}
-        />
-      </CategoryDetail>
-      <CategoryDetail>
-        <Input
-          label="종료 날짜"
-          placeholder="마켓 일단 무제한으로 걸어놓기(2024-09-01)"
-          size={30}
-          onChange={onChangeEndDate}
         />
       </CategoryDetail>
       <CategoryDetail>
@@ -100,19 +98,23 @@ export default function CreateMarket() {
           onChange={onChangeStartSecond}
         />
       </CategoryDetail>
+      공개:
+      <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
       <CategoryDetail>
-        <label htmlFor="categoryDescription">카테고리 설명:</label>
+        세트 설명:
         <CustomTextarea
           id="categoryDescription"
           value={description}
-          onChange={(e) => handleCategoryDescriptionChange(e)}
+          onChange={(e) => handleBundleDescriptionChange(e)}
         />
       </CategoryDetail>
-      <button onClick={createMarket}>마켓 생성</button>
+      <button type="button" onClick={createBundle}>
+        세트 생성
+      </button>
       {showImageUpload ? (
         <div>
           {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="categoryImage">카테고리 이미지:</label>
+          <label htmlFor="categoryImage">세트 이미지:</label>
           <input
             type="file"
             id="categoryImage"
@@ -121,16 +123,20 @@ export default function CreateMarket() {
             onChange={handleImageUpload}
           />
           <PreviewImages>
-            {previewImages.map((preview, index) => (
-              <img
-                key={index}
+            {previewImages?.map((preview, index) => (
+              <Image
+                key={preview}
                 src={preview}
                 alt={`미리보기 이미지 ${index}`}
-                style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
+                width={200} // 이미지 너비
+                height={250} // 이미지 높이
+                style={{ margin: "5px" }}
               />
             ))}
           </PreviewImages>
-          <button onClick={addMarketImages}>이미지 추가</button>
+          <button type="button" onClick={addBundleImages}>
+            이미지 추가
+          </button>
         </div>
       ) : null}
     </div>
