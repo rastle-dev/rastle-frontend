@@ -100,7 +100,13 @@ export default function UserManagement() {
     page: curPage - 1,
     size: ITEM_SIZE,
   });
+  const [userData, setUserData] = useState(data?.data.content);
+  useEffect(() => {
+    setUserData(data?.data.content);
+    refetch();
+  }, [curPage, data]);
   // 열(컬럼) 정보 배열
+  console.log(userData);
   const columnHeaders = [
     "이메일 주소", // email
     "이름", // userName
@@ -120,12 +126,10 @@ export default function UserManagement() {
     "상품 구매 목록": "allOrderDetails",
     가입일: "createdDate",
   };
-
-  const [userData, setUserData] = useState(data?.data.content);
-
+  let filteredUsers;
   const handleSearch = () => {
     // 검색 결과 데이터 생성
-    const filteredUsers = data?.data.content.filter((user: any) => {
+    filteredUsers = data?.data.content.filter((user: any) => {
       if (searchType === "이메일 주소") {
         return user.email.toLowerCase().includes(searchValue.toLowerCase());
       }
@@ -148,20 +152,13 @@ export default function UserManagement() {
     });
     setUserData(filteredUsers);
   };
-  console.log("searchType", searchType);
   const handleReset = () => {
     // 검색 결과를 초기화하고 모든 사용자 데이터로 복원
     setUserData(data?.data.content);
     setSearchValue("");
     setSearchType("이메일 주소");
   };
-  useEffect(() => {
-    setUserData(data?.data.content);
-  }, []);
-  useEffect(() => {
-    refetch();
-    setUserData(data?.data.content);
-  }, [curPage]);
+
   return (
     <div>
       <Title>회원 관리</Title>
@@ -171,7 +168,6 @@ export default function UserManagement() {
           value={searchType}
           onChange={(e) => setSearchType(e.target.value)}
         >
-          <option value="선택">선택</option>
           <option value="이메일 주소">이메일 주소</option>
           <option value="가입일">가입일자</option>
           <option value="회원가입 방식">회원가입 방식</option>
@@ -196,35 +192,17 @@ export default function UserManagement() {
           </tr>
         </TableHead>
         <tbody>
-          {searchType === "" ? (
-            <>
-              {data?.data.content?.map((user: any) => (
-                <TableRow key={user.id}>
-                  {columnHeaders.map((header) => (
-                    <TableCell key={header}>
-                      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                      {/* @ts-ignore */}
-                      {user[columnFieldMap[header]]}
-                    </TableCell>
-                  ))}
-                </TableRow>
+          {userData?.map((user: any) => (
+            <TableRow key={user.id}>
+              {columnHeaders.map((header) => (
+                <TableCell key={header}>
+                  {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                  {/* @ts-ignore */}
+                  {user[columnFieldMap[header]]}
+                </TableCell>
               ))}
-            </>
-          ) : (
-            <>
-              {userData?.map((user: any) => (
-                <TableRow key={user.id}>
-                  {columnHeaders.map((header) => (
-                    <TableCell key={header}>
-                      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                      {/* @ts-ignore */}
-                      {user[columnFieldMap[header]]}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </>
-          )}
+            </TableRow>
+          ))}
         </tbody>
       </Table>
       <PageNumberContainer>

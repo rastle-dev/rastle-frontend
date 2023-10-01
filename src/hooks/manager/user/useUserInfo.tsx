@@ -22,7 +22,7 @@ export default function useUserInfo() {
     console.log("클릭");
   };
 
-  const [searchType, setSearchType] = useState("");
+  const [searchType, setSearchType] = useState("이메일 주소");
   const [searchValue, setSearchValue] = useState("");
   return {
     useLoadUserInfo,
