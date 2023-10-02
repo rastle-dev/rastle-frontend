@@ -16,6 +16,7 @@ const MEMBERS = "/members";
 const COLOR = "/color";
 const DETAIL = "/detail";
 const IMAGE = "/image";
+const CART = "/cart";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -36,5 +37,6 @@ const API = {
   DETAIL: `${DETAIL}`,
   COLORS: `${COLOR}`,
   IMAGE: `${IMAGE}`,
+  CART: `${CART}`,
 };
 export default API;
