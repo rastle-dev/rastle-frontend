@@ -19,23 +19,6 @@ interface SelectedProduct {
 
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
-  const jsonData = {
-    images: [
-      "/image/product5.jpg",
-      "/image/product6.jpg",
-      "/image/product1.jpg",
-      "/image/whiteBackground.png",
-    ],
-    title: "틴 워시드 버뮤다 데님 팬츠",
-    price: 56200,
-    colors: ["화이트", "블랙", "블루"],
-    sizes: ["M", "L"],
-    remain: {
-      M: 3,
-      L: 4,
-    },
-    imageDetails: ["/image/product5.jpg", "/image/homeDesktop2.jpg"],
-  };
   const router = useRouter();
   const { productId } = router.query;
   const { data: imageData } = useQuery(
@@ -195,7 +178,6 @@ export default function useProduct() {
     calculateTotalCount,
     selectedProduct,
     selectedProducts,
-    jsonData,
     detailData,
     imageData,
     COLOR,

@@ -23,7 +23,7 @@ export default function Product() {
     uniqueColors,
     uniqueSizes,
   } = useProduct();
-
+  console.log("selectedProducts", selectedProducts);
   return (
     <S.Wrapper>
       <S.TopLayer>
