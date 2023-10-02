@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import QUERYKEYS from "@/constants/querykey";
 import {
   loadProductCOLOR,
   loadProductDetail,
   loadProductImage,
 } from "@/api/shop";
-import { useRouter } from "next/router";
 
 interface SelectedProduct {
   title?: string;
@@ -36,11 +36,41 @@ export default function useProduct() {
     },
     imageDetails: ["/image/product5.jpg", "/image/homeDesktop2.jpg"],
   };
+  const router = useRouter();
+  const { productId } = router.query;
 
+  const { data: imageData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
+    () => {
+      if (productId) {
+        return loadProductImage(productId);
+      }
+      return null;
+    },
+  );
+
+  const { data: COLOR } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
+    () => {
+      if (productId) {
+        return loadProductCOLOR(productId);
+      }
+      return null;
+    },
+  );
+  const { data: detailData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
+    () => {
+      if (productId) {
+        return loadProductDetail(productId);
+      }
+      return null;
+    },
+  );
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
-    title: jsonData.title,
-    price: jsonData.price,
+    title: detailData?.data.name,
+    price: detailData?.data.price,
     color: null,
     size: null,
     count: 0, // 기본 수량
@@ -52,7 +82,7 @@ export default function useProduct() {
   );
 
   // 컬러 버튼 클릭 핸들러
-  const handleColorClick = (color: string) => {
+  const handleColorClick = (color: any) => {
     setSelectedProduct((prevProduct) => ({
       ...prevProduct,
       color,
@@ -73,8 +103,8 @@ export default function useProduct() {
       }));
 
       const newProduct: SelectedProduct = {
-        title: jsonData.title,
-        price: jsonData.price,
+        title: detailData?.data.name,
+        price: detailData?.data.price,
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
@@ -153,37 +183,6 @@ export default function useProduct() {
     );
   }
 
-  const router = useRouter();
-  const { productId } = router.query;
-
-  const { data: imageData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
-    () => {
-      if (productId) {
-        return loadProductImage(productId);
-      }
-      return null;
-    },
-  );
-
-  const { data: COLOR } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
-    () => {
-      if (productId) {
-        return loadProductCOLOR(productId);
-      }
-      return null;
-    },
-  );
-  const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
-    () => {
-      if (productId) {
-        return loadProductDetail(productId);
-      }
-      return null;
-    },
-  );
   return {
     handleColorClick,
     handleSizeClick,
