@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import Pagination from "react-js-pagination";
 import useUserInfo from "@/hooks/manager/user/useUserInfo";
 
