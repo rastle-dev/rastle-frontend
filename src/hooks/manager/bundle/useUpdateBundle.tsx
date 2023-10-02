@@ -147,7 +147,7 @@ export default function useUpdateBundle() {
       const imageUrlsArray = bundle.imageUrls
         .split(",")
         .map((url) => url.trim())
-        .filter((url) => url.length > 0); // 빈 문자열 필터링
+        .filter((url) => url.length > 0);
 
       setPreviewImages(imageUrlsArray);
     }
