@@ -18,20 +18,11 @@ export default function Product() {
     calculateTotalCount,
     selectedProduct,
     selectedProducts,
-    jsonData,
     detailData,
     imageData,
-    COLOR,
+    uniqueColors,
+    uniqueSizes,
   } = useProduct();
-
-  console.log("detailData", detailData);
-  console.log("imageData", imageData);
-  console.log("COLOR", COLOR);
-  const uniqueColors = [...new Set(COLOR?.data.map((item: any) => item.color))];
-  const uniqueSizes = [...new Set(COLOR?.data.map((item: any) => item.size))];
-
-  console.log(uniqueSizes);
-  console.log(jsonData.colors);
 
   return (
     <S.Wrapper>

@@ -38,7 +38,6 @@ export default function useProduct() {
   };
   const router = useRouter();
   const { productId } = router.query;
-
   const { data: imageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
     () => {
@@ -67,6 +66,8 @@ export default function useProduct() {
       return null;
     },
   );
+  const uniqueColors = [...new Set(COLOR?.data.map((item: any) => item.color))];
+  const uniqueSizes = [...new Set(COLOR?.data.map((item: any) => item.size))];
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
@@ -198,5 +199,7 @@ export default function useProduct() {
     detailData,
     imageData,
     COLOR,
+    uniqueColors,
+    uniqueSizes,
   };
 }
