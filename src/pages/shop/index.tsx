@@ -15,16 +15,11 @@ export default function Shop() {
     [QUERYKEYS.LOAD_PRODUCT],
     loadMarketProduct,
   );
-
+  console.log("전체상품", productData);
   const handleCategoryChange = (category: ProductCategory) => {
     setActiveCategory(category);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // const filteredProducts =
-  //   activeCategory === "전체"
-  //     ? ProductList
-  //     : ProductList.filter((p) => p.category === activeCategory);
 
   return (
     <S.Container>
@@ -43,12 +38,11 @@ export default function Shop() {
         <S.ProductList>
           {productData?.data.content.map((item: any) => (
             <ItemElement
-              key={item.productName}
+              key={item.name}
               defaultImg={item.mainThumbnail}
               hoverImg={item.subThumbnail}
-              productName={item.productName}
+              productName={item.name}
               price={item.price}
-              category={item.category}
             />
           ))}
           {/*// 세트 상품이면 세트상품 띄워야돼*/}

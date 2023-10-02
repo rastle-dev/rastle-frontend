@@ -23,3 +23,24 @@ export const loadMarketProduct = async () => {
   const { data } = await unAuthorizationClient.get(API.PRODUCT);
   return data;
 };
+
+export const loadProductImage = async (productId: number) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}/${productId}${API.IMAGE}`,
+  );
+  return data;
+};
+
+export const loadProductDetail = async (productId: number) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}/${productId}${API.DETAIL}`,
+  );
+  return data;
+};
+
+export const loadProductCOLOR = async (productId: number) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}/${productId}${API.COLORS}`,
+  );
+  return data;
+};

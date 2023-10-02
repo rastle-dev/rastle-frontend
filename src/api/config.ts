@@ -7,13 +7,15 @@ const EMAILCHECK = "emailCertificationCheck";
 const EMAILDUPLICATE = "checkEmail/";
 const SIGNUP = "signup";
 const LOGOUT = "logout";
-const MARKET = "/market";
 const PRODUCT = "/product";
 const BUNDLE = "/bundle";
 const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
 const ADMIN = "/admin/";
 const MEMBERS = "members";
+const COLOR = "/color";
+const DETAIL = "/detail";
+const IMAGE = "/image";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -31,5 +33,8 @@ const API = {
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,
+  DETAIL: `${DETAIL}`,
+  COLORS: `${COLOR}`,
+  IMAGE: `${IMAGE}`,
 };
 export default API;

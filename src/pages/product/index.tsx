@@ -1,10 +1,17 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
+import QUERYKEYS from "@/constants/querykey";
+import {
+  loadProductCOLOR,
+  loadProductDetail,
+  loadProductImage,
+} from "@/api/shop";
 
 export default function Product() {
   const {
@@ -21,6 +28,19 @@ export default function Product() {
     jsonData,
   } = useProduct();
 
+  const { data: imageData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_IMAGE, 40], // 쿼리 키에 bundleId를 포함
+    () => loadProductImage(40), // 쿼리 함수를 호출하고 bundleId를 전달
+  );
+  const { data: COLOR } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_COLOR, 40], // 쿼리 키에 bundleId를 포함
+    () => loadProductCOLOR(40), // 쿼리 함수를 호출하고 bundleId를 전달
+  );
+  const { data: detailData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, 40], // 쿼리 키에 bundleId를 포함
+    () => loadProductDetail(40), // 쿼리 함수를 호출하고 bundleId를 전달
+  );
+  console.log("detailData", detailData);
   return (
     <S.Wrapper>
       <S.TopLayer>
