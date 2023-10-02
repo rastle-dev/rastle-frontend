@@ -27,27 +27,31 @@ export default function Product() {
   console.log("detailData", detailData);
   console.log("imageData", imageData);
   console.log("COLOR", COLOR);
+  const uniqueColors = [...new Set(COLOR?.data.map((item: any) => item.color))];
+  const uniqueSizes = [...new Set(COLOR?.data.map((item: any) => item.size))];
+
+  console.log(uniqueSizes);
+  console.log(jsonData.colors);
 
   return (
     <S.Wrapper>
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={jsonData.images} />
+          <ImageSliderPage images={imageData?.data.mainImages} />
         </S.ImageLayer>
         <S.ProductContent>
-          <S.Title>{jsonData.title}</S.Title>
+          <S.Title>{detailData?.data.name}</S.Title>
           {/* <S.Price>{jsonData.price.toLocaleString()}원</S.Price> */}
           <S.DiscountPrice>
-            <h4>{jsonData.price.toLocaleString()}원</h4>
+            <h4>{detailData?.data.price.toLocaleString()}원</h4>
             <span>10% </span>
-            {jsonData.price.toLocaleString()}원
+            {detailData?.data.discountPrice.toLocaleString()}원
           </S.DiscountPrice>
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
-            {jsonData.colors.map((color) => (
+            {uniqueColors.map((color) => (
               <ColorButton
-                key={color}
-                size={3}
+                size={uniqueColors.length}
                 clicked={color === selectedProduct.color}
                 // @ts-ignore
                 color={COLORS[color]}
@@ -57,12 +61,12 @@ export default function Product() {
           </S.ColorList>
           <S.SizeText>사이즈</S.SizeText>
           <S.SizeButtonList>
-            {jsonData.sizes.map((size) => (
+            {uniqueSizes.map((size: any) => (
               <S.SizeButton
                 key={size}
                 title={size}
                 type="size"
-                onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
+                onClick={() => handleSizeClick(size)}
                 // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
                 isActive={selectedProduct.size === size}
               />
@@ -125,8 +129,9 @@ export default function Product() {
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
-        <S.ProductDetail src="/image/product5.jpg" />
-        <S.ProductDetail src="/image/homeDesktop2.jpg" />
+        {imageData?.data.detailImages.map((img: string) => (
+          <S.ProductDetail src={img} />
+        ))}
       </S.ProductDetailList>
     </S.Wrapper>
   );
