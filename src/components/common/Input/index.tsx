@@ -81,14 +81,14 @@ export default function Input({
   message = "",
   className,
   checked,
-  color = "black",
   inValid = false,
 }: InputProps) {
   const isCheckbox = type === "checkbox"; // 체크박스인지 확인
 
   return (
     <Wrapper style={{ width: isCheckbox ? "auto" : "100%" }}>
-      {!labelHidden && <Label inValid={inValid}>{label}</Label>}      <InputWrapper
+      {!labelHidden && <Label inValid={inValid}>{label}</Label>}
+      <InputWrapper
         value={value}
         onChange={onChange}
         type={type}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import PATH from "@/constants/path";
 import COLORS from "@/constants/color";
 import LazyLink from "@/components/LazyLink";
-import useLogin from "@/hooks/useLogin";
 import {
   Wrapper,
   InnerNav,
@@ -24,7 +23,6 @@ const navList = [
 
 export default function MainHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { logout } = useLogin();
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
@@ -58,7 +56,7 @@ export default function MainHeader() {
         </CenterElement>
         <RightElemet>
           <LazyLink href={PATH.LOGIN}>
-            <span>LOG IN</span>
+            <span>LOGIN</span>
           </LazyLink>
           <LazyLink href={PATH.CART}>
             <span>CART</span>

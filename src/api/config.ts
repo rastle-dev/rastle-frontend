@@ -18,6 +18,14 @@ const MAINIMAGES = "/mainImages";
 const DETAILIMAGES = "/detailImages";
 const UPDATECATEGORY = "/detailImages";
 const BUNDLE = "bundle";
+const LOGOUT = "logout";
+const MARKET = "/market";
+const PRODUCT = "/product";
+const CURRENTMARKET = "/currentMarket";
+const MEMBER = "/member";
+const CHANGEPASSWORD = "/changePassword";
+const ADMIN = "/admin/";
+const MEMBERS = "members";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -39,5 +47,12 @@ const API = {
   SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,
   MAINIMAGES: `${MAINIMAGES}`,
   DETAILIMAGES: `${DETAILIMAGES}`,
+  LOGOUT: `${AUTH}${LOGOUT}`,
+  MARKET: `${MARKET}`,
+  PRODUCT: `${PRODUCT}`,
+  CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
+  MEMBER: `${MEMBER}`,
+  CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
+  MEMBERSINFO: `${ADMIN}${MEMBERS}`,
 };
 export default API;
