@@ -1,4 +1,12 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import {
+  loadProductCOLOR,
+  loadProductDetail,
+  loadProductImage,
+} from "@/api/shop";
+import { useRouter } from "next/router";
 
 interface SelectedProduct {
   title?: string;
@@ -144,6 +152,38 @@ export default function useProduct() {
       0,
     );
   }
+
+  const router = useRouter();
+  const { productId } = router.query;
+
+  const { data: imageData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
+    () => {
+      if (productId) {
+        return loadProductImage(productId);
+      }
+      return null;
+    },
+  );
+
+  const { data: COLOR } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
+    () => {
+      if (productId) {
+        return loadProductCOLOR(productId);
+      }
+      return null;
+    },
+  );
+  const { data: detailData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
+    () => {
+      if (productId) {
+        return loadProductDetail(productId);
+      }
+      return null;
+    },
+  );
   return {
     handleColorClick,
     handleSizeClick,
@@ -156,5 +196,8 @@ export default function useProduct() {
     selectedProduct,
     selectedProducts,
     jsonData,
+    detailData,
+    imageData,
+    COLOR,
   };
 }

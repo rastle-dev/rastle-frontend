@@ -38,11 +38,12 @@ export default function Shop() {
         <S.ProductList>
           {productData?.data.content.map((item: any) => (
             <ItemElement
-              key={item.name}
+              key={item.id}
               defaultImg={item.mainThumbnail}
               hoverImg={item.subThumbnail}
               productName={item.name}
               price={item.price}
+              id={item.id}
             />
           ))}
           {/*// 세트 상품이면 세트상품 띄워야돼*/}

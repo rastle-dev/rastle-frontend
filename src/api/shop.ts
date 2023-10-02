@@ -24,21 +24,27 @@ export const loadMarketProduct = async () => {
   return data;
 };
 
-export const loadProductImage = async (productId: number) => {
+export const loadProductImage = async (
+  productId: string | string[] | undefined,
+) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.IMAGE}`,
   );
   return data;
 };
 
-export const loadProductDetail = async (productId: number) => {
+export const loadProductDetail = async (
+  productId: string | string[] | undefined,
+) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.DETAIL}`,
   );
   return data;
 };
 
-export const loadProductCOLOR = async (productId: number) => {
+export const loadProductCOLOR = async (
+  productId: string | string[] | undefined,
+) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.COLORS}`,
   );
