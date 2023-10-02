@@ -42,11 +42,11 @@ export default function Shop() {
               defaultImg={item.mainThumbnail}
               hoverImg={item.subThumbnail}
               productName={item.name}
-              price={item.price}
+              price={`${item.price.toLocaleString()}원`}
               id={item.id}
             />
           ))}
-          {/*// 세트 상품이면 세트상품 띄워야돼*/}
+          {/* // 세트 상품이면 세트상품 띄워야돼 */}
         </S.ProductList>
       )}
     </S.Container>
