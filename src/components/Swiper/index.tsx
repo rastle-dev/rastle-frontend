@@ -110,7 +110,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
       // @ts-ignore
       ref={swiperRef}
     >
-      {images.map((image, index) => (
+      {images?.map((image, index) => (
         <SwiperSlide key={image}>
           <StyledImage src={image} alt={`Image ${index + 1}`} />
         </SwiperSlide>
