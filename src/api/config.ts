@@ -9,7 +9,7 @@ const SIGNUP = "signup";
 const LOGOUT = "logout";
 const MARKET = "/market";
 const PRODUCT = "/product";
-const CURRENTMARKET = "/currentMarket";
+const BUNDLE = "/bundle";
 const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
 const ADMIN = "/admin/";
@@ -25,9 +25,9 @@ const API = {
   EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
   SIGNUP: `${AUTH}${SIGNUP}`,
   LOGOUT: `${AUTH}${LOGOUT}`,
-  MARKET: `${MARKET}`,
   PRODUCT: `${PRODUCT}`,
-  CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
+  BUNDLE_PRODUCT: `${PRODUCT}${BUNDLE}`,
+  BUNDLE: `${BUNDLE}`,
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,

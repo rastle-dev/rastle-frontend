@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 
-type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
+type ProductCategory = "전체" | "코디상품" | "상의" | "하의" | "이벤트";
 
 interface ProductCategoryTabsProps {
   categories: ProductCategory[];

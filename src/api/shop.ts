@@ -1,13 +1,21 @@
 import { unAuthorizationClient } from ".";
 import API from "./config";
 
-export const getMarketImages = async () => {
-  const { data } = await unAuthorizationClient.get(API.MARKET);
+export const loadBundleProduct = async () => {
+  const { data } = await unAuthorizationClient.get(API.BUNDLE_PRODUCT);
   return data;
 };
-
-export const loadCurrentMarket = async () => {
-  const { data } = await unAuthorizationClient.get(API.CURRENTMARKET);
+export const loadBundle = async (bundleData: any) => {
+  const { page, size } = bundleData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.BUNDLE}?page=${page}&size=${size}`,
+  );
+  return data;
+};
+export const loadSelectBundle = async (bundleId: number) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.BUNDLE}/${bundleId}${API.PRODUCT}`,
+  );
   return data;
 };
 
