@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
 import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
@@ -12,6 +12,7 @@ import {
 } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
+import { prev } from "dom7";
 
 const Title = styled.div`
   margin: 0;
@@ -25,21 +26,6 @@ const ProductDetail = styled.div`
 
   label {
     margin-right: 0.5rem;
-  }
-`;
-
-const ProductNameInput = styled.input`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
   }
 `;
 
@@ -75,40 +61,6 @@ const ProductCategory2Select = styled.select`
 
 const EventCheckbox = styled.input`
   margin-right: 0.5rem;
-`;
-
-const ProductPriceInput = styled.input`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-`;
-
-const DiscountCheckbox = styled.input`
-  margin-right: 0.5rem;
-`;
-
-const DiscountPercentInput = styled.input`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
 `;
 
 const ColorInputs = styled.div`
@@ -165,6 +117,19 @@ const PreviewImages = styled.div`
   margin-top: 1rem;
 `;
 
+interface Bundle {
+  id: number;
+  name: string;
+  imageUrls: string;
+  description: string;
+  saleStartTime: string;
+  visible: boolean;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
 export default function CreateProduct() {
   const {
     onChangeName,
@@ -229,7 +194,7 @@ export default function CreateProduct() {
     if (files && files.length > 0) {
       const newImages: File[] = [...mainThumbnailFile];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -252,7 +217,7 @@ export default function CreateProduct() {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
-    for (let i = 0; i < mainThumbnailFile.length; i++) {
+    for (let i = 0; i < mainThumbnailFile.length; i += 1) {
       formData.append("mainThumbnail", mainThumbnailFile[i]);
     }
 
@@ -274,7 +239,7 @@ export default function CreateProduct() {
     if (files && files.length > 0) {
       const newImages: File[] = [...subThumbnailFile];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -297,7 +262,7 @@ export default function CreateProduct() {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
-    for (let i = 0; i < subThumbnailFile.length; i++) {
+    for (let i = 0; i < subThumbnailFile.length; i += 1) {
       formData.append("subThumbnail", subThumbnailFile[i]);
     }
 
@@ -320,7 +285,7 @@ export default function CreateProduct() {
       const newImages: File[] = [...mainImageFiles];
       const newPreviews: string[] = [...mainImages];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -343,7 +308,7 @@ export default function CreateProduct() {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
-    for (let i = 0; i < mainImageFiles.length; i++) {
+    for (let i = 0; i < mainImageFiles.length; i += 1) {
       formData.append("mainImages", mainImageFiles[i]);
     }
 
@@ -366,7 +331,7 @@ export default function CreateProduct() {
       const newImages: File[] = [...detailImageFiles];
       const newPreviews: string[] = [...detailImages];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -390,7 +355,7 @@ export default function CreateProduct() {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
-    for (let i = 0; i < detailImageFiles.length; i++) {
+    for (let i = 0; i < detailImageFiles.length; i += 1) {
       formData.append("detailImages", detailImageFiles[i]);
     }
 
@@ -452,32 +417,31 @@ export default function CreateProduct() {
         onChange={onChangeDisplayOrder}
       />
       <ProductDetail>
-        <label>이벤트 유무:</label>
+        이벤트 유무:
         <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
       </ProductDetail>
-      트
       <ProductDetail>
-        <label htmlFor="category1">마켓 선택:</label>
+        마켓 선택:
         <ProductCategory1Select
           id="category1"
           value={marketId}
           onChange={(e) => handleMarketChange(e)}
         >
-          {bundleData?.data.content.map((market) => (
-            <option key={market.id} value={market.id}>
-              {market.name}
+          {bundleData?.data.content.map((bundle: Bundle) => (
+            <option key={bundle.id} value={bundle.id}>
+              {bundle.name}
             </option>
           ))}
         </ProductCategory1Select>
       </ProductDetail>
       <ProductDetail>
-        <label htmlFor="category2">카테고리 선택:</label>
+        카테고리 선택:
         <ProductCategory2Select
           id="category2"
           value={categoryId}
           onChange={(e) => handleCategoryChange(e)}
         >
-          {categoryData?.data.map((category) => (
+          {categoryData?.data.map((category: Category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
@@ -486,8 +450,8 @@ export default function CreateProduct() {
       </ProductDetail>
       <ColorInputs>
         {colors.map((color, index) => (
-          <ProductDetail key={index}>
-            <label>색상 추가:</label>
+          <ProductDetail key={color}>
+            색상 추가:
             <ColorInput
               type="text"
               value={color}
@@ -495,12 +459,14 @@ export default function CreateProduct() {
             />
           </ProductDetail>
         ))}
-        <button onClick={addColorInput}>색상 추가</button>
+        <button type="button" onClick={addColorInput}>
+          색상 추가
+        </button>
       </ColorInputs>
       <SizeInputs>
         {sizes.map((size, index) => (
-          <ProductDetail key={index}>
-            <label>사이즈 추가:</label>
+          <ProductDetail key={size}>
+            사이즈 추가:
             <SizeInput
               type="text"
               value={size}
@@ -508,13 +474,17 @@ export default function CreateProduct() {
             />
           </ProductDetail>
         ))}
-        <button onClick={addSizeInput}>사이즈 추가</button>
+        <button type="button" onClick={addSizeInput}>
+          사이즈 추가
+        </button>
       </SizeInputs>
-      <button onClick={createProduct}>상품 생성</button>
+      <button type="button" onClick={createProduct}>
+        상품 생성
+      </button>
       {showImageUpload ? (
         <div>
           <ProductDetail>
-            <label>썸네일 지정:</label>
+            썸네일 지정:
             <ThumbnailInput
               type="file"
               accept="image/*"
@@ -528,9 +498,11 @@ export default function CreateProduct() {
               />
             )}
           </ProductDetail>
-          <button onClick={addMainThumbnailImages}>메인썸네일 추가하기</button>
+          <button type="button" onClick={addMainThumbnailImages}>
+            메인썸네일 추가하기
+          </button>
           <ProductDetail>
-            <label>2번째 사진 지정:</label>
+            2번째 사진 지정:
             <SecondImageInput
               type="file"
               accept="image/*"
@@ -544,9 +516,11 @@ export default function CreateProduct() {
               />
             )}
           </ProductDetail>
-          <button onClick={addSubThumbnailImages}>서브썸네일 추가하기</button>
+          <button type="button" onClick={addSubThumbnailImages}>
+            서브썸네일 추가하기
+          </button>
           <ProductDetail>
-            <label>메인 이미지 추가:</label>
+            메인 이미지 추가:
             <AdditionalImagesInput
               type="file"
               accept="image/*"
@@ -556,7 +530,7 @@ export default function CreateProduct() {
             <PreviewImages>
               {mainImages.map((preview, index) => (
                 <img
-                  key={index}
+                  key={preview}
                   src={preview}
                   alt={`추가 이미지 미리보기 ${index}`}
                   style={{
@@ -568,9 +542,11 @@ export default function CreateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button onClick={addMainImages}>메인 사진들(10장)추가하기</button>
+          <button type="button" onClick={addMainImages}>
+            메인 사진들(10장)추가하기
+          </button>
           <ProductDetail>
-            <label>디테일 이미지 추가:</label>
+            디테일 이미지 추가:
             <AdditionalImagesInput
               type="file"
               accept="image/*"
@@ -580,7 +556,7 @@ export default function CreateProduct() {
             <PreviewImages>
               {detailImages.map((preview, index) => (
                 <img
-                  key={index}
+                  key={preview}
                   src={preview}
                   alt={`추가 이미지 미리보기 ${index}`}
                   style={{
@@ -592,9 +568,13 @@ export default function CreateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button onClick={addDetailImages}>디테일 사진들 추가하기</button>
+          <button type="button" onClick={addDetailImages}>
+            디테일 사진들 추가하기
+          </button>
           <br />
-          <button onClick={handleSubmit}>상품 생성</button>
+          <button type="button" onClick={handleSubmit}>
+            상품 생성
+          </button>
         </div>
       ) : null}
     </div>

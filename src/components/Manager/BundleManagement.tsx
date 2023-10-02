@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateBundle from "@/components/Manager/market/CreateBundle";
-import UpdateBundle from "@/components/Manager/market/UpdateBundle";
+import CreateBundle from "@/components/Manager/bundle/CreateBundle";
+import UpdateBundle from "@/components/Manager/bundle/UpdateBundle";
 
 const Title = styled.div`
   margin: 0;

@@ -1,8 +1,4 @@
-import {
-  adminCreateCategory,
-  adminCreateBundle,
-  adminCreateProduct,
-} from "@/api/admin";
+import { adminCreateProduct } from "@/api/admin";
 import useInput from "@/hooks/useInput";
 import React, { useState } from "react";
 
