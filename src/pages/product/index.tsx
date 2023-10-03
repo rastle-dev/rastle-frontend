@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { router } from "next/client";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
@@ -6,6 +7,8 @@ import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
 import useMypage from "@/hooks/useMypage";
+import Dialog from "@/components/common/Dialog";
+import PATH from "@/constants/path";
 
 export default function Product() {
   const {
@@ -29,9 +32,29 @@ export default function Product() {
 
   console.log("cartProducts", cartProducts);
   console.log("selectedProducts", selectedProducts);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <S.Wrapper>
+      {isDialogOpen && (
+        <Dialog
+          onClickBasketButton={() => {
+            router.push(PATH.MYPAGE);
+          }}
+          onClickShopButton={() => {
+            closeDialog();
+          }}
+          visible
+        />
+      )}
       <S.TopLayer>
         <S.ImageLayer>
           <ImageSliderPage images={imageData?.data.mainImages} />
@@ -122,7 +145,8 @@ export default function Product() {
             <S.StyledBuyButton title="구매하기" type="shop" />
             <S.StyledPayButton
               onClick={() => {
-                mutateAddCartProduct.mutate(cartProducts);
+                // mutateAddCartProduct.mutate(cartProducts);
+                openDialog();
               }}
               title="장바구니에 담기"
               type="shop"
