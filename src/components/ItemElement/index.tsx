@@ -12,6 +12,7 @@ type ItemElementProps = {
   price: string;
   category?: ProductCategory;
   id: any;
+  isEvent: boolean;
 };
 
 const ItemWrapper = styled.div`
@@ -51,9 +52,11 @@ function ItemElement({
   hoverImg,
   category,
   id,
+  isEvent,
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
+  const event = isEvent;
   return (
     <ItemWrapper>
       <StyledImage
@@ -72,7 +75,7 @@ function ItemElement({
         onClick={() => {
           router.push({
             pathname: PATH.PRODUCT, // 이동할 페이지 경로
-            query: { productId }, // 전달할 데이터 (id)
+            query: { productId, event }, // 전달할 데이터 (id)
           });
         }}
       />

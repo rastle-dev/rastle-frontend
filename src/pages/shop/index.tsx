@@ -44,6 +44,7 @@ export default function Shop() {
               productName={item.name}
               price={`${item.price.toLocaleString()}원`}
               id={item.id}
+              isEvent={item.event}
             />
           ))}
           {/* // 세트 상품이면 세트상품 띄워야돼 */}

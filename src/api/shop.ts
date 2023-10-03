@@ -34,10 +34,11 @@ export const loadProductImage = async (
 };
 
 export const loadProductDetail = async (
-  productId: string | string[] | undefined,
+  productId: string | string[],
+  event: string | string[] | undefined,
 ) => {
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}/${productId}${API.DETAIL}`,
+    `${API.PRODUCT}/${productId}${API.DETAIL}?isEvent=${event}`,
   );
   return data;
 };

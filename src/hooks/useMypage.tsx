@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
-import { authLogout, changePassword, deletMe } from "@/api/auth";
+import { authLogout, changePassword, deletMe, loadMe } from "@/api/auth";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
+import QUERYKEYS from "@/constants/querykey";
+import { addCartProduct, loadCartProduct } from "@/api/cart";
 
 export default function useMypage() {
   const router = useRouter();
@@ -49,6 +51,24 @@ export default function useMypage() {
     }
   };
 
+  const { data: cartProduct } = useQuery(
+    [QUERYKEYS.LOAD_CART],
+    loadCartProduct,
+  );
+  const mutateAddCartProduct = useMutation(["addCartProduct"], addCartProduct, {
+    onSuccess: async () => {
+      toastMsg("장바구니에 해당 상품이 담겼습니다!");
+    },
+    onError: ({
+      response: {
+        data: { errorCode, message },
+      },
+    }) => {
+      toast.dismiss();
+      errorMsg("담기 실패");
+      console.log(`${errorCode} / ${message}`);
+    },
+  });
   return {
     email,
     onChangeEmail,
@@ -57,5 +77,7 @@ export default function useMypage() {
     setClickable,
     mutateChangePassword,
     deleteUser,
+    cartProduct,
+    mutateAddCartProduct,
   };
 }

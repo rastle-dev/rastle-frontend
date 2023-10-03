@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import QUERYKEYS from "@/constants/querykey";
@@ -16,11 +16,17 @@ interface SelectedProduct {
   count: number;
   key?: string;
 }
+interface CartProduct {
+  productId: string | string[] | undefined;
+  color?: string | null;
+  count: number;
+  size?: string | null;
+}
 
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
-  const { productId } = router.query;
+  const { productId, event } = router.query;
   const { data: imageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
     () => {
@@ -41,10 +47,10 @@ export default function useProduct() {
     },
   );
   const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId, event],
     () => {
       if (productId) {
-        return loadProductDetail(productId);
+        return loadProductDetail(productId, event);
       }
       return null;
     },
@@ -59,11 +65,18 @@ export default function useProduct() {
     size: null,
     count: 0, // 기본 수량
   });
-
+  const [cartProduct, setCartProduct] = useState<CartProduct>({
+    productId,
+    color: selectedProduct.color,
+    size: selectedProduct.size,
+    count: selectedProduct.count, // 기본 수량
+  });
+  console.log("cartProduct", cartProduct);
   // 선택된 제품 정보들을 관리하는 상태 변수
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
   );
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
   // 컬러 버튼 클릭 핸들러
   const handleColorClick = (color: any) => {
@@ -106,6 +119,7 @@ export default function useProduct() {
       if (!hasDuplicate) {
         // 이전에 선택된 제품 정보들과 새로운 제품 정보를 합쳐서 새로운 배열 생성
         const updatedProducts = [...selectedProducts, newProduct];
+
         setSelectedProducts(updatedProducts);
       }
     }
@@ -166,7 +180,20 @@ export default function useProduct() {
       0,
     );
   }
-
+  useEffect(() => {
+    if (selectedProduct.color && selectedProduct.size) {
+      const newCartProduct: CartProduct = {
+        productId,
+        color: selectedProduct.color,
+        size: selectedProduct.size,
+        count: selectedProduct.count,
+      };
+      setCartProducts((prevCartProducts) => [
+        ...prevCartProducts,
+        newCartProduct,
+      ]);
+    }
+  }, [selectedProduct]);
   return {
     handleColorClick,
     handleSizeClick,
@@ -183,5 +210,6 @@ export default function useProduct() {
     COLOR,
     uniqueColors,
     uniqueSizes,
+    cartProducts,
   };
 }
