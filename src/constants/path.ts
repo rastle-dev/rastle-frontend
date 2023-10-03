@@ -6,6 +6,7 @@ const PATH = {
   CART: "/cart",
   PRODUCT: "/product",
   SHOP: "/shop",
+  MYPAGE: "/mypage",
 } as const;
 
 export default PATH;
