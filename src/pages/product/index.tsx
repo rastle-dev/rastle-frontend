@@ -47,7 +47,10 @@ export default function Product() {
       {isDialogOpen && (
         <Dialog
           onClickBasketButton={() => {
-            router.push(PATH.MYPAGE);
+            router.push({
+              pathname: PATH.MYPAGE,
+              query: { tab: "장바구니" },
+            });
           }}
           onClickShopButton={() => {
             closeDialog();
