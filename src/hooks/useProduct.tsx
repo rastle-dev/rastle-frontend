@@ -26,7 +26,7 @@ interface CartProduct {
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
-  const { productId, event } = router.query;
+  const { productId, events } = router.query;
   const { data: imageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
     () => {
@@ -47,10 +47,10 @@ export default function useProduct() {
     },
   );
   const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId, event],
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId, events],
     () => {
       if (productId) {
-        return loadProductDetail(productId, event);
+        return loadProductDetail(productId, events);
       }
       return null;
     },
@@ -71,7 +71,7 @@ export default function useProduct() {
     size: selectedProduct.size,
     count: selectedProduct.count, // 기본 수량
   });
-  console.log("cartProduct", cartProduct);
+
   // 선택된 제품 정보들을 관리하는 상태 변수
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
@@ -181,19 +181,14 @@ export default function useProduct() {
     );
   }
   useEffect(() => {
-    if (selectedProduct.color && selectedProduct.size) {
-      const newCartProduct: CartProduct = {
-        productId,
-        color: selectedProduct.color,
-        size: selectedProduct.size,
-        count: selectedProduct.count,
-      };
-      setCartProducts((prevCartProducts) => [
-        ...prevCartProducts,
-        newCartProduct,
-      ]);
-    }
-  }, [selectedProduct]);
+    const newCartProducts: CartProduct[] = selectedProducts.map((product) => ({
+      productId,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+    }));
+    setCartProducts(newCartProducts);
+  }, [selectedProducts]);
   return {
     handleColorClick,
     handleSizeClick,

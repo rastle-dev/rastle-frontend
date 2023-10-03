@@ -56,7 +56,7 @@ function ItemElement({
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
-  const event = isEvent;
+  const events = isEvent;
   return (
     <ItemWrapper>
       <StyledImage
@@ -75,7 +75,7 @@ function ItemElement({
         onClick={() => {
           router.push({
             pathname: PATH.PRODUCT, // 이동할 페이지 경로
-            query: { productId, event }, // 전달할 데이터 (id)
+            query: { productId, events }, // 전달할 데이터 (id)
           });
         }}
       />

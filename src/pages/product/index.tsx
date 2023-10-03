@@ -5,6 +5,7 @@ import Icon from "@/components/common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
+import useMypage from "@/hooks/useMypage";
 
 export default function Product() {
   const {
@@ -22,8 +23,13 @@ export default function Product() {
     imageData,
     uniqueColors,
     uniqueSizes,
+    cartProducts,
   } = useProduct();
+  const { mutateAddCartProduct } = useMypage();
+
+  console.log("cartProducts", cartProducts);
   console.log("selectedProducts", selectedProducts);
+
   return (
     <S.Wrapper>
       <S.TopLayer>
@@ -114,7 +120,13 @@ export default function Product() {
           </S.TotalPrice>
           <S.Pay>
             <S.StyledBuyButton title="구매하기" type="shop" />
-            <S.StyledPayButton title="장바구니에 담기" type="shop" />
+            <S.StyledPayButton
+              onClick={() => {
+                mutateAddCartProduct.mutate(cartProducts);
+              }}
+              title="장바구니에 담기"
+              type="shop"
+            />
             <S.StyledNpayButton title="N Pay 구매하기" type="shop" />
           </S.Pay>
         </S.ProductContent>
