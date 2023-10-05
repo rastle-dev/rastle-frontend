@@ -65,12 +65,6 @@ export default function useProduct() {
     size: null,
     count: 0, // 기본 수량
   });
-  const [cartProduct, setCartProduct] = useState<CartProduct>({
-    productId,
-    color: selectedProduct.color,
-    size: selectedProduct.size,
-    count: selectedProduct.count, // 기본 수량
-  });
 
   // 선택된 제품 정보들을 관리하는 상태 변수
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(

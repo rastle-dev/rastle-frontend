@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
+import useMypage from "@/hooks/useMypage";
 
 type ProductItem = {
   defaultImg: string;
@@ -47,13 +48,17 @@ const TabMenu = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: right;
-  p {
+  button {
     font-size: 1.18rem;
+    border: none;
     border-bottom: 1px solid ${COLORS.GREY[400]};
     color: ${COLORS.GREY[400]};
     font-weight: 200;
     cursor: pointer;
     margin: 0 0 1.4rem 0;
+    padding: 0;
+    padding-bottom: 0.4rem;
+    background-color: transparent;
   }
 `;
 const Table = styled.div`
@@ -75,6 +80,13 @@ const TableHeader = styled.div`
   }
 `;
 const TableContent = styled.div``;
+export const NODATA = styled.div`
+  margin-top: 3rem;
+  font-weight: 400;
+  color: ${COLORS.GREY[500]};
+  border: 1px black;
+  font-size: 1.5rem;
+`;
 const ProductInfo = styled.div`
   display: grid;
   grid-template-columns: 3.2rem 10rem 25rem 13.8rem 9.8rem 11.5rem 11rem 6.2rem;
@@ -127,8 +139,19 @@ const TotalPrice = styled.div`
   div {
   }
 `;
+
+interface DeleteProduct {
+  productId: string | string[] | undefined;
+  color?: string | null;
+  size?: string | null;
+}
 export default function Cart() {
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
+  const { cartProduct, deleteCart } = useMypage();
+  console.log("cartProduct", cartProduct?.data.content);
+  console.log("shopItems", shopItems);
+  const [deleteProducts, setDeleteProducts] = useState<DeleteProduct[]>([]);
+
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
     const isSelected = selectedItems.includes(item);
@@ -144,65 +167,119 @@ export default function Cart() {
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
-    if (selectedItems.length === shopItems.length) {
+    if (selectedItems.length === cartProduct?.data.content.length) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(shopItems);
+      setSelectedItems(cartProduct?.data.content);
     }
   };
+  const totalPriceSum = cartProduct?.data.content.reduce(
+    (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
+    0,
+  );
+  console.log("selectedItems", selectedItems);
+  // useEffect(() => {
+  //   const newCartProducts: DeleteProduct[] = selectedItems.map((product) => ({
+  //     productId,
+  //     color: product.color,
+  //     size: product.size,
+  //   }));
+  //   setDeleteProducts(newCartProducts);
+  // }, [selectedProducts]);
+
   return (
     <div>
       <h2>장바구니</h2>
-      <TabMenu>
-        <p>선택상품 삭제</p>
-        <p>장바구니 비우기</p>
-      </TabMenu>
-      <Table>
-        <TableHeader>
-          <Select
-            type="checkbox"
-            checked={selectedItems.length === shopItems.length}
-            onChange={handleHeaderCheckboxChange}
-          />{" "}
-          {menuList.map((menu) => (
-            <p>{menu}</p>
-          ))}
-        </TableHeader>
-        <TableContent>
-          {shopItems.map((item) => (
-            <ProductInfo>
+      {cartProduct?.data.content.length === 0 ? (
+        <NODATA>
+          장바구니에 상품이 없으시네요. &nbsp; &nbsp;장바구니에 상품을
+          담아보세요! 😋
+        </NODATA>
+      ) : (
+        <>
+          <TabMenu>
+            <button
+              type="button"
+              onClick={() => {
+                deleteCart();
+              }}
+            >
+              선택상품 삭제
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                deleteCart();
+              }}
+            >
+              장바구니 비우기
+            </button>
+          </TabMenu>
+          <Table>
+            <TableHeader>
               <Select
                 type="checkbox"
-                checked={selectedItems.includes(item)}
-                onChange={() => handleProductCheckboxChange(item)}
+                checked={
+                  selectedItems.length === cartProduct?.data.content.length
+                }
+                onChange={handleHeaderCheckboxChange}
               />
-              <Img src={item.defaultImg} />
-              <TextInfo>
-                <p>{item.productName}</p>
-                <p>
-                  {item.size}/{item.color}
-                </p>
-              </TextInfo>
-              <p>{item.price}</p>
-              <p>2개</p>
-              <p>3,000원</p>
-              <p>42,900원</p>
-              <SelectTab>
-                <SelectButton title="주문하기" />
-                <SelectButton title="X 삭제" />
-              </SelectTab>
-            </ProductInfo>
-          ))}
-        </TableContent>
-      </Table>
-      <TotalPrice>
-        <p>상품 구매 금액</p>
-        <div>87,900원</div>
-        <p>+ 배송비</p>
-        <div>3,000원</div>
-        <p>= 합계</p>
-        <div>92,000원</div>
-      </TotalPrice>
+              {menuList.map((menu) => (
+                <p>{menu}</p>
+              ))}
+            </TableHeader>
+            <TableContent>
+              {cartProduct?.data.content.map((item: any) => {
+                // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
+                const totalPrice = item.productPrice * item.count + 3000;
+
+                return (
+                  <ProductInfo key={item.productId}>
+                    <Select
+                      type="checkbox"
+                      checked={selectedItems.includes(item)}
+                      onChange={() => handleProductCheckboxChange(item)}
+                    />
+                    <Img src={item.mainThumbnailImage} />
+                    <TextInfo>
+                      <p>{item.productName}</p>
+                      <p>
+                        {item.size}/{item.color}
+                      </p>
+                    </TextInfo>
+                    <p>{item.productPrice.toLocaleString()}원</p>
+                    <p>{item.count}개</p>
+                    <p>3,000원</p>
+                    <p>{totalPrice.toLocaleString()}원</p>
+                    {/* 계산된 총 가격 표시 */}
+                    <SelectTab>
+                      <SelectButton title="주문하기" />
+                      <SelectButton title="X 삭제" />
+                    </SelectTab>
+                  </ProductInfo>
+                );
+              })}
+            </TableContent>
+          </Table>
+          <TotalPrice>
+            {totalPriceSum === 0 ? (
+              <>
+                <p>상품 구매 금액</p>
+                <div>{totalPriceSum.toLocaleString()}원</div>
+              </>
+            ) : (
+              <>
+                <p>상품 구매 금액</p>
+                <div>{(totalPriceSum - 3000).toLocaleString()}원</div>
+                <p>+ 배송비</p>
+                <div>3,000원</div>
+                <p>= 합계</p>
+                <div>{totalPriceSum.toLocaleString()}원</div>
+              </>
+            )}
+          </TotalPrice>
+        </>
+      )}
     </div>
   );
 }

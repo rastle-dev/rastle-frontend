@@ -10,3 +10,12 @@ export const loadCartProduct = async () => {
   const { data } = await authorizationClient.get(API.CART);
   return data;
 };
+export const deleteSelectedCartProduct = async () => {
+  const { data } = await authorizationClient.get(API.CART);
+  return data;
+};
+
+export const deleteAllCartProduct = async () => {
+  const { data } = await authorizationClient.delete(API.CART);
+  return data;
+};

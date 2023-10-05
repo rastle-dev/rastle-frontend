@@ -29,7 +29,6 @@ export default function Product() {
     cartProducts,
   } = useProduct();
   const { mutateAddCartProduct } = useMypage();
-
   console.log("cartProducts", cartProducts);
   console.log("selectedProducts", selectedProducts);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -64,7 +63,7 @@ export default function Product() {
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>
-          {/* <S.Price>{jsonData.price.toLocaleString()}원</S.Price> */}
+          {/*<S.Price>{jsonData.price.toLocaleString()}원</S.Price>*/}
           <S.DiscountPrice>
             <h4>{detailData?.data.price.toLocaleString()}원</h4>
             <span>10% </span>
@@ -148,7 +147,7 @@ export default function Product() {
             <S.StyledBuyButton title="구매하기" type="shop" />
             <S.StyledPayButton
               onClick={() => {
-                // mutateAddCartProduct.mutate(cartProducts);
+                mutateAddCartProduct.mutate(cartProducts);
                 openDialog();
               }}
               title="장바구니에 담기"

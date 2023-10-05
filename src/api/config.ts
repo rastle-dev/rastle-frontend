@@ -17,6 +17,7 @@ const COLOR = "/color";
 const DETAIL = "/detail";
 const IMAGE = "/image";
 const CART = "/cart";
+const REMOVE = "/removeSelected";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -38,5 +39,6 @@ const API = {
   COLORS: `${COLOR}`,
   IMAGE: `${IMAGE}`,
   CART: `${CART}`,
+  REMOVE: `${REMOVE}`,
 };
 export default API;
