@@ -162,7 +162,7 @@ export default function CreateProduct() {
   } = useCreateProduct();
 
   const { data: bundleData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_SET],
+    [QUERYKEYS.ADMIN_GET_BUNDLE],
     adminGetBundle,
   );
 

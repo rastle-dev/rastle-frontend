@@ -105,7 +105,7 @@ export default function UpdateBundle() {
   } = useUpdateBundle();
 
   const { data: bundleData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_SET],
+    [QUERYKEYS.ADMIN_GET_BUNDLE],
     adminGetBundle,
   );
 
@@ -121,7 +121,7 @@ export default function UpdateBundle() {
           </li>
         ))}
       </BundleList>
-      <p>수정할 카테고리 : {selectedBundle?.name}</p>
+      <p>수정할 세트 : {selectedBundle?.name}</p>
       <CategoryDetail>
         <Input
           label="세트 이름"

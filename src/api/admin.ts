@@ -89,6 +89,11 @@ export const adminGetCategory = async () => {
   return data;
 };
 
+export const adminGetProduct = async () => {
+  const { data } = await authorizationClient.get(API.PRODUCT);
+  return data;
+};
+
 export const adminCreateProduct = async (productData: object) => {
   const { data } = await authorizationClient.post(
     API.CREATEPRODUCT,
@@ -153,6 +158,14 @@ export const adminAddDetailImage = async (
     `${API.CREATEPRODUCT}/${productId}${API.DETAILIMAGES}`,
     imageData,
     { headers },
+  );
+  return data;
+};
+
+export const adminGetUserInfo = async (userData: any) => {
+  const { page, size } = userData;
+  const { data } = await authorizationClient.get(
+    `${API.MEMBERSINFO}?page=${page}&size=${size}`,
   );
   return data;
 };
