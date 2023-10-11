@@ -1,18 +1,34 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
 import { authLogout, changePassword, deletMe } from "@/api/auth";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
+import QUERYKEYS from "@/constants/querykey";
+import {
+  addCartProduct,
+  deleteAllCartProduct,
+  deleteSelectedCartProduct,
+  loadCartProduct,
+} from "@/api/cart";
 
+type ProductItem = {
+  defaultImg: string;
+  productName: string;
+  price: string;
+  size: string;
+  color: string;
+  cartProductId: number;
+};
 export default function useMypage() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput("");
   const [clickable, setClickable] = useState(false);
-
+  const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
+  const [deleteProducts, setDeleteProducts] = useState<any>([]);
   const logout = async () => {
     try {
       await authLogout();
@@ -49,6 +65,57 @@ export default function useMypage() {
     }
   };
 
+  const { data: cartProduct } = useQuery(
+    [QUERYKEYS.LOAD_CART],
+    loadCartProduct,
+  );
+  const mutateAddCartProduct = useMutation(["addCartProduct"], addCartProduct, {
+    onSuccess: async (data) => {
+      toastMsg("장바구니에 해당 상품이 담겼습니다!");
+      console.log("담는다?", data);
+    },
+    onError: ({
+      response: {
+        data: { errorCode, message },
+      },
+    }) => {
+      toast.dismiss();
+      errorMsg("담기 실패");
+      console.log(`${errorCode} / ${message}`);
+    },
+  });
+  const queryClient = useQueryClient();
+
+  const mutateDeleteCartProduct = useMutation(
+    ["deleteSelectedCartProduct"],
+    deleteSelectedCartProduct,
+    {
+      onSuccess: async () => {
+        toastMsg("선택하신 상품이 삭제 되었습니다! 👏");
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        toast.dismiss();
+        errorMsg("삭제 실패");
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
+  const deleteCart = async () => {
+    try {
+      await deleteAllCartProduct();
+      toastMsg("삭제 되었습니다! 👏");
+      queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
+    } catch (error) {
+      errorMsg("전체 삭제 실패");
+      console.log(error);
+    }
+  };
+
   return {
     email,
     onChangeEmail,
@@ -57,5 +124,13 @@ export default function useMypage() {
     setClickable,
     mutateChangePassword,
     deleteUser,
+    cartProduct,
+    mutateAddCartProduct,
+    mutateDeleteCartProduct,
+    deleteCart,
+    selectedItems,
+    setSelectedItems,
+    deleteProducts,
+    setDeleteProducts,
   };
 }

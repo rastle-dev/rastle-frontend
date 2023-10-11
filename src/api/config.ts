@@ -7,13 +7,17 @@ const EMAILCHECK = "emailCertificationCheck";
 const EMAILDUPLICATE = "checkEmail/";
 const SIGNUP = "signup";
 const LOGOUT = "logout";
-const MARKET = "/market";
 const PRODUCT = "/product";
-const CURRENTMARKET = "/currentMarket";
+const BUNDLE = "/bundle";
 const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
-const ADMIN = "/admin/";
-const MEMBERS = "members";
+const ADMIN = "/admin";
+const MEMBERS = "/members";
+const COLOR = "/color";
+const DETAIL = "/detail";
+const IMAGE = "/image";
+const CART = "/cart";
+const REMOVE = "/removeSelected";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -25,11 +29,16 @@ const API = {
   EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
   SIGNUP: `${AUTH}${SIGNUP}`,
   LOGOUT: `${AUTH}${LOGOUT}`,
-  MARKET: `${MARKET}`,
   PRODUCT: `${PRODUCT}`,
-  CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
+  BUNDLE_PRODUCT: `${PRODUCT}${BUNDLE}`,
+  BUNDLE: `${BUNDLE}`,
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,
+  DETAIL: `${DETAIL}`,
+  COLORS: `${COLOR}`,
+  IMAGE: `${IMAGE}`,
+  CART: `${CART}`,
+  REMOVE: `${REMOVE}`,
 };
 export default API;
