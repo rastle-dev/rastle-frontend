@@ -29,7 +29,6 @@ export default function useMypage() {
   const [clickable, setClickable] = useState(false);
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
   const [deleteProducts, setDeleteProducts] = useState<any>([]);
-  console.log("test~~", deleteProducts.join(","));
   const logout = async () => {
     try {
       await authLogout();
