@@ -15,11 +15,21 @@ import {
   loadCartProduct,
 } from "@/api/cart";
 
+type ProductItem = {
+  defaultImg: string;
+  productName: string;
+  price: string;
+  size: string;
+  color: string;
+  cartProductId: number;
+};
 export default function useMypage() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput("");
   const [clickable, setClickable] = useState(false);
-
+  const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
+  const [deleteProducts, setDeleteProducts] = useState<any>([]);
+  console.log("test~~", deleteProducts.join(","));
   const logout = async () => {
     try {
       await authLogout();
@@ -82,7 +92,6 @@ export default function useMypage() {
     deleteSelectedCartProduct,
     {
       onSuccess: async () => {
-        await deleteAllCartProduct();
         toastMsg("선택하신 상품이 삭제 되었습니다! 👏");
         queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
       },
@@ -120,5 +129,9 @@ export default function useMypage() {
     mutateAddCartProduct,
     mutateDeleteCartProduct,
     deleteCart,
+    selectedItems,
+    setSelectedItems,
+    deleteProducts,
+    setDeleteProducts,
   };
 }

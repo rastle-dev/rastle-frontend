@@ -11,38 +11,9 @@ type ProductItem = {
   price: string;
   size: string;
   color: string;
+  cartProductId: number;
 };
 const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
-const shopItems: ProductItem[] = [
-  {
-    defaultImg: "/image/product1.jpg",
-    productName: "틴 워시드 버뮤다 데님 팬츠",
-    price: "45,800원",
-    size: "L",
-    color: "인디고",
-  },
-  {
-    defaultImg: "/image/product2.jpg",
-    productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-    price: "53,400원",
-    size: "L",
-    color: "인디고",
-  },
-  {
-    defaultImg: "/image/product3.jpg",
-    productName: "스토퍼 윈드브레이커",
-    price: "34,200원",
-    size: "L",
-    color: "인디고",
-  },
-  {
-    defaultImg: "/image/product1.jpg",
-    productName: "틴 워시드 버뮤다 데님 팬츠",
-    price: "45,800원",
-    size: "L",
-    color: "인디고",
-  },
-];
 const TabMenu = styled.div`
   width: 90.5rem;
   display: flex;
@@ -140,17 +111,16 @@ const TotalPrice = styled.div`
   }
 `;
 
-interface DeleteProduct {
-  productId: string | string[] | undefined;
-  color?: string | null;
-  size?: string | null;
-}
 export default function Cart() {
-  const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
-  const { cartProduct, deleteCart } = useMypage();
-  console.log("cartProduct", cartProduct?.data.content);
-  console.log("shopItems", shopItems);
-  const [deleteProducts, setDeleteProducts] = useState<DeleteProduct[]>([]);
+  const {
+    cartProduct,
+    deleteCart,
+    selectedItems,
+    setSelectedItems,
+    deleteProducts,
+    setDeleteProducts,
+    mutateDeleteCartProduct,
+  } = useMypage();
 
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
@@ -162,30 +132,28 @@ export default function Cart() {
         selectedItems.filter((selectedItem) => selectedItem !== item),
       );
     } else {
+      console.log("아이템", item);
       setSelectedItems([...selectedItems, item]);
+      setDeleteProducts([...deleteProducts, item.cartProductId]);
     }
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
       setSelectedItems([]);
+      setDeleteProducts([]);
     } else {
       setSelectedItems(cartProduct?.data.content);
+      const cartProductIds = cartProduct?.data.content.map(
+        (item: any) => item.cartProductId,
+      );
+      setDeleteProducts(cartProductIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
     (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
     0,
   );
-  console.log("selectedItems", selectedItems);
-  // useEffect(() => {
-  //   const newCartProducts: DeleteProduct[] = selectedItems.map((product) => ({
-  //     productId,
-  //     color: product.color,
-  //     size: product.size,
-  //   }));
-  //   setDeleteProducts(newCartProducts);
-  // }, [selectedProducts]);
 
   return (
     <div>
@@ -201,7 +169,7 @@ export default function Cart() {
             <button
               type="button"
               onClick={() => {
-                deleteCart();
+                mutateDeleteCartProduct.mutate(deleteProducts.join(","));
               }}
             >
               선택상품 삭제
@@ -254,7 +222,12 @@ export default function Cart() {
                     {/* 계산된 총 가격 표시 */}
                     <SelectTab>
                       <SelectButton title="주문하기" />
-                      <SelectButton title="X 삭제" />
+                      <SelectButton
+                        title="X 삭제"
+                        onClick={() => {
+                          mutateDeleteCartProduct.mutate(item.cartProductId);
+                        }}
+                      />
                     </SelectTab>
                   </ProductInfo>
                 );

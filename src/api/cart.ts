@@ -10,8 +10,12 @@ export const loadCartProduct = async () => {
   const { data } = await authorizationClient.get(API.CART);
   return data;
 };
-export const deleteSelectedCartProduct = async () => {
-  const { data } = await authorizationClient.get(API.CART);
+export const deleteSelectedCartProduct = async (
+  cartProductId: string | string[],
+) => {
+  const { data } = await authorizationClient.delete(
+    `${API.CART}${API.REMOVE}?deleteCartProductIdList=${cartProductId}`,
+  );
   return data;
 };
 
