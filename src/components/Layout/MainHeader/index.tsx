@@ -62,7 +62,7 @@ export default function MainHeader() {
             <MenuBackground />
             <MenuList open={menuOpen} ref={menuRef}>
               {navList.map(({ name, href }) => (
-                <MenuItem key={name}>
+                <MenuItem key={name} onClick={toggleMenu}>
                   <LazyLink href={href}>{name}</LazyLink>
                 </MenuItem>
               ))}
