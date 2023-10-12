@@ -70,9 +70,8 @@ export default function useMypage() {
     loadCartProduct,
   );
   const mutateAddCartProduct = useMutation(["addCartProduct"], addCartProduct, {
-    onSuccess: async (data) => {
+    onSuccess: async () => {
       toastMsg("장바구니에 해당 상품이 담겼습니다!");
-      console.log("담는다?", data);
     },
     onError: ({
       response: {

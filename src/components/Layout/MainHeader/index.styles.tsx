@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import IconButton from "@/components/common/IconButton";
+import COLORS from "@/constants/color";
 
 interface WrapperProps {
   scrolled: boolean;
@@ -52,8 +53,8 @@ const LeftElement = styled.ul`
 
 const MenuDiv = styled.div`
   display: none;
-
   @media (max-width: 769px) {
+    width: 80%;
     display: inline;
     position: absolute;
     left: 1.5rem; /* Adjust the value as per your requirement */
@@ -65,14 +66,65 @@ const MenuDiv = styled.div`
   }
 `;
 
-const MenuIcon = styled(IconButton)`
+const MenuIcon = styled(IconButton)<{ open?: boolean }>`
   @media (max-width: 769px) {
     font-size: 3rem;
-    cursor: pointer;
+    margin-top: 3rem;
     background-color: transparent;
+    display: ${(props) =>
+      props.open ? "none" : "block"}; /* 메뉴가 열렸을 때 버튼을 숨깁니다. */
+  }
+`;
+const Hidden = styled.div``;
+
+const MenuBackground = styled.div`
+  @media (min-width: 769px) {
+    display: none;
+  }
+  @media (max-width: 769px) {
+    background-color: rgba(0, 0, 0, 0.5); /* 검정색 배경과 약간의 투명도 적용 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001; /* 메뉴리스트 위에 위치하도록 z-index 설정 */
   }
 `;
 
+const MenuList = styled.ul<{ open?: boolean }>`
+  @media (min-width: 769px) {
+    display: none;
+  }
+  @media (max-width: 769px) {
+    background-color: #fff; /* 배경색 설정 */
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    width: 80%;
+    height: 100%;
+    z-index: 1001;
+    left: ${(props) =>
+      props.open ? "0" : "-80%"}; /* 왼쪽에서 들어오거나 나가도록 설정 */
+    transition: left 0.3s; /* 부드러운 애니메이션을 위한 트랜지션 설정 */
+  }
+`;
+const MenuItem = styled.li`
+  @media (min-width: 769px) {
+    display: none;
+  }
+  @media (max-width: 769px) {
+    list-style: none;
+    padding: 2rem;
+    margin: 0;
+    //border-bottom: 1px solid #ccc;
+    font-weight: 400;
+  }
+  &:hover {
+    background-color: ${COLORS.GREY[200]};
+  }
+`;
 const CenterElement = styled.div`
   display: flex;
   align-items: center;
@@ -85,6 +137,7 @@ const CenterElement = styled.div`
     font-size: 3rem;
     font-weight: 200;
   }
+  z-index: 1000;
 `;
 
 const RightElemet = styled.div`
@@ -124,6 +177,7 @@ const PersonIcon = styled(IconButton)`
     cursor: pointer;
   }
 `;
+
 export {
   Wrapper,
   InnerNav,
@@ -134,4 +188,8 @@ export {
   MenuDiv,
   PersonIcon,
   PersonDiv,
+  MenuList,
+  MenuItem,
+  MenuBackground,
+  Hidden,
 };

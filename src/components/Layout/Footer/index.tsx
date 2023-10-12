@@ -7,9 +7,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: transparent;
   bottom: 0;
-  z-index: 999;
+  z-index: 1;
   padding: 1rem 0 3rem 0;
   p {
     font-size: 1rem;

@@ -3,7 +3,7 @@ const PATH = {
   SIGNUP: "/signup",
   GUEST: "/guest",
   HOME: "/",
-  CART: "/cart",
+  CART: "/mypage?tab=장바구니",
   PRODUCT: "/product",
   SHOP: "/shop",
   MYPAGE: "/mypage",
