@@ -40,6 +40,9 @@
       "eslint-import-resolver-node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    }
+    },
+
+    "ignorePatterns": ["next.config.js"]
+
   }
 }
