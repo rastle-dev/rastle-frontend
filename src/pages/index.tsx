@@ -63,6 +63,8 @@ function ProductLayer({ items }: ProductLayerProps) {
             productName={item.productName}
             price={item.price}
             category={item.category}
+            id={item.productName}
+            isEvent
           />
         ))}
       </S.ItemContainer>
