@@ -142,14 +142,14 @@ export const SizeButtonList = styled.div`
   padding-bottom: 2.27rem;
 `;
 
-export const SizeButton = styled(Button)`
+export const SizeButton = styled(Button)<{ isActive?: boolean }>`
   font-size: 1.18182rem;
   font-weight: 400;
   width: 8rem;
   height: 2.5rem;
   border: 0.5px solid ${COLORS.GREY.상세페이지};
 
-  /* 버튼이 클릭된 상태일 때의 스타일 */
+  /* isActive가 true일 때의 스타일 */
   ${({ isActive }) =>
     isActive &&
     `

@@ -63,7 +63,6 @@ export default function Product() {
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>
-          {/*<S.Price>{jsonData.price.toLocaleString()}원</S.Price>*/}
           <S.DiscountPrice>
             <h4>{detailData?.data.price.toLocaleString()}원</h4>
             <span>10% </span>
@@ -75,6 +74,7 @@ export default function Product() {
               <ColorButton
                 size={uniqueColors.length}
                 clicked={color === selectedProduct.color}
+                /* eslint-disable @typescript-eslint/ban-ts-comment */
                 // @ts-ignore
                 color={COLORS[color]}
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
@@ -89,7 +89,6 @@ export default function Product() {
                 title={size}
                 type="size"
                 onClick={() => handleSizeClick(size)}
-                // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
                 isActive={selectedProduct.size === size}
               />
             ))}
