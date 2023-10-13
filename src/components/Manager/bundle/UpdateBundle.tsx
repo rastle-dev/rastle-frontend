@@ -92,7 +92,7 @@ export default function UpdateBundle() {
     onChangeStartSecond,
     updateBundle,
     updateBundleImages,
-    handleEventChange,
+    handleVisibleChange,
     handleBundleClick,
     selectedBundle,
     startDate,
@@ -167,7 +167,7 @@ export default function UpdateBundle() {
         />
       </CategoryDetail>
       공개:
-      <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
+      <EventCheckbox type="checkbox" onChange={(e) => handleVisibleChange(e)} />
       <CategoryDetail>
         세트 설명:
         <CustomTextarea

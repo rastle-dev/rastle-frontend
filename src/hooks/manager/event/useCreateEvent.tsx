@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import useInput from "@/hooks/useInput";
-import { adminAddBundleImages, adminCreateBundle } from "@/api/admin";
+import {
+  adminAddBundleImages,
+  adminAddEventImages,
+  adminCreateEvent,
+} from "@/api/admin";
 
-export default function useCreateBundle() {
+export default function useCreateEvent() {
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const [name, onChangeName] = useInput("");
   const [startDate, onChangeStartDate] = useInput("");
-  const [endDate, onChangeEndDate] = useInput("");
   const [startHour, onChangeStartHour] = useInput("");
   const [startMinute, onChangeStartMinute] = useInput("");
   const [startSecond, onChangeStartSecond] = useInput("");
+  const [endDate, onChangeEndDate] = useInput("");
+  const [endHour, onChangeEndHour] = useInput("");
+  const [endMinute, onChangeEndMinute] = useInput("");
+  const [endSecond, onChangeEndSecond] = useInput("");
   const [showImageUpload, setshowImageUpload] = useState(false);
-  const [bundleId, setBundleId] = useState<number>();
+  const [eventId, setEventId] = useState<number>();
   const [visible, setVisible] = useState(false);
 
   interface Bundle {
@@ -25,9 +32,8 @@ export default function useCreateBundle() {
     saleStartTime: string;
     visible: boolean;
   }
-  const [selectedBundle, setSelectedBundle] = useState<Bundle | null>(null); // 선택된 카테고리 상태 추가
 
-  const handleBundleDescriptionChange = (
+  const handleEventDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     setDescription(e.target.value);
@@ -60,28 +66,36 @@ export default function useCreateBundle() {
     }
   };
 
-  const createBundle = async () => {
+  const createEvent = async () => {
     try {
-      const data = await adminCreateBundle({
+      const data = await adminCreateEvent({
         name,
         startDate,
-        // endDate,
+        endDate,
         startHour,
         startMinute,
         startSecond,
+        endHour,
+        endMinute,
+        endSecond,
         description,
         visible,
       });
+
+      console.log(data);
       if (data) {
-        setBundleId(data.data.id);
+        setEventId(data.data.id);
         setshowImageUpload(true);
+        alert("이벤트 생성 성공");
+      } else {
+        alert("이벤트 생성 실패");
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const addBundleImages = async () => {
+  const addEventImages = async () => {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -91,7 +105,7 @@ export default function useCreateBundle() {
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminAddBundleImages(bundleId, formData);
+      const data = await adminAddEventImages(eventId, formData);
 
       // 서버 응답 처리
       console.log(data);
@@ -107,21 +121,16 @@ export default function useCreateBundle() {
     setVisible(e.target.checked);
   };
 
-  const handleBundleClick = (bundle: Bundle) => {
-    setSelectedBundle(bundle); // 목록에서 카테고리 선택
-    console.log(selectedBundle);
-  };
-
   return {
-    setCategoryDescription: setDescription,
+    setDescription,
     description,
     images,
     setImages,
     previewImages,
     setPreviewImages,
-    handleBundleDescriptionChange,
+    handleEventDescriptionChange,
     handleImageUpload,
-    createEvent: createBundle,
+    createEvent,
     name,
     onChangeName,
     startDate,
@@ -135,8 +144,13 @@ export default function useCreateBundle() {
     startSecond,
     onChangeStartSecond,
     showImageUpload,
-    addEventImages: addBundleImages,
+    addEventImages,
     handleVisibleChange,
-    handleBundleClick,
+    endHour,
+    endMinute,
+    endSecond,
+    onChangeEndHour,
+    onChangeEndMinute,
+    onChangeEndSecond,
   };
 }

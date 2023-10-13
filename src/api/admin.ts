@@ -252,3 +252,18 @@ export const adminCreateEvent = async (eventData: object) => {
   const { data } = await authorizationClient.post(API.EVENT, eventData);
   return data;
 };
+
+export const adminAddEventImages = async (
+  eventId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.post(
+    `${API.EVENT}/${eventId}${API.IMAGES}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
