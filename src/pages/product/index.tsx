@@ -57,6 +57,7 @@ export default function Product() {
                 type="size"
                 onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
                 // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
+                // @ts-ignore
                 isActive={selectedProduct.size === size}
               />
             ))}

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateCategory from "@/components/Manager/category/CreateCategory";
-import UpdateCategory from "@/components/Manager/category/UpdateCategory";
-import DeleteCategory from "@/components/Manager/category/DeleteCategory";
 import CreateProduct from "@/components/Manager/product/CreateProduct";
 import UpdateProduct from "@/components/Manager/product/UpdateProduct";
-import DeleteProduct from "@/components/Manager/product/DeleteProduct";
+import CreateEvent from "@/components/Manager/event/CreateEvent";
+import UpdateEvent from "@/components/Manager/event/UpdateEvent";
 
 const Title = styled.div`
   margin: 0;
@@ -44,8 +42,9 @@ export const ManageMentDetail = styled.div`
 
 const managementList = [
   { name: "상품 추가" },
-  { name: "상품 수정" },
-  { name: "상품 삭제" },
+  { name: "상품 수정/삭제" },
+  { name: "이벤트 추가" },
+  { name: "이벤트 수정/삭제" },
 ];
 
 export default function ProductManagement() {
@@ -57,7 +56,7 @@ export default function ProductManagement() {
 
   return (
     <div>
-      <Title>카테고리 관리</Title>
+      <Title>상품 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
           <button type="button" key={name} onClick={() => onClickList(name)}>
@@ -67,8 +66,9 @@ export default function ProductManagement() {
       </ManageList>
       <ManageMentDetail>
         {selectedItem === "상품 추가" && <CreateProduct />}
-        {selectedItem === "상품 수정" && <UpdateProduct />}
-        {selectedItem === "상품 삭제" && <DeleteProduct />}
+        {selectedItem === "상품 수정/삭제" && <UpdateProduct />}
+        {selectedItem === "이벤트 추가" && <CreateEvent />}
+        {selectedItem === "이벤트 수정/삭제" && <UpdateEvent />}
       </ManageMentDetail>
     </div>
   );

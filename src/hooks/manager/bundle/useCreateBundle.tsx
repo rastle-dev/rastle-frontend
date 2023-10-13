@@ -121,7 +121,7 @@ export default function useCreateBundle() {
     setPreviewImages,
     handleBundleDescriptionChange,
     handleImageUpload,
-    createBundle,
+    createEvent: createBundle,
     name,
     onChangeName,
     startDate,
@@ -136,7 +136,7 @@ export default function useCreateBundle() {
     onChangeStartSecond,
     showImageUpload,
     addBundleImages,
-    handleEventChange,
+    handleVisibleChange: handleEventChange,
     handleBundleClick,
   };
 }

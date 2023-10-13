@@ -198,7 +198,7 @@ export default function useUpdateBundle() {
     startSecond,
     onChangeStartSecond,
     updateBundleImages,
-    handleEventChange,
+    handleVisibleChange: handleEventChange,
     handleBundleClick,
     selectedBundle,
     deleteBundle,

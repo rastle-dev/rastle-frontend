@@ -25,6 +25,7 @@ const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
 const ADMIN = "/admin"; //
 const MEMBERS = "/members";
+const EVENT = "/event";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -41,6 +42,8 @@ const API = {
   GETCATEGORY: `${CATEGORY}`,
   GETBUNDLE: `${BUNDLE}`,
   CREATEPRODUCT: `${ADMIN}${PRODUCT}`,
+  UPDATEPRODUCT: `${ADMIN}${PRODUCT}`,
+  DELETEPRODUCT: `${ADMIN}${PRODUCT}`,
   MAINTHUMBNAIL: `${MAINTHUMBNAIL}`,
   SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,
   MAINIMAGES: `${MAINIMAGES}`,
@@ -56,5 +59,6 @@ const API = {
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,
+  EVENT: `${ADMIN}${EVENT}`,
 };
 export default API;

@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
-import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
-import { adminGetCategory, adminGetBundle } from "@/api/admin";
-import { useQuery } from "@tanstack/react-query";
-import QUERYKEYS from "@/constants/querykey";
+
 import Image from "next/image";
 import useUpdateProduct from "@/hooks/manager/product/useUpdateProduct";
-import {
-  loadMarketProduct,
-  loadProductCOLOR,
-  loadProductDetail,
-} from "@/api/shop";
+
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -88,6 +82,20 @@ const SizeInput = styled.input`
   font-size: 1.5rem;
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 const ThumbnailInput = styled.input`
   padding: 0.5rem;
   margin-top: 0.5rem;
@@ -149,6 +157,17 @@ const ProductItem = styled.div`
   }
 `;
 
+const ApiButtonWrapper = styled.div`
+  display: flex;
+  margin-right: 2rem;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+`;
+const RedSpan = styled.span`
+  color: red;
+  margin-left: 0.5rem;
+`;
 interface Bundle {
   id: number;
   name: string;
@@ -173,6 +192,8 @@ interface PRODUCT {
   subThumbnail: string;
   displayOrder: number;
   visible: boolean;
+  bundleId: string;
+  categoryId: string;
 }
 
 interface ColorAndSize {
@@ -205,7 +226,7 @@ export default function UpdateProduct() {
     handleSizeChange,
     addSizeInput,
     handleMainThumbnailChange,
-    addMainThumbnailImages,
+    updateMainThumbnailImages,
     handleSubThumbnailChange,
     addSubThumbnailImages,
     handleMainImagesChange,
@@ -224,49 +245,14 @@ export default function UpdateProduct() {
     discountPrice,
     displayOrder,
     selectedProduct,
-    setColors,
-    setSizes,
-    colorAndSizeData,
     loadColorAndSize,
     productListData,
     bundleData,
     categoryData,
-    productData,
+    mainImageData,
+    loadImages,
+    deleteProduct,
   } = useUpdateProduct();
-
-  // const { data: productListData } = useQuery(
-  //   [QUERYKEYS.LOAD_PRODUCT],
-  //   loadMarketProduct,
-  // );
-  //
-  // console.log(productListData);
-  //
-  // const { data: bundleData } = useQuery(
-  //   [QUERYKEYS.ADMIN_GET_BUNDLE],
-  //   adminGetBundle,
-  // );
-  //
-  // const { data: categoryData } = useQuery(
-  //   [QUERYKEYS.ADMIN_GET_CATEGORY],
-  //   adminGetCategory,
-  // );
-  //
-  // const { data: productData } = useQuery([QUERYKEYS.LOAD_PRODUCT_DETAIL], () =>
-  //   selectedProduct ? loadProductDetail(selectedProduct.id) : null,
-  // );
-
-  // const { data: colorAndSizeData } = useQuery(
-  //   [QUERYKEYS.LOAD_PRODUCT_COLOR],
-  //   () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
-  // );
-
-  console.log(productData);
-  console.log(colorAndSizeData);
-
-  // setColors(uniqueColors);
-  // setSizes(uniqueSizes);
-
-  console.log(colorAndSizeData);
 
   return (
     <div>
@@ -292,7 +278,6 @@ export default function UpdateProduct() {
           </ProductItem>
         ))}
       </ProductList>
-      {/*<p>수정할 세트 : {selectedBundle?.name}</p>*/}
       <Input label="상품명" size={30} onChange={onChangeName} value={name} />
       <Input
         type="number"
@@ -330,6 +315,7 @@ export default function UpdateProduct() {
         <EventCheckbox
           type="checkbox"
           onChange={(e) => handleBundleChange(e)}
+          checked={bundleCategory}
         />
       </ProductDetail>
       {bundleCategory && (
@@ -337,7 +323,7 @@ export default function UpdateProduct() {
           세트 선택:
           <ProductCategory1Select
             id="category1"
-            value={bundleId}
+            value={bundleId || ""}
             onChange={(e) => handleBundleIdChange(e)}
           >
             {bundleData?.data.content.map((bundle: Bundle) => (
@@ -362,10 +348,11 @@ export default function UpdateProduct() {
           ))}
         </ProductCategory2Select>
       </ProductDetail>
-      <button type="button" onClick={loadColorAndSize}>
+      <StyledButton onClick={loadColorAndSize}>
         색상, 사이즈 불러오기
-      </button>
-      색상 추가
+      </StyledButton>
+      <RedSpan>*필수 클릭</RedSpan>
+
       <ColorInputs>
         {colors.map((color, index) => (
           <div>
@@ -400,11 +387,33 @@ export default function UpdateProduct() {
           사이즈 추가
         </button>
       </SizeInputs>
-      <button type="button" onClick={createProduct}>
-        상품 생성
-      </button>
-      {showImageUpload ? (
+      <ApiButtonWrapper>
+        <StyledButton type="button" onClick={createProduct}>
+          상품 수정
+        </StyledButton>
+        <StyledButton type="button" onClick={deleteProduct}>
+          상품 삭제
+        </StyledButton>
+        <StyledButton type="button" onClick={loadImages}>
+          이미지 불러오기
+        </StyledButton>
+      </ApiButtonWrapper>
+      {showImageUpload && (
         <div>
+          <ProductDetail>
+            기존 메인 썸네일 이미지:
+            <PreviewImages>
+              {selectedProduct && (
+                <Image
+                  src={selectedProduct.mainThumbnail}
+                  alt="미리보기 이미지"
+                  width={200} // 이미지 너비
+                  height={250} // 이미지 높이
+                  style={{ margin: "5px" }}
+                />
+              )}
+            </PreviewImages>
+          </ProductDetail>
           <ProductDetail>
             썸네일 지정:
             <ThumbnailInput
@@ -424,9 +433,24 @@ export default function UpdateProduct() {
               )}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addMainThumbnailImages}>
-            메인썸네일 추가하기
-          </button>
+          <StyledButton type="button" onClick={updateMainThumbnailImages}>
+            메인썸네일 변경하기
+          </StyledButton>
+          <ProductDetail>
+            <br />
+            기존 2번째 썸네일 이미지:
+            <PreviewImages>
+              {selectedProduct && (
+                <Image
+                  src={selectedProduct.subThumbnail}
+                  alt="미리보기 이미지"
+                  width={200} // 이미지 너비
+                  height={250} // 이미지 높이
+                  style={{ margin: "5px" }}
+                />
+              )}
+            </PreviewImages>
+          </ProductDetail>
           <ProductDetail>
             2번째 사진 지정:
             <SecondImageInput
@@ -446,9 +470,27 @@ export default function UpdateProduct() {
               )}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addSubThumbnailImages}>
-            서브썸네일 추가하기
-          </button>
+          <StyledButton type="button" onClick={addSubThumbnailImages}>
+            서브썸네일 변경하기
+          </StyledButton>
+          <ProductDetail>
+            <br />
+            기존 메인 이미지:
+            <PreviewImages>
+              {mainImageData?.data.mainImages.map((preview: string) => (
+                <img
+                  key={preview}
+                  src={preview}
+                  alt={`추가 이미지 미리보기 ${preview}`}
+                  style={{
+                    maxWidth: "200px",
+                    maxHeight: "250px",
+                    margin: "5px",
+                  }}
+                />
+              ))}
+            </PreviewImages>
+          </ProductDetail>
           <ProductDetail>
             메인 이미지 추가:
             <AdditionalImagesInput
@@ -472,11 +514,30 @@ export default function UpdateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addMainImages}>
+          <StyledButton type="button" onClick={addMainImages}>
             메인 사진들(10장)추가하기
-          </button>
+          </StyledButton>
           <ProductDetail>
-            디테일 이미지 추가:
+            <br />
+            기존 상세페이지 이미지:
+            <PreviewImages>
+              {mainImageData?.data.detailImages.map((preview: string) => (
+                <img
+                  key={preview}
+                  src={preview}
+                  alt={`추가 이미지 미리보기 ${preview}`}
+                  style={{
+                    maxWidth: "200px",
+                    maxHeight: "250px",
+                    margin: "5px",
+                  }}
+                />
+              ))}
+            </PreviewImages>
+          </ProductDetail>
+          <ProductDetail>
+            <br />
+            상세페이지 이미지 추가:
             <AdditionalImagesInput
               type="file"
               accept="image/*"
@@ -498,12 +559,12 @@ export default function UpdateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addDetailImages}>
+          <StyledButton type="button" onClick={addDetailImages}>
             디테일 사진들 추가하기
-          </button>
+          </StyledButton>
           <br />
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

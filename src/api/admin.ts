@@ -102,6 +102,24 @@ export const adminCreateProduct = async (productData: object) => {
   return data;
 };
 
+export const adminUpdateProduct = async (
+  productId: number | undefined,
+  productData: object,
+) => {
+  const { data } = await authorizationClient.patch(
+    `${API.CREATEPRODUCT}/${productId}`,
+    productData,
+  );
+  return data;
+};
+
+export const adminDeleteProduct = async (productId: number | undefined) => {
+  const { data } = await authorizationClient.delete(
+    `${API.DELETEPRODUCT}/${productId}`,
+  );
+  return data;
+};
+
 export const adminAddMainThumbnailImage = async (
   productId: number | undefined,
   imageData: FormData,
@@ -110,6 +128,21 @@ export const adminAddMainThumbnailImage = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.post(
+    `${API.CREATEPRODUCT}/${productId}${API.MAINTHUMBNAIL}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
+export const adminUpdateMainThumbnailImage = async (
+  productId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
     `${API.CREATEPRODUCT}/${productId}${API.MAINTHUMBNAIL}`,
     imageData,
     { headers },
@@ -132,6 +165,21 @@ export const adminAddSubThumbnailImage = async (
   return data;
 };
 
+export const adminUpdateSubThumbnailImage = async (
+  productId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
+    `${API.CREATEPRODUCT}/${productId}${API.SUBTHUMBNAIL}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
 export const adminAddMainImage = async (
   productId: number | undefined,
   imageData: FormData,
@@ -140,6 +188,21 @@ export const adminAddMainImage = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.post(
+    `${API.CREATEPRODUCT}/${productId}${API.MAINIMAGES}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
+export const adminUpdateMainImage = async (
+  productId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
     `${API.CREATEPRODUCT}/${productId}${API.MAINIMAGES}`,
     imageData,
     { headers },
@@ -162,10 +225,30 @@ export const adminAddDetailImage = async (
   return data;
 };
 
+export const adminUpdateDetailImage = async (
+  productId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
+    `${API.CREATEPRODUCT}/${productId}${API.DETAILIMAGES}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
 export const adminGetUserInfo = async (userData: any) => {
   const { page, size } = userData;
   const { data } = await authorizationClient.get(
     `${API.MEMBERSINFO}?page=${page}&size=${size}`,
   );
+  return data;
+};
+
+export const adminCreateEvent = async (eventData: object) => {
+  const { data } = await authorizationClient.post(API.EVENT, eventData);
   return data;
 };

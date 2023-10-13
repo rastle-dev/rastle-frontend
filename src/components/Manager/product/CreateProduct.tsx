@@ -6,6 +6,7 @@ import { adminGetCategory, adminGetBundle } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import Image from "next/image";
+import { loadMarketProduct, loadProductDetail } from "@/api/shop";
 
 const Title = styled.div`
   margin: 0;
@@ -110,6 +111,33 @@ const PreviewImages = styled.div`
   margin-top: 1rem;
 `;
 
+const ProductList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+`;
+
+const ProductItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 200px;
+  height: 280px;
+  font-size: 1rem;
+
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+`;
+
 interface Bundle {
   id: number;
   name: string;
@@ -117,6 +145,20 @@ interface Bundle {
   description: string;
   saleStartTime: string;
   visible: boolean;
+}
+
+interface PRODUCT {
+  id: number;
+  name: string;
+  price: number;
+  discountPrice: number;
+  event: boolean;
+  mainThumbnail: string;
+  subThumbnail: string;
+  displayOrder: number;
+  visible: boolean;
+  bundleId: string;
+  categoryId: string;
 }
 
 interface Category {
@@ -159,6 +201,8 @@ export default function CreateProduct() {
     subThumbnail,
     mainImages,
     detailImages,
+    handleDisplayOrderChange,
+    displayOrderCheck,
   } = useCreateProduct();
 
   const { data: bundleData } = useQuery(
@@ -169,6 +213,14 @@ export default function CreateProduct() {
   const { data: categoryData } = useQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
+  );
+
+  const { data: productListData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT],
+    () => loadMarketProduct(),
+    {
+      enabled: !displayOrderCheck, // 처음에 쿼리를 실행하지 않음
+    },
   );
 
   return (
@@ -193,8 +245,37 @@ export default function CreateProduct() {
         type="number"
         label="출력순서"
         size={30}
+        placeholder="낮은 순서일수록 앞에 나타남"
         onChange={onChangeDisplayOrder}
       />
+      <ProductDetail>
+        상품 출력순서 확인하기
+        <EventCheckbox
+          type="checkbox"
+          checked={displayOrderCheck}
+          onChange={(e) => handleDisplayOrderChange(e)}
+        />
+      </ProductDetail>
+      {displayOrderCheck && (
+        <ProductList>
+          {productListData?.data.content.map((product: PRODUCT) => (
+            <ProductItem key={product.id}>
+              <p>{product.name}</p>
+              {product.displayOrder}
+              {
+                <Image
+                  src={product.mainThumbnail}
+                  alt="미리보기 이미지"
+                  width={160} // 이미지 너비
+                  height={200} // 이미지 높이
+                  style={{ margin: "5px" }}
+                />
+              }
+              {/* 상품 이름 */}
+            </ProductItem>
+          ))}
+        </ProductList>
+      )}
       <ProductDetail>
         세트 추가 유무:
         <EventCheckbox

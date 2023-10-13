@@ -24,9 +24,7 @@ export const loadMarketProduct = async () => {
   return data;
 };
 
-export const loadProductImage = async (
-  productId: string | string[] | undefined,
-) => {
+export const loadProductImage = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.IMAGE}`,
   );

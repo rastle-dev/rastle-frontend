@@ -83,6 +83,7 @@ export default function useCreateProduct() {
   const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
+  const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>();
 
   const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
     price,
@@ -96,6 +97,10 @@ export default function useCreateProduct() {
     const newColors = [...colors];
     newColors[index] = e.target.value;
     setColors(newColors);
+  };
+
+  const handleDisplayOrderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDisplayOrderCheck(e.target.checked);
   };
 
   const addColorInput = () => {
@@ -360,5 +365,7 @@ export default function useCreateProduct() {
     subThumbnail,
     mainImages,
     detailImages,
+    handleDisplayOrderChange,
+    displayOrderCheck,
   };
 }

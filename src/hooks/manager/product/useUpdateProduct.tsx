@@ -1,14 +1,15 @@
 import {
-  adminAddDetailImage,
-  adminAddMainImage,
-  adminAddMainThumbnailImage,
-  adminAddSubThumbnailImage,
-  adminCreateProduct,
+  adminDeleteProduct,
   adminGetBundle,
   adminGetCategory,
+  adminUpdateDetailImage,
+  adminUpdateMainImage,
+  adminUpdateMainThumbnailImage,
+  adminUpdateProduct,
+  adminUpdateSubThumbnailImage,
 } from "@/api/admin";
 import useInput from "@/hooks/useInput";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -16,6 +17,7 @@ import {
   loadMarketProduct,
   loadProductCOLOR,
   loadProductDetail,
+  loadProductImage,
 } from "@/api/shop";
 
 export default function useUpdateProduct() {
@@ -23,14 +25,26 @@ export default function useUpdateProduct() {
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder, setDisplayOrder] = useInput("");
-  const [bundleId, setBundleId] = useState("");
+  const [bundleId, setBundleId] = useState<string>();
   const [bundleCategory, setBundleCategory] = useState(false);
   const [productId, setProductId] = useState<number>();
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState<string>();
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
   const [showImageUpload, setshowImageUpload] = useState(false);
-
+  const [mainThumbnail, setMainThumbnail] = useState("");
+  const [mainThumbnailFile, setMainThumbnailFile] = useState<File[]>([]);
+  const [subThumbnail, setSubThumbnail] = useState("");
+  const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
+  const [mainImages, setMainImages] = useState<string[]>([]);
+  const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
+  const [detailImages, setDetailImages] = useState<string[]>([]);
+  const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
+  const [visible, setVisible] = useState<boolean>();
+  const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
+    price,
+    discountPrice,
+  );
   const [selectedProduct, setSelectedProduct] = useState<PRODUCT | null>(null); // 선택된 카테고리 상태 추가
   interface ColorAndSize {
     color: string;
@@ -48,6 +62,8 @@ export default function useUpdateProduct() {
     subThumbnail: string;
     displayOrder: number;
     visible: boolean;
+    bundleId: string;
+    categoryId: string;
   }
 
   const colorAndSizes: ColorAndSize[] = [];
@@ -67,15 +83,71 @@ export default function useUpdateProduct() {
     adminGetCategory,
   );
 
-  const { data: productData } = useQuery([QUERYKEYS.LOAD_PRODUCT_DETAIL], () =>
-    selectedProduct ? loadProductDetail(selectedProduct.id) : null,
-  );
-  const { data: colorAndSizeData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_COLOR],
-    () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
+  const { data: productData, refetch: refetchProductData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL],
+    () => (selectedProduct ? loadProductDetail(selectedProduct.id) : null),
+    {
+      enabled: false, // 처음에 쿼리를 실행하지 않음
+    },
   );
 
-  const createProduct = async () => {
+  const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_COLOR],
+    () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
+    {
+      enabled: false, // 처음에 쿼리를 실행하지 않음
+    },
+  );
+
+  const { data: mainImageData, refetch: refetchMainImageData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_IMAGE],
+    () => (selectedProduct ? loadProductImage(selectedProduct.id) : null),
+    {
+      enabled: showImageUpload, // 처음에 쿼리를 실행하지 않음
+    },
+  );
+
+  console.log(mainImageData);
+
+  const loadColorAndSize = () => {
+    const uniqueColors: string[] = [];
+    const uniqueSizes: string[] = [];
+    console.log(colorAndSizeData);
+    colorAndSizeData?.data.map((item: ColorAndSize) => {
+      if (!uniqueColors.includes(item.color)) {
+        uniqueColors.push(item.color);
+      }
+      if (!uniqueSizes.includes(item.size)) {
+        uniqueSizes.push(item.size);
+      }
+      return null; // 값을 반환하도록 수정
+    });
+
+    setColors(uniqueColors);
+    setSizes(uniqueSizes);
+  };
+
+  useEffect(() => {
+    if (selectedProduct) {
+      refetchProductData();
+      refetchColorAndSizeData();
+      setColors([""]);
+      setSizes([""]);
+    }
+  }, [selectedProduct]);
+
+  useEffect(() => {
+    if (selectedProduct && showImageUpload) {
+      refetchMainImageData();
+    }
+  }, [selectedProduct]);
+
+  console.log(productData);
+  console.log(productListData);
+
+  console.log(colorAndSizeData);
+
+  const updateProduct = async () => {
     colors.forEach((color) => {
       sizes.forEach((size) => {
         colorAndSizes.push({
@@ -86,25 +158,35 @@ export default function useUpdateProduct() {
       });
     });
     try {
-      const data = await adminCreateProduct({
-        name,
-        price,
-        discountPrice,
-        eventCategory: false,
-        ...(bundleCategory ? { bundleId } : {}),
-        categoryId,
-        colorAndSizes,
-        displayOrder,
-        visible: false,
-      });
-      if (data) {
-        alert("상품이 추가되었습니다. 이미지를 추가해주세요");
-        setProductId(data.data.id);
-        setshowImageUpload(true);
+      if (
+        name &&
+        price &&
+        discountPrice &&
+        categoryId &&
+        colorAndSizes.length > 1 &&
+        displayOrder
+      ) {
+        const data = await adminUpdateProduct(selectedProduct?.id, {
+          name,
+          price,
+          discountPrice,
+          eventCategory: false,
+          ...(bundleCategory ? { bundleId } : {}),
+          categoryId,
+          colorAndSizes,
+          displayOrder,
+          visible,
+        });
+        if (data) {
+          alert("상품이 수정되었습니다. ");
+          setProductId(data.data.id);
+        }
+      } else {
+        alert("필수 항목을 다 채워주세요");
       }
     } catch (err) {
       console.log(err);
-      alert("상품 추가에 실패했습니다.");
+      alert("상품 수정에 실패했습니다.");
     }
   };
 
@@ -119,20 +201,6 @@ export default function useUpdateProduct() {
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryId(e.target.value);
   };
-
-  const [mainThumbnail, setMainThumbnail] = useState("");
-  const [mainThumbnailFile, setMainThumbnailFile] = useState<File[]>([]);
-  const [subThumbnail, setSubThumbnail] = useState("");
-  const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
-  const [mainImages, setMainImages] = useState<string[]>([]);
-  const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
-  const [detailImages, setDetailImages] = useState<string[]>([]);
-  const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
-  const [visible, setVisible] = useState<boolean>();
-  const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
-    price,
-    discountPrice,
-  );
 
   const handleColorChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -177,7 +245,6 @@ export default function useUpdateProduct() {
 
     if (files && files.length > 0) {
       const newImages: File[] = [...mainThumbnailFile];
-
       for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
@@ -197,7 +264,7 @@ export default function useUpdateProduct() {
     }
   };
 
-  const addMainThumbnailImages = async () => {
+  const updateMainThumbnailImages = async () => {
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -207,15 +274,15 @@ export default function useUpdateProduct() {
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminAddMainThumbnailImage(productId, formData);
+      const data = await adminUpdateMainThumbnailImage(productId, formData);
 
       // 서버 응답 처리
       if (data) {
-        alert("메인 썸네일이 추가되었습니다.");
+        alert("메인 썸네일이 수정되었습니다.");
       }
     } catch (error) {
       // 오류 처리
-      console.error("메인 썸네일 이미지 업로드 오류:", error);
+      console.error("메인 썸네일 이미지 수정 오류:", error);
     }
   };
 
@@ -254,14 +321,14 @@ export default function useUpdateProduct() {
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminAddSubThumbnailImage(productId, formData);
+      const data = await adminUpdateSubThumbnailImage(productId, formData);
 
       if (data) {
-        alert("서브 썸네일이 추가되었습니다.");
+        alert("서브 썸네일이 수정되었습니다.");
       }
     } catch (error) {
       // 오류 처리
-      console.error("서브 썸네일이미지 업로드 오류:", error);
+      console.error("서브 썸네일이미지 수정 오류:", error);
     }
   };
 
@@ -301,7 +368,7 @@ export default function useUpdateProduct() {
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminAddMainImage(productId, formData);
+      const data = await adminUpdateMainImage(productId, formData);
 
       // 서버 응답 처리
       console.log(data);
@@ -351,10 +418,10 @@ export default function useUpdateProduct() {
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminAddDetailImage(productId, formData);
+      const data = await adminUpdateDetailImage(productId, formData);
 
       if (data) {
-        alert("상세 페이지 사진들이 추가되었습니다.");
+        alert("상세 페이지 사진들이 수정되었습니다.");
       }
     } catch (error) {
       // 오류 처리
@@ -369,6 +436,18 @@ export default function useUpdateProduct() {
     setDiscountPrice(product.discountPrice);
     setDisplayOrder(product.displayOrder);
     setVisible(product.visible);
+    setCategoryId(product.categoryId);
+    setProductId(product.id);
+
+    // 세트가 구성되어있지 않음
+    if (product.bundleId === null) {
+      setBundleCategory(false);
+    }
+    // 세트가 존재함
+    else {
+      setBundleCategory(true);
+      setBundleId(product.bundleId);
+    }
 
     console.log(selectedProduct);
   };
@@ -377,20 +456,22 @@ export default function useUpdateProduct() {
     setVisible(e.target.checked);
   };
 
-  const loadColorAndSize = () => {
-    const uniqueColors: string[] = [];
-    const uniqueSizes: string[] = [];
-    colorAndSizeData?.data.map((item: ColorAndSize) => {
-      if (!uniqueColors.includes(item.color)) {
-        uniqueColors.push(item.color);
-      }
-      if (!uniqueSizes.includes(item.size)) {
-        uniqueSizes.push(item.size);
-      }
-    });
+  const loadImages = () => {
+    setshowImageUpload(true);
+  };
 
-    setColors(uniqueColors);
-    setSizes(uniqueSizes);
+  const deleteProduct = async () => {
+    try {
+      // 서버로 FormData를 포함한 POST 요청 보내기
+      const data = await adminDeleteProduct(selectedProduct?.id);
+
+      if (data) {
+        alert("상품이 제거되었습니다.");
+      }
+    } catch (error) {
+      // 오류 처리
+      console.error("상품 제거 실패:", error);
+    }
   };
 
   return {
@@ -412,7 +493,7 @@ export default function useUpdateProduct() {
     setshowImageUpload,
     displayOrder,
     onChangeDisplayOrder,
-    createProduct,
+    createProduct: updateProduct,
     productId,
     discountPrice,
     bundleCategory,
@@ -425,7 +506,7 @@ export default function useUpdateProduct() {
     handleSizeChange,
     addSizeInput,
     handleMainThumbnailChange,
-    addMainThumbnailImages,
+    updateMainThumbnailImages,
     handleSubThumbnailChange,
     addSubThumbnailImages,
     handleMainImagesChange,
@@ -446,5 +527,8 @@ export default function useUpdateProduct() {
     bundleData,
     categoryData,
     productData,
+    mainImageData,
+    loadImages,
+    deleteProduct,
   };
 }
