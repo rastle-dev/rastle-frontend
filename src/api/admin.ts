@@ -249,7 +249,7 @@ export const adminGetUserInfo = async (userData: any) => {
 };
 
 export const adminCreateEvent = async (eventData: object) => {
-  const { data } = await authorizationClient.post(API.EVENT, eventData);
+  const { data } = await authorizationClient.post(API.CREATEEVENT, eventData);
   return data;
 };
 
@@ -261,9 +261,47 @@ export const adminAddEventImages = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.post(
-    `${API.EVENT}/${eventId}${API.IMAGES}`,
+    `${API.CREATEEVENT}/${eventId}${API.IMAGES}`,
     imageData,
     { headers },
+  );
+  return data;
+};
+
+export const adminGetEvent = async () => {
+  const { data } = await authorizationClient.get(API.GETEVENT);
+  return data;
+};
+
+export const adminUpdateEvent = async (
+  eventId: number | undefined,
+  eventData: object,
+) => {
+  const { data } = await authorizationClient.patch(
+    `${API.UPDATEEVENT}/${eventId}`,
+    eventData,
+  );
+  return data;
+};
+
+export const adminUpdateEventImages = async (
+  eventId: number | undefined,
+  imageData: FormData,
+) => {
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  const { data } = await authorizationClient.put(
+    `${API.UPDATEEVENT}/${eventId}${API.IMAGES}`,
+    imageData,
+    { headers },
+  );
+  return data;
+};
+
+export const adminDeleteEvent = async (eventId: number | undefined) => {
+  const { data } = await authorizationClient.delete(
+    `${API.CREATEEVENT}/${eventId}`,
   );
   return data;
 };

@@ -184,7 +184,7 @@ export default function useUpdateBundle() {
     setPreviewImages,
     handleBundleDescriptionChange,
     handleImageUpload,
-    updateBundle,
+    updateBundle: updateEvent,
     name,
     onChangeName,
     startDate,
@@ -201,6 +201,6 @@ export default function useUpdateBundle() {
     handleVisibleChange: handleEventChange,
     handleBundleClick,
     selectedBundle,
-    deleteBundle,
+    deleteEvent: deleteBundle,
   };
 }
