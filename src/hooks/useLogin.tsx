@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { toast } from "react-toastify";
 import useInput from "@/hooks/useInput";
 import { authLogin } from "@/api/auth";

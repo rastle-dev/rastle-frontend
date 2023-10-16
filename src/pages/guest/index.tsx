@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import PATH from "@/constants/path";

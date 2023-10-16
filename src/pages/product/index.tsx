@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { router } from "next/client";
+import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
@@ -28,6 +28,7 @@ export default function Product() {
     uniqueSizes,
     cartProducts,
   } = useProduct();
+  const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
   console.log("cartProducts", cartProducts);
   console.log("selectedProducts", selectedProducts);

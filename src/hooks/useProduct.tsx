@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
 import {
   loadProductCOLOR,

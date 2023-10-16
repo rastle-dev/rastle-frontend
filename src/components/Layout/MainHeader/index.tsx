@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import PATH from "@/constants/path";
 import COLORS from "@/constants/color";
 import LazyLink from "@/components/LazyLink";

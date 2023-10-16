@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 
