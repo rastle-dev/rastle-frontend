@@ -2,14 +2,15 @@ import styled from "styled-components";
 import IconButton from "@/components/common/IconButton";
 
 interface WrapperProps {
-  scrolled: boolean;
+  scrolled: string;
 }
 
 const Wrapper = styled.div<WrapperProps>`
   //width: 92%;
   width: 100%;
   //background-color: white;
-  background-color: ${({ scrolled }) => (scrolled ? "white" : "transparent")};
+  background-color: ${({ scrolled }) =>
+    JSON.parse(scrolled) ? "white" : "transparent"};
   position: fixed;
   top: 0;
   z-index: 999;

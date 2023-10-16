@@ -8,7 +8,7 @@ import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
 import TotalManagement from "@/components/Manager/TotalManagement";
 import BundleManagement from "@/components/Manager/BundleManagement";
-import Button from "@/components/common/Button";
+
 import COLORS from "@/constants/color";
 
 export const Wrapper = styled.div`
@@ -90,7 +90,9 @@ export default function Manager() {
       <HeaderTitle>관리자 페이지</HeaderTitle>
       <ManageList>
         {managementList.map(({ name }) => (
-          <StyledButton onClick={() => onClickList(name)}>{name}</StyledButton>
+          <StyledButton key={name} onClick={() => onClickList(name)}>
+            {name}
+          </StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>

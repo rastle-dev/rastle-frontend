@@ -22,11 +22,13 @@ const navList = [
 ];
 
 export default function MainHeader() {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState<string>("false");
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
-      setIsScrolled(scrollTop > 0);
+      if (scrollTop > 0) {
+        setIsScrolled("true");
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -37,7 +39,7 @@ export default function MainHeader() {
   }, []);
 
   return (
-    <Wrapper scrolled={isScrolled}>
+    <Wrapper scrolled={isScrolled.toString()}>
       <InnerNav>
         <MenuDiv>
           <MenuIcon iconName="menu" color={COLORS.블랙} />
