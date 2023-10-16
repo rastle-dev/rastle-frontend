@@ -188,8 +188,8 @@ export default function Cart() {
               <p>3,000원</p>
               <p>42,900원</p>
               <SelectTab>
-                <SelectButton title="주문하기" />
-                <SelectButton title="X 삭제" />
+                <SelectButton children="주문하기" />
+                <SelectButton children="X 삭제" />
               </SelectTab>
             </ProductInfo>
           ))}

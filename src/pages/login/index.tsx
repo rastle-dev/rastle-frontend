@@ -59,7 +59,7 @@ export default function Login() {
           />
         ))}
         <S.LoginButton
-          title="로그인"
+          children="로그인"
           width="100%"
           onClick={() => {
             if (!(email && password)) {
@@ -75,7 +75,7 @@ export default function Login() {
         {buttons.map((button, index) => (
           <React.Fragment key={button.productName}>
             <S.StyledButton
-              title={button.productName}
+              children={button.productName}
               width={button.width}
               onClick={button.onClick}
             />

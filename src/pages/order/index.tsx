@@ -89,7 +89,7 @@ export default function Order() {
                   />
                   <S.PostalButtonWrapper>
                     <S.PostalButton
-                      title={input.title}
+                      children={input.title}
                       onClick={() => handlePostal.clickButton()}
                     />
                   </S.PostalButtonWrapper>
@@ -152,7 +152,7 @@ export default function Order() {
               </S.PaymentOptionsButton>
             ))}
           </S.PaymentOptions>
-          <S.PaymentButton title="결제하기" />
+          <S.PaymentButton children="결제하기" />
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>

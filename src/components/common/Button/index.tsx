@@ -4,7 +4,7 @@ import COLORS from "../../../constants/color";
 
 type ButtonType = "default" | "shop" | "size";
 type ButtonProps = {
-  title?: string;
+  children?: string;
   type?: ButtonType;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
@@ -65,7 +65,7 @@ const Wrapper = styled.button<{
 `;
 
 export default function Button({
-  title,
+  children,
   type = "default",
   disabled = false,
   onClick,
@@ -81,7 +81,7 @@ export default function Button({
       width={width!}
       isActive
     >
-      {title}
+      {children}
     </Wrapper>
   );
 }

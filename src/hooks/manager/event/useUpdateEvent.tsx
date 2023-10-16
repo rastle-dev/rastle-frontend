@@ -119,7 +119,7 @@ export default function useUpdateEvent() {
       );
 
       if (shouldCreate) {
-        // 서버로 FormData를 포함한 POST 요청 보내기
+        // 서버현로 FormData를 포함한 POST 요청 보내기
         const data = await adminUpdateEventImages(eventId, formData);
         console.log(data);
         alert("이벤트 이미지 수정을 성공했습니다");

@@ -8,6 +8,8 @@ import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
 import TotalManagement from "@/components/Manager/TotalManagement";
 import BundleManagement from "@/components/Manager/BundleManagement";
+import Button from "@/components/common/Button";
+import COLORS from "@/constants/color";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -53,6 +55,20 @@ export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 const managementList = [
   { name: "전체통계" },
   { name: "회원관리" },
@@ -74,9 +90,7 @@ export default function Manager() {
       <HeaderTitle>관리자 페이지</HeaderTitle>
       <ManageList>
         {managementList.map(({ name }) => (
-          <button type="button" key={name} onClick={() => onClickList(name)}>
-            {name}
-          </button>
+          <StyledButton onClick={() => onClickList(name)}>{name}</StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>

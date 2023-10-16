@@ -53,7 +53,7 @@ export default function Product() {
             {jsonData.sizes.map((size) => (
               <S.SizeButton
                 key={size}
-                title={size}
+                children={size}
                 type="size"
                 onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
                 // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
@@ -112,9 +112,9 @@ export default function Product() {
             {calculateTotalCount(selectedProducts)}개)
           </S.TotalPrice>
           <S.Pay>
-            <S.StyledBuyButton title="구매하기" type="shop" />
-            <S.StyledPayButton title="장바구니에 담기" type="shop" />
-            <S.StyledNpayButton title="N Pay 구매하기" type="shop" />
+            <S.StyledBuyButton children="구매하기" type="shop" />
+            <S.StyledPayButton children="장바구니에 담기" type="shop" />
+            <S.StyledNpayButton children="N Pay 구매하기" type="shop" />
           </S.Pay>
         </S.ProductContent>
       </S.TopLayer>

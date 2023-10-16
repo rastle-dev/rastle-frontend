@@ -155,7 +155,7 @@ export default function Signup() {
                 />
                 <S.ButtonWrapper>
                   <S.StyledButton
-                    title={data.isCertification.title}
+                    children={data.isCertification.title}
                     onClick={data.isCertification.onClick}
                     disabled={data.isCertification.disabled}
                   />
@@ -174,7 +174,7 @@ export default function Signup() {
                   />
                   <S.ButtonTimerWrapper>
                     <S.StyledButton
-                      title={data.isCertification.title}
+                      children={data.isCertification.title}
                       onClick={data.isCertification.onClick}
                       disabled={data.isCertification.disabled}
                     />
@@ -210,7 +210,7 @@ export default function Signup() {
       <S.SignupButtonDiv>
         <S.SignupButton
           onClick={signUp}
-          title="가입하기"
+          children="가입하기"
           disabled={
             !(
               username.length > 0 &&
