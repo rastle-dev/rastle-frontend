@@ -96,6 +96,7 @@ export default function CreateCategory() {
     <div>
       <Title>카테고리 추가</Title>
       <CategoryDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="categoryType">카테고리 분류:</label>
         <select
           id="categoryType"
@@ -107,6 +108,7 @@ export default function CreateCategory() {
         </select>
       </CategoryDetail>
       <CategoryDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="categoryName">카테고리 이름:</label>
         <input
           type="text"
@@ -116,6 +118,7 @@ export default function CreateCategory() {
         />
       </CategoryDetail>
       <CategoryDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="categoryDescription">카테고리 설명:</label>
         <CustomTextarea
           id="categoryDescription"
