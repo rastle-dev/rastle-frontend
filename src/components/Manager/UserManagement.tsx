@@ -127,7 +127,7 @@ export default function UserManagement() {
     가입일: "createdDate",
   };
 
-  console.log("전체 userData 입니다 : ", userData);
+  console.log("API) useLoadUserInfo : 전체 userData : ", userData);
   let filteredUsers;
   const handleSearch = () => {
     // 검색 결과 데이터 생성

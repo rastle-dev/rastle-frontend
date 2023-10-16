@@ -60,7 +60,7 @@ export default function Mypage() {
               </S.Box>
             ))}
           </S.Menu>
-          <S.Logout children="로그아웃" onClick={() => logout()} />
+          <S.Logout title="로그아웃" onClick={() => logout()} />
         </S.Sidebar>
         <S.Content> {renderTabContent()}</S.Content>
       </S.Wrapper>

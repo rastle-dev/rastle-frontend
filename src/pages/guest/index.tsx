@@ -20,7 +20,7 @@ export default function Guest() {
         {inputs.map((input) => (
           <Input key={input.label} size={input.size} label={input.label} />
         ))}
-        <Button children="주문 조회" width="35rem" disabled />
+        <Button title="주문 조회" width="35rem" disabled />
       </S.Wrapper>
       <S.Box>
         <S.AskMember>아직 회원이 아니신가요?</S.AskMember>

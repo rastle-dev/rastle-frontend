@@ -49,14 +49,14 @@ interface Category {
 }
 
 export default function CreateCategory() {
-  const { createCategory, onChangeName } = useCreateCategory();
+  const { createCategory, onChangeName, name } = useCreateCategory();
 
   const { data: categoryData } = useQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
   );
 
-  console.log(categoryData);
+  console.log("API) adminGetCategory : 전체 카테고리 : ", categoryData);
 
   return (
     <div>
@@ -69,7 +69,7 @@ export default function CreateCategory() {
       </CategoryList>
       <p>상의, 하의, 악세서리, 아우터 등을 추가하세요</p>
       <CategoryDetail>
-        <StyledInput size={30} onChange={onChangeName} />
+        <StyledInput value={name} size={30} onChange={onChangeName} />
       </CategoryDetail>
       <button type="button" onClick={createCategory}>
         카테고리 생성

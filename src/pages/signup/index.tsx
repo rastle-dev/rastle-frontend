@@ -151,11 +151,11 @@ export default function Signup() {
                   label={data.label}
                   onChange={data.onChange}
                   message={data.message}
-                  inValid={data.inValid}
+                  invalid={data.inValid}
                 />
                 <S.ButtonWrapper>
                   <S.StyledButton
-                    children={data.isCertification.title}
+                    title={data.isCertification.title}
                     onClick={data.isCertification.onClick}
                     disabled={data.isCertification.disabled}
                   />
@@ -170,11 +170,11 @@ export default function Signup() {
                     label={data.label}
                     onChange={data.onChange}
                     message={data.message}
-                    inValid={data.inValid}
+                    invalid={data.inValid}
                   />
                   <S.ButtonTimerWrapper>
                     <S.StyledButton
-                      children={data.isCertification.title}
+                      title={data.isCertification.title}
                       onClick={data.isCertification.onClick}
                       disabled={data.isCertification.disabled}
                     />
@@ -191,7 +191,7 @@ export default function Signup() {
                 label={data.label}
                 onChange={data.onChange}
                 message={data.message}
-                inValid={data.inValid}
+                invalid={data.inValid}
               />
             </S.DefaultInputDiv>
           )}
@@ -210,7 +210,7 @@ export default function Signup() {
       <S.SignupButtonDiv>
         <S.SignupButton
           onClick={signUp}
-          children="가입하기"
+          title="가입하기"
           disabled={
             !(
               username.length > 0 &&

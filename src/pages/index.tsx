@@ -21,7 +21,7 @@ function TopLayer() {
       <S.TextWrapper>
         <S.Text>레슬(rastle) : (악, 어려움 등에) 전력을 다하다</S.Text>
         <S.TextInstagram>@rastle_fashion</S.TextInstagram>
-        <S.StyledButton children="view more" width="10rem" />
+        <S.StyledButton title="view more" width="10rem" />
       </S.TextWrapper>
     </S.ImageWrapper>
   );

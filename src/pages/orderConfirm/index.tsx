@@ -52,7 +52,7 @@ export default function Order() {
             <S.TotalPrice>86,600원</S.TotalPrice>
           </S.Total>
           <S.ButtonDiv>
-            <S.StyledBuyButton children="쇼핑하러 가기" type="shop" />
+            <S.StyledBuyButton title="쇼핑하러 가기" type="shop" />
           </S.ButtonDiv>
         </S.InfoWrapper>
       </S.Container>

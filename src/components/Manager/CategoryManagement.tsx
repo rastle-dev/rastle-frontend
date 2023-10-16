@@ -70,7 +70,9 @@ export default function CategoryManagement() {
       <Title>카테고리 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
-          <StyledButton onClick={() => onClickList(name)}>{name}</StyledButton>
+          <StyledButton key={name} onClick={() => onClickList(name)}>
+            {name}
+          </StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>

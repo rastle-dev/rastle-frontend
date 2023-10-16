@@ -9,13 +9,13 @@ export default {
 };
 
 export function Default() {
-  return <Button children="로그인" type="default" />;
+  return <Button title="로그인" type="default" />;
 }
 export function Shop() {
-  return <Button children="구매하기" type="shop" />;
+  return <Button title="구매하기" type="shop" />;
 }
 export function Size() {
-  return <Button children="M" type="size" />;
+  return <Button title="M" type="size" />;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ControlTest(args: any) {

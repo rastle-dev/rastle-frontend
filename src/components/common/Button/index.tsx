@@ -4,14 +4,14 @@ import COLORS from "../../../constants/color";
 
 type ButtonType = "default" | "shop" | "size";
 type ButtonProps = {
-  children?: string;
+  title?: string;
   type?: ButtonType;
   disabled?: boolean;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   width?: string;
   /** 버튼 활성화 (onClick)을 감지하기 위한 props */
-  isActive?: boolean;
+  active?: boolean;
 };
 
 const Wrapper = styled.button<{
@@ -65,7 +65,7 @@ const Wrapper = styled.button<{
 `;
 
 export default function Button({
-  children,
+  title,
   type = "default",
   disabled = false,
   onClick,
@@ -81,7 +81,7 @@ export default function Button({
       width={width!}
       isActive
     >
-      {children}
+      {title}
     </Wrapper>
   );
 }

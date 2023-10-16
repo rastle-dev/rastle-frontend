@@ -137,10 +137,10 @@ export default function LoginInfo() {
                 value={input.value}
                 onChange={input.onChange}
                 message={input.message}
-                inValid={input.inValid}
+                invalid={input.inValid}
               />
               <PasswordChangeButton
-                children="변경"
+                title="변경"
                 onClick={() => {
                   mutateChangePassword.mutate({ newPassword: password });
                 }}
@@ -158,13 +158,13 @@ export default function LoginInfo() {
               value={input.value}
               onChange={input.onChange}
               message={input.message}
-              inValid={input.inValid}
+              invalid={input.inValid}
             />
           )}
         </Wrapper>
       ))}
       <DeleteButtonWrapper>
-        <DeleteButton children="탈퇴하기" onClick={deleteUser} />
+        <DeleteButton title="탈퇴하기" onClick={deleteUser} />
       </DeleteButtonWrapper>
     </div>
   );
