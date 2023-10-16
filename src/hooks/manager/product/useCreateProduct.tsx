@@ -40,26 +40,37 @@ export default function useCreateProduct() {
         });
       });
     });
-    try {
-      const data = await adminCreateProduct({
-        name,
-        price,
-        discountPrice,
-        eventCategory: false,
-        ...(bundleCategory ? { bundleId } : {}),
-        categoryId,
-        colorAndSizes,
-        displayOrder,
-        visible: false,
-      });
-      if (data) {
-        alert("상품이 추가되었습니다. 이미지를 추가해주세요");
-        setProductId(data.data.id);
-        setshowImageUpload(true);
+    if (
+      name.length >= 2 &&
+      price !== null &&
+      discountPrice !== null &&
+      colorAndSizes.length > 0 &&
+      displayOrder !== null &&
+      categoryId !== null
+    ) {
+      try {
+        const data = await adminCreateProduct({
+          name,
+          price,
+          discountPrice,
+          eventCategory: false,
+          ...(bundleCategory ? { bundleId } : {}),
+          categoryId,
+          colorAndSizes,
+          displayOrder,
+          visible: false,
+        });
+        if (data) {
+          alert("상품이 추가되었습니다. 이미지를 추가해주세요");
+          setProductId(data.data.id);
+          setshowImageUpload(true);
+        }
+      } catch (err) {
+        console.log(err);
+        alert("상품 추가에 실패했습니다.");
       }
-    } catch (err) {
-      console.log(err);
-      alert("상품 추가에 실패했습니다.");
+    } else {
+      alert("필수 항목들을 다 채워주세요.");
     }
   };
 
@@ -83,8 +94,12 @@ export default function useCreateProduct() {
   const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
-  const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>();
-
+  const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>(false);
+  const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
+    useState(false);
+  const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
+  const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
+  const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
   const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
     price,
     discountPrice,
@@ -158,6 +173,11 @@ export default function useCreateProduct() {
   };
 
   const addMainThumbnailImages = async () => {
+    if (mainThumbnailFile.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -171,6 +191,7 @@ export default function useCreateProduct() {
 
       // 서버 응답 처리
       if (data) {
+        setBlockMainThumbnailButton(true);
         alert("메인 썸네일이 추가되었습니다.");
       }
     } catch (error) {
@@ -205,6 +226,11 @@ export default function useCreateProduct() {
   };
 
   const addSubThumbnailImages = async () => {
+    if (subThumbnailFile.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -217,6 +243,7 @@ export default function useCreateProduct() {
       const data = await adminAddSubThumbnailImage(productId, formData);
 
       if (data) {
+        setBlockSubThumbnailButton(true);
         alert("서브 썸네일이 추가되었습니다.");
       }
     } catch (error) {
@@ -252,6 +279,11 @@ export default function useCreateProduct() {
     }
   };
   const addMainImages = async () => {
+    if (mainImageFiles.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -266,6 +298,7 @@ export default function useCreateProduct() {
       // 서버 응답 처리
       console.log(data);
       if (data) {
+        setBlockMainImagesButton(true);
         alert("메인 이미지가 추가되었습니다.");
       }
     } catch (error) {
@@ -302,6 +335,11 @@ export default function useCreateProduct() {
   };
 
   const addDetailImages = async () => {
+    if (detailImageFiles.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -314,7 +352,11 @@ export default function useCreateProduct() {
       const data = await adminAddDetailImage(productId, formData);
 
       if (data) {
-        alert("상세 페이지 사진들이 추가되었습니다.");
+        setBlockDetailImagesButton(true);
+        alert(
+          "상세 페이지 사진들이 추가되었습니다. 상품 수정에요서 공개처리를 해주세요",
+        );
+        window.location.reload(); // 페이지 새로고침
       }
     } catch (error) {
       // 오류 처리
@@ -367,5 +409,9 @@ export default function useCreateProduct() {
     detailImages,
     handleDisplayOrderChange,
     displayOrderCheck,
+    blockMainThumbnailButton,
+    blockSubThumbnailButton,
+    blockMainImagesButton,
+    blockDetailImagesButton,
   };
 }

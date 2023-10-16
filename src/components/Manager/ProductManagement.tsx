@@ -4,6 +4,7 @@ import CreateProduct from "@/components/Manager/product/CreateProduct";
 import UpdateProduct from "@/components/Manager/product/UpdateProduct";
 import CreateEvent from "@/components/Manager/event/CreateEvent";
 import UpdateEvent from "@/components/Manager/event/UpdateEvent";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -36,6 +37,20 @@ export const ManageList = styled.ul`
   }
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
 export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
@@ -59,9 +74,9 @@ export default function ProductManagement() {
       <Title>상품 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
-          <button type="button" key={name} onClick={() => onClickList(name)}>
+          <StyledButton key={name} onClick={() => onClickList(name)}>
             {name}
-          </button>
+          </StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>

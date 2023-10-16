@@ -6,7 +6,8 @@ import { adminGetCategory, adminGetBundle } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import Image from "next/image";
-import { loadMarketProduct, loadProductDetail } from "@/api/shop";
+import { loadMarketProduct } from "@/api/shop";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -17,6 +18,15 @@ const Title = styled.div`
 const ProductDetail = styled.div`
   margin: 0;
   padding-bottom: 1rem;
+
+  label {
+    margin-right: 0.5rem;
+  }
+`;
+
+const ProductImgDetail = styled.div`
+  margin: 0;
+  padding-bottom: 0.3rem;
 
   label {
     margin-right: 0.5rem;
@@ -138,6 +148,37 @@ const ProductItem = styled.div`
   }
 `;
 
+export const StyledButton = styled.button`
+  margin-top: 1rem;
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
+export const StyledImgButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.5px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 interface Bundle {
   id: number;
   name: string;
@@ -203,6 +244,10 @@ export default function CreateProduct() {
     detailImages,
     handleDisplayOrderChange,
     displayOrderCheck,
+    blockMainThumbnailButton,
+    blockSubThumbnailButton,
+    blockMainImagesButton,
+    blockDetailImagesButton,
   } = useCreateProduct();
 
   const { data: bundleData } = useQuery(
@@ -219,10 +264,9 @@ export default function CreateProduct() {
     [QUERYKEYS.LOAD_PRODUCT],
     () => loadMarketProduct(),
     {
-      enabled: !displayOrderCheck, // 처음에 쿼리를 실행하지 않음
+      enabled: displayOrderCheck, // 처음에 쿼리를 실행하지 않음
     },
   );
-
   console.log(productListData);
 
   return (
@@ -241,7 +285,7 @@ export default function CreateProduct() {
         size={30}
         onChange={onChangeDiscountPrice}
       />
-      <p>할인퍼센트 : {discountPercent}% </p>
+      <p>할인퍼센트 : {Number.isNaN(discountPercent) ? 0 : discountPercent}%</p>
       <p>할인된 가격 : {discountedPrice}</p>
       <Input
         type="number"
@@ -350,12 +394,12 @@ export default function CreateProduct() {
           사이즈 추가
         </button>
       </SizeInputs>
-      <button type="button" onClick={createProduct}>
+      <StyledButton type="button" onClick={createProduct}>
         상품 생성
-      </button>
+      </StyledButton>
       {showImageUpload ? (
         <div>
-          <ProductDetail>
+          <ProductImgDetail>
             썸네일 지정:
             <ThumbnailInput
               type="file"
@@ -373,11 +417,14 @@ export default function CreateProduct() {
                 />
               )}
             </PreviewImages>
-          </ProductDetail>
-          <button type="button" onClick={addMainThumbnailImages}>
+          </ProductImgDetail>
+          <StyledImgButton
+            onClick={addMainThumbnailImages}
+            disabled={blockMainThumbnailButton}
+          >
             메인썸네일 추가하기
-          </button>
-          <ProductDetail>
+          </StyledImgButton>
+          <ProductImgDetail>
             2번째 사진 지정:
             <SecondImageInput
               type="file"
@@ -395,10 +442,13 @@ export default function CreateProduct() {
                 />
               )}
             </PreviewImages>
-          </ProductDetail>
-          <button type="button" onClick={addSubThumbnailImages}>
+          </ProductImgDetail>
+          <StyledImgButton
+            onClick={addSubThumbnailImages}
+            disabled={blockSubThumbnailButton}
+          >
             서브썸네일 추가하기
-          </button>
+          </StyledImgButton>
           <ProductDetail>
             메인 이미지 추가:
             <AdditionalImagesInput
@@ -422,9 +472,12 @@ export default function CreateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addMainImages}>
+          <StyledImgButton
+            onClick={addMainImages}
+            disabled={blockMainImagesButton}
+          >
             메인 사진들(10장)추가하기
-          </button>
+          </StyledImgButton>
           <ProductDetail>
             디테일 이미지 추가:
             <AdditionalImagesInput
@@ -448,9 +501,12 @@ export default function CreateProduct() {
               ))}
             </PreviewImages>
           </ProductDetail>
-          <button type="button" onClick={addDetailImages}>
+          <StyledImgButton
+            onClick={addDetailImages}
+            disabled={blockDetailImagesButton}
+          >
             디테일 사진들 추가하기
-          </button>
+          </StyledImgButton>
           <br />
         </div>
       ) : null}
