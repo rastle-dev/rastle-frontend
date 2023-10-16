@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Input from "@/components/common/Input";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { adminGetBundle, adminGetEvent } from "@/api/admin";
-import useUpdateBundle from "@/hooks/manager/bundle/useUpdateBundle";
+import { adminGetEvent } from "@/api/admin";
 import Image from "next/image";
 import useUpdateEvent from "@/hooks/manager/event/useUpdateEvent";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -56,19 +56,35 @@ const BundleSubtitle = styled.div`
 const BundleList = styled.ul`
   list-style-type: none;
   padding: 0;
-  li {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
-    &:hover {
-      background-color: #f0f0f0;
-      color: #333;
-    }
+`;
+
+const BundleLi = styled.li`
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
   }
+`;
+
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
 
 interface Event {
@@ -86,7 +102,7 @@ export default function UpdateEvent() {
     description,
     previewImages,
     newPreviewImages,
-    handleBundleDescriptionChange,
+    handleEventDescriptionChange,
     handleImageUpload,
     onChangeName,
     onChangeStartDate,
@@ -94,10 +110,10 @@ export default function UpdateEvent() {
     onChangeStartMinute,
     onChangeStartSecond,
     updateEvent,
-    updateBundleImages,
+    updateEventImages,
     handleVisibleChange,
     handleEventClick,
-    selectedBundle,
+    selectedEvent,
     startDate,
     // endDate,
     startHour,
@@ -121,6 +137,12 @@ export default function UpdateEvent() {
   );
 
   console.log(eventData);
+  // const { data: eventProductData } = useQuery(
+  //   [QUERYKEYS.LOAD_EVENT_PRODUCT],
+  //   () => adminGetEventProduct(selectedEvent?.id), // 함수 래핑
+  // );
+
+  console.log(selectedEvent);
 
   return (
     <div>
@@ -128,13 +150,12 @@ export default function UpdateEvent() {
       <BundleSubtitle>수정할 이벤트를 선택하세요</BundleSubtitle>
       <BundleList>
         {eventData?.data.content.map((event: Event) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-          <li key={event.id} onClick={() => handleEventClick(event)}>
+          <BundleLi key={event.id} onClick={() => handleEventClick(event)}>
             {event.name}
-          </li>
+          </BundleLi>
         ))}
       </BundleList>
-      <p>수정할 세트 : {selectedBundle?.name}</p>
+      <p>수정할 세트 : {selectedEvent?.name}</p>
       <CategoryDetail>
         <Input
           label="세트 이름"
@@ -222,15 +243,11 @@ export default function UpdateEvent() {
         <CustomTextarea
           id="categoryDescription"
           value={description}
-          onChange={(e) => handleBundleDescriptionChange(e)}
+          onChange={(e) => handleEventDescriptionChange(e)}
         />
       </CategoryDetail>
-      <button type="button" onClick={updateEvent}>
-        이벤트 정보 수정
-      </button>
-      <button type="button" onClick={deleteEvent}>
-        이벤트 삭제
-      </button>
+      <StyledButton onClick={updateEvent}>이벤트 정보 수정</StyledButton>
+      <StyledButton onClick={deleteEvent}>이벤트 삭제</StyledButton>
       <p>*이미지는 따로 수정 필요</p>
       <div>
         <p>현재 이벤트 사진</p>
@@ -249,8 +266,7 @@ export default function UpdateEvent() {
           </PreviewImages>
         )}
         <p>변경할 세트 사진</p>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryImage">이벤트 이미지:</label>
+        이벤트 이미지:
         <input
           type="file"
           id="categoryImage"
@@ -270,9 +286,7 @@ export default function UpdateEvent() {
             />
           ))}
         </PreviewImages>
-        <button type="button" onClick={updateBundleImages}>
-          이미지 추가
-        </button>
+        <StyledButton onClick={updateEventImages}>이미지 추가</StyledButton>
       </div>
     </div>
   );

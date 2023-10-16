@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import useInput from "@/hooks/useInput";
-import {
-  adminAddBundleImages,
-  adminAddEventImages,
-  adminCreateEvent,
-} from "@/api/admin";
+import { adminAddEventImages, adminCreateEvent } from "@/api/admin";
 
 export default function useCreateEvent() {
   const [description, setDescription] = useState("");
@@ -23,15 +19,7 @@ export default function useCreateEvent() {
   const [showImageUpload, setshowImageUpload] = useState(false);
   const [eventId, setEventId] = useState<number>();
   const [visible, setVisible] = useState(false);
-
-  interface Bundle {
-    id: number;
-    name: string;
-    imageUrls: string[];
-    description: string;
-    saleStartTime: string;
-    visible: boolean;
-  }
+  const [blockCreateEventButton, setBlockCreateEventButton] = useState(false);
 
   const handleEventDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
@@ -50,52 +38,94 @@ export default function useCreateEvent() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setImages(newImages.slice(0, 5)); // 최대 3개까지만 유지
             setPreviewImages(newPreviews.slice(0, 5));
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
   };
 
   const createEvent = async () => {
-    try {
-      const data = await adminCreateEvent({
-        name,
-        startDate,
-        endDate,
-        startHour,
-        startMinute,
-        startSecond,
-        endHour,
-        endMinute,
-        endSecond,
-        description,
-        visible,
-      });
+    if (
+      name.length >= 2 &&
+      startDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      endDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      startHour &&
+      startMinute &&
+      startSecond &&
+      startMinute &&
+      endHour &&
+      endMinute &&
+      endSecond &&
+      Number(startHour) >= 0 &&
+      Number(startHour) < 24 &&
+      Number(startMinute) >= 0 &&
+      Number(startMinute) < 60 &&
+      Number(startSecond) >= 0 &&
+      Number(startSecond) < 60 &&
+      Number(endHour) >= 0 &&
+      Number(endHour) < 24 &&
+      Number(endMinute) >= 0 &&
+      Number(endMinute) < 60 &&
+      Number(endSecond) >= 0 &&
+      Number(endSecond) < 60 &&
+      visible != null &&
+      description != null
+    ) {
+      console.log(endSecond);
+      console.log(Number(endSecond) >= 0);
+      try {
+        const data = await adminCreateEvent({
+          name,
+          startDate,
+          endDate,
+          startHour,
+          startMinute,
+          startSecond,
+          endHour,
+          endMinute,
+          endSecond,
+          description,
+          visible,
+        });
 
-      console.log(data);
-      if (data) {
-        setEventId(data.data.id);
-        setshowImageUpload(true);
-        alert("이벤트 생성 성공");
-      } else {
-        alert("이벤트 생성 실패");
+        console.log(data);
+        if (data) {
+          setEventId(data.data.id);
+          setshowImageUpload(true);
+          setBlockCreateEventButton(true);
+          alert("이벤트 생성 성공");
+        } else {
+          alert("이벤트 생성 실패");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      alert("필수 항목들을 올바르게 다 채워주세요.");
     }
   };
 
   const addEventImages = async () => {
+    if (images.length === 0) {
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -109,10 +139,11 @@ export default function useCreateEvent() {
 
       // 서버 응답 처리
       console.log(data);
-      alert("세트 이미지 추가를 성공했습니다");
+      alert("이벤트 이미지 추가를 성공했습니다");
+      window.location.reload(); // 페이지 새로고침
     } catch (error) {
       // 오류 처리
-      alert("세트 이미지 추가 오류");
+      alert("이벤트 이미지 추가 오류");
       console.error("이미지 업로드 오류:", error);
     }
   };
@@ -152,5 +183,6 @@ export default function useCreateEvent() {
     onChangeEndHour,
     onChangeEndMinute,
     onChangeEndSecond,
+    blockCreateEventButton,
   };
 }

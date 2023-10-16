@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import useInput from "@/hooks/useInput";
 import {
-  adminDeleteBundle,
   adminDeleteEvent,
-  adminUpdateBundle,
-  adminUpdateBundleImages,
   adminUpdateEvent,
   adminUpdateEventImages,
 } from "@/api/admin";
@@ -57,55 +54,93 @@ export default function useUpdateEvent() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setImages(newImages.slice(0, 5)); // 최대 3개까지만 유지
             setNewPreviewImages(newPreviews.slice(0, 5));
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
   };
 
   const updateEvent = async () => {
-    try {
-      const shouldCreate = window.confirm("이벤트 상품을 수정하시겠습니까?");
+    if (
+      name.length >= 2 &&
+      startDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      endDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      startHour &&
+      startMinute &&
+      startSecond &&
+      startMinute &&
+      endHour &&
+      endMinute &&
+      endSecond &&
+      Number(startHour) >= 0 &&
+      Number(startHour) < 24 &&
+      Number(startMinute) >= 0 &&
+      Number(startMinute) < 60 &&
+      Number(startSecond) >= 0 &&
+      Number(startSecond) < 60 &&
+      Number(endHour) >= 0 &&
+      Number(endHour) < 24 &&
+      Number(endMinute) >= 0 &&
+      Number(endMinute) < 60 &&
+      Number(endSecond) >= 0 &&
+      Number(endSecond) < 60 &&
+      visible != null &&
+      description != null
+    ) {
+      try {
+        const shouldCreate = window.confirm("이벤트 상품을 수정하시겠습니까?");
 
-      if (shouldCreate) {
-        const data = await adminUpdateEvent(eventId, {
-          name,
-          startDate,
-          endDate,
-          startHour,
-          startMinute,
-          startSecond,
-          endHour,
-          endMinute,
-          endSecond,
-          description,
-          visible,
-        });
-        if (data) {
-          console.log(data);
-          setEventId(data.data.id);
-          console.log(data.data.id);
+        if (shouldCreate) {
+          const data = await adminUpdateEvent(eventId, {
+            name,
+            startDate,
+            endDate,
+            startHour,
+            startMinute,
+            startSecond,
+            endHour,
+            endMinute,
+            endSecond,
+            description,
+            visible,
+          });
+          if (data) {
+            console.log(data);
+          }
+          alert("이벤트 수정을 성공했습니다");
+        } else {
+          alert("이벤트 수정을 취소했습니다");
         }
-        alert("이벤트 수정을 성공했습니다");
-      } else {
-        alert("이벤트 수정을 취소했습니다");
+      } catch (err) {
+        console.error("이벤트 수정 중 오류 발생:", err);
       }
-    } catch (err) {
-      console.error("이벤트 수정 중 오류 발생:", err);
+    } else {
+      alert("필수 항목들을 올바르게 다 채워주세요.");
     }
   };
 
   const updateEventImages = async () => {
+    if (images.length === 0) {
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -132,7 +167,7 @@ export default function useUpdateEvent() {
     }
   };
 
-  const handleEventChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleVisibleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVisible(e.target.checked);
   };
 
@@ -188,20 +223,20 @@ export default function useUpdateEvent() {
         alert("이벤트 삭제가 취소되었습니다");
       }
     } catch (error) {
-      console.error("세트 삭제 중 오류 발생:", error);
+      console.error("이벤트 삭제 중 오류 발생:", error);
       alert("이벤트 삭제가 불가합니다.");
     }
   };
 
   return {
-    setBundleDescription: setEventDescription,
+    setEventDescription,
     description,
     images,
     setImages,
     previewImages,
     newPreviewImages,
     setPreviewImages,
-    handleBundleDescriptionChange: handleEventDescriptionChange,
+    handleEventDescriptionChange,
     handleImageUpload,
     updateEvent,
     name,
@@ -216,10 +251,10 @@ export default function useUpdateEvent() {
     onChangeStartMinute,
     startSecond,
     onChangeStartSecond,
-    updateBundleImages: updateEventImages,
-    handleVisibleChange: handleEventChange,
+    updateEventImages,
+    handleVisibleChange,
     handleEventClick,
-    selectedBundle: selectedEvent,
+    selectedEvent,
     deleteEvent,
     endHour,
     endMinute,

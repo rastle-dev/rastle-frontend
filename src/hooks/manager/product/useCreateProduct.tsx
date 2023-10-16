@@ -30,6 +30,8 @@ export default function useCreateProduct() {
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
   const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>(false);
+  const [blockCreateProductButton, setBlockCreateProductButton] =
+    useState(false);
   const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
     useState(false);
   const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
@@ -81,6 +83,7 @@ export default function useCreateProduct() {
           alert("상품이 추가되었습니다. 이미지를 추가해주세요");
           setProductId(data.data.id);
           setshowImageUpload(true);
+          setBlockCreateProductButton(true);
         }
       } catch (err) {
         console.log(err);
@@ -440,5 +443,6 @@ export default function useCreateProduct() {
     blockSubThumbnailButton,
     blockMainImagesButton,
     blockDetailImagesButton,
+    blockCreateProductButton,
   };
 }

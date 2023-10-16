@@ -26,6 +26,7 @@ const CHANGEPASSWORD = "/changePassword";
 const ADMIN = "/admin"; //
 const MEMBERS = "/members";
 const EVENT = "/event";
+const PRODUCTS = "/products";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -62,6 +63,7 @@ const API = {
   CREATEEVENT: `${ADMIN}${EVENT}`,
   UPDATEEVENT: `${ADMIN}${EVENT}`,
   DELETEEVENT: `${ADMIN}${EVENT}`,
-  GETEVENT: `${EVENT}`,
+  EVENT: `${EVENT}`,
+  PRODUCTS: `${PRODUCTS}`,
 };
 export default API;

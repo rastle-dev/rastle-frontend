@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useCreateEvent from "@/hooks/manager/event/useCreateEvent";
 import Input from "@/components/common/Input";
 import Image from "next/image";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -43,6 +44,21 @@ const EventCheckbox = styled.input`
   margin-bottom: 1rem;
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 export default function CreateEvent() {
   const {
     description,
@@ -62,6 +78,7 @@ export default function CreateEvent() {
     onChangeEndHour,
     onChangeEndMinute,
     onChangeEndSecond,
+    blockCreateEventButton,
   } = useCreateEvent();
 
   return (
@@ -144,13 +161,12 @@ export default function CreateEvent() {
           onChange={(e) => handleEventDescriptionChange(e)}
         />
       </CategoryDetail>
-      <button type="button" onClick={createEvent}>
+      <StyledButton onClick={createEvent} disabled={blockCreateEventButton}>
         이벤트 생성
-      </button>
+      </StyledButton>
       {showImageUpload ? (
         <div>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="categoryImage">이벤트 이미지:</label>
+          이벤트 이미지:
           <input
             type="file"
             id="categoryImage"
@@ -170,9 +186,7 @@ export default function CreateEvent() {
               />
             ))}
           </PreviewImages>
-          <button type="button" onClick={addEventImages}>
-            이미지 추가
-          </button>
+          <StyledButton onClick={addEventImages}> 이미지 추가</StyledButton>
         </div>
       ) : null}
     </div>

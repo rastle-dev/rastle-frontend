@@ -248,6 +248,7 @@ export default function CreateProduct() {
     blockSubThumbnailButton,
     blockMainImagesButton,
     blockDetailImagesButton,
+    blockCreateProductButton,
   } = useCreateProduct();
 
   const { data: bundleData } = useQuery(
@@ -394,7 +395,11 @@ export default function CreateProduct() {
           사이즈 추가
         </button>
       </SizeInputs>
-      <StyledButton type="button" onClick={createProduct}>
+      <StyledButton
+        type="button"
+        onClick={createProduct}
+        disabled={blockCreateProductButton}
+      >
         상품 생성
       </StyledButton>
       {showImageUpload ? (

@@ -7,6 +7,7 @@ const QUERYKEYS = {
   ADMIN_GET_CATEGORY: "adminGetCategory",
   ADMIN_GET_PRODUCT: "adminGetProduct",
   ADMIN_GET_EVENT: "adminGetEvent",
+  LOAD_EVENT_PRODUCT: "adminGetEventProduct",
   LOAD_BUNDLE: "loadBundle",
   LOAD_SELECT_BUNDLE: "loadSelectBundle",
   LOAD_ME: "loadMe",

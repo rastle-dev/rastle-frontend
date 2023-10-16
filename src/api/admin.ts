@@ -1,7 +1,7 @@
 // import { unAuthorizationClient } from ".";
 // 관리자 api
 import API from "@/api/config";
-import { authorizationClient } from ".";
+import { authorizationClient, unAuthorizationClient } from ".";
 
 export const adminCreateCategory = async (categoryData: object) => {
   const { data } = await authorizationClient.post(API.CATEGORY, categoryData);
@@ -269,10 +269,16 @@ export const adminAddEventImages = async (
 };
 
 export const adminGetEvent = async () => {
-  const { data } = await authorizationClient.get(API.GETEVENT);
+  const { data } = await authorizationClient.get(API.EVENT);
   return data;
 };
 
+export const adminGetEventProduct = async (eventId: number | undefined) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.EVENT}/${eventId}${API.PRODUCTS}`,
+  );
+  return data;
+};
 export const adminUpdateEvent = async (
   eventId: number | undefined,
   eventData: object,

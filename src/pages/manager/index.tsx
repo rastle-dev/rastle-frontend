@@ -10,6 +10,9 @@ import TotalManagement from "@/components/Manager/TotalManagement";
 import BundleManagement from "@/components/Manager/BundleManagement";
 
 import COLORS from "@/constants/color";
+import CreateEvent from "@/components/Manager/event/CreateEvent";
+import UpdateEvent from "@/components/Manager/event/UpdateEvent";
+import EventManagement from "@/components/Manager/EventManagement";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -73,6 +76,7 @@ const managementList = [
   { name: "회원관리" },
   { name: "카테고리 관리" },
   { name: "세트관리" },
+  { name: "이벤트관리" },
   { name: "상품관리" },
   { name: "주문관리" },
   { name: "대시보드" },
@@ -99,6 +103,7 @@ export default function Manager() {
         {selectedItem === "회원관리" && <UserManagement />}
         {selectedItem === "카테고리 관리" && <CategoryManagement />}
         {selectedItem === "세트관리" && <BundleManagement />}
+        {selectedItem === "이벤트관리" && <EventManagement />}
         {selectedItem === "상품관리" && <ProductManagement />}
         {selectedItem === "주문관리" && <OrderManagement />}
         {selectedItem === "대시보드" && <Dashboard />}
