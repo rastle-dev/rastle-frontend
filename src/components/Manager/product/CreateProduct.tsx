@@ -223,6 +223,8 @@ export default function CreateProduct() {
     },
   );
 
+  console.log(productListData);
+
   return (
     <div>
       <Title>새로운 상품 추가</Title>

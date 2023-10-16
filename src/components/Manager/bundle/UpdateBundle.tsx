@@ -6,6 +6,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { adminGetBundle } from "@/api/admin";
 import useUpdateBundle from "@/hooks/manager/bundle/useUpdateBundle";
 import Image from "next/image";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -55,19 +56,33 @@ const BundleSubtitle = styled.div`
 const BundleList = styled.ul`
   list-style-type: none;
   padding: 0;
-  li {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
-    &:hover {
-      background-color: #f0f0f0;
-      color: #333;
-    }
+`;
+const BundleLi = styled.li`
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
   }
+`;
+
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
 
 interface Bundle {
@@ -102,6 +117,7 @@ export default function UpdateBundle() {
     startSecond,
     name,
     deleteBundle,
+    visible,
   } = useUpdateBundle();
 
   const { data: bundleData } = useQuery(
@@ -115,10 +131,9 @@ export default function UpdateBundle() {
       <BundleSubtitle>수정할 세트를 선택하세요</BundleSubtitle>
       <BundleList>
         {bundleData?.data.content.map((bundle: Bundle) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-          <li key={bundle.id} onClick={() => handleBundleClick(bundle)}>
+          <BundleLi key={bundle.id} onClick={() => handleBundleClick(bundle)}>
             {bundle.name}
-          </li>
+          </BundleLi>
         ))}
       </BundleList>
       <p>수정할 세트 : {selectedBundle?.name}</p>
@@ -167,7 +182,11 @@ export default function UpdateBundle() {
         />
       </CategoryDetail>
       공개:
-      <EventCheckbox type="checkbox" onChange={(e) => handleVisibleChange(e)} />
+      <EventCheckbox
+        type="checkbox"
+        checked={visible}
+        onChange={(e) => handleVisibleChange(e)}
+      />
       <CategoryDetail>
         세트 설명:
         <CustomTextarea
@@ -176,12 +195,12 @@ export default function UpdateBundle() {
           onChange={(e) => handleBundleDescriptionChange(e)}
         />
       </CategoryDetail>
-      <button type="button" onClick={updateBundle}>
+      <StyledButton type="button" onClick={updateBundle}>
         세트 정보 수정
-      </button>
-      <button type="button" onClick={deleteBundle}>
+      </StyledButton>
+      <StyledButton type="button" onClick={deleteBundle}>
         세트 삭제
-      </button>
+      </StyledButton>
       <p>*이미지는 따로 수정 필요</p>
       <div>
         <p>현재 세트 사진</p>
@@ -200,8 +219,7 @@ export default function UpdateBundle() {
           </PreviewImages>
         )}
         <p>변경할 세트 사진</p>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryImage">세트 이미지:</label>
+        세트 이미지:
         <input
           type="file"
           id="categoryImage"
@@ -221,9 +239,9 @@ export default function UpdateBundle() {
             />
           ))}
         </PreviewImages>
-        <button type="button" onClick={updateBundleImages}>
+        <StyledButton type="button" onClick={updateBundleImages}>
           이미지 추가
-        </button>
+        </StyledButton>
       </div>
     </div>
   );

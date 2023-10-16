@@ -3,6 +3,7 @@ import styled from "styled-components";
 import useCreateBundle from "@/hooks/manager/bundle/useCreateBundle";
 import Input from "@/components/common/Input";
 import Image from "next/image";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -23,7 +24,6 @@ const CustomTextarea = styled.textarea`
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
@@ -43,6 +43,21 @@ const EventCheckbox = styled.input`
   margin-bottom: 1rem;
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 export default function CreateBundle() {
   const {
     description,
@@ -57,7 +72,8 @@ export default function CreateBundle() {
     createBundle,
     showImageUpload,
     addBundleImages,
-    handleEventChange,
+    handleVisibleChange,
+    blockButton,
   } = useCreateBundle();
 
   return (
@@ -99,7 +115,7 @@ export default function CreateBundle() {
         />
       </CategoryDetail>
       공개:
-      <EventCheckbox type="checkbox" onChange={(e) => handleEventChange(e)} />
+      <EventCheckbox type="checkbox" onChange={(e) => handleVisibleChange(e)} />
       <CategoryDetail>
         세트 설명:
         <CustomTextarea
@@ -108,13 +124,12 @@ export default function CreateBundle() {
           onChange={(e) => handleBundleDescriptionChange(e)}
         />
       </CategoryDetail>
-      <button type="button" onClick={createBundle}>
+      <StyledButton type="button" onClick={createBundle} disabled={blockButton}>
         세트 생성
-      </button>
+      </StyledButton>
       {showImageUpload ? (
         <div>
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="categoryImage">세트 이미지:</label>
+          세트 이미지:
           <input
             type="file"
             id="categoryImage"
@@ -134,9 +149,9 @@ export default function CreateBundle() {
               />
             ))}
           </PreviewImages>
-          <button type="button" onClick={addBundleImages}>
+          <StyledButton type="button" onClick={addBundleImages}>
             이미지 추가
-          </button>
+          </StyledButton>
         </div>
       ) : null}
     </div>

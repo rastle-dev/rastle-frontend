@@ -20,9 +20,7 @@ export default function useUpdateBundle() {
   const [startSecond, onChangeStartSecond, setStartSecond] = useInput("");
   const [bundleId, setBundleId] = useState<number>();
   const [visible, setVisible] = useState(false);
-  // const [description, onChangeDescription] = useInput("");
 
-  console.log(previewImages);
   interface Bundle {
     id: number;
     name: string;
@@ -67,35 +65,52 @@ export default function useUpdateBundle() {
   };
 
   const updateBundle = async () => {
-    try {
-      const shouldCreate = window.confirm("세트상품을 수정하시겠습니까?");
+    if (
+      name.length > 0 &&
+      startDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      Number(startHour) >= 0 &&
+      Number(startHour) < 24 &&
+      Number(startMinute) >= 0 &&
+      Number(startMinute) < 60 &&
+      Number(startSecond) >= 0 &&
+      Number(startSecond) < 60
+    ) {
+      try {
+        const shouldCreate = window.confirm("세트상품을 수정하시겠습니까?");
 
-      if (shouldCreate) {
-        const data = await adminUpdateBundle(bundleId, {
-          name,
-          startDate,
-          // endDate,
-          startHour,
-          startMinute,
-          startSecond,
-          description,
-          visible,
-        });
-        if (data) {
-          console.log(data);
-          setBundleId(data.data.id);
-          console.log(data.data.id);
+        if (shouldCreate) {
+          const data = await adminUpdateBundle(bundleId, {
+            name,
+            startDate,
+            // endDate,
+            startHour,
+            startMinute,
+            startSecond,
+            description,
+            visible,
+          });
+          if (data) {
+            console.log(data);
+          }
+          alert("세트 수정을 성공했습니다");
+        } else {
+          alert("세트 수정을 취소했습니다");
         }
-        alert("세트 수정을 성공했습니다");
-      } else {
-        alert("세트 수정을 취소했습니다");
+      } catch (err) {
+        console.error("세트 수정 중 오류 발생:", err);
       }
-    } catch (err) {
-      console.error("세트 수정 중 오류 발생:", err);
+    } else {
+      alert("세트 필수항목을 올바르게 채워주세요");
     }
   };
 
   const updateBundleImages = async () => {
+    if (images.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 이상 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -184,7 +199,7 @@ export default function useUpdateBundle() {
     setPreviewImages,
     handleBundleDescriptionChange,
     handleImageUpload,
-    updateBundle: updateEvent,
+    updateBundle,
     name,
     onChangeName,
     startDate,
@@ -201,6 +216,7 @@ export default function useUpdateBundle() {
     handleVisibleChange: handleEventChange,
     handleBundleClick,
     selectedBundle,
-    deleteEvent: deleteBundle,
+    deleteBundle,
+    visible,
   };
 }

@@ -15,7 +15,6 @@ export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
   width: 88%;
   overflow: hidden;
-  //border: 1px solid red;
 
   ${media.mobile} {
     width: 92%;

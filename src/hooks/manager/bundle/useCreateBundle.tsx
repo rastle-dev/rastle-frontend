@@ -3,6 +3,7 @@ import useInput from "@/hooks/useInput";
 import { adminAddBundleImages, adminCreateBundle } from "@/api/admin";
 
 export default function useCreateBundle() {
+  const [blockButton, setBlockButton] = useState(false);
   const [description, setDescription] = useState("");
   const [images, setImages] = useState<File[]>([]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
@@ -61,27 +62,48 @@ export default function useCreateBundle() {
   };
 
   const createBundle = async () => {
-    try {
-      const data = await adminCreateBundle({
-        name,
-        startDate,
-        // endDate,
-        startHour,
-        startMinute,
-        startSecond,
-        description,
-        visible,
-      });
-      if (data) {
-        setBundleId(data.data.id);
-        setshowImageUpload(true);
+    if (
+      name.length > 0 &&
+      startDate.match(/^\d{4}-\d{2}-\d{2}$/) &&
+      Number(startHour) >= 0 &&
+      Number(startHour) < 24 &&
+      Number(startMinute) >= 0 &&
+      Number(startMinute) < 60 &&
+      Number(startSecond) >= 0 &&
+      Number(startSecond) < 60
+    ) {
+      try {
+        const data = await adminCreateBundle({
+          name,
+          startDate,
+          // endDate,
+          startHour,
+          startMinute,
+          startSecond,
+          description,
+          visible,
+        });
+        if (data) {
+          setBundleId(data.data.id);
+          setshowImageUpload(true);
+          setBlockButton(true);
+          alert("세트가 추가되었습니다. 이미지를 추가해주세요");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      alert("세트 필수항목을 올바르게 채워주세요");
     }
   };
 
   const addBundleImages = async () => {
+    if (images.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 이상 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -96,8 +118,9 @@ export default function useCreateBundle() {
       // 서버 응답 처리
       console.log(data);
       alert("세트 이미지 추가를 성공했습니다");
+      window.location.reload(); // 페이지 새로고침
     } catch (error) {
-      // 오류 처리
+      // 오류 처리지
       alert("세트 이미지 추가 오류");
       console.error("이미지 업로드 오류:", error);
     }
@@ -121,7 +144,7 @@ export default function useCreateBundle() {
     setPreviewImages,
     handleBundleDescriptionChange,
     handleImageUpload,
-    createEvent: createBundle,
+    createBundle,
     name,
     onChangeName,
     startDate,
@@ -135,8 +158,9 @@ export default function useCreateBundle() {
     startSecond,
     onChangeStartSecond,
     showImageUpload,
-    addEventImages: addBundleImages,
+    addBundleImages,
     handleVisibleChange,
     handleBundleClick,
+    blockButton,
   };
 }

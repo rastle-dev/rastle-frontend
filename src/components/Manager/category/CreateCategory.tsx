@@ -5,6 +5,7 @@ import Input from "@/components/common/Input";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { adminGetCategory } from "@/api/admin";
+import COLORS from "@/constants/color";
 
 const Title = styled.h1`
   margin: 0;
@@ -43,6 +44,21 @@ const StyledInput = styled(Input)`
   font-size: 2rem;
 `;
 
+export const StyledButton = styled.button`
+  margin-top: 0.3rem;
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 interface Category {
   id: number;
   name: string;
@@ -56,7 +72,7 @@ export default function CreateCategory() {
     adminGetCategory,
   );
 
-  console.log("API) adminGetCategory : 전체 카테고리 : ", categoryData);
+  console.log("API) adminGetCategory : 전체 카테고리 : ", "\n", categoryData);
 
   return (
     <div>
@@ -71,9 +87,9 @@ export default function CreateCategory() {
       <CategoryDetail>
         <StyledInput value={name} size={30} onChange={onChangeName} />
       </CategoryDetail>
-      <button type="button" onClick={createCategory}>
+      <StyledButton type="button" onClick={createCategory}>
         카테고리 생성
-      </button>
+      </StyledButton>
     </div>
   );
 }

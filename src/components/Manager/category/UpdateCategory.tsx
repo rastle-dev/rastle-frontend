@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { adminGetCategory } from "@/api/admin";
 import useUpdateCategory from "@/hooks/manager/category/useUpdateCategory";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -24,18 +25,19 @@ const CategorySubtitle = styled.div`
 const CategoryList = styled.ul`
   list-style-type: none;
   padding: 0;
-  li {
-    margin-bottom: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    transition:
-      background-color 0.3s,
-      color 0.3s;
-    &:hover {
-      background-color: #f0f0f0;
-      color: #333;
-    }
+`;
+
+const CategoryLi = styled.li`
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
   }
 `;
 
@@ -48,6 +50,21 @@ interface Category {
   name: string;
 }
 
+export const StyledButton = styled.button`
+  margin-top: 0.3rem;
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 export default function UpdateCategory() {
   const {
     updateCategory,
@@ -55,6 +72,7 @@ export default function UpdateCategory() {
     handleCategoryClick,
     selectedCategory,
     deleteCategory,
+    name,
   } = useUpdateCategory();
 
   const { data: categoryData } = useQuery(
@@ -67,24 +85,31 @@ export default function UpdateCategory() {
   return (
     <div>
       <Title>카테고리 수정/삭제</Title>
-      <CategorySubtitle>수정할 카테고리를 선택하세요</CategorySubtitle>
       <CategoryList>
         {categoryData?.data.map((category: Category) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-          <li key={category.id} onClick={() => handleCategoryClick(category)}>
+          <CategoryLi
+            key={category.id}
+            onClick={() => handleCategoryClick(category)}
+          >
             {category.name}
-          </li>
+          </CategoryLi>
         ))}
       </CategoryList>
-      수정할 카테고리 : {selectedCategory?.name}
+      {selectedCategory ? (
+        <CategorySubtitle>
+          수정할 카테고리: {selectedCategory.name}
+        </CategorySubtitle>
+      ) : (
+        <CategorySubtitle>수정할 카테고리를 선택해주세요.</CategorySubtitle>
+      )}
       <p>수정할 새 카테고리 이름을 작성하세요 </p>
-      <StyledInput size={30} onChange={onChangeName} />
-      <button type="button" onClick={updateCategory}>
+      <StyledInput value={name} size={30} onChange={onChangeName} />
+      <StyledButton type="button" onClick={updateCategory}>
         카테고리 수정
-      </button>
-      <button type="button" onClick={deleteCategory}>
+      </StyledButton>
+      <StyledButton type="button" onClick={deleteCategory}>
         카테고리 삭제
-      </button>
+      </StyledButton>
     </div>
   );
 }
