@@ -87,7 +87,7 @@ export default function Mypage() {
           </S.Menu>
           <S.Logout title="로그아웃" onClick={() => logout()} />
         </S.Sidebar>
-        <S.Content> {renderTabContent()}</S.Content>
+        <S.Content>🤘{renderTabContent()}</S.Content>
       </S.Wrapper>
     </S.Container>
   );
