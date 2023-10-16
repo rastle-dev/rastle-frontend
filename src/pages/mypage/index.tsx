@@ -31,7 +31,7 @@ export default function Mypage() {
       case "기본 배송지":
         return <OrderList />;
       default:
-        return null;
+        return <OrderList />;
     }
   };
 
