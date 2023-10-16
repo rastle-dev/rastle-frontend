@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import TotalManagement from "@/components/Manager/TotalManagement";
-import UserManagement from "@/components/Manager/UserManagement";
-import ProductManagement from "@/components/Manager/ProductManagement";
-import OrderManagement from "@/components/Manager/OrderManagement";
-import Dashboard from "@/components/Manager/Dashboard";
 import CreateCategory from "@/components/Manager/category/CreateCategory";
 import UpdateCategory from "@/components/Manager/category/UpdateCategory";
 import DeleteCategory from "@/components/Manager/category/DeleteCategory";

@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateCategory from "@/components/Manager/category/CreateCategory";
-import UpdateCategory from "@/components/Manager/category/UpdateCategory";
-import DeleteCategory from "@/components/Manager/category/DeleteCategory";
 import CreateProduct from "@/components/Manager/product/CreateProduct";
 import UpdateProduct from "@/components/Manager/product/UpdateProduct";
 import DeleteProduct from "@/components/Manager/product/DeleteProduct";

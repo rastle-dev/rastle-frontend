@@ -65,7 +65,7 @@ export default function CreateCategory() {
       const newImages: File[] = [...categoryImages];
       const newPreviews: string[] = [...previewImages];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -136,7 +136,6 @@ export default function CreateCategory() {
         <PreviewImages>
           {previewImages.map((preview, index) => (
             <img
-              key={index}
               src={preview}
               alt={`미리보기 이미지 ${index}`}
               style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
@@ -144,7 +143,9 @@ export default function CreateCategory() {
           ))}
         </PreviewImages>
       </div>
-      <button onClick={handleSubmit}>카테고리 생성</button>
+      <button type="button" onClick={handleSubmit}>
+        카테고리 생성
+      </button>
     </div>
   );
 }

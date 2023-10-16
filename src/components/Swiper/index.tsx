@@ -107,6 +107,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
           navigation: false,
         },
       }}
+      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
       // @ts-ignore
       ref={swiperRef}
     >

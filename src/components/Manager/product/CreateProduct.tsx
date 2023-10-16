@@ -80,10 +80,6 @@ const ProductPriceInput = styled.input`
   }
 `;
 
-const DiscountCheckbox = styled.input`
-  margin-right: 0.5rem;
-`;
-
 const DiscountPercentInput = styled.input`
   width: 30%;
   padding: 0.5rem;
@@ -252,7 +248,7 @@ export default function CreateProduct() {
     if (files && files.length > 0) {
       const newImages: string[] = [...additionalImages];
 
-      for (let i = 0; i < files.length; i++) {
+      for (let i = 0; i < files.length; i += 1) {
         const file = files[i];
 
         if (file) {
@@ -280,6 +276,7 @@ export default function CreateProduct() {
     <div>
       <Title>새로운 상품 추가</Title>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="productName">상품명:</label>
         <ProductNameInput
           type="text"
@@ -289,6 +286,7 @@ export default function CreateProduct() {
         />
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="productPrice">일반 가격:</label>
         <ProductPriceInput
           type="number"
@@ -298,6 +296,7 @@ export default function CreateProduct() {
         />
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="discountPercent">할인 퍼센트:</label>
         <DiscountPercentInput
           type="number"
@@ -307,6 +306,7 @@ export default function CreateProduct() {
         />
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label>이벤트 유무:</label>
         <EventCheckbox
           type="checkbox"
@@ -315,6 +315,7 @@ export default function CreateProduct() {
         />
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="category1">카테고리 1 선택:</label>
         <ProductCategory1Select
           id="category1"
@@ -326,6 +327,7 @@ export default function CreateProduct() {
         </ProductCategory1Select>
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor="category2">카테고리 2 선택:</label>
         <ProductCategory2Select
           id="category2"
@@ -338,7 +340,8 @@ export default function CreateProduct() {
       </ProductDetail>
       <ColorInputs>
         {colors.map((color, index) => (
-          <ProductDetail key={index}>
+          <ProductDetail>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label>색상 추가:</label>
             <ColorInput
               type="text"
@@ -347,11 +350,14 @@ export default function CreateProduct() {
             />
           </ProductDetail>
         ))}
-        <button onClick={addColorInput}>색상 추가</button>
+        <button type="button" onClick={addColorInput}>
+          색상 추가
+        </button>
       </ColorInputs>
       <SizeInputs>
         {sizes.map((size, index) => (
-          <ProductDetail key={index}>
+          <ProductDetail>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label>사이즈 추가:</label>
             <SizeInput
               type="text"
@@ -360,9 +366,12 @@ export default function CreateProduct() {
             />
           </ProductDetail>
         ))}
-        <button onClick={addSizeInput}>사이즈 추가</button>
+        <button type="button" onClick={addSizeInput}>
+          사이즈 추가
+        </button>
       </SizeInputs>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label>썸네일 지정:</label>
         <ThumbnailInput
           type="file"
@@ -378,6 +387,7 @@ export default function CreateProduct() {
         )}
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label>2번째 사진 지정:</label>
         <SecondImageInput
           type="file"
@@ -393,6 +403,7 @@ export default function CreateProduct() {
         )}
       </ProductDetail>
       <ProductDetail>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label>이미지 추가:</label>
         <AdditionalImagesInput
           type="file"
@@ -403,7 +414,6 @@ export default function CreateProduct() {
         <PreviewImages>
           {additionalImages.map((preview, index) => (
             <img
-              key={index}
               src={preview}
               alt={`추가 이미지 미리보기 ${index}`}
               style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
@@ -411,7 +421,9 @@ export default function CreateProduct() {
           ))}
         </PreviewImages>
       </ProductDetail>
-      <button onClick={handleSubmit}>상품 생성</button>
+      <button type="button" onClick={handleSubmit}>
+        상품 생성
+      </button>
     </div>
   );
 }
