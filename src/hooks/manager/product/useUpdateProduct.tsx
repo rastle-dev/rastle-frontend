@@ -45,6 +45,11 @@ export default function useUpdateProduct() {
     price,
     discountPrice,
   );
+  const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
+    useState(false);
+  const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
+  const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
+  const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCT | null>(null); // 선택된 카테고리 상태 추가
   interface ColorAndSize {
     color: string;
@@ -110,21 +115,25 @@ export default function useUpdateProduct() {
   console.log(mainImageData);
 
   const loadColorAndSize = () => {
-    const uniqueColors: string[] = [];
-    const uniqueSizes: string[] = [];
-    console.log(colorAndSizeData);
-    colorAndSizeData?.data.map((item: ColorAndSize) => {
-      if (!uniqueColors.includes(item.color)) {
-        uniqueColors.push(item.color);
-      }
-      if (!uniqueSizes.includes(item.size)) {
-        uniqueSizes.push(item.size);
-      }
-      return null; // 값을 반환하도록 수정
-    });
+    if (selectedProduct) {
+      const uniqueColors: string[] = [];
+      const uniqueSizes: string[] = [];
+      console.log(colorAndSizeData);
+      colorAndSizeData?.data.map((item: ColorAndSize) => {
+        if (!uniqueColors.includes(item.color)) {
+          uniqueColors.push(item.color);
+        }
+        if (!uniqueSizes.includes(item.size)) {
+          uniqueSizes.push(item.size);
+        }
+        return null; // 값을 반환하도록 수정
+      });
 
-    setColors(uniqueColors);
-    setSizes(uniqueSizes);
+      setColors(uniqueColors);
+      setSizes(uniqueSizes);
+    } else {
+      alert("상품을 선택해주세요");
+    }
   };
 
   useEffect(() => {
@@ -249,22 +258,35 @@ export default function useUpdateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
 
             setMainThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
             setMainThumbnail(reader.result as string);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
   };
 
   const updateMainThumbnailImages = async () => {
+    if (mainThumbnailFile.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -278,6 +300,7 @@ export default function useUpdateProduct() {
 
       // 서버 응답 처리
       if (data) {
+        setBlockMainThumbnailButton(true);
         alert("메인 썸네일이 수정되었습니다.");
       }
     } catch (error) {
@@ -296,22 +319,35 @@ export default function useUpdateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
 
             setSubThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
             setSubThumbnail(reader.result as string);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
   };
 
   const addSubThumbnailImages = async () => {
+    if (subThumbnailFile.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -319,11 +355,14 @@ export default function useUpdateProduct() {
       formData.append("subThumbnail", subThumbnailFile[i]);
     }
 
+    console.log(formData);
+
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
       const data = await adminUpdateSubThumbnailImage(productId, formData);
 
       if (data) {
+        setBlockSubThumbnailButton(true);
         alert("서브 썸네일이 수정되었습니다.");
       }
     } catch (error) {
@@ -343,28 +382,44 @@ export default function useUpdateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setMainImageFiles(newImages.slice(0, 10)); // 최대 3개까지만 유지
             setMainImages(newPreviews.slice(0, 10));
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
+    console.log(mainImageFiles);
   };
   const addMainImages = async () => {
+    if (mainImageFiles.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
     for (let i = 0; i < mainImageFiles.length; i += 1) {
       formData.append("mainImages", mainImageFiles[i]);
     }
+
+    console.log(formData);
 
     try {
       // 서버로 FormData를 포함한 POST 요청 보내기
@@ -373,6 +428,7 @@ export default function useUpdateProduct() {
       // 서버 응답 처리
       console.log(data);
       if (data) {
+        setBlockMainImagesButton(true);
         alert("메인 이미지가 추가되었습니다.");
       }
     } catch (error) {
@@ -392,23 +448,36 @@ export default function useUpdateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setDetailImageFiles(newImages); // 최대 3개까지만 유지
             setDetailImages(newPreviews);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
   };
 
   const addDetailImages = async () => {
+    if (detailImageFiles.length === 0) {
+      // images 배열이 비어있으면 아무 작업도 수행하지 않습니다.
+      alert("이미지를 하나이상 추가해주세요");
+      return;
+    }
+
     const formData = new FormData();
 
     // 이미지 파일들을 FormData에 추가
@@ -421,6 +490,7 @@ export default function useUpdateProduct() {
       const data = await adminUpdateDetailImage(productId, formData);
 
       if (data) {
+        setBlockDetailImagesButton(true);
         alert("상세 페이지 사진들이 수정되었습니다.");
       }
     } catch (error) {
@@ -457,20 +527,28 @@ export default function useUpdateProduct() {
   };
 
   const loadImages = () => {
-    setshowImageUpload(true);
+    if (selectedProduct) {
+      setshowImageUpload(true);
+    } else {
+      alert("수정할 상품을 선택해주세요");
+    }
   };
 
   const deleteProduct = async () => {
-    try {
-      // 서버로 FormData를 포함한 POST 요청 보내기
-      const data = await adminDeleteProduct(selectedProduct?.id);
+    if (selectedProduct) {
+      try {
+        // 서버로 FormData를 포함한 POST 요청 보내기
+        const data = await adminDeleteProduct(selectedProduct?.id);
 
-      if (data) {
-        alert("상품이 제거되었습니다.");
+        if (data) {
+          alert("상품이 제거되었습니다.");
+        }
+      } catch (error) {
+        // 오류 처리
+        console.error("상품 제거 실패:", error);
       }
-    } catch (error) {
-      // 오류 처리
-      console.error("상품 제거 실패:", error);
+    } else {
+      alert("삭제할 상품을 선택해주세요");
     }
   };
 

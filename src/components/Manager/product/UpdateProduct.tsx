@@ -196,11 +196,6 @@ interface PRODUCT {
   categoryId: string;
 }
 
-interface ColorAndSize {
-  color: string;
-  size: string;
-  count: number;
-}
 export default function UpdateProduct() {
   const {
     onChangeName,
@@ -293,7 +288,7 @@ export default function UpdateProduct() {
         value={discountPrice}
         onChange={onChangeDiscountPrice}
       />
-      <p>할인퍼센트 : {discountPercent}% </p>
+      <p>할인퍼센트 : {Number.isNaN(discountPercent) ? 0 : discountPercent}%</p>
       <p>할인된 가격 : {discountedPrice}</p>
       <Input
         type="number"
@@ -515,7 +510,7 @@ export default function UpdateProduct() {
             </PreviewImages>
           </ProductDetail>
           <StyledButton type="button" onClick={addMainImages}>
-            메인 사진들(10장)추가하기
+            메인 사진들(10장)변경하기
           </StyledButton>
           <ProductDetail>
             <br />
@@ -560,7 +555,7 @@ export default function UpdateProduct() {
             </PreviewImages>
           </ProductDetail>
           <StyledButton type="button" onClick={addDetailImages}>
-            디테일 사진들 추가하기
+            디테일 사진들 변경하기
           </StyledButton>
           <br />
         </div>

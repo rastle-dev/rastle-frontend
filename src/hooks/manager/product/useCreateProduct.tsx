@@ -21,7 +21,24 @@ export default function useCreateProduct() {
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
   const [showImageUpload, setshowImageUpload] = useState(false);
-
+  const [mainThumbnail, setMainThumbnail] = useState("");
+  const [mainThumbnailFile, setMainThumbnailFile] = useState<File[]>([]);
+  const [subThumbnail, setSubThumbnail] = useState("");
+  const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
+  const [mainImages, setMainImages] = useState<string[]>([]);
+  const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
+  const [detailImages, setDetailImages] = useState<string[]>([]);
+  const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
+  const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>(false);
+  const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
+    useState(false);
+  const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
+  const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
+  const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
+  const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
+    price,
+    discountPrice,
+  );
   interface ColorAndSize {
     color: string;
     size: string;
@@ -86,25 +103,6 @@ export default function useCreateProduct() {
     setCategoryId(e.target.value);
   };
 
-  const [mainThumbnail, setMainThumbnail] = useState("");
-  const [mainThumbnailFile, setMainThumbnailFile] = useState<File[]>([]);
-  const [subThumbnail, setSubThumbnail] = useState("");
-  const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
-  const [mainImages, setMainImages] = useState<string[]>([]);
-  const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
-  const [detailImages, setDetailImages] = useState<string[]>([]);
-  const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
-  const [displayOrderCheck, setDisplayOrderCheck] = useState<boolean>(false);
-  const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
-    useState(false);
-  const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
-  const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
-  const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
-  const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
-    price,
-    discountPrice,
-  );
-
   const handleColorChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -157,16 +155,24 @@ export default function useCreateProduct() {
         const file = files[i];
 
         if (file) {
+          // 파일 이름에서 공백 제거
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
 
             setMainThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
             setMainThumbnail(reader.result as string);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
@@ -210,16 +216,23 @@ export default function useCreateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
 
             setSubThumbnailFile(newImages.slice(0, 1)); // 최대 3개까지만 유지
             setSubThumbnail(reader.result as string);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
@@ -263,17 +276,24 @@ export default function useCreateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setMainImageFiles(newImages.slice(0, 10)); // 최대 3개까지만 유지
             setMainImages(newPreviews.slice(0, 10));
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
@@ -318,17 +338,24 @@ export default function useCreateProduct() {
         const file = files[i];
 
         if (file) {
+          const sanitizedFileName = file.name.replace(/\s/g, "");
+
+          // 수정된 파일 이름으로 새로운 File 객체 생성
+          const modifiedFile = new File([file], sanitizedFileName, {
+            type: file.type,
+          });
+
           const reader = new FileReader();
 
           reader.onloadend = () => {
-            newImages.push(file);
+            newImages.push(modifiedFile);
             newPreviews.push(reader.result as string);
 
             setDetailImageFiles(newImages); // 최대 3개까지만 유지
             setDetailImages(newPreviews);
           };
 
-          reader.readAsDataURL(file);
+          reader.readAsDataURL(modifiedFile);
         }
       }
     }
@@ -354,7 +381,7 @@ export default function useCreateProduct() {
       if (data) {
         setBlockDetailImagesButton(true);
         alert(
-          "상세 페이지 사진들이 추가되었습니다. 상품 수정에요서 공개처리를 해주세요",
+          "상세 페이지 사진들이 추가되었습니다. 상품 수정에서 공개처리를 해주세요",
         );
         window.location.reload(); // 페이지 새로고침
       }
