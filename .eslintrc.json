@@ -21,6 +21,11 @@
     "project": ["tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
@@ -33,16 +38,8 @@
       2,
       { "extensions": [".js", ".ts", ".tsx"] }
     ],
-    "@typescript-eslint/no-explicit-any": "off", // ESLint any 규칙 수정
-
-    // 아래 라인을 추가하여 ESLint 패키지 경로를 지정
-    "eslint-import-resolver-typescript": {
-      "eslint-import-resolver-node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      }
-    },
-
-    "ignorePatterns": ["next.config.js"]
-
-  }
+    "@typescript-eslint/no-explicit-any": "off",
+    "eslint-import-resolver-typescript": "off"
+  },
+  "ignorePatterns": ["next.config.js"]
 }
