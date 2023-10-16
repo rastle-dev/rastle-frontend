@@ -4,7 +4,7 @@ import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import LoginInfo from "@/components/Mypage/loginInfo";
 import useMypage from "@/hooks/useMypage";
-import * as S from "./index.styles";
+import * as S from "../../styles/mypage/index.styles";
 
 const shoppingTabs = [
   { label: "주문 내역", category: "쇼핑 정보" },
