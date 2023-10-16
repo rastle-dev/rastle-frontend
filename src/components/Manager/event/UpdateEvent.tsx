@@ -217,6 +217,7 @@ export default function UpdateEvent() {
           onChange={onChangeEndHour}
           value={endHour}
         />
+        정
       </CategoryDetail>
       <CategoryDetail>
         <Input

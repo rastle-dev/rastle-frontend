@@ -3,6 +3,8 @@ import styled from "styled-components";
 import CreateProduct from "@/components/Manager/product/CreateProduct";
 import UpdateProduct from "@/components/Manager/product/UpdateProduct";
 import COLORS from "@/constants/color";
+import CreateEventProduct from "@/components/Manager/product/CreateEventProduct";
+import UpdateEventProduct from "@/components/Manager/product/UpdateEventProduct";
 
 const Title = styled.div`
   margin: 0;
@@ -53,7 +55,12 @@ export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
-const managementList = [{ name: "상품 추가" }, { name: "상품 수정/삭제" }];
+const managementList = [
+  { name: "상품 추가" },
+  { name: "상품 수정/삭제" },
+  { name: "이벤트 상품 추가" },
+  { name: "이벤트 상품 수정/삭제" },
+];
 
 export default function ProductManagement() {
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
@@ -75,6 +82,8 @@ export default function ProductManagement() {
       <ManageMentDetail>
         {selectedItem === "상품 추가" && <CreateProduct />}
         {selectedItem === "상품 수정/삭제" && <UpdateProduct />}
+        {selectedItem === "이벤트 상품 추가" && <CreateEventProduct />}
+        {selectedItem === "이벤트 상품 수정/삭제" && <UpdateEventProduct />}
       </ManageMentDetail>
     </div>
   );
