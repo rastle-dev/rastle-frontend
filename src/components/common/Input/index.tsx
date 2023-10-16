@@ -65,7 +65,6 @@ type InputProps = {
   /** classname */
   className?: string;
   checked?: boolean;
-  color?: string;
   inValid?: boolean;
 };
 

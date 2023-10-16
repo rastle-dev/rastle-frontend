@@ -18,7 +18,7 @@ const myTabs = [
 export default function Mypage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("주문 내역");
-  const { logout, cartProduct } = useMypage();
+  const { logout } = useMypage();
 
   const renderTabContent = () => {
     switch (activeTab) {

@@ -17,7 +17,6 @@ import {
   MenuList,
   MenuItem,
   MenuBackground,
-  Hidden,
 } from "./index.styles";
 
 const navList = [

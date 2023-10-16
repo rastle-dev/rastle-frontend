@@ -1,6 +1,5 @@
 import React from "react";
 import { withKnobs } from "@storybook/addon-knobs";
-import Icon from "./index";
 import COLORS from "../../../constants/color";
 import IconButton from "./index";
 
@@ -10,7 +9,7 @@ export default {
   decorators: [withKnobs], // 애드온 적용
 };
 
-//default
+// default
 export function CartButton() {
   return <IconButton iconName="cart" color={COLORS.블랙} />;
 }
@@ -26,11 +25,3 @@ export function PersonButton() {
 export function MenuButton() {
   return <IconButton iconName="menu" color={COLORS.블랙} />;
 }
-
-export function ControlTest(args: any) {
-  return <Icon {...args} />;
-}
-
-ControlTest.args = {
-  iconName: "cart",
-};

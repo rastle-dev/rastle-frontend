@@ -15,7 +15,7 @@ export const StyledHome = styled.div`
   align-items: center;
 `;
 
-/** TopLayer 컴포넌트 스타일링*/
+/** TopLayer 컴포넌트 스타일링 */
 export const ImageWrapper = styled.div`
   position: relative;
   width: 100%;

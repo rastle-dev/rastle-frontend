@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { loadBundle, loadBundleProduct } from "@/api/shop";
+import { loadBundle } from "@/api/shop";
 import QUERYKEYS from "@/constants/querykey";
 
 export default function useShop() {
