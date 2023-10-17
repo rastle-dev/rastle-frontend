@@ -15,6 +15,7 @@ const QUERYKEYS = {
   LOAD_PRODUCT_IMAGE: "loadProductImage",
   LOAD_PRODUCT_DETAIL: "loadProductDetail",
   LOAD_PRODUCT_COLOR: "loadProductColor",
+  LOAD_CART: "loadCartProduct",
 } as const;
 
 export default QUERYKEYS;

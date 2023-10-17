@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
 import Icon from "@/components/common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
+import useMypage from "@/hooks/useMypage";
+import Dialog from "@/components/common/Dialog";
+import PATH from "@/constants/path";
 
 export default function Product() {
   const {
@@ -18,30 +22,60 @@ export default function Product() {
     calculateTotalCount,
     selectedProduct,
     selectedProducts,
-    jsonData,
+    detailData,
+    imageData,
+    uniqueColors,
+    uniqueSizes,
+    cartProducts,
   } = useProduct();
+  const router = useRouter();
+  const { mutateAddCartProduct } = useMypage();
+  console.log("cartProducts", cartProducts);
+  console.log("selectedProducts", selectedProducts);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <S.Wrapper>
+      {isDialogOpen && (
+        <Dialog
+          onClickBasketButton={() => {
+            router.push({
+              pathname: PATH.MYPAGE,
+              query: { tab: "장바구니" },
+            });
+          }}
+          onClickShopButton={() => {
+            closeDialog();
+          }}
+          visible
+        />
+      )}
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={jsonData.images} />
+          <ImageSliderPage images={imageData?.data.mainImages} />
         </S.ImageLayer>
         <S.ProductContent>
-          <S.Title>{jsonData.title}</S.Title>
-          {/* <S.Price>{jsonData.price.toLocaleString()}원</S.Price> */}
+          <S.Title>{detailData?.data.name}</S.Title>
           <S.DiscountPrice>
-            <h4>{jsonData.price.toLocaleString()}원</h4>
+            <h4>{detailData?.data.price.toLocaleString()}원</h4>
             <span>10% </span>
-            {jsonData.price.toLocaleString()}원
+            {detailData?.data.discountPrice.toLocaleString()}원
           </S.DiscountPrice>
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
-            {jsonData.colors.map((color) => (
+            {uniqueColors.map((color) => (
               <ColorButton
-                key={color}
-                size={3}
+                size={uniqueColors.length}
                 clicked={color === selectedProduct.color}
+                /* eslint-disable @typescript-eslint/ban-ts-comment */
                 // @ts-ignore
                 color={COLORS[color]}
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
@@ -50,15 +84,13 @@ export default function Product() {
           </S.ColorList>
           <S.SizeText>사이즈</S.SizeText>
           <S.SizeButtonList>
-            {jsonData.sizes.map((size) => (
+            {uniqueSizes.map((size: any) => (
               <S.SizeButton
                 key={size}
                 title={size}
                 type="size"
-                onClick={() => handleSizeClick(size)} // 클릭 핸들러 연결
-                // disabled={!selectedProduct.color} // 컬러 선택 전에는 비활성화
-                // @ts-ignore
-                active={selectedProduct.size === size}
+                onClick={() => handleSizeClick(size)}
+                isActive={selectedProduct.size === size}
               />
             ))}
           </S.SizeButtonList>
@@ -113,14 +145,22 @@ export default function Product() {
           </S.TotalPrice>
           <S.Pay>
             <S.StyledBuyButton title="구매하기" type="shop" />
-            <S.StyledPayButton title="장바구니에 담기" type="shop" />
+            <S.StyledPayButton
+              onClick={() => {
+                mutateAddCartProduct.mutate(cartProducts);
+                openDialog();
+              }}
+              title="장바구니에 담기"
+              type="shop"
+            />
             <S.StyledNpayButton title="N Pay 구매하기" type="shop" />
           </S.Pay>
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
-        <S.ProductDetail src="/image/product5.jpg" />
-        <S.ProductDetail src="/image/homeDesktop2.jpg" />
+        {imageData?.data.detailImages.map((img: string) => (
+          <S.ProductDetail src={img} />
+        ))}
       </S.ProductDetailList>
     </S.Wrapper>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import { toast } from "react-toastify";
 import SNSLogin from "@/components/Login/sns";
 import PATH from "@/constants/path";

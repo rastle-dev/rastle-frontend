@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 
@@ -11,6 +11,8 @@ type ItemElementProps = {
   productName: string;
   price: string;
   category?: ProductCategory;
+  id: any;
+  isEvent: boolean;
 };
 
 const ItemWrapper = styled.div`
@@ -49,9 +51,12 @@ function ItemElement({
   price,
   hoverImg,
   category,
+  id,
+  isEvent,
 }: ItemElementProps) {
   const router = useRouter();
-
+  const productId = id;
+  const events = isEvent;
   return (
     <ItemWrapper>
       <StyledImage
@@ -68,7 +73,10 @@ function ItemElement({
           target.src = defaultImg;
         }}
         onClick={() => {
-          router.push(PATH.PRODUCT);
+          router.push({
+            pathname: PATH.PRODUCT, // 이동할 페이지 경로
+            query: { productId, events }, // 전달할 데이터 (id)
+          });
         }}
       />
       <ItemName>{productName}</ItemName>

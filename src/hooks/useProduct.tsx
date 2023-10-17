@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/dist/client/router";
+import QUERYKEYS from "@/constants/querykey";
+import {
+  loadProductCOLOR,
+  loadProductDetail,
+  loadProductImage,
+} from "@/api/shop";
 
 interface SelectedProduct {
   title?: string;
@@ -8,31 +16,51 @@ interface SelectedProduct {
   count: number;
   key?: string;
 }
+interface CartProduct {
+  productId: string | string[] | undefined;
+  color?: string | null;
+  count: number;
+  size?: string | null;
+}
 
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
-  const jsonData = {
-    images: [
-      "/image/product5.jpg",
-      "/image/product6.jpg",
-      "/image/product1.jpg",
-      "/image/whiteBackground.png",
-    ],
-    title: "틴 워시드 버뮤다 데님 팬츠",
-    price: 56200,
-    colors: ["화이트", "블랙", "블루"],
-    sizes: ["M", "L"],
-    remain: {
-      M: 3,
-      L: 4,
+  const router = useRouter();
+  const { productId, events } = router.query;
+  const { data: imageData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
+    () => {
+      if (productId) {
+        return loadProductImage(productId);
+      }
+      return null;
     },
-    imageDetails: ["/image/product5.jpg", "/image/homeDesktop2.jpg"],
-  };
+  );
 
+  const { data: COLOR } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
+    () => {
+      if (productId) {
+        return loadProductCOLOR(productId);
+      }
+      return null;
+    },
+  );
+  const { data: detailData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId, events],
+    () => {
+      if (productId) {
+        return loadProductDetail(productId, events);
+      }
+      return null;
+    },
+  );
+  const uniqueColors = [...new Set(COLOR?.data.map((item: any) => item.color))];
+  const uniqueSizes = [...new Set(COLOR?.data.map((item: any) => item.size))];
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
-    title: jsonData.title,
-    price: jsonData.price,
+    title: detailData?.data.name,
+    price: detailData?.data.price,
     color: null,
     size: null,
     count: 0, // 기본 수량
@@ -42,9 +70,10 @@ export default function useProduct() {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
   );
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
   // 컬러 버튼 클릭 핸들러
-  const handleColorClick = (color: string) => {
+  const handleColorClick = (color: any) => {
     setSelectedProduct((prevProduct) => ({
       ...prevProduct,
       color,
@@ -65,8 +94,8 @@ export default function useProduct() {
       }));
 
       const newProduct: SelectedProduct = {
-        title: jsonData.title,
-        price: jsonData.price,
+        title: detailData?.data.name,
+        price: detailData?.data.price,
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
@@ -84,6 +113,7 @@ export default function useProduct() {
       if (!hasDuplicate) {
         // 이전에 선택된 제품 정보들과 새로운 제품 정보를 합쳐서 새로운 배열 생성
         const updatedProducts = [...selectedProducts, newProduct];
+
         setSelectedProducts(updatedProducts);
       }
     }
@@ -144,6 +174,15 @@ export default function useProduct() {
       0,
     );
   }
+  useEffect(() => {
+    const newCartProducts: CartProduct[] = selectedProducts.map((product) => ({
+      productId,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+    }));
+    setCartProducts(newCartProducts);
+  }, [selectedProducts]);
   return {
     handleColorClick,
     handleSizeClick,
@@ -155,6 +194,11 @@ export default function useProduct() {
     calculateTotalCount,
     selectedProduct,
     selectedProducts,
-    jsonData,
+    detailData,
+    imageData,
+    COLOR,
+    uniqueColors,
+    uniqueSizes,
+    cartProducts,
   };
 }

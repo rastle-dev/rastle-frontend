@@ -21,7 +21,13 @@
     "project": ["tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
   "rules": {
+    "react/self-closing-comp": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "import/extensions": "off",
@@ -33,6 +39,8 @@
       2,
       { "extensions": [".js", ".ts", ".tsx"] }
     ],
-    "@typescript-eslint/no-explicit-any": "off" //eslint any 규칙 수정
-  }
+    "@typescript-eslint/no-explicit-any": "off",
+    "eslint-import-resolver-typescript": "off"
+  },
+  "ignorePatterns": ["next.config.js"]
 }

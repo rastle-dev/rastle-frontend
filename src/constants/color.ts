@@ -15,7 +15,8 @@ const COLORS = {
   레드: "#FF0000",
   그린: "#00ff04",
   옐로우: "#f7ff00",
-
+  베이지: "#C9AA75",
+  연그레이: "#D1CECF",
   WHITE: "#FFF",
   BLACK: "#000",
   BLUE: "#4395F6",

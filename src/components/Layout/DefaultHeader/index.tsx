@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 import PATH from "@/constants/path";
 
 const Container = styled.div`

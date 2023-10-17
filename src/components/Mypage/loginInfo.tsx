@@ -7,7 +7,7 @@ import Input from "@/components/common/Input";
 import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
 import QUERYKEYS from "@/constants/querykey";
-import { deletMe, loadMe } from "@/api/auth";
+import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 
 interface ButtonProps {

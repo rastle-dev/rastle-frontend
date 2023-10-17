@@ -8,25 +8,26 @@ const EMAILDUPLICATE = "checkEmail/";
 const SIGNUP = "signup";
 const CATEGORY = "/category";
 const IMAGES = "/images";
-const PRODUCT = "/product";
 const MAINTHUMBNAIL = "/mainThumbnail";
 const SUBTHUMBNAIL = "/subThumbnail";
 const MAINIMAGES = "/mainImages";
 const DETAILIMAGES = "/detailImages";
-const BUNDLE = "/bundle"; //
-const IMAGE = "/image";
-const DETAIL = "/detail";
-const COLOR = "/color";
 const LOGOUT = "logout";
 const MARKET = "/market";
-// const PRODUCT = "/product";
 const CURRENTMARKET = "/currentMarket";
+const PRODUCT = "/product";
+const BUNDLE = "/bundle";
 const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
-const ADMIN = "/admin"; //
-const MEMBERS = "/members";
 const EVENT = "/event";
 const PRODUCTS = "/products";
+const ADMIN = "/admin";
+const MEMBERS = "/members";
+const COLOR = "/color";
+const DETAIL = "/detail";
+const IMAGE = "/image";
+const CART = "/cart";
+const REMOVE = "/removeSelected";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -57,6 +58,7 @@ const API = {
   LOGOUT: `${AUTH}${LOGOUT}`,
   MARKET: `${MARKET}`,
   CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
+  BUNDLE: `${BUNDLE}`,
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,
@@ -65,5 +67,7 @@ const API = {
   DELETEEVENT: `${ADMIN}${EVENT}`,
   EVENT: `${EVENT}`,
   PRODUCTS: `${PRODUCTS}`,
+  CART: `${CART}`,
+  REMOVE: `${REMOVE}`,
 };
 export default API;

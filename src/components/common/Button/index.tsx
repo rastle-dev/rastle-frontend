@@ -11,7 +11,6 @@ type ButtonProps = {
   className?: string;
   width?: string;
   /** 버튼 활성화 (onClick)을 감지하기 위한 props */
-  active?: boolean;
 };
 
 const Wrapper = styled.button<{

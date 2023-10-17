@@ -33,7 +33,6 @@ export const loadProductImage = async (productId: number | undefined) => {
 
 export const loadProductDetail = async (
   productId: number | undefined,
-  // isEvent: boolean | undefined,
 ) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.DETAIL}`,
@@ -52,3 +51,4 @@ export const loadProductCOLOR = async (productId: number | undefined) => {
 //   const { data } = await unAuthorizationClient.get(API.PRODUCT);
 //   return data;
 // };
+

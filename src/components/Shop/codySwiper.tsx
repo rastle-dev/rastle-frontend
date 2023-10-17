@@ -57,7 +57,7 @@ function SwiperComponent({ imgUrls }: SwiperComponentProps) {
   return (
     <SwiperContainer>
       <SwiperWrapper>
-        {slides.map((slide, index) => (
+        {slides.slice(0, -1)?.map((slide: any, index: number) => (
           <SwiperSlide key={slide}>
             <MarketIMG src={slide} alt={`마켓제품 ${index + 1}`} />
           </SwiperSlide>
