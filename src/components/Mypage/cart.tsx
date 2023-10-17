@@ -247,7 +247,7 @@ export default function Cart() {
                 <p>+ 배송비</p>
                 <div>3,000원</div>
                 <p>= 합계</p>
-                <div>{totalPriceSum.toLocaleString()}원</div>
+                <div>{totalPriceSum?.toLocaleString()}원</div>
               </>
             )}
           </TotalPrice>

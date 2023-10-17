@@ -19,7 +19,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 2rem;
   padding-top: 4rem;
-  width: 50%;
+  width: 55rem;
+  ${media.mobile} {
+    width: 80%;
+  }
 `;
 const Box = styled.div<ButtonProps>`
   display: flex;
@@ -60,15 +63,21 @@ const DeleteButtonWrapper = styled.div`
   padding-top: 5rem;
   display: flex;
   justify-content: flex-end; /* 오른쪽 끝으로 이동 */
-  width: 50%;
+  width: 55.7rem;
+  ${media.mobile} {
+    width: 80%;
+  }
 `;
 const DeleteButton = styled(Button)`
   border: none;
   border-radius: 0;
-  width: 5.3rem;
+  width: 6rem;
   height: 3rem;
   padding: 0.62rem;
   font-size: 1rem;
+  ${media.mobile} {
+    width: 7rem;
+  }
   &:hover {
     border: none;
     color: red;

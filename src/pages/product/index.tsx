@@ -158,7 +158,7 @@ export default function Product() {
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
-        {imageData?.data.detailImages.map((img: string) => (
+        {imageData?.data.detailImages?.map((img: string) => (
           <S.ProductDetail src={img} />
         ))}
       </S.ProductDetailList>
