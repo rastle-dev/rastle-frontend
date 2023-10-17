@@ -47,3 +47,8 @@ export const loadProductCOLOR = async (productId: number | undefined) => {
   );
   return data;
 };
+
+// export const loadEventProduct = async () => {
+//   const { data } = await unAuthorizationClient.get(API.PRODUCT);
+//   return data;
+// };

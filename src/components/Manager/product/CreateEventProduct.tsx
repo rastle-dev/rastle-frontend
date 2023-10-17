@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
 import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
-import { adminGetCategory, adminGetBundle } from "@/api/admin";
+import { adminGetCategory, adminGetBundle, adminGetEvent } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import Image from "next/image";
 import { loadMarketProduct } from "@/api/shop";
 import COLORS from "@/constants/color";
+import useCreateEventProduct from "@/hooks/manager/product/useCreateEventProduct";
 
 const Title = styled.div`
   margin: 0;
@@ -179,7 +180,7 @@ export const StyledImgButton = styled.button`
   /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
 
-interface Bundle {
+interface Event {
   id: number;
   name: string;
   imageUrls: string;
@@ -211,7 +212,7 @@ export default function CreateEventProduct() {
     onChangeName,
     onChangePrice,
     onChangeDiscountPrice,
-    bundleId,
+    eventId,
     categoryId,
     handleBundleChange,
     handleBundleIdChange,
@@ -249,26 +250,22 @@ export default function CreateEventProduct() {
     blockMainImagesButton,
     blockDetailImagesButton,
     blockCreateProductButton,
-  } = useCreateProduct();
+  } = useCreateEventProduct();
 
-  const { data: bundleData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_BUNDLE],
-    adminGetBundle,
+  const { data: eventData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_EVENT],
+    adminGetEvent,
   );
+
+  console.log(eventData);
 
   const { data: categoryData } = useQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
   );
 
-  const { data: productListData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    () => loadMarketProduct(),
-    {
-      enabled: displayOrderCheck, // 처음에 쿼리를 실행하지 않음
-    },
-  );
-  console.log(productListData);
+  console.log(eventId);
+  // console.log(eventData.data.content);
 
   return (
     <div>
@@ -295,57 +292,48 @@ export default function CreateEventProduct() {
         placeholder="낮은 순서일수록 앞에 나타남"
         onChange={onChangeDisplayOrder}
       />
+      {/*<ProductDetail>*/}
+      {/*  상품 출력순서 확인하기*/}
+      {/*  <EventCheckbox*/}
+      {/*    type="checkbox"*/}
+      {/*    checked={displayOrderCheck}*/}
+      {/*    onChange={(e) => handleDisplayOrderChange(e)}*/}
+      {/*  />*/}
+      {/*</ProductDetail>*/}
+      {/*{displayOrderCheck && (*/}
+      {/*  <ProductList>*/}
+      {/*    {productListData?.data.content.map((product: PRODUCT) => (*/}
+      {/*      <ProductItem key={product.id}>*/}
+      {/*        <p>{product.name}</p>*/}
+      {/*        {product.displayOrder}*/}
+      {/*        {*/}
+      {/*          <Image*/}
+      {/*            src={product.mainThumbnail}*/}
+      {/*            alt="미리보기 이미지"*/}
+      {/*            width={160} // 이미지 너비*/}
+      {/*            height={200} // 이미지 높이*/}
+      {/*            style={{ margin: "5px" }}*/}
+      {/*          />*/}
+      {/*        }*/}
+      {/*        /!* 상품 이름 *!/*/}
+      {/*      </ProductItem>*/}
+      {/*    ))}*/}
+      {/*  </ProductList>*/}
+      {/*)}*/}
       <ProductDetail>
-        상품 출력순서 확인하기
-        <EventCheckbox
-          type="checkbox"
-          checked={displayOrderCheck}
-          onChange={(e) => handleDisplayOrderChange(e)}
-        />
-      </ProductDetail>
-      {displayOrderCheck && (
-        <ProductList>
-          {productListData?.data.content.map((product: PRODUCT) => (
-            <ProductItem key={product.id}>
-              <p>{product.name}</p>
-              {product.displayOrder}
-              {
-                <Image
-                  src={product.mainThumbnail}
-                  alt="미리보기 이미지"
-                  width={160} // 이미지 너비
-                  height={200} // 이미지 높이
-                  style={{ margin: "5px" }}
-                />
-              }
-              {/* 상품 이름 */}
-            </ProductItem>
+        이벤트 선택:
+        <ProductCategory1Select
+          id="category1"
+          value={eventId}
+          onChange={(e) => handleBundleIdChange(e)}
+        >
+          {eventData?.data.content.map((event: Event) => (
+            <option key={event.id} value={event.id}>
+              {event.name}
+            </option>
           ))}
-        </ProductList>
-      )}
-      <ProductDetail>
-        세트 추가 유무:
-        <EventCheckbox
-          type="checkbox"
-          onChange={(e) => handleBundleChange(e)}
-        />
+        </ProductCategory1Select>
       </ProductDetail>
-      {bundleCategory && (
-        <ProductDetail>
-          세트 선택:
-          <ProductCategory1Select
-            id="category1"
-            value={bundleId}
-            onChange={(e) => handleBundleIdChange(e)}
-          >
-            {bundleData?.data.content.map((bundle: Bundle) => (
-              <option key={bundle.id} value={bundle.id}>
-                {bundle.name}
-              </option>
-            ))}
-          </ProductCategory1Select>
-        </ProductDetail>
-      )}
       <ProductDetail>
         카테고리 선택:
         <ProductCategory2Select

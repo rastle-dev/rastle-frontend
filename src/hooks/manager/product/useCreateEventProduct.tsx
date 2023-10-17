@@ -9,12 +9,12 @@ import useInput from "@/hooks/useInput";
 import React, { useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 
-export default function useCreateProduct() {
+export default function useCreateEventProduct() {
   const [name, onChangeName] = useInput("");
   const [price, onChangePrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder] = useInput("");
-  const [bundleId, setBundleId] = useState("");
+  const [eventId, setEventId] = useState("");
   const [bundleCategory, setBundleCategory] = useState(false);
   const [productId, setProductId] = useState<number>();
   const [categoryId, setCategoryId] = useState("");
@@ -67,19 +67,21 @@ export default function useCreateProduct() {
       displayOrder !== null &&
       categoryId !== null
     ) {
+      console.log(eventId);
       try {
         const data = await adminCreateProduct({
           name,
           price,
           discountPrice,
-          eventCategory: false,
-          ...(bundleCategory ? { bundleId } : {}),
+          event: true,
+          eventId,
           categoryId,
           colorAndSizes,
           displayOrder,
           visible: false,
         });
         if (data) {
+          console.log(data);
           alert("상품이 추가되었습니다. 이미지를 추가해주세요");
           setProductId(data.data.id);
           setshowImageUpload(true);
@@ -99,7 +101,8 @@ export default function useCreateProduct() {
   };
 
   const handleBundleIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setBundleId(e.target.value);
+    setEventId(e.target.value);
+    console.log(eventId);
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -400,7 +403,7 @@ export default function useCreateProduct() {
     price,
     onChangePrice,
     onChangeDiscountPrice,
-    bundleId,
+    eventId,
     categoryId,
     handleBundleChange,
     handleBundleIdChange,
