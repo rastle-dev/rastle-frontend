@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateProduct from "@/components/Manager/product/CreateProduct";
-import UpdateProduct from "@/components/Manager/product/UpdateProduct";
+import CreateBundle from "@/components/Manager/bundle/CreateBundle";
+import UpdateBundle from "@/components/Manager/bundle/UpdateBundle";
 import COLORS from "@/constants/color";
-import CreateEventProduct from "@/components/Manager/product/CreateEventProduct";
-import UpdateEventProduct from "@/components/Manager/product/UpdateEventProduct";
 
 const Title = styled.div`
   margin: 0;
@@ -44,25 +42,20 @@ export const StyledButton = styled.button`
   border: 0.1px solid ${COLORS.GREY.상세페이지};
   background-color: white;
   cursor: pointer;
-  margin-bottom: 1rem;
   &:hover {
     font-weight: 500;
   }
 
   /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
+
 export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
-const managementList = [
-  { name: "상품 추가" },
-  { name: "상품 수정/삭제" },
-  { name: "이벤트 상품 추가" },
-  { name: "이벤트 상품 수정/삭제" },
-];
+const managementList = [{ name: "세트 추가" }, { name: "세트 수정" }];
 
-export default function ProductManagement() {
+export default function BundleManagement() {
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
 
   const onClickList = (name: string) => {
@@ -71,7 +64,7 @@ export default function ProductManagement() {
 
   return (
     <div>
-      <Title>상품 관리</Title>
+      <Title>세트 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
           <StyledButton key={name} onClick={() => onClickList(name)}>
@@ -80,10 +73,8 @@ export default function ProductManagement() {
         ))}
       </ManageList>
       <ManageMentDetail>
-        {selectedItem === "상품 추가" && <CreateProduct />}
-        {selectedItem === "상품 수정/삭제" && <UpdateProduct />}
-        {selectedItem === "이벤트 상품 추가" && <CreateEventProduct />}
-        {selectedItem === "이벤트 상품 수정/삭제" && <UpdateEventProduct />}
+        {selectedItem === "세트 추가" && <CreateBundle />}
+        {selectedItem === "세트 수정" && <UpdateBundle />}
       </ManageMentDetail>
     </div>
   );

@@ -82,6 +82,7 @@ export const PageNumberContainer = styled.div`
     color: blue;
   }
 `;
+
 export default function UserManagement() {
   // const { data } = useQuery([QUERYKEYS.ADMIN_LOAD_USERINFO], adminGetUserInfo);
   const {
@@ -104,7 +105,6 @@ export default function UserManagement() {
     refetch();
   }, [curPage, data]);
   // 열(컬럼) 정보 배열
-  console.log(userData);
   const columnHeaders = [
     "이메일 주소", // email
     "이름", // userName
@@ -115,7 +115,7 @@ export default function UserManagement() {
     "가입일", // createdDate
   ];
 
-  const columnFieldMap = {
+  const columnFieldMap: { [key: string]: string } = {
     "이메일 주소": "email",
     이름: "userName",
     "회원가입 방식": "userLoginType",
@@ -124,6 +124,8 @@ export default function UserManagement() {
     "상품 구매 목록": "allOrderDetails",
     가입일: "createdDate",
   };
+
+  console.log("API) useLoadUserInfo : 전체 userData : ", userData);
   let filteredUsers;
   const handleSearch = () => {
     // 검색 결과 데이터 생성
@@ -176,10 +178,12 @@ export default function UserManagement() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        {/* eslint-disable-next-line react/button-has-type */}
-        <button onClick={handleSearch}>검색</button>
-        {/* eslint-disable-next-line react/button-has-type */}
-        <button onClick={handleReset}>초기화</button>
+        <button type="button" onClick={handleSearch}>
+          검색
+        </button>
+        <button type="button" onClick={handleReset}>
+          초기화
+        </button>
       </div>
       <Table>
         <TableHead>
@@ -191,11 +195,9 @@ export default function UserManagement() {
         </TableHead>
         <tbody>
           {userData?.map((user: any) => (
-            <TableRow key={user.id}>
+            <TableRow key={user.createdDate}>
               {columnHeaders.map((header) => (
                 <TableCell key={header}>
-                  {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                  {/* @ts-ignore */}
                   {user[columnFieldMap[header]]}
                 </TableCell>
               ))}

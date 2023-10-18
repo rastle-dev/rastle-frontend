@@ -151,7 +151,7 @@ export default function Signup() {
                   label={data.label}
                   onChange={data.onChange}
                   message={data.message}
-                  inValid={data.inValid}
+                  invalid={data.inValid}
                 />
                 <S.ButtonWrapper>
                   <S.StyledButton
@@ -170,7 +170,7 @@ export default function Signup() {
                     label={data.label}
                     onChange={data.onChange}
                     message={data.message}
-                    inValid={data.inValid}
+                    invalid={data.inValid}
                   />
                   <S.ButtonTimerWrapper>
                     <S.StyledButton
@@ -191,7 +191,7 @@ export default function Signup() {
                 label={data.label}
                 onChange={data.onChange}
                 message={data.message}
-                inValid={data.inValid}
+                invalid={data.inValid}
               />
             </S.DefaultInputDiv>
           )}

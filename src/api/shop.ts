@@ -24,30 +24,30 @@ export const loadMarketProduct = async () => {
   return data;
 };
 
-export const loadProductImage = async (
-  productId: string | string[] | undefined,
-) => {
+export const loadProductImage = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.IMAGE}`,
   );
   return data;
 };
 
-export const loadProductDetail = async (
-  productId: string | string[],
-  event: string | string[] | undefined,
-) => {
+export const loadProductDetail = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}/${productId}${API.DETAIL}?isEvent=${event}`,
+    `${API.PRODUCT}/${productId}${API.DETAIL}`,
   );
   return data;
 };
 
-export const loadProductCOLOR = async (
-  productId: string | string[] | undefined,
-) => {
+export const loadProductCOLOR = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.COLORS}`,
+  );
+  return data;
+};
+
+export const loadEventProduct = async () => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}${API.EVENT}?lowerBound=0&upperBound=1500`,
   );
   return data;
 };

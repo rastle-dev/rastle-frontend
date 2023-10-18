@@ -7,12 +7,17 @@ import ProductManagement from "@/components/Manager/ProductManagement";
 import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
 import TotalManagement from "@/components/Manager/TotalManagement";
+import BundleManagement from "@/components/Manager/BundleManagement";
+
+import COLORS from "@/constants/color";
+import CreateEvent from "@/components/Manager/event/CreateEvent";
+import UpdateEvent from "@/components/Manager/event/UpdateEvent";
+import EventManagement from "@/components/Manager/EventManagement";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
   width: 88%;
   overflow: hidden;
-  //border: 1px solid red;
 
   ${media.mobile} {
     width: 92%;
@@ -52,10 +57,26 @@ export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 const managementList = [
   { name: "전체통계" },
   { name: "회원관리" },
   { name: "카테고리 관리" },
+  { name: "세트관리" },
+  { name: "이벤트관리" },
   { name: "상품관리" },
   { name: "주문관리" },
   { name: "대시보드" },
@@ -72,15 +93,17 @@ export default function Manager() {
       <HeaderTitle>관리자 페이지</HeaderTitle>
       <ManageList>
         {managementList.map(({ name }) => (
-          <button type="button" key={name} onClick={() => onClickList(name)}>
+          <StyledButton key={name} onClick={() => onClickList(name)}>
             {name}
-          </button>
+          </StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>
         {selectedItem === "전체통계" && <TotalManagement />}
         {selectedItem === "회원관리" && <UserManagement />}
         {selectedItem === "카테고리 관리" && <CategoryManagement />}
+        {selectedItem === "세트관리" && <BundleManagement />}
+        {selectedItem === "이벤트관리" && <EventManagement />}
         {selectedItem === "상품관리" && <ProductManagement />}
         {selectedItem === "주문관리" && <OrderManagement />}
         {selectedItem === "대시보드" && <Dashboard />}

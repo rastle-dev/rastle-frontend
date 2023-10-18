@@ -146,7 +146,7 @@ export default function LoginInfo() {
                 value={input.value}
                 onChange={input.onChange}
                 message={input.message}
-                inValid={input.inValid}
+                invalid={input.inValid}
               />
               <PasswordChangeButton
                 title="변경"
@@ -167,7 +167,7 @@ export default function LoginInfo() {
               value={input.value}
               onChange={input.onChange}
               message={input.message}
-              inValid={input.inValid}
+              invalid={input.inValid}
             />
           )}
         </Wrapper>

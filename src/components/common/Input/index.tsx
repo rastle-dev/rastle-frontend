@@ -4,16 +4,16 @@ import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
-const Label = styled.div<{ inValid?: boolean }>`
+const Label = styled.div<{ invalid?: boolean }>`
   font-size: 1rem;
-  color: ${(props) => (props.inValid ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
   ${media.xsmall} {
     font-size: 1.5rem;
   }
 `;
 
-const InputWrapper = styled.input<{ size: number; inValid?: boolean }>`
+const InputWrapper = styled.input<{ size: number; invalid?: boolean }>`
   ${({ size }) => `
     width: ${size}rem;
 `}
@@ -21,7 +21,7 @@ const InputWrapper = styled.input<{ size: number; inValid?: boolean }>`
   padding: 0.9rem 0.2rem;
   border: none;
   border-bottom: 0.07rem solid
-    ${(props) => (props.inValid ? COLORS.RED : COLORS.GREY[300])};
+    ${(props) => (props.invalid ? COLORS.RED : COLORS.GREY[300])};
   // border-bottom:
   //   ${(props) =>
     props.onChange
@@ -37,10 +37,10 @@ const InputWrapper = styled.input<{ size: number; inValid?: boolean }>`
   border-radius: 0;
 `;
 
-const Message = styled.p<{ inValid?: boolean }>`
+const Message = styled.p<{ invalid?: boolean }>`
   font-size: 0.7rem;
   margin-bottom: 0;
-  color: ${(props) => (props.inValid ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
 `;
 
 type InputProps = {
@@ -65,7 +65,8 @@ type InputProps = {
   /** classname */
   className?: string;
   checked?: boolean;
-  inValid?: boolean;
+  color?: string;
+  invalid?: boolean;
 };
 
 export default function Input({
@@ -80,13 +81,13 @@ export default function Input({
   message = "",
   className,
   checked,
-  inValid = false,
+  invalid = false,
 }: InputProps) {
   const isCheckbox = type === "checkbox"; // 체크박스인지 확인
 
   return (
     <Wrapper style={{ width: isCheckbox ? "auto" : "100%" }}>
-      {!labelHidden && <Label inValid={inValid}>{label}</Label>}
+      {!labelHidden && <Label invalid={invalid}>{label}</Label>}
       <InputWrapper
         value={value}
         onChange={onChange}
@@ -96,9 +97,9 @@ export default function Input({
         readOnly={readOnly}
         className={className}
         checked={checked}
-        inValid={inValid}
+        invalid={invalid}
       />
-      {message.length > 0 && <Message inValid={inValid}> {message}</Message>}
+      {message.length > 0 && <Message invalid={invalid}> {message}</Message>}
     </Wrapper>
   );
 }

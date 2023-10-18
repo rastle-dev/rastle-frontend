@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import useCreateCategory from "@/hooks/manager/category/useCreateCategory";
+import Input from "@/components/common/Input";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { adminGetCategory } from "@/api/admin";
+import COLORS from "@/constants/color";
 
-const Title = styled.div`
+const Title = styled.h1`
   margin: 0;
   font-size: 2.2rem;
   padding-bottom: 2rem;
@@ -16,139 +22,74 @@ const CategoryDetail = styled.div`
   }
 `;
 
-const CustomTextarea = styled.textarea`
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
+const CategoryList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  li {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+    &:hover {
+      background-color: #f0f0f0;
+      color: #333;
+    }
   }
 `;
 
-const PreviewImages = styled.div`
-  margin-top: 1rem;
+const StyledInput = styled(Input)`
+  font-size: 2rem;
 `;
 
+export const StyledButton = styled.button`
+  margin-top: 0.3rem;
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
+interface Category {
+  id: number;
+  name: string;
+}
+
 export default function CreateCategory() {
-  const [categoryType, setCategoryType] = useState("clothing");
-  const [categoryName, setCategoryName] = useState("");
-  const [categoryDescription, setCategoryDescription] = useState("");
-  const [categoryImages, setCategoryImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const { createCategory, onChangeName, name } = useCreateCategory();
 
-  const handleCategoryTypeChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setCategoryType(e.target.value);
-  };
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
+  );
 
-  const handleCategoryNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategoryName(e.target.value);
-  };
-
-  const handleCategoryDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    setCategoryDescription(e.target.value);
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
-
-    if (files && files.length > 0) {
-      const newImages: File[] = [...categoryImages];
-      const newPreviews: string[] = [...previewImages];
-
-      for (let i = 0; i < files.length; i += 1) {
-        const file = files[i];
-
-        if (file) {
-          const reader = new FileReader();
-
-          reader.onloadend = () => {
-            newImages.push(file);
-            newPreviews.push(reader.result as string);
-
-            setCategoryImages(newImages.slice(0, 3)); // 최대 3개까지만 유지
-            setPreviewImages(newPreviews.slice(0, 3));
-          };
-
-          reader.readAsDataURL(file);
-        }
-      }
-    }
-  };
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    // 여기에서 카테고리 생성 및 제출 로직을 구현하면 됩니다.
-    // categoryType, categoryName, displayOrder, categoryDescription,
-    // categoryImages를 이용하여 서버로 데이터를 전송하거나 상태를 업데이트하세요.
-  };
+  console.log("API) adminGetCategory : 전체 카테고리 : ", "\n", categoryData);
 
   return (
     <div>
       <Title>카테고리 추가</Title>
+      <h3>현재 카테고리</h3>
+      <CategoryList>
+        {categoryData?.data.map((category: Category) => (
+          <li key={category.id}>{category.name}</li>
+        ))}
+      </CategoryList>
+      <p>상의, 하의, 악세서리, 아우터 등을 추가하세요</p>
       <CategoryDetail>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryType">카테고리 분류:</label>
-        <select
-          id="categoryType"
-          value={categoryType}
-          onChange={handleCategoryTypeChange}
-        >
-          <option value="clothing">의류 카테고리</option>
-          <option value="market">마켓 카테고리</option>
-        </select>
+        <StyledInput value={name} size={30} onChange={onChangeName} />
       </CategoryDetail>
-      <CategoryDetail>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryName">카테고리 이름:</label>
-        <input
-          type="text"
-          id="categoryName"
-          value={categoryName}
-          onChange={(e) => handleCategoryNameChange(e)}
-        />
-      </CategoryDetail>
-      <CategoryDetail>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryDescription">카테고리 설명:</label>
-        <CustomTextarea
-          id="categoryDescription"
-          value={categoryDescription}
-          onChange={(e) => handleCategoryDescriptionChange(e)}
-        />
-      </CategoryDetail>
-      <div>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="categoryImage">카테고리 이미지:</label>
-        <input
-          type="file"
-          id="categoryImage"
-          accept="image/*"
-          multiple // 여러 이미지 업로드 가능하도록
-          onChange={handleImageUpload}
-        />
-        <PreviewImages>
-          {previewImages.map((preview, index) => (
-            <img
-              src={preview}
-              alt={`미리보기 이미지 ${index}`}
-              style={{ maxWidth: "200px", maxHeight: "250px", margin: "5px" }}
-            />
-          ))}
-        </PreviewImages>
-      </div>
-      <button type="button" onClick={handleSubmit}>
+      <StyledButton type="button" onClick={createCategory}>
         카테고리 생성
-      </button>
+      </StyledButton>
     </div>
   );
 }

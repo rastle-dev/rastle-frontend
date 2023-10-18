@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CreateCategory from "@/components/Manager/category/CreateCategory";
 import UpdateCategory from "@/components/Manager/category/UpdateCategory";
-import DeleteCategory from "@/components/Manager/category/DeleteCategory";
+import COLORS from "@/constants/color";
 
 const Title = styled.div`
   margin: 0;
@@ -35,14 +35,27 @@ export const ManageList = styled.ul`
   }
 `;
 
+export const StyledButton = styled.button`
+  font-size: 1.18182rem;
+  font-weight: 400;
+  padding: 1rem;
+  border: 0.1px solid ${COLORS.GREY.상세페이지};
+  background-color: white;
+  cursor: pointer;
+  &:hover {
+    font-weight: 500;
+  }
+
+  /* 버튼이 클릭된 상태일 때의 스타일 */
+`;
+
 export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
 const managementList = [
   { name: "카테고리 추가" },
-  { name: "카테고리 수정" },
-  { name: "카테고리 삭제" },
+  { name: "카테고리 수정/삭제" },
 ];
 
 export default function CategoryManagement() {
@@ -57,15 +70,14 @@ export default function CategoryManagement() {
       <Title>카테고리 관리</Title>
       <ManageList>
         {managementList.map(({ name }) => (
-          <button type="button" key={name} onClick={() => onClickList(name)}>
+          <StyledButton key={name} onClick={() => onClickList(name)}>
             {name}
-          </button>
+          </StyledButton>
         ))}
       </ManageList>
       <ManageMentDetail>
         {selectedItem === "카테고리 추가" && <CreateCategory />}
-        {selectedItem === "카테고리 수정" && <UpdateCategory />}
-        {selectedItem === "카테고리 삭제" && <DeleteCategory />}
+        {selectedItem === "카테고리 수정/삭제" && <UpdateCategory />}
       </ManageMentDetail>
     </div>
   );

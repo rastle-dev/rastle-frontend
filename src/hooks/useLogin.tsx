@@ -17,6 +17,7 @@ export default function useLogin() {
       // HTTP 응답에서 "Authorization" 헤더 값을 추출
       const token = response.authorization.replace("Bearer ", "");
       localStorage.setItem("accessToken", token);
+      console.log(response);
       router.push(PATH.HOME);
     },
     onError: ({

@@ -6,11 +6,21 @@ const EMAILCERTIFICATE = "emailCertification";
 const EMAILCHECK = "emailCertificationCheck";
 const EMAILDUPLICATE = "checkEmail/";
 const SIGNUP = "signup";
+const CATEGORY = "/category";
+const IMAGES = "/images";
+const MAINTHUMBNAIL = "/mainThumbnail";
+const SUBTHUMBNAIL = "/subThumbnail";
+const MAINIMAGES = "/mainImages";
+const DETAILIMAGES = "/detailImages";
 const LOGOUT = "logout";
+const MARKET = "/market";
+const CURRENTMARKET = "/currentMarket";
 const PRODUCT = "/product";
 const BUNDLE = "/bundle";
 const MEMBER = "/member";
 const CHANGEPASSWORD = "/changePassword";
+const EVENT = "/event";
+const PRODUCTS = "/products";
 const ADMIN = "/admin";
 const MEMBERS = "/members";
 const COLOR = "/color";
@@ -28,16 +38,35 @@ const API = {
   EMAILCHECK: `${AUTH}${EMAILCHECK}`,
   EMAILDUPLICATE: `${AUTH}${EMAILDUPLICATE}`,
   SIGNUP: `${AUTH}${SIGNUP}`,
-  LOGOUT: `${AUTH}${LOGOUT}`,
-  PRODUCT: `${PRODUCT}`,
+  CATEGORY: `${ADMIN}${CATEGORY}`,
+  ADMINBUNDLE: `${ADMIN}${BUNDLE}`,
+  IMAGES: `${IMAGES}`,
+  GETCATEGORY: `${CATEGORY}`,
+  GETBUNDLE: `${BUNDLE}`,
+  CREATEPRODUCT: `${ADMIN}${PRODUCT}`,
+  UPDATEPRODUCT: `${ADMIN}${PRODUCT}`,
+  DELETEPRODUCT: `${ADMIN}${PRODUCT}`,
+  MAINTHUMBNAIL: `${MAINTHUMBNAIL}`,
+  SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,
+  MAINIMAGES: `${MAINIMAGES}`,
+  DETAILIMAGES: `${DETAILIMAGES}`,
   BUNDLE_PRODUCT: `${PRODUCT}${BUNDLE}`,
+  PRODUCT: `${PRODUCT}`,
+  IMAGE: `${IMAGE}`,
+  DETAIL: `${DETAIL}`,
+  COLORS: `${COLOR}`,
+  LOGOUT: `${AUTH}${LOGOUT}`,
+  MARKET: `${MARKET}`,
+  CURRENTMARKET: `${PRODUCT}${CURRENTMARKET}`,
   BUNDLE: `${BUNDLE}`,
   MEMBER: `${MEMBER}`,
   CHANGEPASSWORD: `${MEMBER}${CHANGEPASSWORD}`,
   MEMBERSINFO: `${ADMIN}${MEMBERS}`,
-  DETAIL: `${DETAIL}`,
-  COLORS: `${COLOR}`,
-  IMAGE: `${IMAGE}`,
+  CREATEEVENT: `${ADMIN}${EVENT}`,
+  UPDATEEVENT: `${ADMIN}${EVENT}`,
+  DELETEEVENT: `${ADMIN}${EVENT}`,
+  EVENT: `${EVENT}`,
+  PRODUCTS: `${PRODUCTS}`,
   CART: `${CART}`,
   REMOVE: `${REMOVE}`,
 };
