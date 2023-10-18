@@ -27,7 +27,7 @@ export const adminDeleteCategory = async (categoryId: number | undefined) => {
 };
 
 export const adminCreateBundle = async (marketData: object) => {
-  const { data } = await authorizationClient.post(API.BUNDLE, marketData);
+  const { data } = await authorizationClient.post(API.ADMINBUNDLE, marketData);
   return data;
 };
 
@@ -36,7 +36,7 @@ export const adminUpdateBundle = async (
   bundleData: object,
 ) => {
   const { data } = await authorizationClient.patch(
-    `${API.BUNDLE}/${bundleId}`,
+    `${API.ADMINBUNDLE}/${bundleId}`,
     bundleData,
   );
   return data;
@@ -44,7 +44,7 @@ export const adminUpdateBundle = async (
 
 export const adminDeleteBundle = async (bundleId: number | undefined) => {
   const { data } = await authorizationClient.delete(
-    `${API.BUNDLE}/${bundleId}`,
+    `${API.ADMINBUNDLE}/${bundleId}`,
   );
   return data;
 };
@@ -57,7 +57,7 @@ export const adminAddBundleImages = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.post(
-    `${API.BUNDLE}/${marketId}${API.IMAGES}`,
+    `${API.ADMINBUNDLE}/${marketId}${API.IMAGES}`,
     imageData,
     { headers },
   );
@@ -72,7 +72,7 @@ export const adminUpdateBundleImages = async (
     "Content-Type": "multipart/form-data",
   };
   const { data } = await authorizationClient.put(
-    `${API.BUNDLE}/${bundleId}${API.IMAGES}`,
+    `${API.ADMINBUNDLE}/${bundleId}${API.IMAGES}`,
     imageData,
     { headers },
   );

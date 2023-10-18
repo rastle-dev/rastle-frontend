@@ -310,7 +310,7 @@ export default function CreateProduct() {
               <p>{product.name}</p>
               {product.displayOrder}
               {
-                <Image
+                <img
                   src={product.mainThumbnail}
                   alt="미리보기 이미지"
                   width={160} // 이미지 너비
@@ -413,7 +413,7 @@ export default function CreateProduct() {
             />
             <PreviewImages>
               {mainThumbnail && (
-                <Image
+                <img
                   src={mainThumbnail}
                   alt="미리보기 이미지"
                   width={200} // 이미지 너비
@@ -438,7 +438,7 @@ export default function CreateProduct() {
             />
             <PreviewImages>
               {subThumbnail && (
-                <Image
+                <img
                   src={subThumbnail}
                   alt="서브썸네일 이미지"
                   width={200} // 이미지 너비

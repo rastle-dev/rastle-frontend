@@ -14,21 +14,20 @@ import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import {
+  loadEventProduct,
   loadMarketProduct,
   loadProductCOLOR,
   loadProductDetail,
   loadProductImage,
 } from "@/api/shop";
 
-export default function useUpdateProduct() {
+export default function useUpdateEventProduct() {
   const [name, onChangeName, setName] = useInput("");
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder, setDisplayOrder] = useInput("");
-  const [bundleId, setBundleId] = useState<string>();
   const [bundleCategory, setBundleCategory] = useState(false);
   const [productId, setProductId] = useState<number>();
-  const [categoryId, setCategoryId] = useState<string>();
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
   const [showImageUpload, setshowImageUpload] = useState(false);
@@ -45,60 +44,50 @@ export default function useUpdateProduct() {
     price,
     discountPrice,
   );
+  const [selectedProduct, setSelectedProduct] = useState<EventProduct | null>(
+    null,
+  ); // 선택된 카테고리 상태 추가
   const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
     useState(false);
   const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
   const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
   const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<PRODUCT | null>(null); // 선택된 카테고리 상태 추가
   interface ColorAndSize {
     color: string;
     size: string;
     count: number;
   }
 
-  interface PRODUCT {
-    id: number;
-    name: string;
-    price: number;
+  interface EventProduct {
     discountPrice: number;
-    event: boolean;
-    mainThumbnail: string;
-    subThumbnail: string;
     displayOrder: number;
-    visible: boolean;
-    bundleId: string;
-    categoryId: string;
+    endDate: string;
+    eventDescription: string;
+    eventId: number;
+    eventImageUrls: string;
+    eventName: string;
+    eventVisible: boolean;
+    mainThumbnail: string;
+    price: number;
+    productId: number;
+    productName: string;
+    productVisible: boolean;
+    startDate: string;
+    subThumbnail: string;
   }
-
   const colorAndSizes: ColorAndSize[] = [];
 
-  const { data: productListData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    loadMarketProduct,
+  const { data: eventProductListData } = useQuery(
+    [QUERYKEYS.LOAD_EVENTPRODUCT],
+    loadEventProduct,
   );
 
-  const { data: bundleData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_BUNDLE],
-    adminGetBundle,
-  );
-
-  const { data: categoryData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_CATEGORY],
-    adminGetCategory,
-  );
-
-  const { data: productData, refetch: refetchProductData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL],
-    () => (selectedProduct ? loadProductDetail(selectedProduct.id) : null),
-    {
-      enabled: false, // 처음에 쿼리를 실행하지 않음
-    },
-  );
+  console.log(eventProductListData);
 
   const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_COLOR],
-    () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
+    () =>
+      selectedProduct ? loadProductCOLOR(selectedProduct.productId) : null,
     {
       enabled: false, // 처음에 쿼리를 실행하지 않음
     },
@@ -106,13 +95,12 @@ export default function useUpdateProduct() {
 
   const { data: mainImageData, refetch: refetchMainImageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE],
-    () => (selectedProduct ? loadProductImage(selectedProduct.id) : null),
+    () =>
+      selectedProduct ? loadProductImage(selectedProduct.productId) : null,
     {
       enabled: showImageUpload, // 처음에 쿼리를 실행하지 않음
     },
   );
-
-  console.log(mainImageData);
 
   const loadColorAndSize = () => {
     if (selectedProduct) {
@@ -138,7 +126,6 @@ export default function useUpdateProduct() {
 
   useEffect(() => {
     if (selectedProduct) {
-      refetchProductData();
       refetchColorAndSizeData();
       setColors([""]);
       setSizes([""]);
@@ -150,9 +137,6 @@ export default function useUpdateProduct() {
       refetchMainImageData();
     }
   }, [selectedProduct]);
-
-  console.log(productData);
-  console.log(productListData);
 
   console.log(colorAndSizeData);
 
@@ -167,28 +151,17 @@ export default function useUpdateProduct() {
       });
     });
     try {
-      if (
-        name &&
-        price &&
-        discountPrice &&
-        categoryId &&
-        colorAndSizes.length > 1 &&
-        displayOrder
-      ) {
-        const data = await adminUpdateProduct(selectedProduct?.id, {
+      if (name && price && colorAndSizes.length >= 1 && displayOrder) {
+        const data = await adminUpdateProduct(selectedProduct?.productId, {
           name,
           price,
           discountPrice,
-          eventCategory: false,
-          ...(bundleCategory ? { bundleId } : {}),
-          categoryId,
           colorAndSizes,
           displayOrder,
           visible,
         });
         if (data) {
           alert("상품이 수정되었습니다. ");
-          setProductId(data.data.id);
         }
       } else {
         alert("필수 항목을 다 채워주세요");
@@ -197,18 +170,6 @@ export default function useUpdateProduct() {
       console.log(err);
       alert("상품 수정에 실패했습니다.");
     }
-  };
-
-  const handleBundleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setBundleCategory(e.target.checked);
-  };
-
-  const handleBundleIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setBundleId(e.target.value);
-  };
-
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategoryId(e.target.value);
   };
 
   const handleColorChange = (
@@ -499,27 +460,14 @@ export default function useUpdateProduct() {
     }
   };
 
-  const handleProductClick = (product: PRODUCT) => {
+  const handleProductClick = (product: EventProduct) => {
     setSelectedProduct(product); // 목록에서 카테고리 선택
-    setName(product.name);
+    setName(product.productName);
     setPrice(product.price);
     setDiscountPrice(product.discountPrice);
     setDisplayOrder(product.displayOrder);
-    setVisible(product.visible);
-    setCategoryId(product.categoryId);
-    setProductId(product.id);
-
-    // 세트가 구성되어있지 않음
-    if (product.bundleId === null) {
-      setBundleCategory(false);
-    }
-    // 세트가 존재함
-    else {
-      setBundleCategory(true);
-      setBundleId(product.bundleId);
-    }
-
-    console.log(selectedProduct);
+    setVisible(product.productVisible);
+    setProductId(product.productId);
   };
 
   const handleVisibleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -538,7 +486,7 @@ export default function useUpdateProduct() {
     if (selectedProduct) {
       try {
         // 서버로 FormData를 포함한 POST 요청 보내기
-        const data = await adminDeleteProduct(selectedProduct?.id);
+        const data = await adminDeleteProduct(selectedProduct?.productId);
 
         if (data) {
           alert("상품이 제거되었습니다.");
@@ -558,11 +506,6 @@ export default function useUpdateProduct() {
     price,
     onChangePrice,
     onChangeDiscountPrice,
-    bundleId,
-    categoryId,
-    handleBundleChange,
-    handleBundleIdChange,
-    handleCategoryChange,
     colors,
     setColors,
     sizes,
@@ -571,7 +514,7 @@ export default function useUpdateProduct() {
     setshowImageUpload,
     displayOrder,
     onChangeDisplayOrder,
-    createProduct: updateProduct,
+    updateProduct,
     productId,
     discountPrice,
     bundleCategory,
@@ -601,12 +544,9 @@ export default function useUpdateProduct() {
     selectedProduct,
     colorAndSizeData,
     loadColorAndSize,
-    productListData,
-    bundleData,
-    categoryData,
-    productData,
     mainImageData,
     loadImages,
     deleteProduct,
+    eventProductListData,
   };
 }

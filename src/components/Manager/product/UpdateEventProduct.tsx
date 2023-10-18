@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Input from "@/components/common/Input";
 
 import Image from "next/image";
-import useUpdateProduct from "@/hooks/manager/product/useUpdateProduct";
 
 import COLORS from "@/constants/color";
+import useUpdateEventProduct from "@/hooks/manager/product/useUpdateEventProduct";
 
 const Title = styled.div`
   margin: 0;
@@ -19,36 +19,6 @@ const ProductDetail = styled.div`
 
   label {
     margin-right: 0.5rem;
-  }
-`;
-
-const ProductCategory1Select = styled.select`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-`;
-
-const ProductCategory2Select = styled.select`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
   }
 `;
 
@@ -168,50 +138,34 @@ const RedSpan = styled.span`
   color: red;
   margin-left: 0.5rem;
 `;
-interface Bundle {
-  id: number;
-  name: string;
-  imageUrls: string;
-  description: string;
-  saleStartTime: string;
-  visible: boolean;
-}
 
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface PRODUCT {
-  id: number;
-  name: string;
-  price: number;
+interface EventProduct {
   discountPrice: number;
-  event: boolean;
-  mainThumbnail: string;
-  subThumbnail: string;
   displayOrder: number;
-  visible: boolean;
-  bundleId: string;
-  categoryId: string;
+  endDate: string;
+  eventDescription: string;
+  eventId: number;
+  eventImageUrls: string;
+  eventName: string;
+  eventVisible: boolean;
+  mainThumbnail: string;
+  price: number;
+  productId: number;
+  productName: string;
+  productVisible: boolean;
+  startDate: string;
+  subThumbnail: string;
 }
-
 export default function UpdateEventProduct() {
   const {
     onChangeName,
     onChangePrice,
     onChangeDiscountPrice,
-    bundleId,
-    categoryId,
-    handleBundleChange,
-    handleBundleIdChange,
-    handleCategoryChange,
     colors,
     sizes,
     showImageUpload,
     onChangeDisplayOrder,
-    createProduct,
-    bundleCategory,
+    updateProduct,
     discountPercent,
     handleColorChange,
     discountedPrice,
@@ -241,25 +195,25 @@ export default function UpdateEventProduct() {
     displayOrder,
     selectedProduct,
     loadColorAndSize,
-    productListData,
-    bundleData,
-    categoryData,
     mainImageData,
     loadImages,
     deleteProduct,
-  } = useUpdateProduct();
+    eventProductListData,
+  } = useUpdateEventProduct();
+
+  console.log(eventProductListData);
 
   return (
     <div>
       <Title>상품 수정</Title>
-      <ProductSubtitle>수정할 상품을 선택하세요</ProductSubtitle>
+      <ProductSubtitle>수정할 이벤트를 선택하세요</ProductSubtitle>
       <ProductList>
-        {productListData?.data.content.map((product: PRODUCT) => (
+        {eventProductListData?.data.map((product: EventProduct) => (
           <ProductItem
-            key={product.id}
+            key={product.eventId}
             onClick={() => handleProductClick(product)}
           >
-            <p>{product.name}</p>
+            <p>{product.productName}</p>
             {product.mainThumbnail && (
               <Image
                 src={product.mainThumbnail}
@@ -305,44 +259,6 @@ export default function UpdateEventProduct() {
           onChange={(e) => handleVisibleChange(e)}
         />
       </ProductDetail>
-      <ProductDetail>
-        세트 추가 유무:
-        <EventCheckbox
-          type="checkbox"
-          onChange={(e) => handleBundleChange(e)}
-          checked={bundleCategory}
-        />
-      </ProductDetail>
-      {bundleCategory && (
-        <ProductDetail>
-          세트 선택:
-          <ProductCategory1Select
-            id="category1"
-            value={bundleId || ""}
-            onChange={(e) => handleBundleIdChange(e)}
-          >
-            {bundleData?.data.content.map((bundle: Bundle) => (
-              <option key={bundle.id} value={bundle.id}>
-                {bundle.name}
-              </option>
-            ))}
-          </ProductCategory1Select>
-        </ProductDetail>
-      )}
-      <ProductDetail>
-        카테고리 선택:
-        <ProductCategory2Select
-          id="category2"
-          value={categoryId}
-          onChange={(e) => handleCategoryChange(e)}
-        >
-          {categoryData?.data.map((category: Category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </ProductCategory2Select>
-      </ProductDetail>
       <StyledButton onClick={loadColorAndSize}>
         색상, 사이즈 불러오기
       </StyledButton>
@@ -383,7 +299,7 @@ export default function UpdateEventProduct() {
         </button>
       </SizeInputs>
       <ApiButtonWrapper>
-        <StyledButton type="button" onClick={createProduct}>
+        <StyledButton type="button" onClick={updateProduct}>
           상품 수정
         </StyledButton>
         <StyledButton type="button" onClick={deleteProduct}>

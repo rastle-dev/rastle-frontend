@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
-import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
-import { adminGetCategory, adminGetBundle, adminGetEvent } from "@/api/admin";
+import { adminGetEvent } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import Image from "next/image";
-import { loadMarketProduct } from "@/api/shop";
 import COLORS from "@/constants/color";
 import useCreateEventProduct from "@/hooks/manager/product/useCreateEventProduct";
 
@@ -47,25 +45,6 @@ const ProductCategory1Select = styled.select`
     outline: none;
     border-color: #007bff;
   }
-`;
-
-const ProductCategory2Select = styled.select`
-  width: 30%;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1.5rem;
-
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-`;
-
-const EventCheckbox = styled.input`
-  margin-right: 0.5rem;
 `;
 
 const ColorInputs = styled.div`
@@ -122,33 +101,6 @@ const PreviewImages = styled.div`
   margin-top: 1rem;
 `;
 
-const ProductList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-`;
-
-const ProductItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  width: 200px;
-  height: 280px;
-  font-size: 1rem;
-
-  margin-bottom: 0.5rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-  &:hover {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-`;
-
 export const StyledButton = styled.button`
   margin-top: 1rem;
   font-size: 1.18182rem;
@@ -189,40 +141,18 @@ interface Event {
   visible: boolean;
 }
 
-interface PRODUCT {
-  id: number;
-  name: string;
-  price: number;
-  discountPrice: number;
-  event: boolean;
-  mainThumbnail: string;
-  subThumbnail: string;
-  displayOrder: number;
-  visible: boolean;
-  bundleId: string;
-  categoryId: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-}
 export default function CreateEventProduct() {
   const {
     onChangeName,
     onChangePrice,
     onChangeDiscountPrice,
     eventId,
-    categoryId,
-    handleBundleChange,
     handleBundleIdChange,
-    handleCategoryChange,
     colors,
     sizes,
     showImageUpload,
     onChangeDisplayOrder,
     createProduct,
-    bundleCategory,
     discountPercent,
     handleColorChange,
     discountedPrice,
@@ -243,8 +173,6 @@ export default function CreateEventProduct() {
     subThumbnail,
     mainImages,
     detailImages,
-    handleDisplayOrderChange,
-    displayOrderCheck,
     blockMainThumbnailButton,
     blockSubThumbnailButton,
     blockMainImagesButton,
@@ -256,16 +184,6 @@ export default function CreateEventProduct() {
     [QUERYKEYS.ADMIN_GET_EVENT],
     adminGetEvent,
   );
-
-  console.log(eventData);
-
-  const { data: categoryData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_CATEGORY],
-    adminGetCategory,
-  );
-
-  console.log(eventId);
-  // console.log(eventData.data.content);
 
   return (
     <div>
@@ -292,34 +210,6 @@ export default function CreateEventProduct() {
         placeholder="낮은 순서일수록 앞에 나타남"
         onChange={onChangeDisplayOrder}
       />
-      {/*<ProductDetail>*/}
-      {/*  상품 출력순서 확인하기*/}
-      {/*  <EventCheckbox*/}
-      {/*    type="checkbox"*/}
-      {/*    checked={displayOrderCheck}*/}
-      {/*    onChange={(e) => handleDisplayOrderChange(e)}*/}
-      {/*  />*/}
-      {/*</ProductDetail>*/}
-      {/*{displayOrderCheck && (*/}
-      {/*  <ProductList>*/}
-      {/*    {productListData?.data.content.map((product: PRODUCT) => (*/}
-      {/*      <ProductItem key={product.id}>*/}
-      {/*        <p>{product.name}</p>*/}
-      {/*        {product.displayOrder}*/}
-      {/*        {*/}
-      {/*          <Image*/}
-      {/*            src={product.mainThumbnail}*/}
-      {/*            alt="미리보기 이미지"*/}
-      {/*            width={160} // 이미지 너비*/}
-      {/*            height={200} // 이미지 높이*/}
-      {/*            style={{ margin: "5px" }}*/}
-      {/*          />*/}
-      {/*        }*/}
-      {/*        /!* 상품 이름 *!/*/}
-      {/*      </ProductItem>*/}
-      {/*    ))}*/}
-      {/*  </ProductList>*/}
-      {/*)}*/}
       <ProductDetail>
         이벤트 선택:
         <ProductCategory1Select
@@ -333,20 +223,6 @@ export default function CreateEventProduct() {
             </option>
           ))}
         </ProductCategory1Select>
-      </ProductDetail>
-      <ProductDetail>
-        카테고리 선택:
-        <ProductCategory2Select
-          id="category2"
-          value={categoryId}
-          onChange={(e) => handleCategoryChange(e)}
-        >
-          {categoryData?.data.map((category: Category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </ProductCategory2Select>
       </ProductDetail>
       색상 추가
       <ColorInputs>
@@ -388,7 +264,7 @@ export default function CreateEventProduct() {
         onClick={createProduct}
         disabled={blockCreateProductButton}
       >
-        상품 생성
+        이벤트 상품 생성
       </StyledButton>
       {showImageUpload ? (
         <div>

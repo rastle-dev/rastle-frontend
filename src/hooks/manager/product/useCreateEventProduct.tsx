@@ -73,7 +73,6 @@ export default function useCreateEventProduct() {
           name,
           price,
           discountPrice,
-          event: true,
           eventId,
           categoryId,
           colorAndSizes,
@@ -82,14 +81,14 @@ export default function useCreateEventProduct() {
         });
         if (data) {
           console.log(data);
-          alert("상품이 추가되었습니다. 이미지를 추가해주세요");
+          alert("이벤트 상품이 추가되었습니다. 이미지를 추가해주세요");
           setProductId(data.data.id);
           setshowImageUpload(true);
           setBlockCreateProductButton(true);
         }
       } catch (err) {
         console.log(err);
-        alert("상품 추가에 실패했습니다.");
+        alert("이벤트 상품 추가에 실패했습니다.");
       }
     } else {
       alert("필수 항목들을 다 채워주세요.");

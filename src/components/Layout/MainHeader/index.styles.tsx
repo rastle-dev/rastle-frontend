@@ -3,15 +3,14 @@ import IconButton from "@/components/common/IconButton";
 import COLORS from "@/constants/color";
 
 interface WrapperProps {
-  scrolled: string;
+  scrolled: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
   //width: 92%;
   width: 100%;
   //background-color: white;
-  background-color: ${({ scrolled }) =>
-    JSON.parse(scrolled) ? "white" : "transparent"};
+  background-color: ${({ scrolled }) => (scrolled ? "white" : "transparent")};
   position: fixed;
   top: 0;
   z-index: 999;

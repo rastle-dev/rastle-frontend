@@ -3,6 +3,7 @@ const QUERYKEYS = {
   LOAD_CURRENT_MARKET: "loadCurrentMarket",
   LOAD_BUNDLE_PRODUCT: "loadBundleProduct",
   LOAD_PRODUCT: "getProducts",
+  LOAD_EVENTPRODUCT: "getEventProducts",
   ADMIN_GET_BUNDLE: "adminGetSet",
   ADMIN_GET_CATEGORY: "adminGetCategory",
   ADMIN_GET_PRODUCT: "adminGetProduct",

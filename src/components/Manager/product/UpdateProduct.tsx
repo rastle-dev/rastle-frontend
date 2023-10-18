@@ -261,7 +261,7 @@ export default function UpdateProduct() {
           >
             <p>{product.name}</p>
             {product.mainThumbnail && (
-              <Image
+              <img
                 src={product.mainThumbnail}
                 alt="미리보기 이미지"
                 width={160} // 이미지 너비
