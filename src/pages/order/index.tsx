@@ -1,9 +1,18 @@
-import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/order/index.styles";
+import useMypage from "@/hooks/useMypage";
+import { useRouter } from "next/dist/client/router";
 import useOrder from "../../hooks/useOrder";
 
+type ProductItem = {
+  productName: string;
+  productPrice: string;
+  count: number;
+  size: string;
+  color: string;
+  mainThumbnailImage: string;
+};
 export default function Order() {
   const {
     clickedPaymentButtonIndex,
@@ -12,13 +21,16 @@ export default function Order() {
     handleDeliveryButtonClick,
     handlePaymentButtonClick,
     handlePostal,
-    ProductList,
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
     PriceInfo,
     OrdererInfo,
   } = useOrder();
+  const { cartProduct } = useMypage();
+  const router = useRouter();
+  const { orderList } = router.query;
+  const orderProducts: string = String(orderList);
   return (
     <S.Temp>
       <style>
@@ -36,23 +48,28 @@ export default function Order() {
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
-          {ProductList.map((item) => (
-            <S.Product>
-              <S.Thumbnail
-                src="/image/product1.jpg"
-                alt="/image/product1.jpg"
-              />
-              <S.Info>
-                <S.ProductName>{item.productName}</S.ProductName>
-                <S.NumPrice>
-                  {item.amount}개 / {item.totalPrice}
-                </S.NumPrice>
-                <S.SizeColor>
-                  {item.size} / {item.color}
-                </S.SizeColor>
-              </S.Info>
-            </S.Product>
-          ))}
+          {cartProduct?.data.content
+            .filter(
+              (v: any) =>
+                orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+            )
+            .map((item: ProductItem) => (
+              <S.Product>
+                <S.Thumbnail
+                  src={item.mainThumbnailImage}
+                  alt={item.mainThumbnailImage}
+                />
+                <S.Info>
+                  <S.ProductName>{item.productName}</S.ProductName>
+                  <S.NumPrice>
+                    {item.count}개 / {item.productPrice}
+                  </S.NumPrice>
+                  <S.SizeColor>
+                    {item.size} / {item.color}
+                  </S.SizeColor>
+                </S.Info>
+              </S.Product>
+            ))}
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (

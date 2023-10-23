@@ -27,12 +27,6 @@ export default function Shop() {
     );
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  console.log(
-    "d",
-    productData?.data.content.filter(
-      (item: any) => item.categoryId === activeCategoryId?.id,
-    ),
-  );
   return (
     <S.Container>
       <S.Header>

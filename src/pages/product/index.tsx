@@ -144,7 +144,13 @@ export default function Product() {
             {calculateTotalCount(selectedProducts)}개)
           </S.TotalPrice>
           <S.Pay>
-            <S.StyledBuyButton title="구매하기" type="shop" />
+            <S.StyledBuyButton
+              onClick={() => {
+                mutateAddCartProduct.mutate(cartProducts);
+              }}
+              title="구매하기"
+              type="shop"
+            />
             <S.StyledPayButton
               onClick={() => {
                 mutateAddCartProduct.mutate(cartProducts);
