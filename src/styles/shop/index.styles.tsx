@@ -114,4 +114,5 @@ export const NOPRODUCT = styled.div`
   padding-bottom: 40rem;
   font-weight: 400;
   width: 43rem;
+  color: ${COLORS.GREY[500]};
 `;

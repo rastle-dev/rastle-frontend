@@ -93,7 +93,8 @@ export default function Shop() {
             (item: any) => item.categoryId === activeCategoryId?.id,
           ).length === 0 ? (
             <S.NOPRODUCT>
-              제품 준비 중이에요!! &nbsp;빠른 시일 내로 준비해서 찾아뵐게요!🙇🏻
+              제품 준비 중이에요. &nbsp;빠른 시일 내로 준비해서 찾아뵐게요!
+              &nbsp;🙇🏻
             </S.NOPRODUCT>
           ) : (
             productData?.data.content
