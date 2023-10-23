@@ -7,6 +7,7 @@ import {
   loadProductDetail,
   loadProductImage,
 } from "@/api/shop";
+import toastMsg from "@/components/Toast";
 
 interface SelectedProduct {
   title?: string;
@@ -87,7 +88,7 @@ export default function useProduct() {
   // 사이즈 버튼 클릭 핸들러
   const handleSizeClick = (size: string) => {
     if (selectedProduct.color === null) {
-      alert("색상을 먼저 선택하세요");
+      toastMsg("색상을 먼저 선택하세요");
     } else {
       setSelectedProduct((prevProduct) => ({
         ...prevProduct,
@@ -186,6 +187,7 @@ export default function useProduct() {
     }));
     setCartProducts(newCartProducts);
   }, [selectedProducts]);
+  console.log("unique", uniqueColors);
   return {
     handleColorClick,
     handleSizeClick,
