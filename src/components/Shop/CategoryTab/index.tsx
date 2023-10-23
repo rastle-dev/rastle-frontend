@@ -1,12 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { adminGetCategory } from "@/api/admin";
 
 type ProductCategory = "전체" | "코디상품" | "상의" | "하의" | "이벤트";
 
 interface ProductCategoryTabsProps {
   categories: ProductCategory[];
-  activeCategory: ProductCategory;
+  activeCategory: string;
   onCategoryChange: (category: ProductCategory) => void;
 }
 
@@ -30,9 +33,16 @@ export default function ProductCategoryTabs({
   activeCategory,
   onCategoryChange,
 }: ProductCategoryTabsProps) {
+  console.log("kkkk", categories, activeCategory);
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
+  );
+  console.log("kkkk", categoryData);
+
   return (
     <TabContainer>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <TabItem
           key={category}
           active={category === activeCategory}

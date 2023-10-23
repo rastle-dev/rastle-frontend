@@ -1,42 +1,18 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadMe } from "@/api/auth";
 
-type ProductItem = {
-  productName: string;
-  totalPrice: string;
-  amount: number;
-  size: string;
-  color: string;
-};
 type Address = {
   address: string | undefined;
   zonecode: number | undefined;
 };
 export default function useOrder() {
-  const ProductList: ProductItem[] = [
-    {
-      productName: "틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "95,800원",
-      amount: 3,
-      size: "L",
-      color: "인디고",
-    },
-    {
-      productName:
-        "트랙 샌딩 워시드 와이드 흑청 데님 틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "35,800원",
-      amount: 1,
-      size: "M",
-      color: "검정",
-    },
-  ];
+  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   const OrdererInfo = [
-    { meta: "이름", data: "함민혁" },
-    { meta: "연락처", data: "010-3009-2255" },
-    { meta: "이메일", data: "ham9893@naver.com" },
-  ];
-  const PriceInfo = [
-    { meta: "상품 합계", data: "86,600원" },
-    { meta: "할인 금액", data: "0원" },
+    { meta: "이름", data: data?.data.userName },
+    { meta: "연락처", data: data?.data.phoneNumber },
+    { meta: "이메일", data: data?.data.email },
   ];
   const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
     useState(null);
@@ -60,8 +36,11 @@ export default function useOrder() {
       setOpenPostcode((current) => !current);
     },
     // 주소 선택 이벤트
-    selectAddress: (data: any) => {
-      setAddress({ address: data.address, zonecode: data.zonecode });
+    selectAddress: (addressData: any) => {
+      setAddress({
+        address: addressData.address,
+        zonecode: addressData.zonecode,
+      });
       setOpenPostcode(false);
     },
   };
@@ -96,11 +75,9 @@ export default function useOrder() {
     handleDeliveryButtonClick,
     handlePaymentButtonClick,
     handlePostal,
-    ProductList,
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
-    PriceInfo,
     OrdererInfo,
   };
 }

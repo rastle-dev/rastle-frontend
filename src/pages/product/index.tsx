@@ -30,10 +30,7 @@ export default function Product() {
   } = useProduct();
   const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
-  console.log("cartProducts", cartProducts);
-  console.log("selectedProducts", selectedProducts);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const openDialog = () => {
     setIsDialogOpen(true);
   };
@@ -73,7 +70,6 @@ export default function Product() {
           <S.ColorList>
             {uniqueColors.map((color) => (
               <ColorButton
-                size={uniqueColors.length}
                 clicked={color === selectedProduct.color}
                 /* eslint-disable @typescript-eslint/ban-ts-comment */
                 // @ts-ignore
@@ -144,7 +140,16 @@ export default function Product() {
             {calculateTotalCount(selectedProducts)}개)
           </S.TotalPrice>
           <S.Pay>
-            <S.StyledBuyButton title="구매하기" type="shop" />
+            <S.StyledBuyButton
+              onClick={() => {
+                router.push({
+                  pathname: PATH.ORDER, // 이동할 페이지 경로
+                  query: { selectedProducts: JSON.stringify(selectedProducts) },
+                });
+              }}
+              title="구매하기"
+              type="shop"
+            />
             <S.StyledPayButton
               onClick={() => {
                 mutateAddCartProduct.mutate(cartProducts);

@@ -92,8 +92,6 @@ export default function LoginInfo() {
     useSignup();
   const { mutateChangePassword, deleteUser } = useMypage();
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
-  console.log("회원정보", data);
-  console.log("비번", passwordCheck);
   const inputs = [
     {
       label: "이름",

@@ -5,7 +5,6 @@ import COLORS from "@/constants/color";
 
 interface DialogProps {
   size?: number;
-
   /** 다이얼로그 제목 */
   title?: string;
   /** 쇼핑 계속하기 버튼 클릭했을 때 호출할 함수 */

@@ -1,16 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { loadBundle } from "@/api/shop";
+import { loadBundle, loadSelectBundle } from "@/api/shop";
 import QUERYKEYS from "@/constants/querykey";
 
 export default function useShop() {
   const useLoadBundle = (BundleData: object) => {
     const queryFn = () => loadBundle(BundleData);
     const { data, refetch } = useQuery([QUERYKEYS.LOAD_BUNDLE], queryFn);
-
     return { data, refetch };
   };
-
+  const useLoadSelectBundle = (bundleId: number) => {
+    const queryFn = () => loadSelectBundle(bundleId);
+    const { data, refetch } = useQuery(
+      [QUERYKEYS.LOAD_BUNDLE_PRODUCT],
+      queryFn,
+    );
+    return { data, refetch };
+  };
   const ITEM_SIZE = 2;
   const [curPage, setCurPage] = useState(1);
 
@@ -23,5 +29,6 @@ export default function useShop() {
     onChangePage,
     curPage,
     ITEM_SIZE,
+    useLoadSelectBundle,
   };
 }

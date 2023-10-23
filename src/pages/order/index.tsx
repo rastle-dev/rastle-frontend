@@ -1,9 +1,20 @@
-import React from "react";
 import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/order/index.styles";
+import useMypage from "@/hooks/useMypage";
+import { useRouter } from "next/dist/client/router";
 import useOrder from "../../hooks/useOrder";
 
+type ProductItem = {
+  productName: string;
+  title: string;
+  productPrice: string;
+  price: string;
+  count: number;
+  size: string;
+  color: string;
+  mainThumbnailImage: string;
+};
 export default function Order() {
   const {
     clickedPaymentButtonIndex,
@@ -12,13 +23,47 @@ export default function Order() {
     handleDeliveryButtonClick,
     handlePaymentButtonClick,
     handlePostal,
-    ProductList,
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
-    PriceInfo,
     OrdererInfo,
   } = useOrder();
+  const { cartProduct } = useMypage();
+  const router = useRouter();
+  const { orderList } = router.query;
+  const { selectedProducts } = router.query;
+
+  const orderProducts: string = String(orderList);
+  console.log("order", orderProducts);
+  if (typeof selectedProducts === "string") {
+    console.log("selectedProducts", JSON.parse(selectedProducts));
+  }
+  // const directProducts: string = String(selectedProducts);
+  const totalPriceSum = cartProduct?.data.content
+    .filter(
+      (v: any) =>
+        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+    )
+    .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+  let totalPriceSumDirect = 0;
+  if (typeof selectedProducts === "string") {
+    totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
+      (sum: any, item: any) => sum + item.price * item.count,
+      0,
+    );
+  }
+  console.log("price", totalPriceSum);
+  const PriceInfo = [
+    {
+      meta: "상품 합계",
+      data:
+        totalPriceSum !== 0
+          ? `${(totalPriceSum + 3000).toLocaleString()}원`
+          : `${(totalPriceSumDirect + 3000).toLocaleString()}원`,
+    },
+    { meta: "할인 금액", data: "0원" },
+  ];
+
   return (
     <S.Temp>
       <style>
@@ -36,23 +81,55 @@ export default function Order() {
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
-          {ProductList.map((item) => (
-            <S.Product>
-              <S.Thumbnail
-                src="/image/product1.jpg"
-                alt="/image/product1.jpg"
-              />
-              <S.Info>
-                <S.ProductName>{item.productName}</S.ProductName>
-                <S.NumPrice>
-                  {item.amount}개 / {item.totalPrice}
-                </S.NumPrice>
-                <S.SizeColor>
-                  {item.size} / {item.color}
-                </S.SizeColor>
-              </S.Info>
-            </S.Product>
-          ))}
+          {cartProduct?.data.content.filter(
+            (v: any) =>
+              orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+          ).length !== 0
+            ? cartProduct?.data.content
+                .filter(
+                  (v: any) =>
+                    orderProducts
+                      .split(",")
+                      .map(Number)
+                      ?.includes(v.cartProductId),
+                )
+                .map((item: ProductItem) => (
+                  <S.Product>
+                    <S.Thumbnail
+                      src={item.mainThumbnailImage}
+                      alt={item.mainThumbnailImage}
+                    />
+                    <S.Info>
+                      <S.ProductName>{item.productName}</S.ProductName>
+                      <S.NumPrice>
+                        {item.count}개 /{" "}
+                        {`${item.productPrice.toLocaleString()}원`}
+                      </S.NumPrice>
+                      <S.SizeColor>
+                        {item.size} / {item.color}
+                      </S.SizeColor>
+                    </S.Info>
+                  </S.Product>
+                ))
+            : JSON.parse(selectedProducts as string).map(
+                (item: ProductItem) => (
+                  <S.Product>
+                    <S.Thumbnail
+                      src={item.mainThumbnailImage}
+                      alt={item.mainThumbnailImage}
+                    />
+                    <S.Info>
+                      <S.ProductName>{item.title}</S.ProductName>
+                      <S.NumPrice>
+                        {item.count}개 / {`${item.price.toLocaleString()}원`}
+                      </S.NumPrice>
+                      <S.SizeColor>
+                        {item.size} / {item.color}
+                      </S.SizeColor>
+                    </S.Info>
+                  </S.Product>
+                ),
+              )}
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (
@@ -133,7 +210,11 @@ export default function Order() {
             </S.PaymentInfoBox>
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
-              <S.TotalPrice>86,600원</S.TotalPrice>
+              <S.TotalPrice>
+                {totalPriceSum !== 0
+                  ? `${(totalPriceSum + 3000).toLocaleString()}원`
+                  : `${(totalPriceSumDirect + 3000).toLocaleString()}원`}
+              </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
           <h2>결제 방법</h2>

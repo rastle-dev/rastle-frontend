@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Input from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import useMypage from "@/hooks/useMypage";
+import PATH from "@/constants/path";
+import { useRouter } from "next/dist/client/router";
 
 type ProductItem = {
   defaultImg: string;
@@ -12,6 +14,7 @@ type ProductItem = {
   size: string;
   color: string;
   cartProductId: number;
+  productId: number;
 };
 const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
 const TabMenu = styled.div`
@@ -27,8 +30,7 @@ const TabMenu = styled.div`
     font-weight: 200;
     cursor: pointer;
     margin: 0 0 1.4rem 0;
-    padding: 0;
-    padding-bottom: 0.4rem;
+    padding: 0 0 0.4rem 0;
     background-color: transparent;
   }
 `;
@@ -110,7 +112,21 @@ const TotalPrice = styled.div`
   div {
   }
 `;
-
+const ButtonWrapper = styled.div`
+  width: 90.5rem;
+  display: flex;
+  gap: 1.45rem;
+  justify-content: right;
+`;
+const OrderButton = styled(Button)`
+  padding: 1.18rem 3rem 1.18rem 3rem;
+  font-size: 1.18rem;
+  font-weight: 200;
+  border-radius: 0.45rem;
+  &:hover {
+    font-weight: 400;
+  }
+`;
 export default function Cart() {
   const {
     cartProduct,
@@ -121,6 +137,8 @@ export default function Cart() {
     setDeleteProducts,
     mutateDeleteCartProduct,
   } = useMypage();
+  const router = useRouter();
+  const [orderProducts, setOrderProducts] = useState<any>([]);
 
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
@@ -135,26 +153,32 @@ export default function Cart() {
       console.log("아이템", item);
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
+      setOrderProducts([...orderProducts, item.cartProductId]);
     }
   };
+  const orderList = orderProducts.join(",");
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
       setSelectedItems([]);
       setDeleteProducts([]);
     } else {
+      console.log("전체 아이템", cartProduct?.data.content);
       setSelectedItems(cartProduct?.data.content);
       const cartProductIds = cartProduct?.data.content.map(
         (item: any) => item.cartProductId,
       );
+      const productIds = cartProduct?.data.content.map(
+        (item: any) => item.cartProductId,
+      );
       setDeleteProducts(cartProductIds);
+      setOrderProducts(productIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
     (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
     0,
   );
-
   return (
     <div>
       <h2>장바구니</h2>
@@ -251,6 +275,28 @@ export default function Cart() {
               </>
             )}
           </TotalPrice>
+          <ButtonWrapper>
+            <OrderButton
+              title="전체상품 주문"
+              type="shop"
+              onClick={() => {
+                router.push({
+                  pathname: PATH.ORDER, // 이동할 페이지 경로
+                  query: { orderList }, // 전달할 데이터 (id)
+                });
+              }}
+            />
+            <OrderButton
+              title="선택상품 주문"
+              type="shop"
+              onClick={() => {
+                router.push({
+                  pathname: PATH.ORDER, // 이동할 페이지 경로
+                  query: { orderList }, // 전달할 데이터 (id)
+                });
+              }}
+            />
+          </ButtonWrapper>
         </>
       )}
     </div>
