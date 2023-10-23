@@ -24,13 +24,25 @@ export default function Order() {
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
-    PriceInfo,
     OrdererInfo,
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
   const { orderList } = router.query;
   const orderProducts: string = String(orderList);
+  console.log("cartProduct", cartProduct);
+  const totalPriceSum = cartProduct?.data.content
+    .filter(
+      (v: any) =>
+        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+    )
+    .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+  console.log("price", totalPriceSum);
+  const PriceInfo = [
+    { meta: "상품 합계", data: `${(totalPriceSum + 3000).toLocaleString()}원` },
+    { meta: "할인 금액", data: "0원" },
+  ];
+
   return (
     <S.Temp>
       <style>
@@ -62,7 +74,7 @@ export default function Order() {
                 <S.Info>
                   <S.ProductName>{item.productName}</S.ProductName>
                   <S.NumPrice>
-                    {item.count}개 / {item.productPrice}
+                    {item.count}개 / {`${item.productPrice.toLocaleString()}원`}
                   </S.NumPrice>
                   <S.SizeColor>
                     {item.size} / {item.color}
@@ -150,7 +162,9 @@ export default function Order() {
             </S.PaymentInfoBox>
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
-              <S.TotalPrice>86,600원</S.TotalPrice>
+              <S.TotalPrice>
+                {`${(totalPriceSum + 3000).toLocaleString()}원`}
+              </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
           <h2>결제 방법</h2>

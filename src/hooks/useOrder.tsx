@@ -9,15 +9,10 @@ type Address = {
 };
 export default function useOrder() {
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
-  console.log("data", data?.data);
   const OrdererInfo = [
     { meta: "이름", data: data?.data.userName },
     { meta: "연락처", data: data?.data.phoneNumber },
     { meta: "이메일", data: data?.data.email },
-  ];
-  const PriceInfo = [
-    { meta: "상품 합계", data: "86,600원" },
-    { meta: "할인 금액", data: "0원" },
   ];
   const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
     useState(null);
@@ -80,7 +75,6 @@ export default function useOrder() {
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
-    PriceInfo,
     OrdererInfo,
   };
 }
