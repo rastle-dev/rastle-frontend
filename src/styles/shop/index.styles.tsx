@@ -13,7 +13,6 @@ export const Container = styled.div`
 
 export const Header = styled.div`
   width: 88%;
-  //position: fixed;
   background-color: ${COLORS.화이트};
   h1 {
     font-size: 2.5rem;
@@ -24,20 +23,35 @@ export const Header = styled.div`
 export const Line = styled.div`
   border-bottom: 0.5px solid;
   color: ${COLORS.GREY[200]};
-  //padding-top: 20.4rem;
   width: 100%;
 `;
+export const SetBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 7rem;
+`;
+
 export const CurrentMarketWrapper = styled.div`
-  width: 88%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   h2 {
-    padding-top: 4rem;
+    width: 88%;
     font-size: 2rem;
     font-weight: 300;
+    padding-top: 3rem;
     margin: 0;
+    ${media.xsmall} {
+      width: 95%;
+    }
+    ${media.small} {
+      width: 90%;
+    }
   }
 `;
 export const FirstMarketDescription = styled.div`
-  padding-top: 3rem;
+  padding-top: 5rem;
   width: 88%;
   font-weight: 400;
   ${media.xsmall} {
@@ -67,6 +81,9 @@ export const ProductList = styled.div`
   padding-top: 4.8rem;
   column-gap: 1%;
   row-gap: 8rem;
+`;
+export const BundleProductList = styled.div`
+  border: 1px solid red;
 `;
 export const Product = styled.div`
   background-color: transparent;

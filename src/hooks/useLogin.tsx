@@ -12,7 +12,7 @@ export default function useLogin() {
   const [email, onChangeEmail] = useInput("");
 
   // yslim162@naver.com
-  const mutateLogin = useMutation(["login"], authLogin, {
+  const mutateLogin = useMutation(["loadMutation"], authLogin, {
     onSuccess: async (response) => {
       // HTTP 응답에서 "Authorization" 헤더 값을 추출
       const token = response.authorization.replace("Bearer ", "");

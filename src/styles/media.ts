@@ -12,6 +12,7 @@ const media = {
   xxlarge: mediaQuery(1441, 1919),
 
   mobile: mediaQuery(0, 769),
+  pad: mediaQuery(770, 1080),
 };
 
 export default media;

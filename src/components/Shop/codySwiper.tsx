@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import media from "@/styles/media";
 
 // 슬라이드 데이터
 
@@ -7,8 +8,13 @@ const SwiperContainer = styled.div`
   width: 88%;
   overflow: hidden;
   position: relative;
+  ${media.xsmall} {
+    width: 95%;
+  }
+  ${media.small} {
+    width: 90%;
+  }
 `;
-
 const SwiperWrapper = styled.div`
   display: flex;
   overflow-x: auto;
@@ -41,6 +47,12 @@ const SwiperSlide = styled.div`
   align-items: center;
   font-size: 24px;
   margin-right: 10px; /* 슬라이드 간의 간격 설정 */
+  ${media.xsmall} {
+    width: 50%;
+  }
+  ${media.small} {
+    width: 33%;
+  }
 `;
 const MarketIMG = styled.img`
   width: 100%;
