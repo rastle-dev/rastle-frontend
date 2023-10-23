@@ -179,9 +179,6 @@ export default function Cart() {
     (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
     0,
   );
-  console.log("deleteProducts", deleteProducts);
-  console.log("orderProducts", orderProducts);
-
   return (
     <div>
       <h2>장바구니</h2>
@@ -285,7 +282,7 @@ export default function Cart() {
               onClick={() => {
                 router.push({
                   pathname: PATH.ORDER, // 이동할 페이지 경로
-                  query: { orderProducts }, // 전달할 데이터 (id)
+                  query: { orderList }, // 전달할 데이터 (id)
                 });
               }}
             />

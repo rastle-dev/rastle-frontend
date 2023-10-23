@@ -1,14 +1,19 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadMe } from "@/api/auth";
 
 type Address = {
   address: string | undefined;
   zonecode: number | undefined;
 };
 export default function useOrder() {
+  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  console.log("data", data?.data);
   const OrdererInfo = [
-    { meta: "이름", data: "함민혁" },
-    { meta: "연락처", data: "010-3009-2255" },
-    { meta: "이메일", data: "ham9893@naver.com" },
+    { meta: "이름", data: data?.data.userName },
+    { meta: "연락처", data: data?.data.phoneNumber },
+    { meta: "이메일", data: data?.data.email },
   ];
   const PriceInfo = [
     { meta: "상품 합계", data: "86,600원" },
