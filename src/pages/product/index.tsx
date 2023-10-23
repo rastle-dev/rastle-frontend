@@ -30,11 +30,6 @@ export default function Product() {
   } = useProduct();
   const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
-  const { cartProduct } = useMypage();
-  console.log("cartProduct", cartProduct);
-  console.log("cartProducts", cartProducts);
-  console.log("selectedProducts", selectedProducts);
-  console.log("이미지", imageData?.data.mainImages[0]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const openDialog = () => {
     setIsDialogOpen(true);
@@ -75,7 +70,6 @@ export default function Product() {
           <S.ColorList>
             {uniqueColors.map((color) => (
               <ColorButton
-                size={uniqueColors.length}
                 clicked={color === selectedProduct.color}
                 /* eslint-disable @typescript-eslint/ban-ts-comment */
                 // @ts-ignore
