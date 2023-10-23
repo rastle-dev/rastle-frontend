@@ -7,7 +7,9 @@ import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
   productName: string;
+  title: string;
   productPrice: string;
+  price: string;
   count: number;
   size: string;
   color: string;
@@ -29,17 +31,36 @@ export default function Order() {
   const { cartProduct } = useMypage();
   const router = useRouter();
   const { orderList } = router.query;
+  const { selectedProducts } = router.query;
+
   const orderProducts: string = String(orderList);
-  console.log("cartProduct", cartProduct);
+  console.log("order", orderProducts);
+  if (typeof selectedProducts === "string") {
+    console.log("selectedProducts", JSON.parse(selectedProducts));
+  }
+  // const directProducts: string = String(selectedProducts);
   const totalPriceSum = cartProduct?.data.content
     .filter(
       (v: any) =>
         orderProducts.split(",").map(Number)?.includes(v.cartProductId),
     )
     .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+  let totalPriceSumDirect = 0;
+  if (typeof selectedProducts === "string") {
+    totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
+      (sum: any, item: any) => sum + item.price * item.count,
+      0,
+    );
+  }
   console.log("price", totalPriceSum);
   const PriceInfo = [
-    { meta: "상품 합계", data: `${(totalPriceSum + 3000).toLocaleString()}원` },
+    {
+      meta: "상품 합계",
+      data:
+        totalPriceSum !== 0
+          ? `${(totalPriceSum + 3000).toLocaleString()}원`
+          : `${(totalPriceSumDirect + 3000).toLocaleString()}원`,
+    },
     { meta: "할인 금액", data: "0원" },
   ];
 
@@ -60,28 +81,55 @@ export default function Order() {
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
-          {cartProduct?.data.content
-            .filter(
-              (v: any) =>
-                orderProducts.split(",").map(Number)?.includes(v.cartProductId),
-            )
-            .map((item: ProductItem) => (
-              <S.Product>
-                <S.Thumbnail
-                  src={item.mainThumbnailImage}
-                  alt={item.mainThumbnailImage}
-                />
-                <S.Info>
-                  <S.ProductName>{item.productName}</S.ProductName>
-                  <S.NumPrice>
-                    {item.count}개 / {`${item.productPrice.toLocaleString()}원`}
-                  </S.NumPrice>
-                  <S.SizeColor>
-                    {item.size} / {item.color}
-                  </S.SizeColor>
-                </S.Info>
-              </S.Product>
-            ))}
+          {cartProduct?.data.content.filter(
+            (v: any) =>
+              orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+          ).length !== 0
+            ? cartProduct?.data.content
+                .filter(
+                  (v: any) =>
+                    orderProducts
+                      .split(",")
+                      .map(Number)
+                      ?.includes(v.cartProductId),
+                )
+                .map((item: ProductItem) => (
+                  <S.Product>
+                    <S.Thumbnail
+                      src={item.mainThumbnailImage}
+                      alt={item.mainThumbnailImage}
+                    />
+                    <S.Info>
+                      <S.ProductName>{item.productName}</S.ProductName>
+                      <S.NumPrice>
+                        {item.count}개 /{" "}
+                        {`${item.productPrice.toLocaleString()}원`}
+                      </S.NumPrice>
+                      <S.SizeColor>
+                        {item.size} / {item.color}
+                      </S.SizeColor>
+                    </S.Info>
+                  </S.Product>
+                ))
+            : JSON.parse(selectedProducts as string).map(
+                (item: ProductItem) => (
+                  <S.Product>
+                    <S.Thumbnail
+                      src={item.mainThumbnailImage}
+                      alt={item.mainThumbnailImage}
+                    />
+                    <S.Info>
+                      <S.ProductName>{item.title}</S.ProductName>
+                      <S.NumPrice>
+                        {item.count}개 / {`${item.price.toLocaleString()}원`}
+                      </S.NumPrice>
+                      <S.SizeColor>
+                        {item.size} / {item.color}
+                      </S.SizeColor>
+                    </S.Info>
+                  </S.Product>
+                ),
+              )}
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (
@@ -163,7 +211,9 @@ export default function Order() {
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
               <S.TotalPrice>
-                {`${(totalPriceSum + 3000).toLocaleString()}원`}
+                {totalPriceSum !== 0
+                  ? `${(totalPriceSum + 3000).toLocaleString()}원`
+                  : `${(totalPriceSumDirect + 3000).toLocaleString()}원`}
               </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>

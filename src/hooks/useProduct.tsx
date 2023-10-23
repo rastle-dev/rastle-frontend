@@ -15,6 +15,7 @@ interface SelectedProduct {
   size?: string | null;
   count: number;
   key?: string;
+  mainThumbnailImage: string;
 }
 interface CartProduct {
   productId: any;
@@ -64,6 +65,7 @@ export default function useProduct() {
     color: null,
     size: null,
     count: 0, // 기본 수량
+    mainThumbnailImage: imageData?.data.mainImages[0],
   });
 
   // 선택된 제품 정보들을 관리하는 상태 변수
@@ -99,7 +101,8 @@ export default function useProduct() {
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
-        key: `${size}-${selectedProduct.color}`, // 문자열로 결합
+        key: `${size}-${selectedProduct.color}`,
+        mainThumbnailImage: imageData?.data.mainImages[0], // 문자열로 결합
       };
 
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인

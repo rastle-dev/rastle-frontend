@@ -30,10 +30,12 @@ export default function Product() {
   } = useProduct();
   const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
+  const { cartProduct } = useMypage();
+  console.log("cartProduct", cartProduct);
   console.log("cartProducts", cartProducts);
   console.log("selectedProducts", selectedProducts);
+  console.log("이미지", imageData?.data.mainImages[0]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const openDialog = () => {
     setIsDialogOpen(true);
   };
@@ -146,7 +148,10 @@ export default function Product() {
           <S.Pay>
             <S.StyledBuyButton
               onClick={() => {
-                mutateAddCartProduct.mutate(cartProducts);
+                router.push({
+                  pathname: PATH.ORDER, // 이동할 페이지 경로
+                  query: { selectedProducts: JSON.stringify(selectedProducts) },
+                });
               }}
               title="구매하기"
               type="shop"
