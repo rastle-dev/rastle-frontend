@@ -32,7 +32,7 @@ export default function ProductCategoryTabs({
 }: ProductCategoryTabsProps) {
   return (
     <TabContainer>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <TabItem
           key={category}
           active={category === activeCategory}
