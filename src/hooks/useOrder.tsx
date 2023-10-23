@@ -36,8 +36,11 @@ export default function useOrder() {
       setOpenPostcode((current) => !current);
     },
     // 주소 선택 이벤트
-    selectAddress: (data: any) => {
-      setAddress({ address: data.address, zonecode: data.zonecode });
+    selectAddress: (addressData: any) => {
+      setAddress({
+        address: addressData.address,
+        zonecode: addressData.zonecode,
+      });
       setOpenPostcode(false);
     },
   };
