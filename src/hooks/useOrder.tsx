@@ -1,34 +1,10 @@
 import { useState } from "react";
 
-type ProductItem = {
-  productName: string;
-  totalPrice: string;
-  amount: number;
-  size: string;
-  color: string;
-};
 type Address = {
   address: string | undefined;
   zonecode: number | undefined;
 };
 export default function useOrder() {
-  const ProductList: ProductItem[] = [
-    {
-      productName: "틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "95,800원",
-      amount: 3,
-      size: "L",
-      color: "인디고",
-    },
-    {
-      productName:
-        "트랙 샌딩 워시드 와이드 흑청 데님 틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "35,800원",
-      amount: 1,
-      size: "M",
-      color: "검정",
-    },
-  ];
   const OrdererInfo = [
     { meta: "이름", data: "함민혁" },
     { meta: "연락처", data: "010-3009-2255" },
@@ -96,7 +72,6 @@ export default function useOrder() {
     handleDeliveryButtonClick,
     handlePaymentButtonClick,
     handlePostal,
-    ProductList,
     deliveryInputs,
     PaymentOptionsButtons,
     DeliveryButtons,
