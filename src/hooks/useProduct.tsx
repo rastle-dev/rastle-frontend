@@ -17,7 +17,7 @@ interface SelectedProduct {
   key?: string;
 }
 interface CartProduct {
-  productId: string | string[] | undefined;
+  productId: any;
   color?: string | null;
   count: number;
   size?: string | null;
@@ -26,12 +26,12 @@ interface CartProduct {
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
-  const { productId, events } = router.query;
+  const { productId } = router.query;
   const { data: imageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
     () => {
       if (productId) {
-        return loadProductImage(productId);
+        return loadProductImage(Number(productId));
       }
       return null;
     },
@@ -41,16 +41,16 @@ export default function useProduct() {
     [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
     () => {
       if (productId) {
-        return loadProductCOLOR(productId);
+        return loadProductCOLOR(Number(productId));
       }
       return null;
     },
   );
   const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId, events],
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
     () => {
       if (productId) {
-        return loadProductDetail(productId, events);
+        return loadProductDetail(Number(productId));
       }
       return null;
     },

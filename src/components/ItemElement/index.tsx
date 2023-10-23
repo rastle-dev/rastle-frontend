@@ -12,7 +12,7 @@ type ItemElementProps = {
   price: string;
   category?: ProductCategory;
   id: any;
-  isEvent: boolean;
+  isEvent?: boolean;
 };
 
 const ItemWrapper = styled.div`
@@ -44,7 +44,6 @@ const Price = styled.div`
   padding-top: 1rem;
   font-weight: 600;
 `;
-
 function ItemElement({
   defaultImg,
   productName,

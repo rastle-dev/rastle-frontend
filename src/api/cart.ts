@@ -11,7 +11,7 @@ export const loadCartProduct = async () => {
   return data;
 };
 export const deleteSelectedCartProduct = async (
-  cartProductId: string | string[],
+  cartProductId: number | undefined,
 ) => {
   const { data } = await authorizationClient.delete(
     `${API.CART}${API.REMOVE}?deleteCartProductIdList=${cartProductId}`,

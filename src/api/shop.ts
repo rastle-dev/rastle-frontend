@@ -14,7 +14,7 @@ export const loadBundle = async (bundleData: any) => {
 };
 export const loadSelectBundle = async (bundleId: number) => {
   const { data } = await unAuthorizationClient.get(
-    `${API.BUNDLE}/${bundleId}${API.PRODUCT}`,
+    `${API.BUNDLE}/${bundleId}${API.PRODUCTS}`,
   );
   return data;
 };
