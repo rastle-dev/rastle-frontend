@@ -109,3 +109,9 @@ export const Event = styled.div`
   color: ${COLORS.레드};
   font-weight: 300;
 `;
+
+export const NOPRODUCT = styled.div`
+  padding-bottom: 40rem;
+  font-weight: 400;
+  width: 43rem;
+`;

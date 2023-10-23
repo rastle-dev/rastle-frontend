@@ -89,20 +89,28 @@ export default function Shop() {
         </S.ProductList>
       ) : (
         <S.ProductList>
-          {productData?.data.content
-            .filter((item: any) => item.categoryId === activeCategoryId?.id)
-            .map((item: any) => (
-              <ItemElement
-                key={item.id}
-                defaultImg={item.mainThumbnail}
-                hoverImg={item.subThumbnail}
-                productName={item.name}
-                price={`${item.price.toLocaleString()}원`}
-                id={item.id}
-                category={item.categoryId}
-                isEvent={item.event}
-              />
-            ))}
+          {productData?.data.content.filter(
+            (item: any) => item.categoryId === activeCategoryId?.id,
+          ).length === 0 ? (
+            <S.NOPRODUCT>
+              제품 준비 중이에요!! &nbsp;빠른 시일 내로 준비해서 찾아뵐게요!🙇🏻
+            </S.NOPRODUCT>
+          ) : (
+            productData?.data.content
+              .filter((item: any) => item.categoryId === activeCategoryId?.id)
+              .map((item: any) => (
+                <ItemElement
+                  key={item.id}
+                  defaultImg={item.mainThumbnail}
+                  hoverImg={item.subThumbnail}
+                  productName={item.name}
+                  price={`${item.price.toLocaleString()}원`}
+                  id={item.id}
+                  category={item.categoryId}
+                  isEvent={item.event}
+                />
+              ))
+          )}
         </S.ProductList>
       )}
     </S.Container>
