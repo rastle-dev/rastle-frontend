@@ -56,7 +56,13 @@ export const TextWrapper = styled.div`
 `;
 
 export const Text = styled.span`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+`;
+
+export const Text2 = styled.span`
+  padding-top: 0.3rem;
+  font-size: 2rem;
   font-weight: 400;
 `;
 

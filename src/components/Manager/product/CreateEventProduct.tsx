@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
-import { adminGetEvent } from "@/api/admin";
+import { adminGetCategory, adminGetEvent } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import Image from "next/image";
@@ -132,6 +132,21 @@ export const StyledImgButton = styled.button`
   /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
 
+const ProductCategory2Select = styled.select`
+  width: 30%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+`;
+
 interface Event {
   id: number;
   name: string;
@@ -139,6 +154,11 @@ interface Event {
   description: string;
   saleStartTime: string;
   visible: boolean;
+}
+
+interface Category {
+  id: number;
+  name: string;
 }
 
 export default function CreateEventProduct() {
@@ -178,11 +198,18 @@ export default function CreateEventProduct() {
     blockMainImagesButton,
     blockDetailImagesButton,
     blockCreateProductButton,
+    categoryId,
+    handleCategoryChange,
   } = useCreateEventProduct();
 
   const { data: eventData } = useQuery(
     [QUERYKEYS.ADMIN_GET_EVENT],
     adminGetEvent,
+  );
+
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
   );
 
   return (
@@ -223,6 +250,20 @@ export default function CreateEventProduct() {
             </option>
           ))}
         </ProductCategory1Select>
+      </ProductDetail>
+      <ProductDetail>
+        카테고리 선택:
+        <ProductCategory2Select
+          id="category2"
+          value={categoryId}
+          onChange={(e) => handleCategoryChange(e)}
+        >
+          {categoryData?.data.map((category: Category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </ProductCategory2Select>
       </ProductDetail>
       색상 추가
       <ColorInputs>
