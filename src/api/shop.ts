@@ -24,6 +24,14 @@ export const loadMarketProduct = async () => {
   return data;
 };
 
+export const loadMarketProductPaging = async (pageData: any) => {
+  const { page, size, visible } = pageData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}?size=${size}&visible=true`,
+  );
+  return data;
+};
+
 export const loadProductImage = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}/${productId}${API.IMAGE}`,
@@ -48,6 +56,14 @@ export const loadProductCOLOR = async (productId: number | undefined) => {
 export const loadEventProduct = async () => {
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}${API.EVENT}?lowerBound=0&upperBound=1500`,
+  );
+  return data;
+};
+
+export const loadEventProductPaging = async (pageData: any) => {
+  const { page, size, visible } = pageData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}${API.EVENT}?lowerBound=0&upperBound=1500&size=${size}`,
   );
   return data;
 };

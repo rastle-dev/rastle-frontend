@@ -13,6 +13,9 @@ import COLORS from "@/constants/color";
 import CreateEvent from "@/components/Manager/event/CreateEvent";
 import UpdateEvent from "@/components/Manager/event/UpdateEvent";
 import EventManagement from "@/components/Manager/EventManagement";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { adminCheckAuthority, adminGetBundle } from "@/api/admin";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -83,11 +86,27 @@ const managementList = [
 ];
 
 export default function Manager() {
+  const { data: authority, status } = useQuery(
+    [QUERYKEYS.ADMIN_GET_AUTHORITY],
+    adminCheckAuthority,
+  );
+
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
 
   const onClickList = (name: string) => {
     setSelectedItem(name);
   };
+
+  if (status === "loading") {
+    // 데이터를 로딩 중일 때 표시할 내용
+    return <div>Loading...</div>;
+  }
+
+  if (!authority) {
+    // authority 값이 없을 때 표시할 내용
+    return <div>데이터를 불러올 수 없습니다.</div>;
+  }
+
   return (
     <Wrapper>
       <HeaderTitle>관리자 페이지</HeaderTitle>
