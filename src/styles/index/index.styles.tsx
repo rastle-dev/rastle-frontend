@@ -61,7 +61,7 @@ export const Text = styled.span`
 `;
 
 export const Text2 = styled.span`
-  padding-top: 0.3rem;
+  padding-top: 0.5rem;
   font-size: 2rem;
   font-weight: 400;
 `;

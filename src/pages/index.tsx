@@ -26,7 +26,6 @@ function TopLayer() {
       <S.TextWrapper>
         <S.Text>코디로 이해시키는 제품의 가치 </S.Text>
         <S.Text2>RECORDY SLOW</S.Text2>
-        <S.TextInstagram>@rastle_fashion</S.TextInstagram>
         <S.StyledButton title="view more" width="10rem" />
       </S.TextWrapper>
     </S.ImageWrapper>
