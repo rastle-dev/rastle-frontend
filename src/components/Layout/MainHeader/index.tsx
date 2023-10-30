@@ -87,7 +87,7 @@ export default function MainHeader() {
         </LeftElement>
         <CenterElement>
           <LazyLink href="/">
-            <span>rastle_</span>
+            <span>Recordy Slow</span>
           </LazyLink>
         </CenterElement>
         {accessToken ? (

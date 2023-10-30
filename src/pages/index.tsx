@@ -1,6 +1,11 @@
 import React from "react";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/index/index.styles";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
+import { useRouter } from "next/dist/client/router";
+import LazyLink from "@/components/LazyLink";
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
 function TopLayer() {
@@ -19,123 +24,96 @@ function TopLayer() {
         objectFit="cover"
       />
       <S.TextWrapper>
-        <S.Text>레슬(rastle) : (악, 어려움 등에) 전력을 다하다</S.Text>
-        <S.TextInstagram>@rastle_fashion</S.TextInstagram>
+        <S.Text>코디로 이해시키는 제품의 가치 </S.Text>
+        <S.Text2>RECORDY SLOW</S.Text2>
         <S.StyledButton title="view more" width="10rem" />
       </S.TextWrapper>
     </S.ImageWrapper>
   );
 }
 
-export type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
-
-type ProductItem = {
-  defaultImg: string;
-  hoverImg?: string;
-  productName: string;
-  price: string;
-  category?: ProductCategory;
-};
-
-type ProductLayerProps = {
-  items: ProductItem[];
-};
-
-function ProductLayer({ items }: ProductLayerProps) {
-  const type = items.some((item) => item.category === "이벤트")
-    ? "event"
-    : "shop";
+function ProductLayer({ productData }: any) {
+  console.log(productData);
+  const router = useRouter();
   return (
     <S.ProductWrapper>
-      {type === "event" ? (
-        <S.ProductTitle>
-          회원가입하고 <span>EVENT</span> 참여 !!
-        </S.ProductTitle>
-      ) : (
-        <S.ProductTitle>1차 마켓 오픈 (8.12 ~ 8.15)</S.ProductTitle>
-      )}
+      <S.ProductTitle>신상품 업데이트 🔥</S.ProductTitle>
       <S.ItemContainer>
-        {items.map((item) => (
+        {productData?.data.content.map((item: any) => (
           <ItemElement
-            key={item.productName}
-            defaultImg={item.defaultImg}
-            hoverImg={item.hoverImg}
-            productName={item.productName}
+            key={item.id}
+            defaultImg={item.mainThumbnail}
+            hoverImg={item.subThumbnail}
+            productName={item.name}
             price={item.price}
-            category={item.category}
-            id={item.productName}
-            isEvent
+            discountPrice={item.discountPrice}
+            id={item.id}
+            category={item.categoryId}
+            isEvent={!!item.eventId}
           />
         ))}
       </S.ItemContainer>
       <S.ViewMore>
-        <span>더 많은 상품 보러가기</span>
+        <LazyLink href="/shop">더 많은 상품 보러가기</LazyLink>
       </S.ViewMore>
-      {type === "event" ? "" : <S.StyledBorderLine />}
+    </S.ProductWrapper>
+  );
+}
+
+function EventProductLayer({ productData }: any) {
+  console.log(productData);
+
+  return (
+    <S.ProductWrapper>
+      <S.ProductTitle>
+        회원가입하고 <span>EVENT</span> 참여 !!
+      </S.ProductTitle>
+      <S.ItemContainer>
+        {productData?.data.map((item: any) => (
+          <ItemElement
+            key={item.id}
+            defaultImg={item.mainThumbnail}
+            hoverImg={item.subThumbnail}
+            productName={item.eventName}
+            price={item.price}
+            discountPrice={item.discountPrice}
+            id={item.id}
+            category={item.categoryId}
+            isEvent={!!item.eventId}
+          />
+        ))}
+      </S.ItemContainer>
+      <S.ViewMore>
+        <LazyLink href="/shop">더 많은 이벤트 상품 보러가기</LazyLink>
+      </S.ViewMore>
+      <S.StyledBorderLine />
     </S.ProductWrapper>
   );
 }
 
 export default function Home() {
-  const shopItems: ProductItem[] = [
-    {
-      category: "1차 마켓",
-      defaultImg: "/image/product1.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "틴 워시드 버뮤다 데님 팬츠",
-      price: "45,800원",
-    },
-    {
-      category: "1차 마켓",
-      defaultImg: "/image/product2.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      price: "53,400원",
-    },
-    {
-      category: "1차 마켓",
-      defaultImg: "/image/product3.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "스토퍼 윈드브레이커",
-      price: "34,200원",
-    },
-    {
-      category: "1차 마켓",
-      defaultImg: "/image/product4.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      price: "53,400원",
-    },
-  ];
+  const router = useRouter();
+  const { data: productData, status: productStatus } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT],
+    () => loadMarketProductPaging({ size: 4, visible: true }),
+  );
 
-  const eventItems: ProductItem[] = [
-    {
-      defaultImg: "/image/product5.jpg",
-      productName: "틴 워시드 버뮤다 데님 팬츠",
-      hoverImg: "/image/product5.jpg",
-      price: "0원",
-      category: "이벤트",
-    },
-    {
-      defaultImg: "/image/product6.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      price: "0원",
-      category: "이벤트",
-    },
-    {
-      defaultImg: "/image/homeMobile1.jpg",
-      hoverImg: "/image/product5.jpg",
-      productName: "트랙 샌딩 워시드 와이드 흑청 데님 팬츠",
-      price: "0원",
-      category: "이벤트",
-    },
-  ];
+  const { data: eventProductData, status: eventProductStatus } = useQuery(
+    [QUERYKEYS.LOAD_EVENTPRODUCT],
+    () => loadEventProductPaging({ size: 4, visible: true }),
+  );
+
+  console.log(productData);
+
   return (
     <S.StyledHome>
       <TopLayer />
-      <ProductLayer items={shopItems} />
-      <ProductLayer items={eventItems} />
+      {productStatus === "success" && productData !== undefined && (
+        <ProductLayer productData={productData} />
+      )}
+      {eventProductStatus === "success" && eventProductData !== undefined && (
+        <EventProductLayer productData={eventProductData} />
+      )}
     </S.StyledHome>
   );
 }

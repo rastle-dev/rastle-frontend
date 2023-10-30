@@ -3,6 +3,11 @@
 import API from "@/api/config";
 import { authorizationClient, unAuthorizationClient } from ".";
 
+export const adminCheckAuthority = async () => {
+  const { data } = await authorizationClient.get(API.CHECKAUTHORITY);
+  return data;
+};
+
 export const adminCreateCategory = async (categoryData: object) => {
   const { data } = await authorizationClient.post(API.CATEGORY, categoryData);
   return data;

@@ -57,10 +57,11 @@ export default function Shop() {
               defaultImg={item.mainThumbnail}
               hoverImg={item.subThumbnail}
               productName={item.name}
-              price={`${item.price.toLocaleString()}원`}
+              price={item.price}
+              discountPrice={item.discountPrice}
               id={item.id}
               category={item.categoryId}
-              isEvent={item.event}
+              isEvent={!!item.eventId}
             />
           ))}
         </S.ProductList>
@@ -74,10 +75,11 @@ export default function Shop() {
                 defaultImg={item.mainThumbnail}
                 hoverImg={item.subThumbnail}
                 productName={item.name}
-                price={`${item.price.toLocaleString()}원`}
+                price={item.price}
+                discountPrice={item.discountPrice}
                 id={item.id}
                 category={item.categoryId}
-                isEvent={item.event}
+                isEvent={!!item.eventId}
               />
             ))}
         </S.ProductList>
@@ -99,10 +101,11 @@ export default function Shop() {
                   defaultImg={item.mainThumbnail}
                   hoverImg={item.subThumbnail}
                   productName={item.name}
-                  price={`${item.price.toLocaleString()}원`}
+                  price={item.price}
+                  discountPrice={item.discountPrice}
                   id={item.id}
                   category={item.categoryId}
-                  isEvent={item.event}
+                  isEvent={!!item.eventId}
                 />
               ))
           )}

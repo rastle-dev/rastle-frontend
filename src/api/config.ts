@@ -28,6 +28,7 @@ const DETAIL = "/detail";
 const IMAGE = "/image";
 const CART = "/cart";
 const REMOVE = "/removeSelected";
+const AUTHORITY = "authority";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -69,5 +70,6 @@ const API = {
   EVENT: `${EVENT}`,
   CART: `${CART}`,
   REMOVE: `${REMOVE}`,
+  CHECKAUTHORITY: `${AUTH}${AUTHORITY}`,
 };
 export default API;
