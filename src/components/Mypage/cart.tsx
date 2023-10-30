@@ -245,7 +245,15 @@ export default function Cart() {
                     <p>{totalPrice.toLocaleString()}원</p>
                     {/* 계산된 총 가격 표시 */}
                     <SelectTab>
-                      <SelectButton title="주문하기" />
+                      <SelectButton
+                        title="주문하기"
+                        onClick={() => {
+                          router.push({
+                            pathname: PATH.ORDER, // 이동할 페이지 경로
+                            query: { orderList: item.cartProductId }, // 전달할 데이터 (id)
+                          });
+                        }}
+                      />
                       <SelectButton
                         title="X 삭제"
                         onClick={() => {
