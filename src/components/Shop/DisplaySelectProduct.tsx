@@ -14,7 +14,8 @@ export default function DisplaySelectProduct({ id }: any) {
           defaultImg={item.mainThumbnail}
           hoverImg={item.subThumbnail}
           productName={item.name}
-          price={`${item.price.toLocaleString()}원`}
+          price={item.price}
+          discountPrice={item.discountPrice}
           id={item.id}
           isEvent={item.event}
         />
