@@ -21,6 +21,25 @@ import {
 } from "@/api/shop";
 
 export default function useUpdateProduct() {
+  interface ProductColorState {
+    productColors: ProductColor[];
+  }
+
+  interface ProductColor {
+    color: string;
+    sizes: Size[];
+  }
+
+  interface Size {
+    size: string;
+    count: number;
+  }
+
+  // Inside your functional component
+  const [productColor, setProductColor] = useState<ProductColorState>({
+    productColors: [],
+  });
+
   const [name, onChangeName, setName] = useInput("");
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
@@ -96,13 +115,15 @@ export default function useUpdateProduct() {
     },
   );
 
-  const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_COLOR],
-    () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
-    {
-      enabled: false, // 처음에 쿼리를 실행하지 않음
-    },
-  );
+  console.log(productData);
+
+  // const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
+  //   [QUERYKEYS.LOAD_PRODUCT_COLOR],
+  //   () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
+  //   {
+  //     enabled: false, // 처음에 쿼리를 실행하지 않음
+  //   },
+  // );
 
   const { data: mainImageData, refetch: refetchMainImageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE],
@@ -118,15 +139,15 @@ export default function useUpdateProduct() {
     if (selectedProduct) {
       const uniqueColors: string[] = [];
       const uniqueSizes: string[] = [];
-      console.log(colorAndSizeData);
-      colorAndSizeData?.data.map((item: ColorAndSize) => {
+
+      productData?.data.productColor.productColors.forEach((item: any) => {
         if (!uniqueColors.includes(item.color)) {
           uniqueColors.push(item.color);
         }
-        if (!uniqueSizes.includes(item.size)) {
-          uniqueSizes.push(item.size);
+        if (!uniqueSizes.includes(item.sizes[0].size)) {
+          // Assuming sizes are consistent within the same color
+          uniqueSizes.push(item.sizes[0].size);
         }
-        return null; // 값을 반환하도록 수정
       });
 
       setColors(uniqueColors);
@@ -139,7 +160,6 @@ export default function useUpdateProduct() {
   useEffect(() => {
     if (selectedProduct) {
       refetchProductData();
-      refetchColorAndSizeData();
       setColors([""]);
       setSizes([""]);
     }
@@ -154,27 +174,25 @@ export default function useUpdateProduct() {
   console.log(productData);
   console.log(productListData);
 
-  console.log(colorAndSizeData);
-
   const updateProduct = async () => {
+    const productColors: any = [];
+
     colors.forEach((color) => {
       sizes.forEach((size) => {
-        colorAndSizes.push({
+        productColors.push({
           color,
-          size,
-          count: 1000,
+          sizes: [
+            {
+              size,
+              count: 1000,
+            },
+          ],
         });
       });
     });
+
     try {
-      if (
-        name &&
-        price &&
-        discountPrice &&
-        categoryId &&
-        colorAndSizes.length > 1 &&
-        displayOrder
-      ) {
+      if (name && price && discountPrice && categoryId && displayOrder) {
         const data = await adminUpdateProduct(selectedProduct?.id, {
           name,
           price,
@@ -182,7 +200,7 @@ export default function useUpdateProduct() {
           eventCategory: false,
           ...(bundleCategory ? { bundleId } : {}),
           categoryId,
-          colorAndSizes,
+          productColor: { productColors },
           displayOrder,
           visible,
         });
@@ -231,7 +249,7 @@ export default function useUpdateProduct() {
 
   const removeSizeInput = (indexToRemove: number) => {
     const newSizes = sizes.filter((_, index) => index !== indexToRemove);
-    setColors(newSizes);
+    setSizes(newSizes);
   };
 
   const handleSizeChange = (
@@ -599,7 +617,6 @@ export default function useUpdateProduct() {
     handleVisibleChange,
     visible,
     selectedProduct,
-    colorAndSizeData,
     loadColorAndSize,
     productListData,
     bundleData,
@@ -608,5 +625,6 @@ export default function useUpdateProduct() {
     mainImageData,
     loadImages,
     deleteProduct,
+    productColor,
   };
 }

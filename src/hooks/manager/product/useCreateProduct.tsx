@@ -8,6 +8,7 @@ import {
 import useInput from "@/hooks/useInput";
 import React, { useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
+import { v4 as uuidv4 } from "uuid";
 
 export default function useCreateProduct() {
   const [name, onChangeName] = useInput("");
@@ -47,23 +48,33 @@ export default function useCreateProduct() {
     count: number;
   }
 
-  const colorAndSizes: ColorAndSize[] = [];
-
   const createProduct = async () => {
+    const productColors: any = [];
+
     colors.forEach((color) => {
       sizes.forEach((size) => {
-        colorAndSizes.push({
+        productColors.push({
           color,
-          size,
-          count: 1000,
+          sizes: [
+            {
+              size,
+              count: 1000,
+            },
+          ],
         });
       });
     });
+
+    console.log({ productColors });
+
+    const productColor: any = { productColors };
+    console.log(productColor);
+
     if (
       name.length >= 2 &&
       price !== null &&
       discountPrice !== null &&
-      colorAndSizes.length > 0 &&
+      productColors.length > 0 &&
       displayOrder !== null &&
       categoryId !== null
     ) {
@@ -72,10 +83,9 @@ export default function useCreateProduct() {
           name,
           price,
           discountPrice,
-          eventCategory: false,
           ...(bundleCategory ? { bundleId } : {}),
           categoryId,
-          colorAndSizes,
+          productColor,
           displayOrder,
           visible: false,
         });
@@ -119,6 +129,8 @@ export default function useCreateProduct() {
     setDisplayOrderCheck(e.target.checked);
   };
 
+  console.log(sizes);
+
   const addColorInput = () => {
     setColors([...colors, ""]);
   };
@@ -130,7 +142,7 @@ export default function useCreateProduct() {
 
   const removeSizeInput = (indexToRemove: number) => {
     const newSizes = sizes.filter((_, index) => index !== indexToRemove);
-    setColors(newSizes);
+    setSizes(newSizes);
   };
 
   const handleSizeChange = (
@@ -158,7 +170,6 @@ export default function useCreateProduct() {
         const file = files[i];
 
         if (file) {
-          // 파일 이름에서 공백 제거
           const sanitizedFileName = file.name.replace(/\s/g, "");
 
           // 수정된 파일 이름으로 새로운 File 객체 생성

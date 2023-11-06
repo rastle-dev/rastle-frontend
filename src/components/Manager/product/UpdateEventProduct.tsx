@@ -6,6 +6,9 @@ import Image from "next/image";
 
 import COLORS from "@/constants/color";
 import useUpdateEventProduct from "@/hooks/manager/product/useUpdateEventProduct";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { adminGetCategory, adminGetEvent } from "@/api/admin";
 
 const Title = styled.div`
   margin: 0;
@@ -126,6 +129,20 @@ const ProductItem = styled.div`
     color: #333;
   }
 `;
+const ProductCategory1Select = styled.select`
+  width: 30%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+`;
 
 const ApiButtonWrapper = styled.div`
   display: flex;
@@ -139,12 +156,27 @@ const RedSpan = styled.span`
   margin-left: 0.5rem;
 `;
 
+const ProductCategory2Select = styled.select`
+  width: 30%;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+`;
+
 interface EventProduct {
   discountPrice: number;
   displayOrder: number;
   endDate: string;
   eventDescription: string;
-  eventId: number;
+  eventId: string;
   eventImageUrls: string;
   eventName: string;
   eventVisible: boolean;
@@ -155,7 +187,24 @@ interface EventProduct {
   productVisible: boolean;
   startDate: string;
   subThumbnail: string;
+  bundleId: string;
+  categoryId: string;
 }
+
+interface Event {
+  id: number;
+  name: string;
+  imageUrls: string;
+  description: string;
+  saleStartTime: string;
+  visible: boolean;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
+
 export default function UpdateEventProduct() {
   const {
     onChangeName,
@@ -198,10 +247,24 @@ export default function UpdateEventProduct() {
     mainImageData,
     loadImages,
     deleteProduct,
+    handleBundleIdChange,
     eventProductListData,
+    eventId,
+    categoryId,
+    handleCategoryChange,
   } = useUpdateEventProduct();
 
   console.log(eventProductListData);
+
+  const { data: eventData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_EVENT],
+    adminGetEvent,
+  );
+
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
+  );
 
   return (
     <div>
@@ -251,6 +314,34 @@ export default function UpdateEventProduct() {
         size={30}
         onChange={onChangeDisplayOrder}
       />
+      <ProductDetail>
+        이벤트 선택:
+        <ProductCategory1Select
+          id="category1"
+          value={eventId}
+          onChange={(e) => handleBundleIdChange(e)}
+        >
+          {eventData?.data.content.map((event: Event) => (
+            <option key={event.id} value={event.id}>
+              {event.name}
+            </option>
+          ))}
+        </ProductCategory1Select>
+      </ProductDetail>
+      <ProductDetail>
+        카테고리 선택:
+        <ProductCategory2Select
+          id="category2"
+          value={categoryId}
+          onChange={(e) => handleCategoryChange(e)}
+        >
+          {categoryData?.data.map((category: Category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </ProductCategory2Select>
+      </ProductDetail>
       <ProductDetail>
         공개:
         <EventCheckbox
