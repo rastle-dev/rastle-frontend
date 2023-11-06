@@ -133,7 +133,8 @@ authorizationClient.interceptors.response.use(
 unAuthorizationClient.interceptors.response.use(
   (response) => {
     // 특정 도메인에 대한 접근 허용, 로그인을 하지 않은 인증되지 않은 사용자니까
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+    response.headers["Access-Control-Allow-Origin"] =
+      "https://www.recordyslow.com, http://localhost:3000";
     return response;
   },
   (error) => {

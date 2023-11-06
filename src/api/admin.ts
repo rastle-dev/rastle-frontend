@@ -90,7 +90,7 @@ export const adminGetBundle = async () => {
 };
 
 export const adminGetCategory = async () => {
-  const { data } = await authorizationClient.get(API.GETCATEGORY);
+  const { data } = await unAuthorizationClient.get(API.GETCATEGORY);
   return data;
 };
 
