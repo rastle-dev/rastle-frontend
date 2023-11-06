@@ -22,12 +22,25 @@ import {
 } from "@/api/shop";
 
 export default function useUpdateEventProduct() {
+  interface ProductColorState {
+    productColors: ProductColor[];
+  }
+
+  interface ProductColor {
+    color: string;
+    sizes: Size[];
+  }
+
+  interface Size {
+    size: string;
+    count: number;
+  }
+
   const [name, onChangeName, setName] = useInput("");
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder, setDisplayOrder] = useInput("");
   const [bundleCategory, setBundleCategory] = useState(false);
-  const [productId, setProductId] = useState<number>();
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
   const [showImageUpload, setshowImageUpload] = useState(false);
@@ -52,6 +65,10 @@ export default function useUpdateEventProduct() {
   const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
   const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
   const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
+  const [productId, setProductId] = useState<number>();
+  const [categoryId, setCategoryId] = useState<string>();
+  const [eventId, setEventId] = useState<string>();
+  const [bundleId, setBundleId] = useState<string>();
   interface ColorAndSize {
     color: string;
     size: string;
@@ -63,7 +80,7 @@ export default function useUpdateEventProduct() {
     displayOrder: number;
     endDate: string;
     eventDescription: string;
-    eventId: number;
+    eventId: string;
     eventImageUrls: string;
     eventName: string;
     eventVisible: boolean;
@@ -74,7 +91,10 @@ export default function useUpdateEventProduct() {
     productVisible: boolean;
     startDate: string;
     subThumbnail: string;
+    bundleId: string;
+    categoryId: string;
   }
+
   const colorAndSizes: ColorAndSize[] = [];
 
   const { data: eventProductListData } = useQuery(
@@ -82,16 +102,16 @@ export default function useUpdateEventProduct() {
     loadEventProduct,
   );
 
-  console.log(eventProductListData);
-
-  const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_COLOR],
+  const { data: productData, refetch: refetchProductData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL],
     () =>
-      selectedProduct ? loadProductCOLOR(selectedProduct.productId) : null,
+      selectedProduct ? loadProductDetail(selectedProduct.productId) : null,
     {
       enabled: false, // 처음에 쿼리를 실행하지 않음
     },
   );
+
+  console.log(eventProductListData);
 
   const { data: mainImageData, refetch: refetchMainImageData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_IMAGE],
@@ -102,19 +122,20 @@ export default function useUpdateEventProduct() {
     },
   );
 
+  console.log(eventProductListData);
   const loadColorAndSize = () => {
     if (selectedProduct) {
       const uniqueColors: string[] = [];
       const uniqueSizes: string[] = [];
-      console.log(colorAndSizeData);
-      colorAndSizeData?.data.map((item: ColorAndSize) => {
+
+      productData?.data.productColor.productColors.forEach((item: any) => {
         if (!uniqueColors.includes(item.color)) {
           uniqueColors.push(item.color);
         }
-        if (!uniqueSizes.includes(item.size)) {
-          uniqueSizes.push(item.size);
+        if (!uniqueSizes.includes(item.sizes[0].size)) {
+          // Assuming sizes are consistent within the same color
+          uniqueSizes.push(item.sizes[0].size);
         }
-        return null; // 값을 반환하도록 수정
       });
 
       setColors(uniqueColors);
@@ -126,7 +147,7 @@ export default function useUpdateEventProduct() {
 
   useEffect(() => {
     if (selectedProduct) {
-      refetchColorAndSizeData();
+      refetchProductData();
       setColors([""]);
       setSizes([""]);
     }
@@ -138,27 +159,35 @@ export default function useUpdateEventProduct() {
     }
   }, [selectedProduct]);
 
-  console.log(colorAndSizeData);
-
   const updateProduct = async () => {
+    const productColors: any = [];
+
     colors.forEach((color) => {
       sizes.forEach((size) => {
-        colorAndSizes.push({
+        productColors.push({
           color,
-          size,
-          count: 1000,
+          sizes: [
+            {
+              size,
+              count: 1000,
+            },
+          ],
         });
       });
     });
+
     try {
-      if (name && price && colorAndSizes.length >= 1 && displayOrder) {
+      if (name && price && displayOrder) {
         const data = await adminUpdateProduct(selectedProduct?.productId, {
           name,
           price,
           discountPrice,
-          colorAndSizes,
+          categoryId,
+          productColor: { productColors },
           displayOrder,
           visible,
+          eventId,
+          bundleId,
         });
         if (data) {
           alert("상품이 수정되었습니다. ");
@@ -170,6 +199,11 @@ export default function useUpdateEventProduct() {
       console.log(err);
       alert("상품 수정에 실패했습니다.");
     }
+  };
+
+  const handleBundleIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEventId(e.target.value);
+    console.log(eventId);
   };
 
   const handleColorChange = (
@@ -192,7 +226,7 @@ export default function useUpdateEventProduct() {
 
   const removeSizeInput = (indexToRemove: number) => {
     const newSizes = sizes.filter((_, index) => index !== indexToRemove);
-    setColors(newSizes);
+    setSizes(newSizes);
   };
 
   const handleSizeChange = (
@@ -467,7 +501,9 @@ export default function useUpdateEventProduct() {
     setDiscountPrice(product.discountPrice);
     setDisplayOrder(product.displayOrder);
     setVisible(product.productVisible);
+    setCategoryId(product.categoryId);
     setProductId(product.productId);
+    setEventId(product.eventId);
   };
 
   const handleVisibleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -500,6 +536,9 @@ export default function useUpdateEventProduct() {
     }
   };
 
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryId(e.target.value);
+  };
   return {
     onChangeName,
     name,
@@ -542,11 +581,14 @@ export default function useUpdateEventProduct() {
     handleVisibleChange,
     visible,
     selectedProduct,
-    colorAndSizeData,
     loadColorAndSize,
     mainImageData,
     loadImages,
     deleteProduct,
     eventProductListData,
+    handleBundleIdChange,
+    eventId,
+    categoryId,
+    handleCategoryChange,
   };
 }

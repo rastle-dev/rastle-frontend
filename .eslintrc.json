@@ -32,7 +32,7 @@
     "react/jsx-props-no-spreading": "off",
     "import/extensions": "off",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true, "optionalDependencies": true, "peerDependencies": true }],
     "react/require-default-props": "off",
     "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "react/jsx-filename-extension": [

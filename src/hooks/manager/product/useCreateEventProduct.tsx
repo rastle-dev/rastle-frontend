@@ -50,20 +50,29 @@ export default function useCreateEventProduct() {
   const colorAndSizes: ColorAndSize[] = [];
 
   const createProduct = async () => {
+    const productColors: any = [];
+
     colors.forEach((color) => {
       sizes.forEach((size) => {
-        colorAndSizes.push({
+        productColors.push({
           color,
-          size,
-          count: 1000,
+          sizes: [
+            {
+              size,
+              count: 1000,
+            },
+          ],
         });
       });
     });
+
+    console.log({ productColors });
+
+    const productColor: any = { productColors };
     if (
       name.length >= 2 &&
       price !== null &&
       discountPrice !== null &&
-      colorAndSizes.length > 0 &&
       displayOrder !== null &&
       categoryId !== null
     ) {
@@ -75,7 +84,7 @@ export default function useCreateEventProduct() {
           discountPrice,
           eventId,
           categoryId,
-          colorAndSizes,
+          productColor,
           displayOrder,
           visible: false,
         });
@@ -132,7 +141,7 @@ export default function useCreateEventProduct() {
 
   const removeSizeInput = (indexToRemove: number) => {
     const newSizes = sizes.filter((_, index) => index !== indexToRemove);
-    setColors(newSizes);
+    setSizes(newSizes);
   };
 
   const handleSizeChange = (
