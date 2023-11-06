@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
-import {
-  loadProductCOLOR,
-  loadProductDetail,
-  loadProductImage,
-} from "@/api/shop";
+import { loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
 
 interface SelectedProduct {
@@ -29,25 +25,6 @@ export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
   const { productId } = router.query;
-  const { data: imageData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_IMAGE, productId],
-    () => {
-      if (productId) {
-        return loadProductImage(Number(productId));
-      }
-      return null;
-    },
-  );
-
-  const { data: COLOR } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_COLOR, productId],
-    () => {
-      if (productId) {
-        return loadProductCOLOR(Number(productId));
-      }
-      return null;
-    },
-  );
   const { data: detailData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
     () => {
@@ -57,7 +34,6 @@ export default function useProduct() {
       return null;
     },
   );
-  console.log("productDetail", detailData?.data.mainImage.imageUrls);
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(
@@ -65,7 +41,6 @@ export default function useProduct() {
       ),
     ),
   ];
-  console.log("color", uniqueColors);
   const uniqueSizes = [
     ...new Set(
       detailData?.data.productColor.productColors
@@ -73,7 +48,6 @@ export default function useProduct() {
         .join(""),
     ),
   ];
-  console.log("size", uniqueSizes);
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
@@ -202,7 +176,6 @@ export default function useProduct() {
     }));
     setCartProducts(newCartProducts);
   }, [selectedProducts]);
-  console.log("unique", uniqueColors);
   return {
     handleColorClick,
     handleSizeClick,
@@ -215,7 +188,6 @@ export default function useProduct() {
     selectedProduct,
     selectedProducts,
     detailData,
-    COLOR,
     uniqueColors,
     uniqueSizes,
     cartProducts,
