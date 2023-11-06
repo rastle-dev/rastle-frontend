@@ -57,8 +57,23 @@ export default function useProduct() {
       return null;
     },
   );
-  const uniqueColors = [...new Set(COLOR?.data.map((item: any) => item.color))];
-  const uniqueSizes = [...new Set(COLOR?.data.map((item: any) => item.size))];
+  console.log("productDetail", detailData?.data.mainImage.imageUrls);
+  const uniqueColors = [
+    ...new Set(
+      detailData?.data.productColor.productColors.map(
+        (item: any) => item.color,
+      ),
+    ),
+  ];
+  console.log("color", uniqueColors);
+  const uniqueSizes = [
+    ...new Set(
+      detailData?.data.productColor.productColors
+        .map((item: any) => item.sizes.map((v: any) => v.size))
+        .join(""),
+    ),
+  ];
+  console.log("size", uniqueSizes);
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
@@ -66,7 +81,7 @@ export default function useProduct() {
     color: null,
     size: null,
     count: 0, // 기본 수량
-    mainThumbnailImage: imageData?.data.mainImages[0],
+    mainThumbnailImage: detailData?.data.mainThumbnailImage,
   });
 
   // 선택된 제품 정보들을 관리하는 상태 변수
@@ -103,7 +118,7 @@ export default function useProduct() {
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
         key: `${size}-${selectedProduct.color}`,
-        mainThumbnailImage: imageData?.data.mainImages[0], // 문자열로 결합
+        mainThumbnailImage: detailData?.data.mainThumbnail, // 문자열로 결합
       };
 
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인
@@ -200,7 +215,6 @@ export default function useProduct() {
     selectedProduct,
     selectedProducts,
     detailData,
-    imageData,
     COLOR,
     uniqueColors,
     uniqueSizes,
