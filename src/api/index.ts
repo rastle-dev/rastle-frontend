@@ -1,4 +1,6 @@
 import axios from "axios";
+import PATH from "@/constants/path";
+import toastMsg from "@/components/Toast";
 import API from "./config";
 
 axios.defaults.baseURL = API.BASE_URL;
@@ -7,7 +9,7 @@ axios.defaults.withCredentials = true;
 // 사용자가 인증되지 않은 상태로 간주되면, 로컬 스토리지를 비우고 메인 화면으로 리디렉션하는 역할 수행
 const handleUnauthorized = () => {
   localStorage.clear();
-  // window.location.href = PATH.MAIN;
+  window.location.href = PATH.LOGIN;
 };
 
 // axios.create()함수를 사용하여 새로운 Axios 인스턴스를 생성
@@ -101,7 +103,7 @@ async function resetTokenAndReattemptRequest(error: any) {
     // 엑세스 토큰을 재발급하고 난 후 이전에 실패한 원래 요청을 재시도
     return await retryOriginalRequest;
   } catch (refreshError) {
-    // toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
+    toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
     handleUnauthorized();
     return Promise.reject(refreshError);
   }
@@ -119,8 +121,7 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.response.data.errorCode);
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
-      error.response.data.errorCode === 401 &&
-      localStorage.getItem("accessToken")
+      error.response.data.errorCode === 401
     ) {
       // 엑세스 토큰을 재발급하고 요청을 다시 시도
       return resetTokenAndReattemptRequest(error);
@@ -133,8 +134,7 @@ authorizationClient.interceptors.response.use(
 unAuthorizationClient.interceptors.response.use(
   (response) => {
     // 특정 도메인에 대한 접근 허용, 로그인을 하지 않은 인증되지 않은 사용자니까
-    response.headers["Access-Control-Allow-Origin"] =
-      "https://www.recordyslow.com, http://localhost:3000";
+    response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
     return response;
   },
   (error) => {
