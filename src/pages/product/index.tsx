@@ -23,7 +23,6 @@ export default function Product() {
     selectedProduct,
     selectedProducts,
     detailData,
-    imageData,
     uniqueColors,
     uniqueSizes,
     cartProducts,
@@ -57,7 +56,7 @@ export default function Product() {
       )}
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={imageData?.data.mainImages} />
+          <ImageSliderPage images={detailData?.data.mainImage.imageUrls} />
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>
@@ -163,7 +162,7 @@ export default function Product() {
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
-        {imageData?.data.detailImages?.map((img: string) => (
+        {detailData?.data.detailImage.imageUrls?.map((img: string) => (
           <S.ProductDetail src={img} />
         ))}
       </S.ProductDetailList>
