@@ -244,6 +244,7 @@ export default function CreateEventProduct() {
           value={eventId}
           onChange={(e) => handleBundleIdChange(e)}
         >
+          <option value="">원하는 이벤트를 선택하세요.</option>
           {eventData?.data.content.map((event: Event) => (
             <option key={event.id} value={event.id}>
               {event.name}
@@ -258,6 +259,7 @@ export default function CreateEventProduct() {
           value={categoryId}
           onChange={(e) => handleCategoryChange(e)}
         >
+          <option value="">원하는 카테고리를 선택하세요.</option>
           {categoryData?.data.map((category: Category) => (
             <option key={category.id} value={category.id}>
               {category.name}

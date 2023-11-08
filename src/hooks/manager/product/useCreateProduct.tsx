@@ -4,11 +4,15 @@ import {
   adminAddMainThumbnailImage,
   adminAddSubThumbnailImage,
   adminCreateProduct,
+  adminGetBundle,
+  adminGetCategory,
 } from "@/api/admin";
 import useInput from "@/hooks/useInput";
 import React, { useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
-import { v4 as uuidv4 } from "uuid";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadMarketProduct } from "@/api/shop";
 
 export default function useCreateProduct() {
   const [name, onChangeName] = useInput("");
@@ -42,11 +46,25 @@ export default function useCreateProduct() {
     price,
     discountPrice,
   );
-  interface ColorAndSize {
-    color: string;
-    size: string;
-    count: number;
-  }
+
+  const { data: bundleData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_BUNDLE],
+    adminGetBundle,
+  );
+
+  const { data: categoryData } = useQuery(
+    [QUERYKEYS.ADMIN_GET_CATEGORY],
+    adminGetCategory,
+  );
+
+  const { data: productListData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT],
+    () => loadMarketProduct(),
+    {
+      enabled: displayOrderCheck, // 처음에 쿼리를 실행하지 않음
+    },
+  );
+  console.log(productListData);
 
   const createProduct = async () => {
     const productColors: any = [];
@@ -455,5 +473,8 @@ export default function useCreateProduct() {
     blockMainImagesButton,
     blockDetailImagesButton,
     blockCreateProductButton,
+    bundleData,
+    categoryData,
+    productListData,
   };
 }

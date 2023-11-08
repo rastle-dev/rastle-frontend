@@ -15,31 +15,11 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import {
   loadMarketProduct,
-  loadProductCOLOR,
   loadProductDetail,
   loadProductImage,
 } from "@/api/shop";
 
 export default function useUpdateProduct() {
-  interface ProductColorState {
-    productColors: ProductColor[];
-  }
-
-  interface ProductColor {
-    color: string;
-    sizes: Size[];
-  }
-
-  interface Size {
-    size: string;
-    count: number;
-  }
-
-  // Inside your functional component
-  const [productColor, setProductColor] = useState<ProductColorState>({
-    productColors: [],
-  });
-
   const [name, onChangeName, setName] = useInput("");
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
@@ -56,6 +36,8 @@ export default function useUpdateProduct() {
   const [subThumbnail, setSubThumbnail] = useState("");
   const [subThumbnailFile, setSubThumbnailFile] = useState<File[]>([]);
   const [mainImages, setMainImages] = useState<string[]>([]);
+  const [mainImageData, setMainImageData] = useState<any>();
+  const [detailImageData, setDetailImageData] = useState<any>();
   const [mainImageFiles, setMainImageFiles] = useState<File[]>([]);
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
@@ -64,17 +46,7 @@ export default function useUpdateProduct() {
     price,
     discountPrice,
   );
-  const [blockMainThumbnailButton, setBlockMainThumbnailButton] =
-    useState(false);
-  const [blockSubThumbnailButton, setBlockSubThumbnailButton] = useState(false);
-  const [blockMainImagesButton, setBlockMainImagesButton] = useState(false);
-  const [blockDetailImagesButton, setBlockDetailImagesButton] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<PRODUCT | null>(null); // 선택된 카테고리 상태 추가
-  interface ColorAndSize {
-    color: string;
-    size: string;
-    count: number;
-  }
 
   interface PRODUCT {
     id: number;
@@ -88,9 +60,10 @@ export default function useUpdateProduct() {
     visible: boolean;
     bundleId: string;
     categoryId: string;
+    mainImage: {
+      imageUrls: string[];
+    };
   }
-
-  const colorAndSizes: ColorAndSize[] = [];
 
   const { data: productListData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT],
@@ -125,16 +98,6 @@ export default function useUpdateProduct() {
   //   },
   // );
 
-  const { data: mainImageData, refetch: refetchMainImageData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_IMAGE],
-    () => (selectedProduct ? loadProductImage(selectedProduct.id) : null),
-    {
-      enabled: showImageUpload, // 처음에 쿼리를 실행하지 않음
-    },
-  );
-
-  console.log(mainImageData);
-
   const loadColorAndSize = () => {
     if (selectedProduct) {
       const uniqueColors: string[] = [];
@@ -167,7 +130,6 @@ export default function useUpdateProduct() {
 
   useEffect(() => {
     if (selectedProduct && showImageUpload) {
-      refetchMainImageData();
     }
   }, [selectedProduct]);
 
@@ -318,7 +280,6 @@ export default function useUpdateProduct() {
 
       // 서버 응답 처리
       if (data) {
-        setBlockMainThumbnailButton(true);
         alert("메인 썸네일이 수정되었습니다.");
       }
     } catch (error) {
@@ -380,7 +341,6 @@ export default function useUpdateProduct() {
       const data = await adminUpdateSubThumbnailImage(productId, formData);
 
       if (data) {
-        setBlockSubThumbnailButton(true);
         alert("서브 썸네일이 수정되었습니다.");
       }
     } catch (error) {
@@ -446,7 +406,6 @@ export default function useUpdateProduct() {
       // 서버 응답 처리
       console.log(data);
       if (data) {
-        setBlockMainImagesButton(true);
         alert("메인 이미지가 추가되었습니다.");
       }
     } catch (error) {
@@ -508,7 +467,6 @@ export default function useUpdateProduct() {
       const data = await adminUpdateDetailImage(productId, formData);
 
       if (data) {
-        setBlockDetailImagesButton(true);
         alert("상세 페이지 사진들이 수정되었습니다.");
       }
     } catch (error) {
@@ -518,6 +476,7 @@ export default function useUpdateProduct() {
   };
 
   const handleProductClick = (product: PRODUCT) => {
+    console.log(product);
     setSelectedProduct(product); // 목록에서 카테고리 선택
     setName(product.name);
     setPrice(product.price);
@@ -545,8 +504,11 @@ export default function useUpdateProduct() {
   };
 
   const loadImages = () => {
-    if (selectedProduct) {
+    if (productData) {
       setshowImageUpload(true);
+      setMainImageData(productData.data.mainImage.imageUrls);
+      setDetailImageData(productData.data.detailImage.imageUrls);
+      console.log(mainImageData);
     } else {
       alert("수정할 상품을 선택해주세요");
     }
@@ -554,16 +516,22 @@ export default function useUpdateProduct() {
 
   const deleteProduct = async () => {
     if (selectedProduct) {
-      try {
-        // 서버로 FormData를 포함한 POST 요청 보내기
-        const data = await adminDeleteProduct(selectedProduct?.id);
+      const shouldCreate = window.confirm("상품을 삭제하시겠습니까?");
 
-        if (data) {
-          alert("상품이 제거되었습니다.");
+      if (shouldCreate) {
+        try {
+          // 서버로 FormData를 포함한 POST 요청 보내기
+          const data = await adminDeleteProduct(selectedProduct?.id);
+
+          if (data) {
+            alert("상품이 제거되었습니다.");
+          }
+        } catch (error) {
+          // 오류 처리
+          console.error("상품 제거 실패:", error);
         }
-      } catch (error) {
-        // 오류 처리
-        console.error("상품 제거 실패:", error);
+      } else {
+        alert("상품이 제거가 취소되었습니다.");
       }
     } else {
       alert("삭제할 상품을 선택해주세요");
@@ -625,6 +593,6 @@ export default function useUpdateProduct() {
     mainImageData,
     loadImages,
     deleteProduct,
-    productColor,
+    detailImageData,
   };
 }

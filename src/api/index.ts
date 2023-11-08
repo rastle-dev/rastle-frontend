@@ -119,8 +119,9 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.response.data.errorCode);
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
-      error.response.data.errorCode === 401 &&
-      localStorage.getItem("accessToken")
+      error.response.data.errorCode === 401
+      // &&
+      // localStorage.getItem("accessToken")
     ) {
       // 엑세스 토큰을 재발급하고 요청을 다시 시도
       return resetTokenAndReattemptRequest(error);

@@ -2,11 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Input from "@/components/common/Input";
 import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
-import { adminGetCategory, adminGetBundle } from "@/api/admin";
-import { useQuery } from "@tanstack/react-query";
-import QUERYKEYS from "@/constants/querykey";
-import Image from "next/image";
-import { loadMarketProduct } from "@/api/shop";
 import COLORS from "@/constants/color";
 
 const Title = styled.div`
@@ -249,26 +244,10 @@ export default function CreateProduct() {
     blockMainImagesButton,
     blockDetailImagesButton,
     blockCreateProductButton,
+    productListData,
+    categoryData,
+    bundleData,
   } = useCreateProduct();
-
-  const { data: bundleData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_BUNDLE],
-    adminGetBundle,
-  );
-
-  const { data: categoryData } = useQuery(
-    [QUERYKEYS.ADMIN_GET_CATEGORY],
-    adminGetCategory,
-  );
-
-  const { data: productListData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    () => loadMarketProduct(),
-    {
-      enabled: displayOrderCheck, // 처음에 쿼리를 실행하지 않음
-    },
-  );
-  console.log(productListData);
 
   return (
     <div>
@@ -338,6 +317,7 @@ export default function CreateProduct() {
             value={bundleId}
             onChange={(e) => handleBundleIdChange(e)}
           >
+            <option value="">원하는 세트를 선택하세요.</option>
             {bundleData?.data.content.map((bundle: Bundle) => (
               <option key={bundle.id} value={bundle.id}>
                 {bundle.name}
@@ -353,6 +333,7 @@ export default function CreateProduct() {
           value={categoryId}
           onChange={(e) => handleCategoryChange(e)}
         >
+          <option value="">원하는 카테고리를 선택하세요.</option>
           {categoryData?.data.map((category: Category) => (
             <option key={category.id} value={category.id}>
               {category.name}

@@ -194,6 +194,9 @@ interface PRODUCT {
   visible: boolean;
   bundleId: string;
   categoryId: string;
+  mainImage: {
+    imageUrls: string[];
+  };
 }
 
 export default function UpdateProduct() {
@@ -247,6 +250,7 @@ export default function UpdateProduct() {
     mainImageData,
     loadImages,
     deleteProduct,
+    detailImageData,
   } = useUpdateProduct();
 
   return (
@@ -259,7 +263,7 @@ export default function UpdateProduct() {
             key={product.id}
             onClick={() => handleProductClick(product)}
           >
-            <p>{product.name}</p>
+            러<p>{product.name}</p>
             {product.mainThumbnail && (
               <img
                 src={product.mainThumbnail}
@@ -472,7 +476,7 @@ export default function UpdateProduct() {
             <br />
             기존 메인 이미지:
             <PreviewImages>
-              {mainImageData?.data.mainImages.map((preview: string) => (
+              {mainImageData?.map((preview: string) => (
                 <img
                   key={preview}
                   src={preview}
@@ -516,7 +520,7 @@ export default function UpdateProduct() {
             <br />
             기존 상세페이지 이미지:
             <PreviewImages>
-              {mainImageData?.data.detailImages.map((preview: string) => (
+              {detailImageData?.map((preview: string) => (
                 <img
                   key={preview}
                   src={preview}
