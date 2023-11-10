@@ -2,6 +2,8 @@ import React from "react";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/signup/index.styles";
 import useSignup from "@/hooks/useSignup";
+import LazyLink from "@/components/LazyLink";
+import PATH from "@/constants/path";
 
 type InputProps = {
   label: string;
@@ -205,7 +207,9 @@ export default function Signup() {
           onChange={togglePrivate}
         />
         <h3>개인정보 수집 및 이용 동의 (필수)</h3>
-        <h3>자세히</h3>
+        <LazyLink href={PATH.AGREEMENT}>
+          <h3>자세히</h3>
+        </LazyLink>
       </S.CheckBoxWithText>
       <S.SignupButtonDiv>
         <S.SignupButton

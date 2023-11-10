@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import React from "react";
+import LazyLink from "@/components/LazyLink";
+import PATH from "@/constants/path";
 
 const Container = styled.div`
   width: 100%;
@@ -86,6 +88,19 @@ function DefaultHeader() {
             @rastle__fasihon
           </a>
         </InformationDetail>
+      </ReturnInformationWrapper>
+
+      <ReturnInformationWrapper>
+        <CompanyTitle>Links</CompanyTitle>
+        <LazyLink href={PATH.GUIDE}>
+          <InformationDetail>이용안내</InformationDetail>
+        </LazyLink>
+        <LazyLink href={PATH.AGREEMENT}>
+          <InformationDetail>이용약관</InformationDetail>
+        </LazyLink>
+        <LazyLink href={PATH.PRIVACY}>
+          <InformationDetail>개인정보처리방침</InformationDetail>
+        </LazyLink>
       </ReturnInformationWrapper>
       <ReturnInformationWrapper>
         <CompanyTitle>C/S CENTER</CompanyTitle>
