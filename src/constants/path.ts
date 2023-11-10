@@ -8,6 +8,9 @@ const PATH = {
   SHOP: "/shop",
   MYPAGE: "/mypage",
   ORDER: "/order",
+  AGREEMENT: "/shopinfo/agreement",
+  PRIVACY: "/shopinfo/privacy",
+  GUIDE: "/shopinfo/guide",
 } as const;
 
 export default PATH;

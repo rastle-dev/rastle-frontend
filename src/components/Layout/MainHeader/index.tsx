@@ -23,7 +23,7 @@ const navList = [
   { name: "SHOP", href: "/shop" },
   { name: "코디보기", href: "/style" },
   { name: "공지사항", href: "/community" },
-  { name: "ABOUT", href: "/about" },
+  { name: "ABOUT", href: "/shopinfo/guide" },
 ];
 
 export default function MainHeader() {
