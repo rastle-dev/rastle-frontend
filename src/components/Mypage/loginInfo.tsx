@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
 import QUERYKEYS from "@/constants/querykey";
-import { loadMe } from "@/api/auth";
+import { authLogout, loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
+import LoadingBar from "@/components/LoadingBar";
+import toastMsg from "@/components/Toast";
+import PATH from "@/constants/path";
 
 interface ButtonProps {
   inValid: boolean;
@@ -87,19 +90,59 @@ const DeleteButton = styled(Button)`
     font-weight: 500;
   }
 `;
+
+// export async function getStaticProps() {
+//   const queryClient = new QueryClient();
+//
+//   await queryClient.prefetchQuery([QUERYKEYS.LOAD_ME], loadMe);
+//
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
   const { mutateChangePassword, deleteUser } = useMypage();
-  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  // const [data2, setData] = useState();
+  // const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERYKEYS.LOAD_ME],
+    queryFn: loadMe,
+  });
+
+  // const getMe = async () => {
+  //   try {
+  //     const dat = await loadMe();
+  //     console.log(dat);
+  //     setData(dat);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //   // setData(data);
+  // };
+  // useEffect(() => {
+  //   getMe();
+  //   // setData(data);
+  //   console.log("hi");
+  // }, []);
+  if (isLoading || !data)
+    return (
+      <Wrapper>
+        <LoadingBar type={6} />
+      </Wrapper>
+    );
+
   const inputs = [
     {
       label: "이름",
-      value: data?.data.userName,
+      value: data.data.userName,
     },
     {
       label: "이메일 주소",
-      value: data?.data.email,
+      value: data.data.email,
     },
     {
       placeholder: "새로운 비밀번호를 입력해주세요!",
@@ -125,7 +168,7 @@ export default function LoginInfo() {
     },
     {
       label: "전화번호",
-      value: data?.data.phoneNumber,
+      value: data.data.phoneNumber,
       onChange: onChangePassword,
     },
   ];
