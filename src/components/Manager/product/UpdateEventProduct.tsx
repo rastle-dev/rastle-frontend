@@ -245,6 +245,7 @@ export default function UpdateEventProduct() {
     selectedProduct,
     loadColorAndSize,
     mainImageData,
+    detailImageData,
     loadImages,
     deleteProduct,
     handleBundleIdChange,
@@ -479,7 +480,7 @@ export default function UpdateEventProduct() {
             <br />
             기존 메인 이미지:
             <PreviewImages>
-              {mainImageData?.data.mainImages.map((preview: string) => (
+              {mainImageData?.map((preview: string) => (
                 <img
                   key={preview}
                   src={preview}
@@ -523,7 +524,7 @@ export default function UpdateEventProduct() {
             <br />
             기존 상세페이지 이미지:
             <PreviewImages>
-              {mainImageData?.data.detailImages.map((preview: string) => (
+              {detailImageData.map((preview: string) => (
                 <img
                   key={preview}
                   src={preview}
