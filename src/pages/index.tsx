@@ -7,7 +7,6 @@ import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import LazyLink from "@/components/LazyLink";
 import useLogin from "@/hooks/useLogin";
 
-//
 export async function getStaticProps() {
   const queryClient = new QueryClient();
 

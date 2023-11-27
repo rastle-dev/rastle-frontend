@@ -50,8 +50,14 @@ export default function MainHeader() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const accessToken =
-    typeof window !== "undefined" && localStorage.getItem("accessToken");
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    // 클라이언트 사이드에서만 실행되도록 accessToken을 가져옴
+    if (typeof window !== "undefined") {
+      setAccessToken(accessToken);
+    }
+  }, []);
 
   return (
     <Wrapper scrolled={isScrolled}>
@@ -102,7 +108,7 @@ export default function MainHeader() {
         ) : (
           <RightElemet>
             <LazyLink href={PATH.LOGIN}>
-              <span>MYPAGE</span>
+              <span>LOGIN</span>
             </LazyLink>
             <LazyLink href={PATH.LOGIN}>
               <span>CART</span>
