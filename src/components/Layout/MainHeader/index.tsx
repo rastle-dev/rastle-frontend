@@ -53,9 +53,8 @@ export default function MainHeader() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
 
   useEffect(() => {
-    // 클라이언트 사이드에서만 실행되도록 accessToken을 가져옴
     if (typeof window !== "undefined") {
-      setAccessToken(accessToken);
+      setAccessToken(localStorage.getItem("accessToken"));
     }
   }, []);
 

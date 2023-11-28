@@ -116,7 +116,6 @@ export default function Home() {
     const searchParams = new URLSearchParams(window.location.search);
     const authCode = searchParams.get("social");
     if (authCode === "true") {
-      console.log("hi");
       mutateSocialLogin.mutate();
     }
   }, []);
