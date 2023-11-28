@@ -151,8 +151,12 @@ export default function Product() {
             />
             <S.StyledPayButton
               onClick={() => {
-                mutateAddCartProduct.mutate(cartProducts);
-                openDialog();
+                if (localStorage.getItem("accessToken")) {
+                  mutateAddCartProduct.mutate(cartProducts);
+                  openDialog();
+                } else {
+                  router.push(PATH.LOGIN);
+                }
               }}
               title="장바구니에 담기"
               type="shop"
