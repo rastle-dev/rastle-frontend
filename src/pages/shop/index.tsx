@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  dehydrate,
-  QueryClient,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
@@ -39,8 +34,15 @@ export default function Shop() {
   const [activeCategoryId, setActiveCategoryId] = useState<any>();
   const queryClient = useQueryClient();
 
-  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT]);
-  const categoryData = queryClient.getQueryData([QUERYKEYS.ADMIN_GET_CATEGORY]);
+  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT]) as {
+    data: {
+      content: Array<any>;
+    };
+  };
+
+  const categoryData = queryClient.getQueryData([
+    QUERYKEYS.ADMIN_GET_CATEGORY,
+  ]) as { data: Array<any> };
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     setActiveCategoryId(
