@@ -23,7 +23,7 @@ const Wrapper = styled.button<{
   ${({ type, width, disabled, isActive }) => `
     width: ${width};
     font-size: ${
-      { default: "1.25rem", shop: "1.25rem", size: "1.875rem" }[type]
+      { default: "1.25rem", shop: "1.25rem", size: "1.18182" }[type]
     };
      padding: ${
        {
@@ -33,15 +33,14 @@ const Wrapper = styled.button<{
        }[type]
      };
      background-color: ${(disabled && "#E6E6E6") || COLORS.화이트};
-     border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]}; 
-     
-      display: ${isActive ? `none` : `none`};
+     border-radius: ${{ default: "12px", shop: "5px", size: "none" }[type]};
+     display: ${isActive ? `none` : `none`};
      border: ${
        (disabled && "1px solid #E6E6E6") ||
        {
          default: `1px solid ${COLORS.블랙}`,
          shop: `1px solid ${COLORS.블랙}`,
-         size: `1px solid ${COLORS.화이트}`,
+         size: `0.5px solid ${COLORS.블랙}`,
        }[type]
      };
      color: ${(disabled && "#9B9B9B") || COLORS.블랙};
