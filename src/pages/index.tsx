@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/index/index.styles";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import LazyLink from "@/components/LazyLink";
 import useLogin from "@/hooks/useLogin";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], () =>
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
     loadMarketProductPaging({ size: 4, visible: true }),
+  );
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
+    loadEventProductPaging({ size: 4, visible: true }),
   );
 
   return {
@@ -102,16 +105,11 @@ function EventProductLayer({ productData }: any) {
 }
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
-
-  const { data: productData, status: productStatus } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    () => loadMarketProductPaging({ size: 4, visible: true }),
-  );
-
-  const { data: eventProductData, status: eventProductStatus } = useQuery(
-    [QUERYKEYS.LOAD_EVENTPRODUCT],
-    () => loadEventProductPaging({ size: 4, visible: true }),
-  );
+  const queryClient = useQueryClient();
+  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT_PAGING]);
+  const eventProductData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
+  ]);
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const authCode = searchParams.get("social");
@@ -122,10 +120,8 @@ export default function Home() {
   return (
     <S.StyledHome>
       <TopLayer />
-      {productStatus === "success" && productData !== undefined && (
-        <ProductLayer productData={productData} />
-      )}
-      {eventProductStatus === "success" && eventProductData !== undefined && (
+      {productData !== undefined && <ProductLayer productData={productData} />}
+      {eventProductData !== undefined && (
         <EventProductLayer productData={eventProductData} />
       )}
     </S.StyledHome>
