@@ -7,7 +7,7 @@ import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import LazyLink from "@/components/LazyLink";
 import useLogin from "@/hooks/useLogin";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
@@ -21,6 +21,7 @@ export async function getServerSideProps() {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
+    revalidate: 10, // Set the revalidate time in seconds
   };
 }
 

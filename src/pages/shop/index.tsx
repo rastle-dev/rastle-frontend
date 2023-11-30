@@ -8,25 +8,21 @@ import { loadMarketProduct } from "@/api/shop";
 import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
 
-  const productQuery = await queryClient.prefetchQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    loadMarketProduct,
-  );
-
-  const categoryQuery = queryClient.prefetchQuery(
+  // Prefetch queries
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], loadMarketProduct);
+  await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
   );
-
-  await Promise.all([productQuery, categoryQuery]);
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
+    revalidate: 10, // Set the revalidate time in seconds
   };
 }
 export default function Shop() {
