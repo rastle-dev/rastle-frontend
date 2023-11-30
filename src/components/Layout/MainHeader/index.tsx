@@ -56,7 +56,7 @@ export default function MainHeader() {
     if (typeof window !== "undefined") {
       setAccessToken(localStorage.getItem("accessToken"));
     }
-  }, []);
+  }, [accessToken]);
 
   return (
     <Wrapper scrolled={isScrolled}>
