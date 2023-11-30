@@ -33,8 +33,7 @@ export default function useMypage() {
     try {
       await authLogout();
       localStorage.clear();
-      toastMsg("로그아웃 되었습니다!");
-      router.push(PATH.HOME);
+      router.push(PATH.HOME).then(() => router.reload());
     } catch (err) {
       console.log(err);
     }

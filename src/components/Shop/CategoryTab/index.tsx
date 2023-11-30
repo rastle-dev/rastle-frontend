@@ -4,7 +4,6 @@ import COLORS from "@/constants/color";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { adminGetCategory } from "@/api/admin";
-import media from "@/styles/media";
 
 type ProductCategory = "전체" | "코디상품" | "상의" | "하의" | "이벤트";
 

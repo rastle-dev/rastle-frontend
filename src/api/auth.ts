@@ -8,7 +8,10 @@ export const authLogin = async (userLoginData: object) => {
   );
   return headers;
 };
-
+export const authSocialReissue = async () => {
+  const { headers } = await unAuthorizationClient.post(API.REISSUE);
+  return headers;
+};
 export const authLogout = async () => {
   const { data } = await authorizationClient.post(API.LOGOUT);
   return data;

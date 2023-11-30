@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
@@ -8,18 +8,37 @@ import { loadMarketProduct } from "@/api/shop";
 import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 
-export default function Shop() {
-  const [activeCategory, setActiveCategory] = useState<string>("전체");
-  const [activeCategoryId, setActiveCategoryId] = useState<any>();
-  const { data: productData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    loadMarketProduct,
-  );
-  const { data: categoryData } = useQuery(
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  // Prefetch queries
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], loadMarketProduct);
+  await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
   );
 
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 10, // Set the revalidate time in seconds
+  };
+}
+export default function Shop() {
+  const [activeCategory, setActiveCategory] = useState<string>("전체");
+  const [activeCategoryId, setActiveCategoryId] = useState<any>();
+  const queryClient = useQueryClient();
+
+  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT]) as {
+    data: {
+      content: Array<any>;
+    };
+  };
+
+  const categoryData = queryClient.getQueryData([
+    QUERYKEYS.ADMIN_GET_CATEGORY,
+  ]) as { data: Array<any> };
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     setActiveCategoryId(

@@ -80,16 +80,12 @@ function ItemElement({
   let discountPercent;
   let discountedPrice;
 
-  console.log(price);
-  console.log(discountPrice);
   if (discountPrice !== undefined) {
     const result = calculateDiscountPercentAndPrice(price, discountPrice);
     discountPercent = result.discountPercent;
     discountedPrice = result.discountedPrice;
   }
 
-  console.log(discountPercent);
-  console.log(discountedPrice);
   return (
     <ItemWrapper>
       <StyledImage
