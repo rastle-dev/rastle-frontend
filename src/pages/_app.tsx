@@ -5,7 +5,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { RecoilRoot } from "recoil";
 import { createGlobalStyle } from "styled-components";
 import DefaultLayout from "@/components/Layout/DefaultLayout";
 import MainLayout from "@/components/Layout/MainLayout";
@@ -95,10 +95,12 @@ export default function App({ Component, pageProps }: AppProps) {
         position="top-center"
         closeButton={false}
       />
-      <Hydrate state={pageProps.dehydratedState}>
-        <GlobalStyle />
-        {Layout}
-      </Hydrate>
+      <RecoilRoot>
+        <Hydrate state={pageProps.dehydratedState}>
+          <GlobalStyle />
+          {Layout}
+        </Hydrate>
+      </RecoilRoot>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
