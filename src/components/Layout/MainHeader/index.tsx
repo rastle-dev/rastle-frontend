@@ -18,6 +18,8 @@ import {
   MenuItem,
   MenuBackground,
 } from "./index.styles";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/stores/atom/recoilState";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -31,6 +33,7 @@ export default function MainHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const menuRef = useRef<HTMLUListElement>(null);
+  // const { mutateSocialLogin } = useLogin();
 
   useDetectOutside({
     refs: [menuRef],
@@ -50,14 +53,13 @@ export default function MainHeader() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
+  const [accessToken, setToken] = useRecoilState(tokenState);
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setAccessToken(localStorage.getItem("accessToken"));
+      setToken(localStorage.getItem("accessToken"));
     }
-  }, [accessToken]);
-
+  }, []);
+  console.log("hi", accessToken);
   return (
     <Wrapper scrolled={isScrolled}>
       <InnerNav>

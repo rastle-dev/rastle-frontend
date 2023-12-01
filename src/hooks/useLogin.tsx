@@ -5,11 +5,14 @@ import useInput from "@/hooks/useInput";
 import { authLogin, authSocialReissue } from "@/api/auth";
 import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/stores/atom/recoilState";
 
 export default function useLogin() {
   const router = useRouter();
   const [password, onChangePassword] = useInput("");
   const [email, onChangeEmail] = useInput("");
+  const [accessToken, setToken] = useRecoilState(tokenState);
 
   // yslim162@naver.com
   const mutateLogin = useMutation(["loadMutation"], authLogin, {
@@ -18,7 +21,6 @@ export default function useLogin() {
       const token = response.authorization.replace("Bearer ", "");
       localStorage.setItem("accessToken", token);
       console.log(response);
-
       setTimeout(async () => {
         const cookies = document.cookie;
         console.log("click", cookies);
@@ -40,7 +42,7 @@ export default function useLogin() {
       // HTTP 응답에서 "Authorization" 헤더 값을 추출
       const token = headers.authorization.replace("Bearer ", "");
       localStorage.setItem("accessToken", token);
-      console.log(headers);
+      setToken(token);
       router.push(PATH.HOME);
     },
     onError: ({
@@ -61,5 +63,6 @@ export default function useLogin() {
     email,
     onChangeEmail,
     mutateSocialLogin,
+    accessToken,
   };
 }
