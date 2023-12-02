@@ -4,18 +4,29 @@ import Button from "@/components/common/Button";
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   margin-top: 5.5rem;
   padding-top: 2rem;
+`;
+export const Header = styled.header`
+  width: 88%;
   h1 {
     font-size: 2.5rem;
     font-weight: 200;
-    padding: 4rem 0 5rem 7.84rem;
+    padding: 4rem 0 5rem 0;
   }
-  margin-bottom: 20rem;
 `;
 export const Wrapper = styled.div`
   display: flex;
+  width: 100%;
   border-top: 1px solid ${COLORS.GREY[200]};
+  @media (max-width: 769px) {
+    display: flex;
+    flex-direction: column;
+    border-top: none;
+  }
 `;
 export const Sidebar = styled.div`
   flex: 17;
@@ -24,6 +35,12 @@ export const Sidebar = styled.div`
   align-items: center;
   gap: 4.1rem;
   padding-top: 4.1rem;
+  @media (max-width: 769px) {
+    flex-direction: row;
+    border-bottom: 1px solid ${COLORS.GREY[200]};
+    padding-left: 3rem;
+    padding-top: 0;
+  }
 `;
 export const Content = styled.div`
   flex: 83;
@@ -33,14 +50,28 @@ export const Content = styled.div`
     margin: 0;
     font-weight: 500;
   }
+  @media (max-width: 769px) {
+    flex-direction: row;
+    padding-left: 3rem;
+  }
 `;
 export const Menu = styled.div`
-  width: 7rem;
   h2 {
     font-size: 1.63rem;
     margin: 0;
     font-weight: 500;
     padding-bottom: 1.63rem;
+    @media (max-width: 769px) {
+      display: none;
+    }
+  }
+  @media (min-width: 769px) {
+    width: 7rem;
+  }
+  @media (max-width: 769px) {
+    display: flex;
+    //width: 17rem;
+    gap: 3rem;
   }
 `;
 export const Logout = styled(Button)`
@@ -56,6 +87,9 @@ export const Logout = styled(Button)`
     color: red;
     font-weight: 500;
   }
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
 export const Box = styled.div`
   border: none;
@@ -66,6 +100,9 @@ export const SubMenu = styled.div<{ active: boolean }>`
   padding-bottom: 1.18rem;
   cursor: pointer;
   font-weight: 200;
+  @media (max-width: 769px) {
+    //display: flex;
+  }
 `;
 export const TabMenu = styled.div`
   width: 90.5rem;

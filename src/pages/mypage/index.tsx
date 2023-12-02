@@ -62,7 +62,9 @@ export default function Mypage() {
 
   return (
     <S.Container>
-      <h1>MYPAGE</h1>
+      <S.Header>
+        <h1>MYPAGE</h1>
+      </S.Header>
       <S.Wrapper>
         <S.Sidebar>
           <S.Menu>
