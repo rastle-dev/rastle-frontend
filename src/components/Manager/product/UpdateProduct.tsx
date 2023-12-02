@@ -263,7 +263,7 @@ export default function UpdateProduct() {
             key={product.id}
             onClick={() => handleProductClick(product)}
           >
-            러<p>{product.name}</p>
+            <p>{product.name}</p>
             {product.mainThumbnail && (
               <img
                 src={product.mainThumbnail}

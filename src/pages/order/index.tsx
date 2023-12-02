@@ -27,6 +27,7 @@ export default function Order() {
     PaymentOptionsButtons,
     DeliveryButtons,
     OrdererInfo,
+    handlePaymentSubmit,
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
@@ -63,6 +64,8 @@ export default function Order() {
     },
     { meta: "할인 금액", data: "0원" },
   ];
+
+  console.log(cartProduct);
 
   return (
     <S.Temp>
@@ -233,7 +236,7 @@ export default function Order() {
               </S.PaymentOptionsButton>
             ))}
           </S.PaymentOptions>
-          <S.PaymentButton title="결제하기" />
+          <S.PaymentButton onClick={handlePaymentSubmit} title="결제하기" />
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
+import useMypage from "@/hooks/useMypage";
 
 type Address = {
   address: string | undefined;
@@ -9,6 +10,7 @@ type Address = {
 };
 export default function useOrder() {
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  const { cartProduct } = useMypage();
   const OrdererInfo = [
     { meta: "이름", data: data?.data.userName },
     { meta: "연락처", data: data?.data.phoneNumber },
@@ -67,6 +69,10 @@ export default function useOrder() {
     { label: "상세 주소" },
     { label: "연락처", placeholder: "010-3009-2255" },
   ];
+
+  const handlePaymentSubmit = () => {
+    console.log(cartProduct);
+  };
   return {
     clickedPaymentButtonIndex,
     clickedDeliveryButtonIndex,
@@ -79,5 +85,6 @@ export default function useOrder() {
     PaymentOptionsButtons,
     DeliveryButtons,
     OrdererInfo,
+    handlePaymentSubmit,
   };
 }
