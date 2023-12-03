@@ -18,7 +18,6 @@ type ProductItem = {
 };
 const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
 const TabMenu = styled.div`
-  width: 90.5rem;
   display: flex;
   gap: 1rem;
   justify-content: right;
@@ -33,10 +32,17 @@ const TabMenu = styled.div`
     padding: 0 0 0.4rem 0;
     background-color: transparent;
   }
+  @media (max-width: 769px) {
+    display: none;
+  }
+  width: 80rem;
 `;
 const Table = styled.div`
   border-bottom: 1px solid;
-  width: 90.5rem;
+  width: 80rem;
+  @media (max-width: 769px) {
+    width: 88%;
+  }
 `;
 const Select = styled(Input)`
   width: 2rem;
@@ -45,10 +51,14 @@ const TableHeader = styled.div`
   border-bottom: 1px solid;
   display: grid;
   align-items: center;
-  grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
+  //grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
+  grid-template-columns: 15rem 20rem 10.5rem 9rem 10.5rem 9rem 3rem;
+  font-size: 1.2rem;
+  @media (max-width: 769px) {
+    display: none;
+  }
   p {
     margin: 1rem 0 1rem 0;
-    font-size: 1.45rem;
     font-weight: 500;
   }
 `;
@@ -57,36 +67,67 @@ export const NODATA = styled.div`
   margin-top: 3rem;
   font-weight: 400;
   color: ${COLORS.GREY[500]};
-  border: 1px black;
   font-size: 1.5rem;
 `;
 const ProductInfo = styled.div`
-  display: grid;
-  grid-template-columns: 3.2rem 10rem 25rem 13.8rem 9.8rem 11.5rem 11rem 6.2rem;
+  display: flex;
+  position: relative;
+  font-size: 1.2rem;
   align-items: center;
   margin: 1.9rem 0 1.9rem 0;
   p {
-    font-size: 1.45rem;
+    @media (max-width: 769px) {
+      margin: 0;
+    }
     font-weight: 200;
   }
 `;
 const Img = styled.img`
   width: 7.5rem;
   height: 8.2rem;
+  margin-right: 1rem;
+  margin-left: 0.8rem;
+  @media (max-width: 769px) {
+    margin-right: 3rem;
+  }
 `;
 const TextInfo = styled.div`
   width: 24rem;
   padding-right: 1rem;
   p {
-    font-size: 1.45rem;
     font-weight: 500;
     margin: 0;
+  }
+`;
+const MobileTextInfo = styled.div`
+  display: grid;
+  grid-template-columns: 22rem 11.8rem 7.8rem 9.5rem 9rem;
+  margin: 1.9rem 0 1.9rem 0;
+  @media (max-width: 769px) {
+    display: flex;
+    flex-direction: column;
+    p:nth-child(3):before {
+      content: "판매가 : ";
+    }
+    p:nth-child(4):before {
+      content: "배송비 : ";
+    }
+    p:nth-child(5):before {
+      content: "합계 : ";
+    }
   }
 `;
 const SelectTab = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.36rem;
+  //border: 1px solid red;
+  @media (max-width: 769px) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 1.5rem;
+  }
 `;
 const SelectButton = styled(Button)`
   margin: 0;
@@ -97,13 +138,38 @@ const SelectButton = styled(Button)`
   width: 6.2rem;
   border-radius: 0;
   border: 0.5px solid;
+  @media (max-width: 769px) {
+    display: none;
+  }
+`;
+const DeleteButton = styled(Button)`
+  margin: 0;
+  padding: 0.5rem 0 0.5rem 0;
+  font-weight: 600;
+  font-size: 1.4rem;
+  width: 3.2rem;
+  border-radius: 0;
+  border: none;
+  @media (min-width: 769px) {
+    border-radius: 0;
+    font-weight: 200;
+    font-size: 1rem;
+    width: 6.2rem;
+    text-align: center;
+    &::after {
+      content: " 삭제";
+    }
+  }
 `;
 const TotalPrice = styled.div`
   display: flex;
   justify-content: right;
   font-size: 1.45rem;
   padding: 2.2rem 0 2.2rem 0;
-  width: 90.5rem;
+  width: 80rem;
+  @media (max-width: 769px) {
+    width: 88%;
+  }
   p {
     margin: 0;
     font-weight: 200;
@@ -113,10 +179,14 @@ const TotalPrice = styled.div`
   }
 `;
 const ButtonWrapper = styled.div`
-  width: 90.5rem;
+  width: 80rem;
+  font-size: 1rem;
   display: flex;
   gap: 1.45rem;
   justify-content: right;
+  @media (max-width: 769px) {
+    width: 88%;
+  }
 `;
 const OrderButton = styled(Button)`
   padding: 1.18rem 3rem 1.18rem 3rem;
@@ -233,17 +303,19 @@ export default function Cart() {
                       onChange={() => handleProductCheckboxChange(item)}
                     />
                     <Img src={item.mainThumbnailImage} />
-                    <TextInfo>
-                      <p>{item.productName}</p>
-                      <p>
-                        {item.size}/{item.color}
-                      </p>
-                    </TextInfo>
-                    <p>{item.productPrice.toLocaleString()}원</p>
-                    <p>{item.count}개</p>
-                    <p>3,000원</p>
-                    <p>{totalPrice.toLocaleString()}원</p>
-                    {/* 계산된 총 가격 표시 */}
+                    <MobileTextInfo>
+                      <TextInfo>
+                        <p>{item.productName}</p>
+                        <p>
+                          {item.size}/{item.color}
+                        </p>
+                      </TextInfo>
+                      <p>{item.productPrice.toLocaleString()}원</p>
+                      <p>{item.count}개</p>
+                      <p>3,000원</p>
+                      <p>{totalPrice.toLocaleString()}원</p>
+                      {/* 계산된 총 가격 표시 */}
+                    </MobileTextInfo>
                     <SelectTab>
                       <SelectButton
                         title="주문하기"
@@ -254,8 +326,8 @@ export default function Cart() {
                           });
                         }}
                       />
-                      <SelectButton
-                        title="X 삭제"
+                      <DeleteButton
+                        title="X"
                         onClick={() => {
                           mutateDeleteCartProduct.mutate(item.cartProductId);
                         }}
@@ -266,6 +338,7 @@ export default function Cart() {
               })}
             </TableContent>
           </Table>
+
           <TotalPrice>
             {totalPriceSum === 0 ? (
               <>

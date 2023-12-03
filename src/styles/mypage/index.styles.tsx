@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
   display: flex;
   width: 100%;
   border-top: 1px solid ${COLORS.GREY[200]};
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     display: flex;
     flex-direction: column;
     border-top: none;
@@ -35,7 +35,7 @@ export const Sidebar = styled.div`
   align-items: center;
   gap: 4.1rem;
   padding-top: 4.1rem;
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     flex-direction: row;
     border-bottom: 1px solid ${COLORS.GREY[200]};
     padding-left: 3rem;
@@ -50,7 +50,7 @@ export const Content = styled.div`
     margin: 0;
     font-weight: 500;
   }
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     flex-direction: row;
     padding-left: 3rem;
   }
@@ -61,14 +61,14 @@ export const Menu = styled.div`
     margin: 0;
     font-weight: 500;
     padding-bottom: 1.63rem;
-    @media (max-width: 769px) {
+    @media (max-width: 1007px) {
       display: none;
     }
   }
-  @media (min-width: 769px) {
+  @media (min-width: 1007px) {
     width: 7rem;
   }
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     display: flex;
     //width: 17rem;
     gap: 3rem;
@@ -87,7 +87,7 @@ export const Logout = styled(Button)`
     color: red;
     font-weight: 500;
   }
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     display: none;
   }
 `;
@@ -100,7 +100,7 @@ export const SubMenu = styled.div<{ active: boolean }>`
   padding-bottom: 1.18rem;
   cursor: pointer;
   font-weight: 200;
-  @media (max-width: 769px) {
+  @media (max-width: 1007px) {
     //display: flex;
   }
 `;

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   gap: 2rem;
   padding-top: 4rem;
   width: 55rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     width: 80%;
   }
 `;
@@ -44,7 +44,7 @@ const PasswordInput = styled(Input)`
   }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     font-size: 1.4rem;
     &::placeholder {
       font-size: 1.4rem;
@@ -65,7 +65,7 @@ const DeleteButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end; /* 오른쪽 끝으로 이동 */
   width: 55.7rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     width: 80%;
   }
 `;
@@ -76,7 +76,7 @@ const DeleteButton = styled(Button)`
   height: 3rem;
   padding: 0.62rem;
   font-size: 1rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     width: 7rem;
   }
   &:hover {
