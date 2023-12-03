@@ -66,7 +66,7 @@ function onAccessTokenFetched(accessToken: string) {
 async function resetTokenAndReattemptRequest(error: any) {
   try {
     const { response: errorResponse } = error; // 요청에 대한 에러 응답 정보 추출
-    console.log("1", error);
+    console.log(error);
     // 엑세스 토큰을 얻었을 때, 원래의 요청을 재시도하는데 사용
     const retryOriginalRequest = new Promise((resolve, reject) => {
       addSubscriber(async (accessToken: string) => {
@@ -99,7 +99,7 @@ async function resetTokenAndReattemptRequest(error: any) {
         .catch((err) => {
           // 요청 실패시
           // toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
-          console.log("토큰 재발급 실패~~~~~");
+          console.log("토큰 재발급 실패");
           handleUnauthorized();
           return Promise.reject(err);
         });

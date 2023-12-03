@@ -59,7 +59,6 @@ export default function MainHeader() {
       setToken(localStorage.getItem("accessToken"));
     }
   }, []);
-  console.log("hi", accessToken);
   return (
     <Wrapper scrolled={isScrolled}>
       <InnerNav>
