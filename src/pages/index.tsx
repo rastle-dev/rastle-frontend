@@ -112,8 +112,8 @@ export default function Home() {
     QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
   ]);
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const authCode = searchParams.get("social");
+    const url = new URL(window.location.href);
+    const authCode = url.searchParams.get("social");
     if (authCode === "true") {
       mutateSocialLogin.mutate();
     }

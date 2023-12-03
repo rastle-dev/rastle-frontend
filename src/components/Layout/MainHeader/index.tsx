@@ -4,6 +4,8 @@ import PATH from "@/constants/path";
 import COLORS from "@/constants/color";
 import LazyLink from "@/components/LazyLink";
 import useDetectOutside from "@/hooks/useDetectOutside";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/stores/atom/recoilState";
 import {
   Wrapper,
   InnerNav,
@@ -18,8 +20,6 @@ import {
   MenuItem,
   MenuBackground,
 } from "./index.styles";
-import { useRecoilState } from "recoil";
-import { tokenState } from "@/stores/atom/recoilState";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -59,7 +59,6 @@ export default function MainHeader() {
       setToken(localStorage.getItem("accessToken"));
     }
   }, []);
-  console.log("hi", accessToken);
   return (
     <Wrapper scrolled={isScrolled}>
       <InnerNav>

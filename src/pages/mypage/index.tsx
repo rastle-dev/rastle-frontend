@@ -4,6 +4,7 @@ import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import LoginInfo from "@/components/Mypage/loginInfo";
 import useMypage from "@/hooks/useMypage";
+import DefaultAddress from "@/components/Mypage/defaultAddress";
 import * as S from "../../styles/mypage/index.styles";
 
 const shoppingTabs = [
@@ -29,7 +30,7 @@ export default function Mypage() {
       case "로그인 정보":
         return <LoginInfo />;
       case "기본 배송지":
-        return <OrderList />;
+        return <DefaultAddress />;
       default:
         return <OrderList />;
     }
@@ -62,7 +63,9 @@ export default function Mypage() {
 
   return (
     <S.Container>
-      <h1>MYPAGE</h1>
+      <S.Header>
+        <h1>MYPAGE</h1>
+      </S.Header>
       <S.Wrapper>
         <S.Sidebar>
           <S.Menu>
