@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
@@ -22,7 +21,7 @@ const Wrapper = styled.div`
   padding-top: 4rem;
   width: 55rem;
   @media (max-width: 1007px) {
-    width: 80%;
+    width: 94%;
   }
 `;
 const Box = styled.div<ButtonProps>`
@@ -66,18 +65,19 @@ const DeleteButtonWrapper = styled.div`
   justify-content: flex-end; /* 오른쪽 끝으로 이동 */
   width: 55.7rem;
   @media (max-width: 1007px) {
-    width: 80%;
+    width: 95%;
   }
 `;
 const MobileLogoutButton = styled(Button)`
   border: none;
   border-radius: 0;
-  width: 6rem;
+  width: 8rem;
   height: 3rem;
   padding: 0.62rem;
-  font-size: 1rem;
   color: red;
   font-weight: 300;
+  font-size: 1.4rem;
+
   @media (min-width: 1007px) {
     display: none;
   }
@@ -98,7 +98,8 @@ const DeleteButton = styled(Button)`
   padding: 0.62rem;
   font-size: 1rem;
   @media (max-width: 1007px) {
-    width: 7rem;
+    width: 8rem;
+    font-size: 1.4rem;
   }
   &:hover {
     border: none;

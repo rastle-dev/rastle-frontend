@@ -99,9 +99,9 @@ export const SubMenu = styled.div<{ active: boolean }>`
   font-size: 1.36rem;
   padding-bottom: 1.18rem;
   cursor: pointer;
-  font-weight: 200;
+  font-weight: 300;
   @media (max-width: 1007px) {
-    //display: flex;
+    font-size: 1.63rem;
   }
 `;
 export const TabMenu = styled.div`
