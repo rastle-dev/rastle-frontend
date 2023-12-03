@@ -69,6 +69,27 @@ const DeleteButtonWrapper = styled.div`
     width: 80%;
   }
 `;
+const MobileLogoutButton = styled(Button)`
+  border: none;
+  border-radius: 0;
+  width: 6rem;
+  height: 3rem;
+  padding: 0.62rem;
+  font-size: 1rem;
+  color: red;
+  font-weight: 300;
+  @media (min-width: 1007px) {
+    display: none;
+  }
+  &:hover {
+    border: none;
+    color: red;
+    font-weight: 500;
+  }
+  &:focus {
+    font-weight: 500;
+  }
+`;
 const DeleteButton = styled(Button)`
   border: none;
   border-radius: 0;
@@ -91,7 +112,7 @@ const DeleteButton = styled(Button)`
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
-  const { mutateChangePassword, deleteUser } = useMypage();
+  const { mutateChangePassword, deleteUser, logout } = useMypage();
   const { data, isLoading } = useQuery({
     queryKey: [QUERYKEYS.LOAD_ME],
     queryFn: loadMe,
@@ -183,6 +204,7 @@ export default function LoginInfo() {
         </Wrapper>
       ))}
       <DeleteButtonWrapper>
+        <MobileLogoutButton title="로그아웃" onClick={logout} />
         <DeleteButton title="탈퇴하기" onClick={deleteUser} />
       </DeleteButtonWrapper>
     </div>
