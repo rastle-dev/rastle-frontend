@@ -21,10 +21,6 @@ export default function useLogin() {
       const token = response.authorization.replace("Bearer ", "");
       localStorage.setItem("accessToken", token);
       console.log(response);
-      setTimeout(async () => {
-        const cookies = document.cookie;
-        console.log("click", cookies);
-      }, 3000);
       router.push(PATH.HOME);
     },
     onError: ({

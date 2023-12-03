@@ -1,5 +1,5 @@
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
@@ -29,6 +29,14 @@ export default function useMypage() {
   const [clickable, setClickable] = useState(false);
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
   const [deleteProducts, setDeleteProducts] = useState<any>([]);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("accessToken")) {
+        setIsDataLoading(true);
+      }
+    }
+  }, []);
   const logout = async () => {
     try {
       await authLogout();
@@ -58,7 +66,7 @@ export default function useMypage() {
       await deletMe();
       toastMsg("회원 탈퇴가 완료되었습니다.");
       localStorage.clear();
-      router.push(PATH.HOME);
+      router.push(PATH.HOME).then(() => router.reload());
     } catch (err) {
       console.log(err);
     }
@@ -67,10 +75,16 @@ export default function useMypage() {
   const { data: cartProduct } = useQuery(
     [QUERYKEYS.LOAD_CART],
     loadCartProduct,
+    {
+      enabled: isDataLoading, // someCondition은 실행 여부를 결정하는 조건입니다.
+    },
   );
+  const queryClient = useQueryClient();
+
   const mutateAddCartProduct = useMutation(["addCartProduct"], addCartProduct, {
     onSuccess: async () => {
       toastMsg("장바구니에 해당 상품이 담겼습니다!");
+      queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
     },
     onError: ({
       response: {
@@ -82,7 +96,6 @@ export default function useMypage() {
       console.log(`${errorCode} / ${message}`);
     },
   });
-  const queryClient = useQueryClient();
 
   const mutateDeleteCartProduct = useMutation(
     ["deleteSelectedCartProduct"],
@@ -107,7 +120,7 @@ export default function useMypage() {
     try {
       await deleteAllCartProduct();
       toastMsg("삭제 되었습니다! 👏");
-      queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
+      await queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
     } catch (error) {
       errorMsg("전체 삭제 실패");
       console.log(error);
@@ -130,5 +143,6 @@ export default function useMypage() {
     setSelectedItems,
     deleteProducts,
     setDeleteProducts,
+    setIsDataLoading,
   };
 }
