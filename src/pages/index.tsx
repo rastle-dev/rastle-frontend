@@ -6,6 +6,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import LazyLink from "@/components/LazyLink";
 import useLogin from "@/hooks/useLogin";
+import { useRouter } from "next/dist/client/router";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -107,14 +108,17 @@ function EventProductLayer({ productData }: any) {
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
   const queryClient = useQueryClient();
+  const router = useRouter();
   const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT_PAGING]);
   const eventProductData = queryClient.getQueryData([
     QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
   ]);
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const authCode = url.searchParams.get("social");
-    if (authCode === "true") {
+    // const url = new URL(window.location.href);
+    // const authCode = url.searchParams.get("social");
+    const currentPath = router.asPath;
+    console.log("currentPath", currentPath);
+    if (currentPath === "/?social=true") {
       mutateSocialLogin.mutate();
     }
   }, []);
