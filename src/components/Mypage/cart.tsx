@@ -46,6 +46,9 @@ const Table = styled.div`
 `;
 const Select = styled(Input)`
   width: 2rem;
+  @media (max-width: 769px) {
+    margin-right: 1rem;
+  }
 `;
 const TableHeader = styled.div`
   border-bottom: 1px solid;
@@ -89,15 +92,18 @@ const Img = styled.img`
   margin-left: 0.8rem;
   @media (max-width: 769px) {
     margin-right: 3rem;
+    width: 8.5rem;
+    height: 9.29rem;
   }
 `;
 const TextInfo = styled.div`
   width: 24rem;
   padding-right: 1rem;
-  p {
+  h4 {
     font-weight: 500;
     margin: 0;
   }
+  padding-bottom: 0.5rem;
 `;
 const MobileTextInfo = styled.div`
   display: grid;
@@ -106,8 +112,16 @@ const MobileTextInfo = styled.div`
   @media (max-width: 769px) {
     display: flex;
     flex-direction: column;
-    p:nth-child(3):before {
+    p {
+      font-weight: 400;
+      font-size: 1rem;
+      padding-bottom: 0.2rem;
+    }
+    p:nth-child(2):before {
       content: "판매가 : ";
+    }
+    p:nth-child(3):before {
+      content: "수량 : ";
     }
     p:nth-child(4):before {
       content: "배송비 : ";
@@ -169,6 +183,7 @@ const TotalPrice = styled.div`
   width: 80rem;
   @media (max-width: 769px) {
     width: 88%;
+    font-size: 1.3rem;
   }
   p {
     margin: 0;
@@ -305,10 +320,10 @@ export default function Cart() {
                     <Img src={item.mainThumbnailImage} />
                     <MobileTextInfo>
                       <TextInfo>
-                        <p>{item.productName}</p>
-                        <p>
+                        <h4>{item.productName}</h4>
+                        <h4>
                           {item.size}/{item.color}
-                        </p>
+                        </h4>
                       </TextInfo>
                       <p>{item.productPrice.toLocaleString()}원</p>
                       <p>{item.count}개</p>
