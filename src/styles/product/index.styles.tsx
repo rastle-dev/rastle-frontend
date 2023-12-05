@@ -11,6 +11,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 
   ${media.mobile} {
     width: 92%;
@@ -315,7 +316,6 @@ export const ProductDetailList = styled.div`
   margin-top: 3rem;
   gap: 3rem;
   width: 60%;
-
   ${media.mobile} {
     width: 100%;
   }
@@ -323,4 +323,20 @@ export const ProductDetailList = styled.div`
 
 export const ProductDetail = styled.img`
   width: 100%;
+`;
+
+export const ScrollWrapper = styled.div`
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  &.show {
+    display: flex;
+    flex-direction: column;
+  }
 `;
