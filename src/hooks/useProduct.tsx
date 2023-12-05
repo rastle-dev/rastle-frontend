@@ -34,6 +34,8 @@ export default function useProduct() {
       return null;
     },
   );
+
+  console.log(detailData);
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(

@@ -31,7 +31,7 @@ export default function Order() {
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query;
+  const { orderList } = router.query; //일반구매
   const { selectedProducts } = router.query;
 
   const orderProducts: string = String(orderList);
@@ -59,8 +59,14 @@ export default function Order() {
       meta: "상품 합계",
       data:
         totalPriceSum !== 0
-          ? `${(totalPriceSum + 3000).toLocaleString()}원`
-          : `${(totalPriceSumDirect + 3000).toLocaleString()}원`,
+          ? `${(totalPriceSum >= 80000
+              ? totalPriceSum
+              : totalPriceSum + 3000
+            ).toLocaleString()}원`
+          : `${(totalPriceSumDirect >= 80000
+              ? totalPriceSumDirect
+              : totalPriceSumDirect + 3000
+            ).toLocaleString()}원`,
     },
     { meta: "할인 금액", data: "0원" },
   ];
@@ -166,6 +172,7 @@ export default function Order() {
                     label={input.label}
                     size={input.size}
                     value={input.value}
+                    onChange={input.onChange}
                   />
                   <S.PostalButtonWrapper>
                     <S.PostalButton
@@ -180,6 +187,7 @@ export default function Order() {
                   placeholder={input.placeholder}
                   size={input.size}
                   value={input.value}
+                  onChange={input.onChange}
                 />
               )}
               {input.size && openPostcode && (
