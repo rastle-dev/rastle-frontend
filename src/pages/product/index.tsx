@@ -9,6 +9,7 @@ import useProduct from "@/hooks/useProduct";
 import useMypage from "@/hooks/useMypage";
 import Dialog from "@/components/common/Dialog";
 import PATH from "@/constants/path";
+import toastMsg from "@/components/Toast";
 
 export default function Product() {
   const {
@@ -37,7 +38,7 @@ export default function Product() {
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
-
+  console.log("selectedProducts", selectedProducts);
   return (
     <S.Wrapper>
       {isDialogOpen && (
@@ -141,18 +142,32 @@ export default function Product() {
           <S.Pay>
             <S.StyledBuyButton
               onClick={() => {
-                router.push({
-                  pathname: PATH.ORDER, // 이동할 페이지 경로
-                  query: { selectedProducts: JSON.stringify(selectedProducts) },
-                });
+                if (selectedProducts.length === 0) {
+                  toastMsg("구매하실 제품을 선택해주세요!");
+                } else {
+                  router.push({
+                    pathname: PATH.ORDER, // 이동할 페이지 경로
+                    query: {
+                      selectedProducts: JSON.stringify(selectedProducts),
+                    },
+                  });
+                }
               }}
               title="구매하기"
               type="shop"
             />
             <S.StyledPayButton
               onClick={() => {
-                mutateAddCartProduct.mutate(cartProducts);
-                openDialog();
+                if (localStorage.getItem("accessToken")) {
+                  if (selectedProducts.length === 0) {
+                    toastMsg("장바구니에 담을 제품을 선택해주세요!");
+                  } else {
+                    mutateAddCartProduct.mutate(cartProducts);
+                    openDialog();
+                  }
+                } else {
+                  router.push(PATH.LOGIN);
+                }
               }}
               title="장바구니에 담기"
               type="shop"

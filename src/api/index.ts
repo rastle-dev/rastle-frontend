@@ -28,11 +28,15 @@ const unAuthorizationClient = axios.create({
 // 즉 모든 API 요청이 전송되기 전에 헤더에 인증 정보를 추가하는 역할 수행
 // 헤더에 accessToken을 담음
 authorizationClient.interceptors.request.use((config) => {
-  return Object.assign(config, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  });
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    return Object.assign(config, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
+  return config;
 });
 
 // 엑세스 토큰을 가져오는 중인지 여부를 나타냄
@@ -62,7 +66,7 @@ function onAccessTokenFetched(accessToken: string) {
 async function resetTokenAndReattemptRequest(error: any) {
   try {
     const { response: errorResponse } = error; // 요청에 대한 에러 응답 정보 추출
-
+    console.log(error);
     // 엑세스 토큰을 얻었을 때, 원래의 요청을 재시도하는데 사용
     const retryOriginalRequest = new Promise((resolve, reject) => {
       addSubscriber(async (accessToken: string) => {
@@ -95,7 +99,7 @@ async function resetTokenAndReattemptRequest(error: any) {
         .catch((err) => {
           // 요청 실패시
           // toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
-          console.log("토큰 재발급 실패~~~~~");
+          console.log("토큰 재발급 실패");
           handleUnauthorized();
           return Promise.reject(err);
         });
@@ -121,7 +125,8 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.response.data.errorCode);
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
-      error.response.data.errorCode === 401
+      error.response.data.errorCode === 401 &&
+      localStorage.getItem("accessToken")
     ) {
       // 엑세스 토큰을 재발급하고 요청을 다시 시도
       return resetTokenAndReattemptRequest(error);

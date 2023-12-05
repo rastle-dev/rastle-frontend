@@ -11,7 +11,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //border: 1px solid red;
 
   ${media.mobile} {
     width: 92%;
@@ -143,12 +142,12 @@ export const SizeButtonList = styled.div`
 `;
 
 export const SizeButton = styled(Button)<{ isActive?: boolean }>`
-  font-size: 1.18182rem;
-  font-weight: 400;
   width: 8rem;
   height: 2.5rem;
-  border: 0.5px solid ${COLORS.GREY.상세페이지};
 
+  font-size: 1.18182rem;
+  font-weight: 400;
+  border: 0.5px solid ${COLORS.GREY.상세페이지};
   /* isActive가 true일 때의 스타일 */
   ${({ isActive }) =>
     isActive &&

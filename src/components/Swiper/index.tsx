@@ -39,9 +39,9 @@ const StyledSwiper = styled(Swiper)`
     bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
-
     .swiper-pagination-bullet {
       margin: 0 0.25rem;
+      padding: 0 0.5rem; ;
     }
   }
 

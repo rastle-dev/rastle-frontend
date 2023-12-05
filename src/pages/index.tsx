@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/index/index.styles";
-import { useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
-import { useRouter } from "next/dist/client/router";
 import LazyLink from "@/components/LazyLink";
+import useLogin from "@/hooks/useLogin";
+import { useRouter } from "next/dist/client/router";
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
+    loadMarketProductPaging({ size: 4, visible: true }),
+  );
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
+    loadEventProductPaging({ size: 4, visible: true }),
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+    revalidate: 10, // Set the revalidate time in seconds
+  };
+}
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
 function TopLayer() {
@@ -33,8 +52,6 @@ function TopLayer() {
 }
 
 function ProductLayer({ productData }: any) {
-  console.log(productData);
-  const router = useRouter();
   return (
     <S.ProductWrapper>
       <S.ProductTitle>신상품 업데이트 🔥</S.ProductTitle>
@@ -61,8 +78,6 @@ function ProductLayer({ productData }: any) {
 }
 
 function EventProductLayer({ productData }: any) {
-  console.log(productData);
-
   return (
     <S.ProductWrapper>
       <S.ProductTitle>
@@ -90,28 +105,28 @@ function EventProductLayer({ productData }: any) {
     </S.ProductWrapper>
   );
 }
-
 export default function Home() {
+  const { mutateSocialLogin } = useLogin();
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: productData, status: productStatus } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT],
-    () => loadMarketProductPaging({ size: 4, visible: true }),
-  );
-
-  const { data: eventProductData, status: eventProductStatus } = useQuery(
-    [QUERYKEYS.LOAD_EVENTPRODUCT],
-    () => loadEventProductPaging({ size: 4, visible: true }),
-  );
-
-  console.log(productData);
-
+  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT_PAGING]);
+  const eventProductData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
+  ]);
+  useEffect(() => {
+    // const url = new URL(window.location.href);
+    // const authCode = url.searchParams.get("social");
+    const currentPath = router.asPath;
+    console.log("currentPath", currentPath);
+    if (currentPath === "/?social=true") {
+      mutateSocialLogin.mutate();
+    }
+  }, []);
   return (
     <S.StyledHome>
       <TopLayer />
-      {productStatus === "success" && productData !== undefined && (
-        <ProductLayer productData={productData} />
-      )}
-      {eventProductStatus === "success" && eventProductData !== undefined && (
+      {productData !== undefined && <ProductLayer productData={productData} />}
+      {eventProductData !== undefined && (
         <EventProductLayer productData={eventProductData} />
       )}
     </S.StyledHome>

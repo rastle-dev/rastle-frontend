@@ -4,11 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import media from "@/styles/media";
 import useMypage from "@/hooks/useMypage";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
+import LoadingBar from "@/components/LoadingBar";
 
 interface ButtonProps {
   inValid: boolean;
@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   gap: 2rem;
   padding-top: 4rem;
   width: 55rem;
-  ${media.mobile} {
-    width: 80%;
+  @media (max-width: 1007px) {
+    width: 94%;
   }
 `;
 const Box = styled.div<ButtonProps>`
@@ -43,7 +43,7 @@ const PasswordInput = styled(Input)`
   }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     font-size: 1.4rem;
     &::placeholder {
       font-size: 1.4rem;
@@ -64,8 +64,30 @@ const DeleteButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end; /* 오른쪽 끝으로 이동 */
   width: 55.7rem;
-  ${media.mobile} {
-    width: 80%;
+  @media (max-width: 1007px) {
+    width: 95%;
+  }
+`;
+const MobileLogoutButton = styled(Button)`
+  border: none;
+  border-radius: 0;
+  width: 8rem;
+  height: 3rem;
+  padding: 0.62rem;
+  color: red;
+  font-weight: 300;
+  font-size: 1.4rem;
+
+  @media (min-width: 1007px) {
+    display: none;
+  }
+  &:hover {
+    border: none;
+    color: red;
+    font-weight: 500;
+  }
+  &:focus {
+    font-weight: 500;
   }
 `;
 const DeleteButton = styled(Button)`
@@ -75,8 +97,9 @@ const DeleteButton = styled(Button)`
   height: 3rem;
   padding: 0.62rem;
   font-size: 1rem;
-  ${media.mobile} {
-    width: 7rem;
+  @media (max-width: 1007px) {
+    width: 8rem;
+    font-size: 1.4rem;
   }
   &:hover {
     border: none;
@@ -90,16 +113,27 @@ const DeleteButton = styled(Button)`
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
-  const { mutateChangePassword, deleteUser } = useMypage();
-  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+  const { mutateChangePassword, deleteUser, logout } = useMypage();
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERYKEYS.LOAD_ME],
+    queryFn: loadMe,
+  });
+
+  if (isLoading || !data)
+    return (
+      <Wrapper>
+        <LoadingBar type={6} />
+      </Wrapper>
+    );
+
   const inputs = [
     {
       label: "이름",
-      value: data?.data.userName,
+      value: data.data.userName,
     },
     {
       label: "이메일 주소",
-      value: data?.data.email,
+      value: data.data.email,
     },
     {
       placeholder: "새로운 비밀번호를 입력해주세요!",
@@ -125,7 +159,7 @@ export default function LoginInfo() {
     },
     {
       label: "전화번호",
-      value: data?.data.phoneNumber,
+      value: data.data.phoneNumber,
       onChange: onChangePassword,
     },
   ];
@@ -171,6 +205,7 @@ export default function LoginInfo() {
         </Wrapper>
       ))}
       <DeleteButtonWrapper>
+        <MobileLogoutButton title="로그아웃" onClick={logout} />
         <DeleteButton title="탈퇴하기" onClick={deleteUser} />
       </DeleteButtonWrapper>
     </div>

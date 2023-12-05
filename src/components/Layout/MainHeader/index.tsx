@@ -4,6 +4,8 @@ import PATH from "@/constants/path";
 import COLORS from "@/constants/color";
 import LazyLink from "@/components/LazyLink";
 import useDetectOutside from "@/hooks/useDetectOutside";
+import { useRecoilState } from "recoil";
+import { tokenState } from "@/stores/atom/recoilState";
 import {
   Wrapper,
   InnerNav,
@@ -31,6 +33,7 @@ export default function MainHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const menuRef = useRef<HTMLUListElement>(null);
+  // const { mutateSocialLogin } = useLogin();
 
   useDetectOutside({
     refs: [menuRef],
@@ -50,9 +53,12 @@ export default function MainHeader() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const accessToken =
-    typeof window !== "undefined" && localStorage.getItem("accessToken");
-
+  const [accessToken, setToken] = useRecoilState(tokenState);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setToken(localStorage.getItem("accessToken"));
+    }
+  }, []);
   return (
     <Wrapper scrolled={isScrolled}>
       <InnerNav>
@@ -102,7 +108,7 @@ export default function MainHeader() {
         ) : (
           <RightElemet>
             <LazyLink href={PATH.LOGIN}>
-              <span>MYPAGE</span>
+              <span>LOGIN</span>
             </LazyLink>
             <LazyLink href={PATH.LOGIN}>
               <span>CART</span>

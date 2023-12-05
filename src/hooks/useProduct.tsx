@@ -43,9 +43,9 @@ export default function useProduct() {
   ];
   const uniqueSizes = [
     ...new Set(
-      detailData?.data.productColor.productColors
-        .map((item: any) => item.sizes.map((v: any) => v.size))
-        .join(""),
+      detailData?.data.productColor.productColors.flatMap((item: any) =>
+        item.sizes.map((v: any) => v.size),
+      ),
     ),
   ];
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
