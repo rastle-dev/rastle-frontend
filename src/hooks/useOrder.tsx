@@ -3,7 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useMypage from "@/hooks/useMypage";
-import { router } from "next/client";
+import { useRouter } from "next/dist/client/router";
+
 import useInput from "@/hooks/useInput";
 import { RequestPayResponse } from "../../portone";
 
@@ -12,6 +13,8 @@ type Address = {
   zonecode: number | undefined;
 };
 export default function useOrder() {
+  const router = useRouter();
+
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   console.log(data);
   const { cartProduct } = useMypage();
