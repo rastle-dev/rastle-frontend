@@ -31,7 +31,7 @@ export default function Order() {
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query; //일반구매
+  const { orderList } = router.query;
   const { selectedProducts } = router.query;
 
   const orderProducts: string = String(orderList);
@@ -70,8 +70,6 @@ export default function Order() {
     },
     { meta: "할인 금액", data: "0원" },
   ];
-
-  console.log(cartProduct);
 
   return (
     <S.Temp>
