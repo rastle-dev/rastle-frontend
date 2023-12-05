@@ -27,10 +27,11 @@ export default function Order() {
     PaymentOptionsButtons,
     DeliveryButtons,
     OrdererInfo,
+    handlePaymentSubmit,
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query;
+  const { orderList } = router.query; //일반구매
   const { selectedProducts } = router.query;
 
   const orderProducts: string = String(orderList);
@@ -58,11 +59,19 @@ export default function Order() {
       meta: "상품 합계",
       data:
         totalPriceSum !== 0
-          ? `${(totalPriceSum + 3000).toLocaleString()}원`
-          : `${(totalPriceSumDirect + 3000).toLocaleString()}원`,
+          ? `${(totalPriceSum >= 80000
+              ? totalPriceSum
+              : totalPriceSum + 3000
+            ).toLocaleString()}원`
+          : `${(totalPriceSumDirect >= 80000
+              ? totalPriceSumDirect
+              : totalPriceSumDirect + 3000
+            ).toLocaleString()}원`,
     },
     { meta: "할인 금액", data: "0원" },
   ];
+
+  console.log(cartProduct);
 
   return (
     <S.Temp>
@@ -163,6 +172,7 @@ export default function Order() {
                     label={input.label}
                     size={input.size}
                     value={input.value}
+                    onChange={input.onChange}
                   />
                   <S.PostalButtonWrapper>
                     <S.PostalButton
@@ -177,6 +187,7 @@ export default function Order() {
                   placeholder={input.placeholder}
                   size={input.size}
                   value={input.value}
+                  onChange={input.onChange}
                 />
               )}
               {input.size && openPostcode && (
@@ -233,7 +244,7 @@ export default function Order() {
               </S.PaymentOptionsButton>
             ))}
           </S.PaymentOptions>
-          <S.PaymentButton title="결제하기" />
+          <S.PaymentButton onClick={handlePaymentSubmit} title="결제하기" />
         </S.InfoWrapper>
       </S.Container>
     </S.Temp>
