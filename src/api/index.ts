@@ -123,6 +123,12 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.message);
     console.log("에러를 잡아줘", error.message.includes("401"));
     console.log("에러를 잡아줘", error.response.data.errorCode);
+    if (error.response.data.errorCode === 403) {
+      // 403 인증에러, 사용자가 개인정보 브라우저에서 강제 종료 후 api 요청할 경우
+      console.log("403error");
+      toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
+      handleUnauthorized();
+    }
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
       error.response.data.errorCode === 401 &&
