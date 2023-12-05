@@ -71,9 +71,9 @@ const API = {
   CART: `${CART}`,
   REMOVE: `${REMOVE}`,
   CHECKAUTHORITY: `${AUTH}${AUTHORITY}`,
-  KAKAO_AUTH_URL: `https://rastledev.site/oauth2/authorization/kakao?redirect_uri=https://www.recordyslow.com`,
-  LOCAL_KAKAO_AUTH_URL: `https://rastledev.site/oauth2/authorization/kakao?redirect_uri=http://localhost:3000`,
-  NAVER_AUTH_URL: `https://rastledev.site/oauth2/authorization/naver?redirect_uri=https://www.recordyslow.com`,
-  LOCAL_NAVER_AUTH_URL: `https://rastledev.site/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
+  KAKAO_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/kakao?redirect_uri=https://www.recordyslow.com`,
+  LOCAL_KAKAO_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/kakao?redirect_uri=http://localhost:3000`,
+  NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=https://www.recordyslow.com`,
+  LOCAL_NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
 };
 export default API;

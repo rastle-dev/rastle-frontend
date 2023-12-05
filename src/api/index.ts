@@ -15,11 +15,11 @@ const handleUnauthorized = () => {
 // axios.create()함수를 사용하여 새로운 Axios 인스턴스를 생성
 // 이 인스턴스는 api 요청을 보낼때 인증에 필요한 설정과 헤더를 가지고있음
 const authorizationClient = axios.create({
-  baseURL: "https://rastledev.site",
+  baseURL: "https://api.recordyslow.com",
   withCredentials: true, // 요청보낼 때 자격 증명 정보(인증 헤더 등)을 포함시킴
 });
 const unAuthorizationClient = axios.create({
-  baseURL: "https://rastledev.site",
+  baseURL: "https://api.recordyslow.com",
   withCredentials: true,
 });
 
