@@ -31,9 +31,7 @@ export default function Order() {
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query;
-  const { selectedProducts } = router.query;
-
+  const { orderList, selectedProducts } = router.query;
   const orderProducts: string = String(orderList);
   console.log("order", orderProducts);
   if (typeof selectedProducts === "string") {
