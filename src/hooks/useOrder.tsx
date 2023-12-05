@@ -123,7 +123,6 @@ export default function useOrder() {
   const handlePaymentSubmit = () => {
     const { orderList } = router.query; // 일반구매
     const { selectedProducts } = router.query;
-
     const orderProducts: string = String(orderList);
 
     console.log(clickedPaymentButtonIndex);
