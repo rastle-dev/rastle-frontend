@@ -77,7 +77,7 @@ function DefaultHeader() {
       <ReturnInformationWrapper>
         <CompanyTitle>BANK ACCOUNT</CompanyTitle>
         <InformationDetail>카카오뱅크 3333-28-1864224</InformationDetail>
-        <InformationDetail>예금주명 : 홍의성(레슬)</InformationDetail>
+        <InformationDetail>예금주명 : 홍정성(레슬)</InformationDetail>
       </ReturnInformationWrapper>
       <ReturnInformationWrapper>
         <CompanyTitle>FOLLOW</CompanyTitle>
