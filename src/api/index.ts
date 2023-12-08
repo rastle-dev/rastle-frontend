@@ -15,11 +15,11 @@ const handleUnauthorized = () => {
 // axios.create()함수를 사용하여 새로운 Axios 인스턴스를 생성
 // 이 인스턴스는 api 요청을 보낼때 인증에 필요한 설정과 헤더를 가지고있음
 const authorizationClient = axios.create({
-  baseURL: "https://rastledev.site",
+  baseURL: API.BASE_URL,
   withCredentials: true, // 요청보낼 때 자격 증명 정보(인증 헤더 등)을 포함시킴
 });
 const unAuthorizationClient = axios.create({
-  baseURL: "https://rastledev.site",
+  baseURL: API.BASE_URL,
   withCredentials: true,
 });
 
@@ -123,6 +123,12 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.message);
     console.log("에러를 잡아줘", error.message.includes("401"));
     console.log("에러를 잡아줘", error.response.data.errorCode);
+    if (error.response.data.errorCode === 403) {
+      // 403 인증에러, 사용자가 개인정보 브라우저에서 강제 종료 후 api 요청할 경우
+      console.log("403error");
+      toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
+      handleUnauthorized();
+    }
     if (
       // 401 인증에러이면서 로컬 스토리지에 엑세스 토큰이 존재하는 경우
       error.response.data.errorCode === 401 &&
@@ -139,7 +145,8 @@ authorizationClient.interceptors.response.use(
 unAuthorizationClient.interceptors.response.use(
   (response) => {
     // 특정 도메인에 대한 접근 허용, 로그인을 하지 않은 인증되지 않은 사용자니까
-    response.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+    response.headers["Access-Control-Allow-Origin"] =
+      "https://www.recordyslow.com/";
     return response;
   },
   (error) => {

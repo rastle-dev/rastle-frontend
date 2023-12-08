@@ -3,16 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useMypage from "@/hooks/useMypage";
-import { router } from "next/client";
-import { log } from "util";
+import { useRouter } from "next/dist/client/router";
+
 import useInput from "@/hooks/useInput";
-import { RequestPayParams, RequestPayResponse } from "../../portone";
+import { RequestPayResponse } from "../../portone";
 
 type Address = {
   address: string | undefined;
   zonecode: number | undefined;
 };
 export default function useOrder() {
+  const router = useRouter();
+
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   console.log(data);
   const { cartProduct } = useMypage();
@@ -109,9 +111,10 @@ export default function useOrder() {
 
   /* 3. 콜백 함수 정의하기 */
   function callback(response: RequestPayResponse) {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     const { success, error_msg } = response;
-    //주문을 어떻게 생성할건지가 궁금해
-    //결제가 끝나고 나서 어떤 데이터로 주문을 만들건지 , 어떤 api를 사용해서 만들건지가 궁금하다
+    // 주문을 어떻게 생성할건지가 궁금해
+    // 결제가 끝나고 나서 어떤 데이터로 주문을 만들건지 , 어떤 api를 사용해서 만들건지가 궁금하다
 
     if (success) {
       alert("결제 성공");
@@ -123,7 +126,6 @@ export default function useOrder() {
   const handlePaymentSubmit = () => {
     const { orderList } = router.query; // 일반구매
     const { selectedProducts } = router.query;
-
     const orderProducts: string = String(orderList);
 
     console.log(clickedPaymentButtonIndex);
@@ -179,6 +181,7 @@ export default function useOrder() {
           (v: any) =>
             orderProducts.split(",").map(Number)?.includes(v.cartProductId),
         )
+        // eslint-disable-next-line array-callback-return
         .map((item: any) => {
           console.log("장바구니에서 선택된 제품", item);
         });
@@ -232,7 +235,7 @@ export default function useOrder() {
           // naverCultureBenefit: true, // 문화비 소득공제 적용여부,
         };
       }
-      //2) 카카오페이일때
+      // 2) 카카오페이일때
       else if (pgData === "kakaopay") {
         let name;
         if (parsedSelectedProducts.length === 1) {
@@ -255,7 +258,7 @@ export default function useOrder() {
           m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
         };
       }
-      //2) 일반결제일때
+      // 2) 일반결제일때
       else if (pgData === "nice") {
         let name;
         if (parsedSelectedProducts.length === 1) {

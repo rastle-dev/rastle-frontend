@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
@@ -10,6 +10,7 @@ import useMypage from "@/hooks/useMypage";
 import Dialog from "@/components/common/Dialog";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
+import IconButton from "@/components/common/IconButton";
 
 export default function Product() {
   const {
@@ -31,6 +32,35 @@ export default function Product() {
   const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show the button when the scroll position is greater than 20 pixels
+      setShowScrollButton(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Add smooth scrolling behavior
+    });
+  };
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
+  };
   const openDialog = () => {
     setIsDialogOpen(true);
   };
@@ -181,6 +211,21 @@ export default function Product() {
           <S.ProductDetail src={img} />
         ))}
       </S.ProductDetailList>
+      <S.ScrollWrapper
+        className={showScrollButton ? "show" : ""}
+        // onClick={scrollToTop}
+      >
+        <IconButton
+          onClick={scrollToTop}
+          iconName="arrowUp"
+          color={COLORS.블랙}
+        />
+        <IconButton
+          onClick={scrollToBottom}
+          iconName="arrowDown"
+          color={COLORS.블랙}
+        />
+      </S.ScrollWrapper>
     </S.Wrapper>
   );
 }

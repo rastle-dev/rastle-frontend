@@ -10,6 +10,8 @@ const ICONS: IconProps = {
   arrowRight: "bi bi-chevron-right",
   arrowLeft: "bi bi-chevron-left",
   delete: "bi bi-x-circle-fill",
+  arrowUp: "bi bi-arrow-up-circle-fill",
+  arrowDown: "bi bi-arrow-down-circle-fill",
 };
 
 export default ICONS;
