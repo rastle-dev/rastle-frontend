@@ -211,6 +211,9 @@ const OrderButton = styled(Button)`
   &:hover {
     font-weight: 400;
   }
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
 export default function Cart() {
   const {
