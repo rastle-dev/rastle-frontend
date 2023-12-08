@@ -57,7 +57,8 @@ function DefaultHeader() {
     <Container>
       <CompanyWrapper>
         <CompanyTitle>Recordy Slow</CompanyTitle>
-        <InformationDetail>Company : 레슬</InformationDetail>
+        <InformationDetail>상호명 : 레슬</InformationDetail>
+        <InformationDetail>대표자명 : 홍의성</InformationDetail>
         <InformationDetail>TEL/ 0507-1347-7140</InformationDetail>
         <InformationDetail>사업자등록번호 : 4911602184</InformationDetail>
         <InformationDetail>
