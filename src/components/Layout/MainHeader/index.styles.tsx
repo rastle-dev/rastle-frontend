@@ -134,7 +134,7 @@ const CenterElement = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   span {
-    font-size: 3rem;
+    font-size: 2.3rem;
     font-weight: 200;
   }
   z-index: 1000;
@@ -177,7 +177,6 @@ const PersonIcon = styled(IconButton)`
     cursor: pointer;
   }
 `;
-
 export {
   Wrapper,
   InnerNav,
