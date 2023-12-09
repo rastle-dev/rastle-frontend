@@ -154,7 +154,8 @@ const SelectButton = styled(Button)`
   font-size: 1rem;
   width: 6.2rem;
   border-radius: 0;
-  border: 0.5px solid;
+  border: 1px solid ${COLORS.GREY[300]};
+
   @media (max-width: 769px) {
     display: none;
   }
@@ -170,7 +171,11 @@ const DeleteButton = styled(Button)`
   &:focus {
     border: none;
   }
+  &:hover {
+    border: none;
+  }
   @media (min-width: 769px) {
+    border: 1px solid ${COLORS.GREY[300]};
     border-radius: 0;
     font-weight: 200;
     font-size: 1rem;
