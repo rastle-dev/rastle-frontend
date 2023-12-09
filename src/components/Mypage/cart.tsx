@@ -286,8 +286,7 @@ export default function Cart() {
       <h2>장바구니</h2>
       {cartProduct?.data.content.length === 0 ? (
         <NODATA>
-          장바구니에 상품이 없으시네요. &nbsp; &nbsp;장바구니에 상품을
-          담아보세요! 😋
+          장바구니에 상품이 없어요. &nbsp;장바구니에 상품을 담아보세요! 😋
         </NODATA>
       ) : (
         <>
