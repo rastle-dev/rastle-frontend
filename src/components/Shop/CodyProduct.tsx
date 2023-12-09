@@ -22,7 +22,7 @@ export default function CodyProduct() {
         {bundleData?.data.content.map((item: any, idx: number) => (
           <S.CurrentMarketWrapper>
             <S.FirstMarketDescription>
-              RECODY {idx + 1}: {item.name}
+              RECORDY {idx + 1}: {item.name}
             </S.FirstMarketDescription>
             <SwiperComponent imgUrls={item.imageUrls} />
             <h2>제품 정보</h2>

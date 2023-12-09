@@ -26,7 +26,8 @@ export const Header = styled.div`
   gap: 1.75rem;
   h1 {
     margin: 0;
-    font-size: 3.4375rem;
+    padding-top: 2rem;
+    font-size: 2.5rem;
     font-weight: 400;
     text-align: center;
   }

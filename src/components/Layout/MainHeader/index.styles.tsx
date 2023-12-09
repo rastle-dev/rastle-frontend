@@ -136,6 +136,9 @@ const CenterElement = styled.div`
   span {
     font-size: 2.3rem;
     font-weight: 200;
+    @media (max-width: 769px) {
+      font-size: 2rem;
+    }
   }
   z-index: 1000;
 `;
