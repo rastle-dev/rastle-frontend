@@ -93,8 +93,8 @@ const Img = styled.img`
   margin-left: 0.8rem;
   @media (max-width: 769px) {
     margin-right: 3rem;
-    width: 8.5rem;
-    height: 9.29rem;
+    width: 9rem;
+    height: 9.84rem;
   }
 `;
 const TextInfo = styled.div`
@@ -165,6 +165,9 @@ const DeleteButton = styled(Button)`
   width: 3.2rem;
   border-radius: 0;
   border: none;
+  &:focus {
+    border: none;
+  }
   @media (min-width: 769px) {
     border-radius: 0;
     font-weight: 200;
