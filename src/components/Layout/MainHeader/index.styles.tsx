@@ -116,10 +116,12 @@ const MenuItem = styled.li`
   }
   @media (max-width: 769px) {
     list-style: none;
-    padding: 2rem;
+    padding: 2rem 2rem 2rem 0;
     margin: 0;
-    //border-bottom: 1px solid #ccc;
     font-weight: 400;
+    a {
+      padding: 2rem 10rem 2rem 2rem;
+    }
   }
   &:hover {
     background-color: ${COLORS.GREY[200]};

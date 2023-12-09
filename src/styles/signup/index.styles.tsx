@@ -63,7 +63,6 @@ export const CheckBoxWithText = styled.div`
   padding-bottom: 2.5rem;
   justify-content: flex-start;
   align-items: center;
-
   h3 {
     font-size: 1rem;
     margin-left: 0.94rem;
@@ -72,6 +71,9 @@ export const CheckBoxWithText = styled.div`
   h4 {
     font-size: 1rem;
     margin-left: 0.44rem;
+  }
+  input {
+    margin-bottom: 0.35rem;
   }
 `;
 
