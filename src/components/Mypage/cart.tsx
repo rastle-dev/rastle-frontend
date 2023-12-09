@@ -48,6 +48,7 @@ const Select = styled(Input)`
   width: 2rem;
   @media (max-width: 769px) {
     margin-right: 1rem;
+    display: none;
   }
 `;
 const TableHeader = styled.div`
@@ -211,10 +212,20 @@ const OrderButton = styled(Button)`
   &:hover {
     font-weight: 400;
   }
+`;
+const SelectOrderButton = styled(Button)`
+  padding: 1.18rem 3rem 1.18rem 3rem;
+  font-size: 1.18rem;
+  font-weight: 200;
+  border-radius: 0.45rem;
+  &:hover {
+    font-weight: 400;
+  }
   @media (max-width: 769px) {
     display: none;
   }
 `;
+
 export default function Cart() {
   const {
     cartProduct,
@@ -385,7 +396,7 @@ export default function Cart() {
                 });
               }}
             />
-            <OrderButton
+            <SelectOrderButton
               title="선택상품 주문"
               type="shop"
               onClick={() => {
