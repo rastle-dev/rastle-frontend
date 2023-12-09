@@ -69,6 +69,7 @@ export default function Product() {
     setIsDialogOpen(false);
   };
   console.log("selectedProducts", selectedProducts);
+
   return (
     <S.Wrapper>
       {isDialogOpen && (

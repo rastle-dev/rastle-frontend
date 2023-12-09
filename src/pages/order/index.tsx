@@ -72,6 +72,7 @@ export default function Order() {
   ];
 
   console.log(cartProduct);
+  console.log(router.query);
 
   return (
     <S.Temp>

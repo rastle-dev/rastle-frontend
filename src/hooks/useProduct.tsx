@@ -13,6 +13,7 @@ interface SelectedProduct {
   count: number;
   key?: string;
   mainThumbnailImage: string;
+  productId: string | string[] | undefined;
 }
 interface CartProduct {
   productId: any;
@@ -56,7 +57,10 @@ export default function useProduct() {
     size: null,
     count: 0, // 기본 수량
     mainThumbnailImage: detailData?.data.mainThumbnailImage,
+    productId,
   });
+
+  console.log(detailData);
 
   // 선택된 제품 정보들을 관리하는 상태 변수
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
@@ -92,8 +96,11 @@ export default function useProduct() {
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
         key: `${size}-${selectedProduct.color}`,
-        mainThumbnailImage: detailData?.data.mainThumbnail, // 문자열로 결합
+        mainThumbnailImage: detailData?.data.mainThumbnailImage, // 문자열로 결합
+        productId,
       };
+
+      console.log(newProduct);
 
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인
 
@@ -111,6 +118,8 @@ export default function useProduct() {
       }
     }
   };
+
+  console.log(selectedProducts);
 
   const inputChangeHandler = (event: any) => {
     setSelectedProduct((prevProduct) => ({
