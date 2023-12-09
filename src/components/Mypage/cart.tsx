@@ -72,6 +72,8 @@ export const NODATA = styled.div`
   font-weight: 400;
   color: ${COLORS.GREY[500]};
   font-size: 1.5rem;
+  height: 30rem;
+  //border: 1px solid red;
 `;
 const ProductInfo = styled.div`
   display: flex;
