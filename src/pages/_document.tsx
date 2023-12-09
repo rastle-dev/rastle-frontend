@@ -45,6 +45,8 @@ class MyDocument extends Document {
             src="https://cdn.iamport.kr/v1/iamport.js"
             strategy="beforeInteractive"
           />
+          <Script src="https://pay.naver.com/customer/js/naverPayButton.js" />
+          <Script src="https://pay.naver.com/customer/js/mobile/naverPayButton.js" />
         </Head>
         <body>
           <Main />
