@@ -63,6 +63,10 @@ export const StyledInput = styled(Input)`
   &:focus {
     border-bottom: 2px solid;
   }
+  &:focus {
+    border-bottom: ${(props) =>
+      props.readOnly ? `0.07rem solid ${COLORS.GREY[300]}` : "2px solid"};
+  }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
   ${media.mobile} {

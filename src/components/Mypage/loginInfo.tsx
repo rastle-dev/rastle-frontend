@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
@@ -118,6 +118,15 @@ export default function LoginInfo() {
     queryKey: [QUERYKEYS.LOAD_ME],
     queryFn: loadMe,
   });
+  const [isSocial, setIsSocial] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("loginType") === "social") {
+        setIsSocial(true);
+      }
+    }
+  }, []);
+  console.log("isSocial", isSocial);
 
   if (isLoading || !data)
     return (
@@ -130,16 +139,21 @@ export default function LoginInfo() {
     {
       label: "이름",
       value: data.data.userName,
+      readOnly: true,
     },
     {
       label: "이메일 주소",
       value: data.data.email,
+      readOnly: true,
     },
     {
-      placeholder: "새로운 비밀번호를 입력해주세요!",
+      placeholder: isSocial
+        ? "소셜 로그인된 상태에서는 비밀번호를 변경할 수 없습니다."
+        : "새로운 비밀번호를 입력해주세요!",
       label: "비밀번호",
       type: "password",
       onChange: onChangePassword,
+      readOnly: isSocial,
       message:
         password.length > 0 && password.length < 8
           ? "영문, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상 16자 이하 입력해주세요."
@@ -151,6 +165,7 @@ export default function LoginInfo() {
       type: "password",
       buttonTitle: "변경",
       onChange: onChangePasswordCheck,
+      readOnly: isSocial,
       message:
         password !== passwordCheck && passwordCheck.length > 0
           ? "비밀번호가 일치하지 않습니다."
@@ -163,6 +178,14 @@ export default function LoginInfo() {
       onChange: onChangePassword,
     },
   ];
+  const filteredInputs = inputs.filter((input) => {
+    // isSocial이 true이고, 라벨이 "비밀번호" 또는 "비밀번호 확인"이 아닌 경우만 반환
+    return (
+      !isSocial ||
+      (input.label !== "비밀번호" && input.label !== "비밀번호 확인")
+    );
+  });
+  console.log("filte", filteredInputs);
   return (
     <div>
       <h2>로그인 정보</h2>
@@ -179,6 +202,8 @@ export default function LoginInfo() {
                 onChange={input.onChange}
                 message={input.message}
                 invalid={input.inValid}
+                disabled={isSocial}
+                readOnly={isSocial}
               />
               <PasswordChangeButton
                 title="변경"
@@ -199,7 +224,7 @@ export default function LoginInfo() {
               value={input.value}
               onChange={input.onChange}
               message={input.message}
-              invalid={input.inValid}
+              readOnly={input.readOnly}
             />
           )}
         </Wrapper>
