@@ -6,8 +6,9 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   //height: 55rem;
+  width: 35rem;
+  //width: 100%;
   //overflow: scroll; // 세로 스크롤 사용
-  padding-right: 1rem;
   h2 {
     font-size: 1rem;
     flex-shrink: 0;
@@ -23,6 +24,9 @@ export const Title = styled.h1`
   line-height: normal;
   padding-bottom: 3.5rem;
   margin: 0;
+  @media (max-width: 769px) {
+    font-size: 3rem;
+  }
 `;
 
 export const InputWithButtonDiv = styled.div`
@@ -75,6 +79,7 @@ export const SignupButtonDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const StyledButton = styled(Button)`
@@ -85,14 +90,14 @@ export const StyledButton = styled(Button)`
 `;
 
 export const SignupButton = styled(Button)`
-  width: 35rem;
   height: 4.375rem;
   flex-shrink: 0;
-  //color: white;
-  //background-color: black;
-  //&:hover {
-  //  color: white;
-  //  background-color: black;
+  //padding-left: 15rem;
+  //padding-right: 15rem;
+  width: 100%;
+  //@media (max-width: 440px) {
+  //  padding-left: 11.5rem;
+  //  padding-right: 11.5rem;
   //}
 `;
 

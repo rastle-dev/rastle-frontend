@@ -8,9 +8,9 @@ const Label = styled.div<{ invalid?: boolean }>`
   font-size: 1rem;
   color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
-  ${media.xsmall} {
-    font-size: 1.5rem;
-  }
+  // ${media.xsmall} {
+  //   font-size: 1.5rem;
+  // }
 `;
 
 const InputWrapper = styled.input<{ size: number; invalid?: boolean }>`
