@@ -114,11 +114,9 @@ export default function Home() {
     QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
   ]);
   useEffect(() => {
-    // const url = new URL(window.location.href);
-    // const authCode = url.searchParams.get("social");
     const currentPath = router.asPath;
-    console.log("currentPath", currentPath);
     if (currentPath === "/?social=true") {
+      localStorage.setItem("loginType", "social");
       mutateSocialLogin.mutate();
     }
   }, []);
