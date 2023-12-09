@@ -15,10 +15,10 @@ const Container = styled.div`
   padding-top: 2rem;
 `;
 const Wrapper = styled.div`
-  width: 95%;
+  width: 93%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
   background-color: transparent;
 `;
@@ -33,7 +33,7 @@ const CompanyWrapper = styled.div`
 
 const CompanyTitle = styled.div`
   font-size: 1.3rem;
-  padding: 1rem 0 1rem 0;
+  padding: 1rem 1rem 1rem 0;
   font-weight: 500;
 `;
 
