@@ -9,13 +9,13 @@ export default {
 };
 
 export function DefaultInput() {
-  return <Input value="TEST" labelHidden />;
+  return <Input value="TEST" labelHidden disabled />;
 }
 export function CheckBox() {
   return <Input type="checkbox" />;
 }
 export function LabelInput() {
-  return <Input size={30} value="label" label="label" />;
+  return <Input size={30} value="label" label="label" readOnly />;
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function ControlTest(args: any) {
