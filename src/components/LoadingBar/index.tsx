@@ -1,35 +1,26 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import styled from "styled-components";
 import React from "react";
 import COLORS from "../../constants/color";
 
-export default function LoadingBar({ type }: { type: number }) {
-  return (
-    <Wrapper>
-      <Loading key={0}>
-        <div className={`loader loader-${type}`} />
-      </Loading>
-    </Wrapper>
-  );
-}
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
-  padding-top: 20rem;
+  //width: 100%;
+  //height: 100%;
+  //border: 1px solid blue;
 `;
 const Loading = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
+  //padding: 1rem 0;
   .loader {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin: 3em;
+    margin: 7em;
     display: inline-block;
     position: relative;
     vertical-align: middle;
@@ -116,3 +107,12 @@ const Loading = styled.div`
     }
   }
 `;
+export default function LoadingBar({ type }: { type: number }) {
+  return (
+    <Wrapper>
+      <Loading key={0}>
+        <div className={`loader loader-${type}`} />
+      </Loading>
+    </Wrapper>
+  );
+}

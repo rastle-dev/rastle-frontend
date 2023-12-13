@@ -13,13 +13,14 @@ import LoadingBar from "@/components/LoadingBar";
 interface ButtonProps {
   inValid: boolean;
 }
-
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isLoading?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding-top: 4rem;
+  //height: 100%;
   width: 55rem;
+  height: ${({ isLoading }) => (isLoading ? "50rem" : "auto")};
   @media (max-width: 1007px) {
     width: 94%;
   }
@@ -130,7 +131,7 @@ export default function LoginInfo() {
 
   if (isLoading || !data)
     return (
-      <Wrapper>
+      <Wrapper isLoading={!isLoading}>
         <LoadingBar type={6} />
       </Wrapper>
     );
@@ -190,7 +191,7 @@ export default function LoginInfo() {
     <div>
       <h2>로그인 정보</h2>
       {inputs.map((input) => (
-        <Wrapper>
+        <Wrapper isLoading={isLoading}>
           {input.buttonTitle ? (
             <Box inValid={input.inValid}>
               <PasswordInput
