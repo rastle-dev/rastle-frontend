@@ -31,8 +31,10 @@ export default function Order() {
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query; //일반구매
+  const { orderList } = router.query;
   const { selectedProducts } = router.query;
+
+  console.log(router.query);
 
   const orderProducts: string = String(orderList);
   console.log("order", orderProducts);
@@ -140,6 +142,7 @@ export default function Order() {
                   </S.Product>
                 ),
               )}
+
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (
