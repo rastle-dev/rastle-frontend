@@ -298,7 +298,7 @@ export default function Cart() {
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
-    (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
+    (sum: any, item: any) => sum + item.productPrice * item.count,
     0,
   );
   return (
@@ -404,11 +404,11 @@ export default function Cart() {
             ) : (
               <>
                 <p>상품 구매 금액</p>
-                <div>{(totalPriceSum - 3000).toLocaleString()}원</div>
+                <div>{totalPriceSum.toLocaleString()}원</div>
                 <p>+ 배송비</p>
                 <div>3,000원</div>
                 <p>= 합계</p>
-                <div>{totalPriceSum?.toLocaleString()}원</div>
+                <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
               </>
             )}
           </TotalPrice>
