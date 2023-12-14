@@ -14,7 +14,6 @@ import {
   deleteSelectedCartProduct,
   loadCartProduct,
 } from "@/api/cart";
-import { createOrder } from "@/api/shop";
 
 type ProductItem = {
   defaultImg: string;
@@ -113,6 +112,7 @@ export default function useMypage() {
         setDeleteButtonDisabled(true);
       },
       onSuccess: async () => {
+        toast.dismiss();
         toastMsg("선택하신 상품이 삭제 되었습니다! 👏");
       },
       onError: ({

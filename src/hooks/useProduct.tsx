@@ -5,6 +5,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { createOrder, loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
+import { toast } from "react-toastify";
 
 interface SelectedProduct {
   title?: string;
@@ -80,6 +81,7 @@ export default function useProduct() {
   // 사이즈 버튼 클릭 핸들러
   const handleSizeClick = (size: string) => {
     if (selectedProduct.color === null) {
+      toast.dismiss();
       toastMsg("색상을 먼저 선택하세요");
     } else {
       setSelectedProduct((prevProduct) => ({

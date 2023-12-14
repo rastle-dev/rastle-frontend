@@ -8,6 +8,8 @@ import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import LoadingBar from "@/components/LoadingBar";
 import { createOrder } from "@/api/shop";
+import errorMsg from "@/components/Toast/error";
+import { toast } from "react-toastify";
 
 type ProductItem = {
   defaultImg: string;
@@ -263,8 +265,8 @@ export default function Cart() {
     deleteButtonDisabled,
   } = useMypage();
   const router = useRouter();
-  const [cartorderProducts, setCartorderProducts] = useState<any>([]);
-
+  const [cartOrderProducts, setCartOrderProducts] = useState<any>([]);
+  // console.log()
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
     const isSelected = selectedItems.includes(item);
@@ -277,10 +279,10 @@ export default function Cart() {
     } else {
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
-      setCartorderProducts([...cartorderProducts, item.cartProductId]);
+      setCartOrderProducts([...cartOrderProducts, item.cartProductId]);
     }
   };
-  const orderList = cartorderProducts.join(",");
+  const orderList = cartOrderProducts.join(",");
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
@@ -295,14 +297,13 @@ export default function Cart() {
         (item: any) => item.cartProductId,
       );
       setDeleteProducts(cartProductIds);
-      setCartorderProducts(productIds);
+      setCartOrderProducts(productIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
     (sum: any, item: any) => sum + item.productPrice * item.count,
     0,
   );
-  console.log(selectedItems);
 
   const onClickOrderButton = async () => {
     const orderProducts = selectedItems.map((product: any) => ({
@@ -313,7 +314,51 @@ export default function Cart() {
       count: product.count,
       totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
     }));
+    if (orderProducts.length === 0) {
+      toast.dismiss();
+      errorMsg("주문하실 상품을 선택해주세요");
+    } else {
+      try {
+        const data = await createOrder({
+          orderProducts,
+        });
 
+        if (data) {
+          const productOrderNumbers: string[] = data.data.orderProducts.map(
+            (product: { productOrderNumber: string }) =>
+              product.productOrderNumber,
+          );
+
+          router.push({
+            pathname: PATH.ORDER,
+            query: {
+              orderList,
+              selectedProducts: JSON.stringify(selectedItems),
+              orderDetailId: data.data.orderDetailId,
+              orderNumber: data.data.orderNumber,
+              productOrderNumbers,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const onClickWholeOrderButton = async () => {
+    const orderProducts = cartProduct?.data.content.map((product: any) => ({
+      productId: product.productId,
+      name: product.productName,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+    }));
+    const whole = cartProduct?.data.content.map(
+      (product: any) => product.cartProductId,
+    );
+    const wholeOrderList = whole.join(",");
     try {
       const data = await createOrder({
         orderProducts,
@@ -324,14 +369,11 @@ export default function Cart() {
           (product: { productOrderNumber: string }) =>
             product.productOrderNumber,
         );
-
-        console.log(productOrderNumbers);
-
         router.push({
           pathname: PATH.ORDER,
           query: {
-            orderList,
-            selectedProducts: JSON.stringify(selectedItems),
+            orderList: wholeOrderList,
+            selectedProducts: JSON.stringify(cartProduct?.data.content),
             orderDetailId: data.data.orderDetailId,
             orderNumber: data.data.orderNumber,
             productOrderNumbers,
@@ -342,7 +384,6 @@ export default function Cart() {
       console.log(err);
     }
   };
-
   const onClickSelectedOrderButton = async (item: any) => {
     const orderProducts = selectedItems.map((product: any) => ({
       productId: product.productId,
@@ -500,7 +541,7 @@ export default function Cart() {
               type="shop"
               onClick={async () => {
                 try {
-                  await onClickOrderButton();
+                  await onClickWholeOrderButton();
                 } catch (error) {
                   console.error(error);
                 }
