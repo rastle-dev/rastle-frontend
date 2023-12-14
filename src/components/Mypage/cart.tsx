@@ -437,7 +437,12 @@ export default function Cart() {
             <button
               type="button"
               onClick={() => {
-                mutateDeleteCartProduct.mutate(deleteProducts.join(","));
+                if (deleteProducts.length === 0) {
+                  toast.dismiss();
+                  errorMsg("삭제하실 상품을 선택해주세요");
+                } else {
+                  mutateDeleteCartProduct.mutate(deleteProducts.join(","));
+                }
               }}
             >
               선택상품 삭제
