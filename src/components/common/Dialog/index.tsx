@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import COLORS from "@/constants/color";
+import COLORS from "../../../constants/color";
 
 interface DialogProps {
   size?: number;

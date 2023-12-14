@@ -116,10 +116,12 @@ const MenuItem = styled.li`
   }
   @media (max-width: 769px) {
     list-style: none;
-    padding: 2rem;
+    padding: 2rem 2rem 2rem 0;
     margin: 0;
-    //border-bottom: 1px solid #ccc;
     font-weight: 400;
+    a {
+      padding: 2rem 10rem 2rem 2rem;
+    }
   }
   &:hover {
     background-color: ${COLORS.GREY[200]};
@@ -134,8 +136,11 @@ const CenterElement = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   span {
-    font-size: 3rem;
+    font-size: 2.3rem;
     font-weight: 200;
+    @media (max-width: 769px) {
+      font-size: 2rem;
+    }
   }
   z-index: 1000;
 `;
@@ -177,7 +182,6 @@ const PersonIcon = styled(IconButton)`
     cursor: pointer;
   }
 `;
-
 export {
   Wrapper,
   InnerNav,

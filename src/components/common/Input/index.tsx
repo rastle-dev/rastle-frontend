@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import media from "@/styles/media";
+// import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
@@ -8,14 +8,16 @@ const Label = styled.div<{ invalid?: boolean }>`
   font-size: 1rem;
   color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
-  ${media.xsmall} {
-    font-size: 1.5rem;
-  }
 `;
 
-const InputWrapper = styled.input<{ size: number; invalid?: boolean }>`
-  ${({ size }) => `
+const InputWrapper = styled.input<{
+  size: number;
+  invalid?: boolean;
+  readOnly: boolean;
+}>`
+  ${({ size, readOnly }) => `
     width: ${size}rem;
+    cursor: ${readOnly ? "default" : "pointer"};
 `}
   width: 100%;
   padding: 0.9rem 0.2rem;
@@ -23,7 +25,7 @@ const InputWrapper = styled.input<{ size: number; invalid?: boolean }>`
   border-bottom: 0.07rem solid
     ${(props) => (props.invalid ? COLORS.RED : COLORS.GREY[300])};
   // border-bottom:
-  //   ${(props) =>
+  ${(props) =>
     props.onChange
       ? `0.07rem solid ${COLORS.블랙}`
       : `0.14rem solid ${COLORS.GREY[300]}`};
@@ -66,6 +68,7 @@ type InputProps = {
   className?: string;
   checked?: boolean;
   invalid?: boolean;
+  disabled?: boolean;
 };
 
 export default function Input({
@@ -81,6 +84,7 @@ export default function Input({
   className,
   checked,
   invalid = false,
+  disabled = false,
 }: InputProps) {
   const isCheckbox = type === "checkbox"; // 체크박스인지 확인
 
@@ -97,6 +101,7 @@ export default function Input({
         className={className}
         checked={checked}
         invalid={invalid}
+        disabled={disabled}
       />
       {message.length > 0 && <Message invalid={invalid}> {message}</Message>}
     </Wrapper>

@@ -49,6 +49,7 @@ const Select = styled(Input)`
   width: 2rem;
   @media (max-width: 769px) {
     margin-right: 1rem;
+    display: none;
   }
 `;
 const TableHeader = styled.div`
@@ -72,6 +73,8 @@ export const NODATA = styled.div`
   font-weight: 400;
   color: ${COLORS.GREY[500]};
   font-size: 1.5rem;
+  height: 30rem;
+  //border: 1px solid red;
 `;
 const ProductInfo = styled.div`
   display: flex;
@@ -93,8 +96,8 @@ const Img = styled.img`
   margin-left: 0.8rem;
   @media (max-width: 769px) {
     margin-right: 3rem;
-    width: 8.5rem;
-    height: 9.29rem;
+    width: 9rem;
+    height: 9.84rem;
   }
 `;
 const TextInfo = styled.div`
@@ -152,7 +155,8 @@ const SelectButton = styled(Button)`
   font-size: 1rem;
   width: 6.2rem;
   border-radius: 0;
-  border: 0.5px solid;
+  border: 1px solid ${COLORS.GREY[300]};
+
   @media (max-width: 769px) {
     display: none;
   }
@@ -165,7 +169,14 @@ const DeleteButton = styled(Button)`
   width: 3.2rem;
   border-radius: 0;
   border: none;
+  &:focus {
+    border: none;
+  }
+  &:hover {
+    border: none;
+  }
   @media (min-width: 769px) {
+    border: 1px solid ${COLORS.GREY[300]};
     border-radius: 0;
     font-weight: 200;
     font-size: 1rem;
@@ -213,6 +224,19 @@ const OrderButton = styled(Button)`
     font-weight: 400;
   }
 `;
+const SelectOrderButton = styled(Button)`
+  padding: 1.18rem 3rem 1.18rem 3rem;
+  font-size: 1.18rem;
+  font-weight: 200;
+  border-radius: 0.45rem;
+  &:hover {
+    font-weight: 400;
+  }
+  @media (max-width: 769px) {
+    display: none;
+  }
+`;
+
 export default function Cart() {
   const {
     cartProduct,
@@ -350,8 +374,7 @@ export default function Cart() {
       <h2>장바구니</h2>
       {cartProduct?.data.content.length === 0 ? (
         <NODATA>
-          장바구니에 상품이 없으시네요. &nbsp; &nbsp;장바구니에 상품을
-          담아보세요! 😋
+          장바구니에 상품이 없어요. &nbsp;장바구니에 상품을 담아보세요! 😋
         </NODATA>
       ) : (
         <>
@@ -465,7 +488,7 @@ export default function Cart() {
                 }
               }}
             />
-            <OrderButton
+            <SelectOrderButton
               title="선택상품 주문"
               type="shop"
               onClick={async () => {

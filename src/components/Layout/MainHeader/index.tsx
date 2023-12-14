@@ -6,20 +6,7 @@ import LazyLink from "@/components/LazyLink";
 import useDetectOutside from "@/hooks/useDetectOutside";
 import { useRecoilState } from "recoil";
 import { tokenState } from "@/stores/atom/recoilState";
-import {
-  Wrapper,
-  InnerNav,
-  LeftElement,
-  CenterElement,
-  RightElemet,
-  MenuIcon,
-  MenuDiv,
-  PersonIcon,
-  PersonDiv,
-  MenuList,
-  MenuItem,
-  MenuBackground,
-} from "./index.styles";
+import * as S from "./index.styles";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
@@ -60,63 +47,63 @@ export default function MainHeader() {
     }
   }, []);
   return (
-    <Wrapper scrolled={isScrolled}>
-      <InnerNav>
+    <S.Wrapper scrolled={isScrolled}>
+      <S.InnerNav>
         {menuOpen ? (
           <>
-            <MenuBackground />
-            <MenuList open={menuOpen} ref={menuRef}>
+            <S.MenuBackground />
+            <S.MenuList open={menuOpen} ref={menuRef}>
               {navList.map(({ name, href }) => (
-                <MenuItem key={name} onClick={toggleMenu}>
+                <S.MenuItem key={name} onClick={toggleMenu}>
                   <LazyLink href={href}>{name}</LazyLink>
-                </MenuItem>
+                </S.MenuItem>
               ))}
-            </MenuList>
+            </S.MenuList>
           </>
         ) : (
-          <MenuDiv>
-            <MenuIcon
+          <S.MenuDiv>
+            <S.MenuIcon
               iconName="menu"
               color={COLORS.블랙}
               onClick={toggleMenu}
               open={menuOpen}
             />
-          </MenuDiv>
+          </S.MenuDiv>
         )}
 
-        <LeftElement>
+        <S.LeftElement>
           {navList.map(({ name, href }) => (
             <li key={name}>
               <LazyLink href={href}>{name}</LazyLink>
             </li>
           ))}
-        </LeftElement>
-        <CenterElement>
+        </S.LeftElement>
+        <S.CenterElement>
           <LazyLink href="/">
-            <span>Recordy Slow</span>
+            <span>R E C O R D Y&nbsp;&nbsp; S L O W</span>
           </LazyLink>
-        </CenterElement>
+        </S.CenterElement>
         {accessToken ? (
-          <RightElemet>
+          <S.RightElemet>
             <LazyLink href={PATH.MYPAGE}>
               <span>MYPAGE</span>
             </LazyLink>
             <LazyLink href={PATH.CART}>
               <span>CART</span>
             </LazyLink>
-          </RightElemet>
+          </S.RightElemet>
         ) : (
-          <RightElemet>
+          <S.RightElemet>
             <LazyLink href={PATH.LOGIN}>
               <span>LOGIN</span>
             </LazyLink>
             <LazyLink href={PATH.LOGIN}>
               <span>CART</span>
             </LazyLink>
-          </RightElemet>
+          </S.RightElemet>
         )}
-        <PersonDiv>
-          <PersonIcon
+        <S.PersonDiv>
+          <S.PersonIcon
             iconName="person"
             color={COLORS.블랙}
             onClick={() => {
@@ -127,8 +114,8 @@ export default function MainHeader() {
               }
             }}
           />
-        </PersonDiv>
-      </InnerNav>
-    </Wrapper>
+        </S.PersonDiv>
+      </S.InnerNav>
+    </S.Wrapper>
   );
 }

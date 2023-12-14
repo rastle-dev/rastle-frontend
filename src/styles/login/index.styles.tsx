@@ -26,7 +26,8 @@ export const Header = styled.div`
   gap: 1.75rem;
   h1 {
     margin: 0;
-    font-size: 3.4375rem;
+    padding-top: 2rem;
+    font-size: 2.5rem;
     font-weight: 400;
     text-align: center;
   }
@@ -61,6 +62,10 @@ export const StyledInput = styled(Input)`
   }
   &:focus {
     border-bottom: 2px solid;
+  }
+  &:focus {
+    border-bottom: ${(props) =>
+      props.readOnly ? `0.07rem solid ${COLORS.GREY[300]}` : "2px solid"};
   }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
