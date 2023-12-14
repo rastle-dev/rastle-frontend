@@ -14,6 +14,7 @@ import {
   deleteSelectedCartProduct,
   loadCartProduct,
 } from "@/api/cart";
+import { createOrder } from "@/api/shop";
 
 type ProductItem = {
   defaultImg: string;

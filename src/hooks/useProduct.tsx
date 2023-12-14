@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
-import { loadProductDetail } from "@/api/shop";
+import { createOrder, loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
+import PATH from "@/constants/path";
 
 interface SelectedProduct {
   title?: string;
@@ -13,6 +14,7 @@ interface SelectedProduct {
   count: number;
   key?: string;
   mainThumbnailImage: string;
+  productId: string | string[] | undefined;
 }
 interface CartProduct {
   productId: any;
@@ -56,6 +58,7 @@ export default function useProduct() {
     size: null,
     count: 0, // 기본 수량
     mainThumbnailImage: detailData?.data.mainThumbnailImage,
+    productId,
   });
 
   // 선택된 제품 정보들을 관리하는 상태 변수
@@ -92,7 +95,8 @@ export default function useProduct() {
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
         key: `${size}-${selectedProduct.color}`,
-        mainThumbnailImage: detailData?.data.mainThumbnail, // 문자열로 결합
+        mainThumbnailImage: detailData?.data.mainThumbnailImage, // 문자열로 결합
+        productId,
       };
 
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인
@@ -148,6 +152,42 @@ export default function useProduct() {
     });
   };
 
+  const onClickOrderButton = async () => {
+    const orderProducts = selectedProducts.map((product) => ({
+      productId: product.productId,
+      name: product.title,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.price, // totalPrice 값은 필요에 따라 설정해 주세요.
+    }));
+
+    try {
+      const data = await createOrder({
+        orderProducts,
+      });
+
+      if (data) {
+        const productOrderNumbers: string[] = data.data.orderProducts.map(
+          (product: { productOrderNumber: string }) =>
+            product.productOrderNumber,
+        );
+
+        router.push({
+          pathname: PATH.ORDER,
+          query: {
+            selectedProducts: JSON.stringify(selectedProducts),
+            orderDetailId: data.data.orderDetailId,
+            orderNumber: data.data.orderNumber,
+            productOrderNumbers,
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDelete = (key: string | undefined) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.filter((product) => product.key !== key);
@@ -191,5 +231,6 @@ export default function useProduct() {
     uniqueColors,
     uniqueSizes,
     cartProducts,
+    onClickOrderButton,
   };
 }

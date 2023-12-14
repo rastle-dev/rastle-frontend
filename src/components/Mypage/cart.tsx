@@ -6,6 +6,7 @@ import Button from "@/components/common/Button";
 import useMypage from "@/hooks/useMypage";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
+import { createOrder } from "@/api/shop";
 
 type ProductItem = {
   defaultImg: string;
@@ -247,7 +248,7 @@ export default function Cart() {
     mutateDeleteCartProduct,
   } = useMypage();
   const router = useRouter();
-  const [orderProducts, setOrderProducts] = useState<any>([]);
+  const [cartorderProducts, setCartorderProducts] = useState<any>([]);
 
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
@@ -262,10 +263,10 @@ export default function Cart() {
       console.log("아이템", item);
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
-      setOrderProducts([...orderProducts, item.cartProductId]);
+      setCartorderProducts([...cartorderProducts, item.cartProductId]);
     }
   };
-  const orderList = orderProducts.join(",");
+  const orderList = cartorderProducts.join(",");
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
@@ -281,13 +282,51 @@ export default function Cart() {
         (item: any) => item.cartProductId,
       );
       setDeleteProducts(cartProductIds);
-      setOrderProducts(productIds);
+      setCartorderProducts(productIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
     (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
     0,
   );
+
+  const onClickOrderButton = async () => {
+    const orderProducts = selectedItems.map((product: any) => ({
+      productId: product.productId,
+      name: product.productName,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.productPrice,
+    }));
+
+    try {
+      const data = await createOrder({
+        orderProducts,
+      });
+
+      if (data) {
+        const productOrderNumbers: string[] = data.data.orderProducts.map(
+          (product: { productOrderNumber: string }) =>
+            product.productOrderNumber,
+        );
+
+        router.push({
+          pathname: PATH.ORDER,
+          query: {
+            orderList,
+            selectedProducts: JSON.stringify(selectedItems),
+            orderDetailId: data.data.orderDetailId,
+            orderNumber: data.data.orderNumber,
+            productOrderNumbers,
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <h2>장바구니</h2>
@@ -357,11 +396,12 @@ export default function Cart() {
                     <SelectTab>
                       <SelectButton
                         title="주문하기"
-                        onClick={() => {
-                          router.push({
-                            pathname: PATH.ORDER, // 이동할 페이지 경로
-                            query: { orderList: item.cartProductId }, // 전달할 데이터 (id)
-                          });
+                        onClick={async () => {
+                          try {
+                            await onClickOrderButton();
+                          } catch (error) {
+                            console.error(error);
+                          }
                         }}
                       />
                       <DeleteButton
@@ -398,21 +438,23 @@ export default function Cart() {
             <OrderButton
               title="전체상품 주문"
               type="shop"
-              onClick={() => {
-                router.push({
-                  pathname: PATH.ORDER, // 이동할 페이지 경로
-                  query: { orderList }, // 전달할 데이터 (id)
-                });
+              onClick={async () => {
+                try {
+                  await onClickOrderButton();
+                } catch (error) {
+                  console.error(error);
+                }
               }}
             />
             <SelectOrderButton
               title="선택상품 주문"
               type="shop"
-              onClick={() => {
-                router.push({
-                  pathname: PATH.ORDER, // 이동할 페이지 경로
-                  query: { orderList }, // 전달할 데이터 (id)
-                });
+              onClick={async () => {
+                try {
+                  await onClickOrderButton();
+                } catch (error) {
+                  console.error(error);
+                }
               }}
             />
           </ButtonWrapper>

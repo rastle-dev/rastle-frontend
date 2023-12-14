@@ -67,3 +67,8 @@ export const loadEventProductPaging = async (pageData: any) => {
   );
   return data;
 };
+
+export const createOrder = async (orderData: object) => {
+  const { data } = await unAuthorizationClient.post(`${API.ORDERS}`, orderData);
+  return data;
+};
