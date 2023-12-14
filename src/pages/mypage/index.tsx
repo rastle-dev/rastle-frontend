@@ -52,7 +52,7 @@ export default function Mypage() {
     // URL 파라미터가 없을 경우, "로그인정보" 탭으로 설정하고 URL에 파라미터를 추가
     if (!tab) {
       setActiveTab("로그인정보");
-      router.push("/mypage?tab=로그인정보");
+      router.replace("/mypage?tab=로그인정보");
     }
   }, [router.query]);
 

@@ -6,7 +6,10 @@ import Button from "@/components/common/Button";
 import useMypage from "@/hooks/useMypage";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
+import LoadingBar from "@/components/LoadingBar";
 import { createOrder } from "@/api/shop";
+import errorMsg from "@/components/Toast/error";
+import { toast } from "react-toastify";
 
 type ProductItem = {
   defaultImg: string;
@@ -18,6 +21,12 @@ type ProductItem = {
   productId: number;
 };
 const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
+
+const Wrap = styled.div<{ isLoading?: boolean }>`
+  height: ${({ isLoading }) => (isLoading ? "50rem" : "auto")};
+  //border: 1px solid red;
+  //background-color: blueviolet;
+`;
 const TabMenu = styled.div`
   display: flex;
   gap: 1rem;
@@ -185,6 +194,12 @@ const DeleteButton = styled(Button)`
     &::after {
       content: " 삭제";
     }
+    &:hover {
+      border: 1px solid ${COLORS.GREY[300]};
+    }
+    &:focus {
+      border: 1px solid ${COLORS.GREY[300]};
+    }
   }
 `;
 const TotalPrice = styled.div`
@@ -246,10 +261,12 @@ export default function Cart() {
     deleteProducts,
     setDeleteProducts,
     mutateDeleteCartProduct,
+    isLoading,
+    deleteButtonDisabled,
   } = useMypage();
   const router = useRouter();
-  const [cartorderProducts, setCartorderProducts] = useState<any>([]);
-
+  const [cartOrderProducts, setCartOrderProducts] = useState<any>([]);
+  // console.log()
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
     const isSelected = selectedItems.includes(item);
@@ -260,20 +277,18 @@ export default function Cart() {
         selectedItems.filter((selectedItem) => selectedItem !== item),
       );
     } else {
-      console.log("아이템", item);
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
-      setCartorderProducts([...cartorderProducts, item.cartProductId]);
+      setCartOrderProducts([...cartOrderProducts, item.cartProductId]);
     }
   };
-  const orderList = cartorderProducts.join(",");
+  const orderList = cartOrderProducts.join(",");
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
       setSelectedItems([]);
       setDeleteProducts([]);
     } else {
-      console.log("전체 아이템", cartProduct?.data.content);
       setSelectedItems(cartProduct?.data.content);
       const cartProductIds = cartProduct?.data.content.map(
         (item: any) => item.cartProductId,
@@ -282,14 +297,13 @@ export default function Cart() {
         (item: any) => item.cartProductId,
       );
       setDeleteProducts(cartProductIds);
-      setCartorderProducts(productIds);
+      setCartOrderProducts(productIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
-    (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
+    (sum: any, item: any) => sum + item.productPrice * item.count,
     0,
   );
-  console.log(selectedItems);
 
   const onClickOrderButton = async () => {
     const orderProducts = selectedItems.map((product: any) => ({
@@ -300,7 +314,51 @@ export default function Cart() {
       count: product.count,
       totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
     }));
+    if (orderProducts.length === 0) {
+      toast.dismiss();
+      errorMsg("주문하실 상품을 선택해주세요");
+    } else {
+      try {
+        const data = await createOrder({
+          orderProducts,
+        });
 
+        if (data) {
+          const productOrderNumbers: string[] = data.data.orderProducts.map(
+            (product: { productOrderNumber: string }) =>
+              product.productOrderNumber,
+          );
+
+          router.push({
+            pathname: PATH.ORDER,
+            query: {
+              orderList,
+              selectedProducts: JSON.stringify(selectedItems),
+              orderDetailId: data.data.orderDetailId,
+              orderNumber: data.data.orderNumber,
+              productOrderNumbers,
+            },
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
+  const onClickWholeOrderButton = async () => {
+    const orderProducts = cartProduct?.data.content.map((product: any) => ({
+      productId: product.productId,
+      name: product.productName,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+    }));
+    const whole = cartProduct?.data.content.map(
+      (product: any) => product.cartProductId,
+    );
+    const wholeOrderList = whole.join(",");
     try {
       const data = await createOrder({
         orderProducts,
@@ -311,14 +369,11 @@ export default function Cart() {
           (product: { productOrderNumber: string }) =>
             product.productOrderNumber,
         );
-
-        console.log(productOrderNumbers);
-
         router.push({
           pathname: PATH.ORDER,
           query: {
-            orderList,
-            selectedProducts: JSON.stringify(selectedItems),
+            orderList: wholeOrderList,
+            selectedProducts: JSON.stringify(cartProduct?.data.content),
             orderDetailId: data.data.orderDetailId,
             orderNumber: data.data.orderNumber,
             productOrderNumbers,
@@ -329,7 +384,6 @@ export default function Cart() {
       console.log(err);
     }
   };
-
   const onClickSelectedOrderButton = async (item: any) => {
     const orderProducts = selectedItems.map((product: any) => ({
       productId: product.productId,
@@ -370,7 +424,7 @@ export default function Cart() {
   };
 
   return (
-    <div>
+    <Wrap isLoading={isLoading}>
       <h2>장바구니</h2>
       {cartProduct?.data.content.length === 0 ? (
         <NODATA>
@@ -378,6 +432,7 @@ export default function Cart() {
         </NODATA>
       ) : (
         <>
+          {isLoading && <LoadingBar type={6} />}
           <TabMenu>
             <button
               type="button"
@@ -449,8 +504,12 @@ export default function Cart() {
                       <DeleteButton
                         title="X"
                         onClick={() => {
-                          mutateDeleteCartProduct.mutate(item.cartProductId);
+                          // 버튼이 활성화되어 있을 때만 뮤테이션을 시작합니다.
+                          if (!deleteButtonDisabled) {
+                            mutateDeleteCartProduct.mutate(item.cartProductId);
+                          }
                         }}
+                        disabled={deleteButtonDisabled}
                       />
                     </SelectTab>
                   </ProductInfo>
@@ -468,11 +527,11 @@ export default function Cart() {
             ) : (
               <>
                 <p>상품 구매 금액</p>
-                <div>{(totalPriceSum - 3000).toLocaleString()}원</div>
+                <div>{totalPriceSum.toLocaleString()}원</div>
                 <p>+ 배송비</p>
                 <div>3,000원</div>
                 <p>= 합계</p>
-                <div>{totalPriceSum?.toLocaleString()}원</div>
+                <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
               </>
             )}
           </TotalPrice>
@@ -482,7 +541,7 @@ export default function Cart() {
               type="shop"
               onClick={async () => {
                 try {
-                  await onClickOrderButton();
+                  await onClickWholeOrderButton();
                 } catch (error) {
                   console.error(error);
                 }
@@ -502,6 +561,6 @@ export default function Cart() {
           </ButtonWrapper>
         </>
       )}
-    </div>
+    </Wrap>
   );
 }
