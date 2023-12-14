@@ -5,6 +5,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { createOrder, loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
+import { adminCreateProduct } from "@/api/admin";
 
 interface SelectedProduct {
   title?: string;
@@ -59,6 +60,8 @@ export default function useProduct() {
     mainThumbnailImage: detailData?.data.mainThumbnailImage,
   });
 
+  console.log(detailData);
+
   // 선택된 제품 정보들을 관리하는 상태 변수
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>(
     [],
@@ -96,6 +99,8 @@ export default function useProduct() {
         mainThumbnailImage: detailData?.data.mainThumbnail, // 문자열로 결합
       };
 
+      console.log(newProduct);
+
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인
 
       const hasDuplicate = selectedProducts.some(
@@ -112,6 +117,8 @@ export default function useProduct() {
       }
     }
   };
+
+  console.log(selectedProducts);
 
   const inputChangeHandler = (event: any) => {
     setSelectedProduct((prevProduct) => ({
@@ -165,10 +172,16 @@ export default function useProduct() {
       });
 
       if (data) {
+        console.log(data);
+        console.log(data.orderNumber);
+        console.log(data.orderProducts);
+
         const productOrderNumbers: string[] = data.data.orderProducts.map(
           (product: { productOrderNumber: string }) =>
             product.productOrderNumber,
         );
+
+        console.log(productOrderNumbers);
 
         router.push({
           pathname: PATH.ORDER,
@@ -181,7 +194,7 @@ export default function useProduct() {
         });
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
