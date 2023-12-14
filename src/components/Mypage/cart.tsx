@@ -302,6 +302,7 @@ export default function Cart() {
     (sum: any, item: any) => sum + item.productPrice * item.count,
     0,
   );
+  console.log(selectedItems);
 
   const onClickOrderButton = async () => {
     const orderProducts = selectedItems.map((product: any) => ({
@@ -310,7 +311,7 @@ export default function Cart() {
       color: product.color,
       size: product.size,
       count: product.count,
-      totalPrice: product.productPrice,
+      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
     }));
 
     try {
@@ -324,10 +325,51 @@ export default function Cart() {
             product.productOrderNumber,
         );
 
+        console.log(productOrderNumbers);
+
         router.push({
           pathname: PATH.ORDER,
           query: {
             orderList,
+            selectedProducts: JSON.stringify(selectedItems),
+            orderDetailId: data.data.orderDetailId,
+            orderNumber: data.data.orderNumber,
+            productOrderNumbers,
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onClickSelectedOrderButton = async (item: any) => {
+    const orderProducts = selectedItems.map((product: any) => ({
+      productId: product.productId,
+      name: product.productName,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+    }));
+
+    try {
+      const data = await createOrder({
+        orderProducts,
+      });
+
+      if (data) {
+        const productOrderNumbers: string[] = data.data.orderProducts.map(
+          (product: { productOrderNumber: string }) =>
+            product.productOrderNumber,
+        );
+
+        console.log(productOrderNumbers);
+
+        router.push({
+          pathname: PATH.ORDER,
+          query: {
+            orderList: item.cartProductId,
             selectedProducts: JSON.stringify(selectedItems),
             orderDetailId: data.data.orderDetailId,
             orderNumber: data.data.orderNumber,
@@ -412,7 +454,7 @@ export default function Cart() {
                         title="주문하기"
                         onClick={async () => {
                           try {
-                            await onClickOrderButton();
+                            await onClickSelectedOrderButton(item);
                           } catch (error) {
                             console.error(error);
                           }
