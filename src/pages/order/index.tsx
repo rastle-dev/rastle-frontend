@@ -78,15 +78,6 @@ export default function Order() {
 
   return (
     <S.Temp>
-      <style>
-        {`
-          @media (min-width: 1px) and (max-width: 767px) {
-            html{
-              font-size: 7.5px;
-            }
-          }
-        `}
-      </style>
       <S.Container>
         <S.Header>
           <h1>배송/결제</h1>
