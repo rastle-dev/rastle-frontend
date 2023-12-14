@@ -91,7 +91,6 @@ export default function useCreateProduct() {
     if (
       name.length >= 2 &&
       price !== null &&
-      discountPrice !== null &&
       productColors.length > 0 &&
       displayOrder !== null &&
       categoryId !== null

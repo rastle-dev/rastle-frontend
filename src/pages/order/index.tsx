@@ -31,15 +31,17 @@ export default function Order() {
   } = useOrder();
   const { cartProduct } = useMypage();
   const router = useRouter();
-  const { orderList } = router.query; //일반구매
+  const { orderList } = router.query;
   const { selectedProducts } = router.query;
+
+  console.log(router.query);
 
   const orderProducts: string = String(orderList);
   console.log("order", orderProducts);
   if (typeof selectedProducts === "string") {
     console.log("selectedProducts", JSON.parse(selectedProducts));
   }
-  // const directProducts: string = String(selectedProducts);
+  // const directProducts: string = String(정selectedProducts);
   const totalPriceSum = cartProduct?.data.content
     .filter(
       (v: any) =>
@@ -72,6 +74,7 @@ export default function Order() {
   ];
 
   console.log(cartProduct);
+  console.log(router.query);
 
   return (
     <S.Temp>
@@ -139,6 +142,7 @@ export default function Order() {
                   </S.Product>
                 ),
               )}
+
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (

@@ -28,6 +28,7 @@ export default function Product() {
     uniqueColors,
     uniqueSizes,
     cartProducts,
+    onClickOrderButton,
   } = useProduct();
   const router = useRouter();
   const { mutateAddCartProduct } = useMypage();
@@ -69,6 +70,7 @@ export default function Product() {
     setIsDialogOpen(false);
   };
   console.log("selectedProducts", selectedProducts);
+
   return (
     <S.Wrapper>
       {isDialogOpen && (
@@ -171,16 +173,18 @@ export default function Product() {
           </S.TotalPrice>
           <S.Pay>
             <S.StyledBuyButton
-              onClick={() => {
+              onClick={async () => {
                 if (selectedProducts.length === 0) {
                   toastMsg("구매하실 제품을 선택해주세요!");
                 } else {
-                  router.push({
-                    pathname: PATH.ORDER, // 이동할 페이지 경로
-                    query: {
-                      selectedProducts: JSON.stringify(selectedProducts),
-                    },
-                  });
+                  try {
+                    await onClickOrderButton();
+                  } catch (error) {
+                    // onClickOrderButton이 프로미스를 reject할 경우의 처리
+                    console.error(error);
+
+                    // 추가적인 에러 처리 또는 사용자에게 알림을 보여줄 수 있습니다.
+                  }
                 }
               }}
               title="구매하기"
