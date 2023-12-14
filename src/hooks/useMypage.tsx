@@ -31,6 +31,7 @@ export default function useMypage() {
   const [deleteProducts, setDeleteProducts] = useState<any>([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -108,10 +109,10 @@ export default function useMypage() {
       onMutate: () => {
         // 뮤테이션이 시작될 때 로딩을 true로 설정합니다.
         setIsLoading(true);
+        setDeleteButtonDisabled(true);
       },
       onSuccess: async () => {
         toastMsg("선택하신 상품이 삭제 되었습니다! 👏");
-        queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
       },
       onError: ({
         response: {
@@ -125,6 +126,8 @@ export default function useMypage() {
       onSettled: () => {
         // 뮤테이션이 완료될 때 (성공 또는 에러) 로딩을 false로 설정합니다.
         setIsLoading(false);
+        setDeleteButtonDisabled(false);
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
       },
     },
   );
@@ -158,5 +161,6 @@ export default function useMypage() {
     setDeleteProducts,
     setIsDataLoading,
     isLoading,
+    deleteButtonDisabled,
   };
 }
