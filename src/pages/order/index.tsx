@@ -82,7 +82,7 @@ export default function Order() {
         {`
           @media (min-width: 1px) and (max-width: 767px) {
             html{
-              font-size: 11px;
+              font-size: 7.5px;
             }
           }
         `}
