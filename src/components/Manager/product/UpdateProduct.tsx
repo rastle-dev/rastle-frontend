@@ -251,6 +251,8 @@ export default function UpdateProduct() {
     loadImages,
     deleteProduct,
     detailImageData,
+    handleDiscountChange,
+    discountState,
   } = useUpdateProduct();
 
   return (
@@ -285,6 +287,14 @@ export default function UpdateProduct() {
         value={price}
         onChange={onChangePrice}
       />
+      <ProductDetail>
+        할인:
+        <EventCheckbox
+          type="checkbox"
+          checked={discountState}
+          onChange={(e) => handleDiscountChange(e)}
+        />
+      </ProductDetail>
       <Input
         type="number"
         label="할인 가격"

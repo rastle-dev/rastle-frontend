@@ -29,6 +29,7 @@ const IMAGE = "/image";
 const CART = "/cart";
 const REMOVE = "/removeSelected";
 const AUTHORITY = "authority";
+const ORDERS = "/orders";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -75,5 +76,6 @@ const API = {
   LOCAL_KAKAO_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/kakao?redirect_uri=http://localhost:3000`,
   NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=https://www.recordyslow.com`,
   LOCAL_NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
+  ORDERS: `${ORDERS}`,
 };
 export default API;

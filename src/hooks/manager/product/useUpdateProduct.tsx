@@ -42,6 +42,7 @@ export default function useUpdateProduct() {
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
   const [visible, setVisible] = useState<boolean>();
+  const [discountState, setDiscountState] = useState<boolean>();
   const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
     price,
     discountPrice,
@@ -119,6 +120,7 @@ export default function useUpdateProduct() {
       alert("상품을 선택해주세요");
     }
   };
+  console.log(discountState);
 
   useEffect(() => {
     if (selectedProduct) {
@@ -153,8 +155,12 @@ export default function useUpdateProduct() {
       });
     });
 
+    if (discountState === false) {
+      setDiscountPrice(undefined);
+    }
+
     try {
-      if (name && price && discountPrice && categoryId && displayOrder) {
+      if (name && price && categoryId && displayOrder) {
         const data = await adminUpdateProduct(selectedProduct?.id, {
           name,
           price,
@@ -503,6 +509,9 @@ export default function useUpdateProduct() {
     setVisible(e.target.checked);
   };
 
+  const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDiscountState(e.target.checked);
+  };
   const loadImages = () => {
     if (productData) {
       setshowImageUpload(true);
@@ -594,5 +603,7 @@ export default function useUpdateProduct() {
     loadImages,
     deleteProduct,
     detailImageData,
+    handleDiscountChange,
+    discountState,
   };
 }

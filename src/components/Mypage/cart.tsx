@@ -6,6 +6,7 @@ import Button from "@/components/common/Button";
 import useMypage from "@/hooks/useMypage";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
+import { createOrder } from "@/api/shop";
 
 type ProductItem = {
   defaultImg: string;
@@ -223,7 +224,7 @@ export default function Cart() {
     mutateDeleteCartProduct,
   } = useMypage();
   const router = useRouter();
-  const [orderProducts, setOrderProducts] = useState<any>([]);
+  const [cartorderProducts, setCartorderProducts] = useState<any>([]);
 
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
@@ -238,10 +239,10 @@ export default function Cart() {
       console.log("아이템", item);
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
-      setOrderProducts([...orderProducts, item.cartProductId]);
+      setCartorderProducts([...cartorderProducts, item.cartProductId]);
     }
   };
-  const orderList = orderProducts.join(",");
+  const orderList = cartorderProducts.join(",");
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
@@ -257,13 +258,50 @@ export default function Cart() {
         (item: any) => item.cartProductId,
       );
       setDeleteProducts(cartProductIds);
-      setOrderProducts(productIds);
+      setCartorderProducts(productIds);
     }
   };
   const totalPriceSum = cartProduct?.data.content.reduce(
     (sum: any, item: any) => sum + (item.productPrice * item.count + 3000),
     0,
   );
+
+  // const onClickOrderButton = async () => {
+  //   const orderProducts = selectedProducts.map((product) => ({
+  //     productId: product.productId,
+  //     name: product.title,
+  //     color: product.color,
+  //     size: product.size,
+  //     count: product.count,
+  //     totalPrice: product.price, // totalPrice 값은 필요에 따라 설정해 주세요.
+  //   }));
+  //
+  //   try {
+  //     const data = await createOrder({
+  //       orderProducts,
+  //     });
+  //
+  //     if (data) {
+  //       console.log(data);
+  //       const productOrderNumbers = orderProducts.map(
+  //         (product: any) => product.productOrderNumber,
+  //       );
+  //
+  //       router.push({
+  //         pathname: PATH.ORDER,
+  //         query: {
+  //           selectedProducts: JSON.stringify(selectedProducts),
+  //           orderDetailId: data.orderDetailId,
+  //           orderNumber: data.orderNumber,
+  //           productOrderNumbers: JSON.stringify(productOrderNumbers),
+  //         },
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   return (
     <div>
       <h2>장바구니</h2>

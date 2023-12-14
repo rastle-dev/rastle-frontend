@@ -39,7 +39,7 @@ export default function Order() {
   if (typeof selectedProducts === "string") {
     console.log("selectedProducts", JSON.parse(selectedProducts));
   }
-  // const directProducts: string = String(selectedProducts);
+  // const directProducts: string = String(정selectedProducts);
   const totalPriceSum = cartProduct?.data.content
     .filter(
       (v: any) =>

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
-import { loadProductDetail } from "@/api/shop";
+import { createOrder, loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
+import PATH from "@/constants/path";
+import { adminCreateProduct } from "@/api/admin";
 
 interface SelectedProduct {
   title?: string;
@@ -157,6 +159,48 @@ export default function useProduct() {
     });
   };
 
+  const onClickOrderButton = async () => {
+    const orderProducts = selectedProducts.map((product) => ({
+      productId: product.productId,
+      name: product.title,
+      color: product.color,
+      size: product.size,
+      count: product.count,
+      totalPrice: product.price, // totalPrice 값은 필요에 따라 설정해 주세요.
+    }));
+
+    try {
+      const data = await createOrder({
+        orderProducts,
+      });
+
+      if (data) {
+        console.log(data);
+        console.log(data.orderNumber);
+        console.log(data.orderProducts);
+
+        const productOrderNumbers: string[] = data.data.orderProducts.map(
+          (product: { productOrderNumber: string }) =>
+            product.productOrderNumber,
+        );
+
+        console.log(productOrderNumbers);
+
+        router.push({
+          pathname: PATH.ORDER,
+          query: {
+            selectedProducts: JSON.stringify(selectedProducts),
+            orderDetailId: data.data.orderDetailId,
+            orderNumber: data.data.orderNumber,
+            productOrderNumbers,
+          },
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleDelete = (key: string | undefined) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.filter((product) => product.key !== key);
@@ -200,5 +244,6 @@ export default function useProduct() {
     uniqueColors,
     uniqueSizes,
     cartProducts,
+    onClickOrderButton,
   };
 }

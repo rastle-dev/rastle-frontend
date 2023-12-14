@@ -35,6 +35,7 @@ export default function Shop() {
       content: Array<any>;
     };
   };
+  console.log(productData);
 
   const categoryData = queryClient.getQueryData([
     QUERYKEYS.ADMIN_GET_CATEGORY,
