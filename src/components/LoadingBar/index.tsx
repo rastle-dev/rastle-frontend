@@ -4,18 +4,28 @@ import COLORS from "../../constants/color";
 
 const Wrapper = styled.div`
   display: flex;
+  position: fixed;
   flex-direction: column;
   //align-items: center;
   justify-content: center;
   //width: 100%;
   //height: 100%;
   //border: 1px solid blue;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  align-items: center;
+  z-index: 999;
+  //border: 1px solid red;
 `;
 const Loading = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   //padding: 1rem 0;
+  //border: 1px solid blueviolet;
   .loader {
     width: 50px;
     height: 50px;
