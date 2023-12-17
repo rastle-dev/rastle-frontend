@@ -1,44 +1,43 @@
 import React, { useEffect } from "react";
-import Pagination from "react-js-pagination";
 import * as S from "@/styles/shop/index.styles";
 import SwiperComponent from "@/components/Shop/codySwiper";
-import useShop from "@/hooks/useShop";
-import { PageNumberContainer } from "@/components/Manager/UserManagement";
 import DisplaySelectProduct from "@/components/Shop/DisplaySelectProduct";
+import {
+  LoadingSpinner,
+  LoadingSpinnerWrapper,
+} from "@/components/LoadingSpinner";
+import useShop from "@/hooks/useShop";
 
 export default function CodyProduct() {
-  const { useLoadBundle, ITEM_SIZE, curPage, onChangePage } = useShop();
-  const { data: bundleData, refetch } = useLoadBundle({
-    page: curPage - 1,
-    size: ITEM_SIZE,
-  });
-
+  const { infiniteData, handleScroll, isFetchingNextPage } = useShop();
+  // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
-    refetch();
-  }, [curPage, bundleData]);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
   return (
     <>
       <S.SetBox>
-        {bundleData?.data.content.map((item: any, idx: number) => (
-          <S.CurrentMarketWrapper>
-            <S.FirstMarketDescription>
-              RECORDY {idx + 1}: {item.name}
-            </S.FirstMarketDescription>
-            <SwiperComponent imgUrls={item.imageUrls} />
-            <h2>제품 정보</h2>
-            {item.id && <DisplaySelectProduct id={item.id} />}
-          </S.CurrentMarketWrapper>
-        ))}
+        {infiniteData?.pages.flatMap((page: any, idx: number) =>
+          page.data.content.map((item: any) => (
+            <S.CurrentMarketWrapper key={item.id}>
+              <S.FirstMarketDescription>
+                RECORDY {idx + 1}: {item.name}
+              </S.FirstMarketDescription>
+              <SwiperComponent imgUrls={item.imageUrls} />
+              <h2>제품 정보</h2>
+              {item.id && <DisplaySelectProduct id={item.id} />}
+            </S.CurrentMarketWrapper>
+          )),
+        )}
       </S.SetBox>
-      <PageNumberContainer>
-        <Pagination
-          activePage={curPage}
-          itemsCountPerPage={ITEM_SIZE}
-          totalItemsCount={bundleData?.data.totalElements || 1}
-          pageRangeDisplayed={5}
-          onChange={onChangePage}
-        />
-      </PageNumberContainer>
+      {isFetchingNextPage && (
+        <LoadingSpinnerWrapper>
+          <LoadingSpinner />
+        </LoadingSpinnerWrapper>
+      )}
     </>
   );
 }
