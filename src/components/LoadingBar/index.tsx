@@ -4,7 +4,7 @@ import COLORS from "../../constants/color";
 
 const Wrapper = styled.div`
   display: flex;
-  position: fixed;
+  //position: fixed;
   flex-direction: column;
   //align-items: center;
   justify-content: center;
