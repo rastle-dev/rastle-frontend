@@ -11,6 +11,7 @@ import Dialog from "@/components/common/Dialog";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import IconButton from "@/components/common/IconButton";
+import { toast } from "react-toastify";
 
 export default function Product() {
   const {
@@ -174,6 +175,7 @@ export default function Product() {
             <S.StyledBuyButton
               onClick={async () => {
                 if (selectedProducts.length === 0) {
+                  toast.dismiss();
                   toastMsg("구매하실 제품을 선택해주세요!");
                 } else {
                   try {

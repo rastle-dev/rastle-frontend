@@ -33,15 +33,7 @@ export default function Order() {
   const router = useRouter();
   const { orderList } = router.query;
   const { selectedProducts } = router.query;
-
-  console.log(router.query);
-
   const orderProducts: string = String(orderList);
-  console.log("order", orderProducts);
-  if (typeof selectedProducts === "string") {
-    console.log("selectedProducts", JSON.parse(selectedProducts));
-  }
-  // const directProducts: string = String(정selectedProducts);
   const totalPriceSum = cartProduct?.data.content
     .filter(
       (v: any) =>
@@ -55,7 +47,6 @@ export default function Order() {
       0,
     );
   }
-  console.log("price", totalPriceSum);
   const PriceInfo = [
     {
       meta: "상품 합계",
@@ -73,19 +64,8 @@ export default function Order() {
     { meta: "할인 금액", data: "0원" },
   ];
 
-  console.log(cartProduct);
-
   return (
     <S.Temp>
-      <style>
-        {`
-          @media (min-width: 1px) and (max-width: 767px) {
-            html{
-              font-size: 11px;
-            }
-          }
-        `}
-      </style>
       <S.Container>
         <S.Header>
           <h1>배송/결제</h1>

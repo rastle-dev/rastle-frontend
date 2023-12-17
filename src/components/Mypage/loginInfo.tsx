@@ -9,17 +9,19 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 import LoadingBar from "@/components/LoadingBar";
+import Dialog from "@/components/common/Dialog";
 
 interface ButtonProps {
   inValid: boolean;
 }
-
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ isLoading?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding-top: 4rem;
+  //height: 100%;
   width: 55rem;
+  height: ${({ isLoading }) => (isLoading ? "50rem" : "auto")};
   @media (max-width: 1007px) {
     width: 94%;
   }
@@ -126,15 +128,39 @@ export default function LoginInfo() {
       }
     }
   }, []);
-  console.log("isSocial", isSocial);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const openDialog = () => {
+    setIsDialogOpen(true);
+  };
+  const closeDialog = () => {
+    setIsDialogOpen(false);
+  };
+  const [timedOut, setTimedOut] = useState(false);
+  let timeoutId: NodeJS.Timeout | undefined;
+  useEffect(() => {
+    if (isLoading && timedOut) {
+      openDialog();
+    }
+  }, [timedOut]);
+  useEffect(() => {
+    if (isLoading) {
+      timeoutId = setTimeout(() => {
+        setTimedOut(true);
+      }, 5000);
+    } else {
+      setTimedOut(false);
+      clearTimeout(timeoutId);
+    }
 
-  if (isLoading || !data)
+    return () => clearTimeout(timeoutId);
+  }, [isLoading]);
+
+  if ((isLoading && !timedOut) || !data)
     return (
-      <Wrapper>
+      <Wrapper isLoading={!isLoading}>
         <LoadingBar type={6} />
       </Wrapper>
     );
-
   const inputs = [
     {
       label: "이름",
@@ -178,19 +204,27 @@ export default function LoginInfo() {
       onChange: onChangePassword,
     },
   ];
-  const filteredInputs = inputs.filter((input) => {
-    // isSocial이 true이고, 라벨이 "비밀번호" 또는 "비밀번호 확인"이 아닌 경우만 반환
-    return (
-      !isSocial ||
-      (input.label !== "비밀번호" && input.label !== "비밀번호 확인")
-    );
-  });
-  console.log("filte", filteredInputs);
+
   return (
     <div>
+      {isDialogOpen && (
+        <Dialog
+          onClickBasketButton={() => {
+            logout();
+          }}
+          onClickShopButton={() => {
+            closeDialog();
+          }}
+          visible
+          title="세션이 만료되어 로그아웃합니다."
+          refuse="확인"
+          confirm=""
+          size={34}
+        />
+      )}
       <h2>로그인 정보</h2>
       {inputs.map((input) => (
-        <Wrapper>
+        <Wrapper isLoading={isLoading}>
           {input.buttonTitle ? (
             <Box inValid={input.inValid}>
               <PasswordInput

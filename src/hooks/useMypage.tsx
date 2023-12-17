@@ -14,7 +14,6 @@ import {
   deleteSelectedCartProduct,
   loadCartProduct,
 } from "@/api/cart";
-import { createOrder } from "@/api/shop";
 
 type ProductItem = {
   defaultImg: string;
@@ -31,6 +30,9 @@ export default function useMypage() {
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
   const [deleteProducts, setDeleteProducts] = useState<any>([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
@@ -98,13 +100,20 @@ export default function useMypage() {
     },
   });
 
+  // 컴포넌트에 로딩 상태가 있다고 가정합니다.
+
   const mutateDeleteCartProduct = useMutation(
     ["deleteSelectedCartProduct"],
     deleteSelectedCartProduct,
     {
+      onMutate: () => {
+        // 뮤테이션이 시작될 때 로딩을 true로 설정합니다.
+        setIsLoading(true);
+        setDeleteButtonDisabled(true);
+      },
       onSuccess: async () => {
+        toast.dismiss();
         toastMsg("선택하신 상품이 삭제 되었습니다! 👏");
-        queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
       },
       onError: ({
         response: {
@@ -115,8 +124,15 @@ export default function useMypage() {
         errorMsg("삭제 실패");
         console.log(`${errorCode} / ${message}`);
       },
+      onSettled: () => {
+        // 뮤테이션이 완료될 때 (성공 또는 에러) 로딩을 false로 설정합니다.
+        setIsLoading(false);
+        setDeleteButtonDisabled(false);
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
+      },
     },
   );
+
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -145,5 +161,7 @@ export default function useMypage() {
     deleteProducts,
     setDeleteProducts,
     setIsDataLoading,
+    isLoading,
+    deleteButtonDisabled,
   };
 }
