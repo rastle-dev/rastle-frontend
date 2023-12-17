@@ -2,41 +2,14 @@ import React, { useEffect } from "react";
 import * as S from "@/styles/shop/index.styles";
 import SwiperComponent from "@/components/Shop/codySwiper";
 import DisplaySelectProduct from "@/components/Shop/DisplaySelectProduct";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import QUERYKEYS from "@/constants/querykey";
-import { loadBundle } from "@/api/shop";
 import {
   LoadingSpinner,
   LoadingSpinnerWrapper,
 } from "@/components/LoadingSpinner";
+import useShop from "@/hooks/useShop";
 
 export default function CodyProduct() {
-  const {
-    data: infiniteData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery(
-    [QUERYKEYS.LOAD_BUNDLE], // 쿼리 키
-    ({ pageParam = 0 }) => loadBundle({ page: pageParam, size: 1 }),
-    {
-      getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.data.pageable.pageNumber + 1;
-        return nextPage < lastPage.data.totalPages ? nextPage : undefined;
-      },
-    },
-  );
-
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
-      hasNextPage &&
-      !isFetchingNextPage
-    ) {
-      fetchNextPage();
-    }
-  };
-
+  const { infiniteData, handleScroll, isFetchingNextPage } = useShop();
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
