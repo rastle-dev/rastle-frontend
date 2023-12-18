@@ -4,7 +4,12 @@ import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
 import QUERYKEYS from "@/constants/querykey";
-import { loadMarketProduct } from "@/api/shop";
+import {
+  loadEventProduct,
+  loadEventProductPaging,
+  loadMarketProduct,
+  loadMarketProductPaging,
+} from "@/api/shop";
 import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 
@@ -12,7 +17,15 @@ export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   // Prefetch queries
-  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], loadMarketProduct);
+  // await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], loadMarketProduct);
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
+    loadMarketProductPaging({ page: 0, size: 4 }),
+  );
+  await queryClient.prefetchQuery(
+    [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
+    loadEventProductPaging,
+  );
+
   await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
@@ -30,12 +43,21 @@ export default function Shop() {
   const [activeCategoryId, setActiveCategoryId] = useState<any>();
   const queryClient = useQueryClient();
 
-  const productData = queryClient.getQueryData([QUERYKEYS.LOAD_PRODUCT]) as {
+  const productData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_PRODUCT_PAGING,
+  ]) as {
     data: {
       content: Array<any>;
     };
   };
-  console.log(productData);
+  const eventData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
+  ]) as {
+    data: Array<any>;
+  };
+  console.log("productData", productData);
+
+  console.log("eventData", eventData);
 
   const categoryData = queryClient.getQueryData([
     QUERYKEYS.ADMIN_GET_CATEGORY,
@@ -87,21 +109,19 @@ export default function Shop() {
         </S.ProductList>
       ) : activeCategory === "이벤트" ? (
         <S.ProductList>
-          {productData?.data.content
-            .filter((item: any) => item.isEvent === true)
-            .map((item: any) => (
-              <ItemElement
-                key={item.id}
-                defaultImg={item.mainThumbnail}
-                hoverImg={item.subThumbnail}
-                productName={item.name}
-                price={item.price}
-                discountPrice={item.discountPrice}
-                id={item.id}
-                category={item.categoryId}
-                isEvent={!!item.eventId}
-              />
-            ))}
+          {eventData?.data.map((item: any) => (
+            <ItemElement
+              key={item.id}
+              defaultImg={item.mainThumbnail}
+              hoverImg={item.subThumbnail}
+              productName={item.name}
+              price={item.price}
+              discountPrice={item.discountPrice}
+              id={item.id}
+              category={item.categoryId}
+              isEvent={!!item.eventId}
+            />
+          ))}
         </S.ProductList>
       ) : (
         <S.ProductList>
