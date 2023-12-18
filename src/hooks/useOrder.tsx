@@ -6,6 +6,7 @@ import useMypage from "@/hooks/useMypage";
 import { useRouter } from "next/dist/client/router";
 
 import useInput from "@/hooks/useInput";
+import { paymentConfirm } from "@/api/shop";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
@@ -110,16 +111,31 @@ export default function useOrder() {
   ];
 
   /* 3. 콜백 함수 정의하기 */
-  function callback(response: RequestPayResponse) {
+  async function callback(response: RequestPayResponse) {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { success, error_msg } = response;
-    // 주문을 어떻게 생성할건지가 궁금해
-    // 결제가 끝나고 나서 어떤 데이터로 주문을 만들건지 , 어떤 api를 사용해서 만들건지가 궁금하다
+
+    console.log(response);
 
     if (success) {
-      alert("결제 성공");
+      try {
+        const paymentData = await paymentConfirm({
+          data: {
+            imp_uid: response.imp_uid,
+            merchant_uid: response.merchant_uid,
+          },
+        });
+
+        if (paymentData) {
+          console.log(paymentData);
+          alert("결제 성공");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     } else {
-      alert(`결제 실패: ${error_msg}`);
+      alert(error_msg);
+      alert("결제 실패");
     }
   }
 

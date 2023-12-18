@@ -72,3 +72,11 @@ export const createOrder = async (orderData: object) => {
   const { data } = await unAuthorizationClient.post(`${API.ORDERS}`, orderData);
   return data;
 };
+
+export const paymentConfirm = async (paymentData: object) => {
+  const { data } = await unAuthorizationClient.post(
+    `${API.PAYMENTCOMPLETE}`,
+    paymentData,
+  );
+  return data;
+};
