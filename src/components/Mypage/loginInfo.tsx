@@ -155,21 +155,16 @@ export default function LoginInfo() {
     return () => clearTimeout(timeoutId);
   }, [isLoading]);
 
-  if ((isLoading && !timedOut) || !data)
-    return (
-      <Wrapper isLoading={!isLoading}>
-        <LoadingBar type={6} />
-      </Wrapper>
-    );
+  if ((isLoading && !timedOut) || !data) return <LoadingBar type={6} />;
   const inputs = [
     {
       label: "이름",
-      value: data.data.userName,
+      value: data?.data.userName,
       readOnly: true,
     },
     {
       label: "이메일 주소",
-      value: data.data.email,
+      value: data?.data.email,
       readOnly: true,
     },
     {
@@ -200,7 +195,7 @@ export default function LoginInfo() {
     },
     {
       label: "전화번호",
-      value: data.data.phoneNumber,
+      value: data?.data.phoneNumber,
       onChange: onChangePassword,
     },
   ];

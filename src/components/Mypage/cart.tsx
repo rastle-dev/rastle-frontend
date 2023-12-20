@@ -23,7 +23,7 @@ type ProductItem = {
 const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
 
 const Wrap = styled.div<{ isLoading?: boolean }>`
-  height: ${({ isLoading }) => (isLoading ? "50rem" : "auto")};
+  height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
   //border: 1px solid red;
   //background-color: blueviolet;
 `;
@@ -423,6 +423,7 @@ export default function Cart() {
     }
   };
 
+  console.log("cart", cartProduct);
   return (
     <Wrap isLoading={isLoading}>
       <h2>장바구니</h2>
@@ -432,8 +433,8 @@ export default function Cart() {
         </NODATA>
       ) : (
         <>
-          {isLoading && <LoadingBar type={6} />}
           <TabMenu>
+            {isLoading && <LoadingBar type={6} />}
             <button
               type="button"
               onClick={() => {
