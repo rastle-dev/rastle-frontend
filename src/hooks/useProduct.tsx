@@ -37,6 +37,15 @@ export default function useProduct() {
       return null;
     },
   );
+  // const { data: detailData } = useQuery(
+  //   [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
+  //   () => {
+  //     if (productId) {
+  //       return loadProductDetail(Number(productId));
+  //     }
+  //     return null;
+  //   },
+  // );
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(

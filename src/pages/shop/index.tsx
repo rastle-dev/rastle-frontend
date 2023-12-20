@@ -4,12 +4,7 @@ import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
 import QUERYKEYS from "@/constants/querykey";
-import {
-  loadEventProduct,
-  loadEventProductPaging,
-  loadMarketProduct,
-  loadMarketProductPaging,
-} from "@/api/shop";
+import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 
@@ -111,13 +106,13 @@ export default function Shop() {
         <S.ProductList>
           {eventData?.data.map((item: any) => (
             <ItemElement
-              key={item.id}
+              key={item.productId}
               defaultImg={item.mainThumbnail}
               hoverImg={item.subThumbnail}
               productName={item.name}
               price={item.price}
-              discountPrice={item.discountPrice}
-              id={item.id}
+              discountPrice={0}
+              id={item.productId}
               category={item.categoryId}
               isEvent={!!item.eventId}
             />
