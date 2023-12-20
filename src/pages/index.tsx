@@ -12,10 +12,10 @@ export async function getStaticProps() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
-    loadMarketProductPaging({ size: 4, visible: true }),
+    loadMarketProductPaging({ page: 0, size: 4 }),
   );
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
-    loadEventProductPaging({ size: 4, visible: true }),
+    loadEventProductPaging({ size: 4 }),
   );
 
   return {
