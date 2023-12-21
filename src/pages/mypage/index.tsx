@@ -18,7 +18,9 @@ const myTabs = [
 
 export default function Mypage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("주문 내역");
+  const [activeTab, setActiveTab] = useState<string>("주문 내역");
+  const [tabList, setTabList] = useState<any>([]);
+
   const { logout } = useMypage();
 
   const renderTabContent = () => {
@@ -35,30 +37,50 @@ export default function Mypage() {
         return <OrderList />;
     }
   };
-
+  useEffect(() => {
+    setTabList(["주문 내역", "장바구니", "로그인 정보", "기본 배송지"]);
+  }, []);
   // URL 파라미터를 확인하여 활성 탭을 설정
   useEffect(() => {
     const { tab } = router.query;
-
+    const storedTab = sessionStorage.getItem("tab");
+    const initialTab = tab || storedTab || "로그인 정보";
+    console.log("tab", tab, initialTab);
     // URL 파라미터에 따라 활성 탭 설정
-    if (tab === "장바구니") {
-      setActiveTab("장바구니");
-    } else if (tab === "로그인정보") {
-      setActiveTab("로그인 정보");
-    } else if (tab === "기본배송지") {
-      setActiveTab("기본 배송지");
-    }
+    // if (tab === "장바구니") {
+    //   setActiveTab("장바구니");
+    // } else if (tab === "로그인 정보") {
+    //   setActiveTab("로그인 정보");
+    // } else if (tab === "기본배송지") {
+    //   setActiveTab("기본 배송지");
+    // }
+    tabList?.forEach((item: any) => {
+      if (tab && item === initialTab) {
+        setActiveTab(item);
+      }
+    });
 
+    if (typeof initialTab === "string") {
+      sessionStorage.setItem("tab", initialTab);
+    }
     // URL 파라미터가 없을 경우, "로그인정보" 탭으로 설정하고 URL에 파라미터를 추가
-    if (!tab) {
-      setActiveTab("로그인정보");
-      router.replace("/mypage?tab=로그인정보");
-    }
-  }, [router.query]);
+    // if (!tab) {
+    //   setActiveTab("로그인 정보");
+    //   router.replace("/mypage?tab=로그인 정보");
+    // }
 
+    // 컴포넌트가 마운트될 때만 실행되는 코드
+    return () => {
+      // 언마운트될 때 세션 스토리지에서 데이터 삭제
+      sessionStorage.removeItem("tab");
+    };
+  }, [router.query.tab, tabList]);
+  console.log("tablsit", tabList);
   const handleTabClick = (tabs: any) => {
     setActiveTab(tabs);
-    router.push(`/mypage?tab=${encodeURIComponent(tabs)}`);
+    // 업데이트하기: 선택된 탭을 세션 스토리지에 저장
+    sessionStorage.setItem("tab", tabs);
+    router.replace(`/mypage?tab=${encodeURIComponent(tabs)}`);
   };
 
   return (

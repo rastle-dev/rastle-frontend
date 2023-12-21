@@ -5,11 +5,11 @@ import QUERYKEYS from "@/constants/querykey";
 export default function useShop() {
   const useLoadSelectBundle = (bundleId: number) => {
     const queryFn = () => loadSelectBundle(bundleId);
-    const { data, refetch } = useQuery(
-      [QUERYKEYS.LOAD_BUNDLE_PRODUCT],
+    const { data } = useQuery(
+      [QUERYKEYS.LOAD_BUNDLE_PRODUCT, { bundleId }],
       queryFn,
     );
-    return { data, refetch };
+    return { data };
   };
   const {
     data: infiniteData,

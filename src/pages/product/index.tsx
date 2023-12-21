@@ -70,7 +70,7 @@ export default function Product() {
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
-  console.log("selectedProducts", selectedProducts);
+  console.log("detailData", detailData);
   return (
     <S.Wrapper>
       {isDialogOpen && (
