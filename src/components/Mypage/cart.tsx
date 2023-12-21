@@ -528,12 +528,12 @@ export default function Cart() {
             {totalPriceSum === 0 ? (
               <>
                 <p>상품 구매 금액</p>
-                <div>{totalPriceSum.toLocaleString()}원</div>
+                <div>{totalPriceSum?.toLocaleString()}원</div>
               </>
             ) : (
               <>
                 <p>상품 구매 금액</p>
-                <div>{totalPriceSum.toLocaleString()}원</div>
+                <div>{totalPriceSum?.toLocaleString()}원</div>
                 <p>+ 배송비</p>
                 <div>3,000원</div>
                 <p>= 합계</p>
