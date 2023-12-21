@@ -79,7 +79,6 @@ export default function Shop() {
     );
   }, []);
   useEffect(() => {
-    console.log("렌더링2");
     const { tab } = router.query;
     // 읽어오기: 세션 스토리지에서 저장된 값을 읽어옴
     const storedTab = sessionStorage.getItem("activeTab");
@@ -102,7 +101,7 @@ export default function Shop() {
       // 언마운트될 때 세션 스토리지에서 데이터 삭제
       sessionStorage.removeItem("activeTab");
     };
-  }, [router.query.tab, categoryData]);
+  }, [router.query.tab, categoryData, categoryList]);
   return (
     <S.Container>
       <S.Header>
