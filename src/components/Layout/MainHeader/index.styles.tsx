@@ -65,14 +65,17 @@ const MenuDiv = styled.div`
   }
 `;
 
-const MenuIcon = styled(IconButton)<{ open?: boolean }>`
+const MenuIcon = styled(IconButton)<{ open?: boolean }>(
+  (props) => `
   @media (max-width: 769px) {
     font-size: 3rem;
     margin-top: 3rem;
     background-color: transparent;
-    display: ${(props) => (props.open ? "none" : "block")};
+    display: ${props.open ? "none" : "block"};
   }
-`;
+`,
+);
+
 const Hidden = styled.div``;
 
 const MenuBackground = styled.div`
