@@ -78,13 +78,14 @@ const MenuDiv = styled.div`
   }
 `;
 
-const MenuIcon = styled(IconButton)<IconButtonProps & { open?: boolean }>`
+const MenuIcon = styled((props: IconButtonProps & { open?: boolean }) => (
+  <IconButton {...props} />
+))`
   @media (max-width: 769px) {
     font-size: 3rem;
     margin-top: 3rem;
     background-color: transparent;
-    display: ${(props) =>
-      props.open ? "none" : "block"}; /* 메뉴가 열렸을 때 버튼을 숨깁니다. */
+    display: ${(props) => (props.open ? "none" : "block")};
   }
 `;
 const Hidden = styled.div``;
