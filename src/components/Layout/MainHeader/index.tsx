@@ -20,7 +20,6 @@ export default function MainHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
   const menuRef = useRef<HTMLUListElement>(null);
-  // const { mutateSocialLogin } = useLogin();
 
   useDetectOutside({
     refs: [menuRef],
