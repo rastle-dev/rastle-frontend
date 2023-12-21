@@ -1,11 +1,23 @@
 import styled from "styled-components";
 import IconButton from "@/components/common/IconButton";
 import COLORS from "@/constants/color";
+import React from "react";
 
 interface WrapperProps {
   scrolled: boolean;
 }
-
+interface IconButtonProps {
+  /** 아이콘 이름 */
+  iconName: string;
+  /** 클릭했을 때 호출할 함수 */
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  /** icon 사이즈 */
+  iconSize?: string;
+  /** icon 색 조정 */
+  color?: string;
+  /** border 조정 */
+  border?: number;
+}
 const Wrapper = styled.div<WrapperProps>`
   //width: 92%;
   width: 100%;
@@ -66,7 +78,7 @@ const MenuDiv = styled.div`
   }
 `;
 
-const MenuIcon = styled(IconButton)<{ open?: boolean }>`
+const MenuIcon = styled(IconButton)<IconButtonProps & { open?: boolean }>`
   @media (max-width: 769px) {
     font-size: 3rem;
     margin-top: 3rem;

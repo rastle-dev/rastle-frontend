@@ -10,6 +10,8 @@ import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/common/Dialog";
+import PATH from "@/constants/path";
+import { useRouter } from "next/dist/client/router";
 
 interface ButtonProps {
   inValid: boolean;
@@ -120,6 +122,8 @@ export default function LoginInfo() {
     queryKey: [QUERYKEYS.LOAD_ME],
     queryFn: loadMe,
   });
+  const router = useRouter();
+
   const [isSocial, setIsSocial] = useState(false);
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -155,7 +159,9 @@ export default function LoginInfo() {
     return () => clearTimeout(timeoutId);
   }, [isLoading]);
 
-  if ((isLoading && !timedOut) || !data) return <LoadingBar type={6} />;
+  if (isLoading && !timedOut) return <LoadingBar type={6} />;
+  console.log("/////////////////", isLoading, timedOut);
+
   const inputs = [
     {
       label: "이름",
@@ -205,10 +211,9 @@ export default function LoginInfo() {
       {isDialogOpen && (
         <Dialog
           onClickBasketButton={() => {
-            logout();
-          }}
-          onClickShopButton={() => {
+            localStorage.clear();
             closeDialog();
+            router.push(PATH.LOGIN);
           }}
           visible
           title="세션이 만료되어 로그아웃합니다."
