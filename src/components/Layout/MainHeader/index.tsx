@@ -66,7 +66,6 @@ export default function MainHeader() {
               color={COLORS.블랙}
               onClick={toggleMenu}
               open={menuOpen}
-              border={0.1}
             />
           </S.MenuDiv>
         )}
