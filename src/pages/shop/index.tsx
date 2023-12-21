@@ -77,7 +77,6 @@ export default function Shop() {
         "이벤트",
       ],
     );
-    console.log("첫 렌더링");
   }, []);
   useEffect(() => {
     console.log("렌더링2");
@@ -101,11 +100,9 @@ export default function Shop() {
     // 컴포넌트가 마운트될 때만 실행되는 코드
     return () => {
       // 언마운트될 때 세션 스토리지에서 데이터 삭제
-      console.log("메이슨 마운트");
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData]);
-  console.log("렌더링체크");
   return (
     <S.Container>
       <S.Header>
