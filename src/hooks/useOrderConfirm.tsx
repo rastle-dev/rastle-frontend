@@ -25,11 +25,11 @@ export default function useOrderConfirm() {
     },
   ];
   const OrdererInfo = [
-    { meta: "받는사람", data: "함민혁" },
-    { meta: "연락처", data: "010-3009-2255" },
+    { meta: "받는사람", data: "홍레슬" },
+    { meta: "연락처", data: "010-xxxx-xxxx" },
     {
       meta: "받는주소",
-      data: "(05769) 서울특별시 송파구 오금로 44길 21 상상프리 401호",
+      data: "(00000) 서울특별시 송파구 xxx xx길 xx",
     },
     {
       meta: "배송요청사항",
