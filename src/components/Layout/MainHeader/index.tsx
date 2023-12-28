@@ -65,7 +65,7 @@ export default function MainHeader() {
               iconName="menu"
               color={COLORS.블랙}
               onClick={toggleMenu}
-              open={menuOpen}
+              // open={menuOpen}
             />
           </S.MenuDiv>
         )}

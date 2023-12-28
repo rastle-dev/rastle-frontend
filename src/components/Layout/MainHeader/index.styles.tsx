@@ -65,21 +65,20 @@ const MenuDiv = styled.div`
   }
 `;
 
-const MenuIcon = styled(IconButton)<{ open?: boolean }>(
-  (props) => `
+const MenuIcon = styled(IconButton)<{ open?: boolean }>`
   @media (max-width: 769px) {
     font-size: 3rem;
     margin-top: 3rem;
     background-color: transparent;
-    display: ${props.open ? "none" : "block"};
+    display: ${(props) => (props.open ? "none" : "block")};
   }
-`,
-);
+  //border: 1px solid red;
+`;
 
 const Hidden = styled.div``;
 
 const MenuBackground = styled.div`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {
@@ -94,7 +93,7 @@ const MenuBackground = styled.div`
 `;
 
 const MenuList = styled.ul<{ open?: boolean }>`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {
@@ -112,7 +111,7 @@ const MenuList = styled.ul<{ open?: boolean }>`
   }
 `;
 const MenuItem = styled.li`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {
