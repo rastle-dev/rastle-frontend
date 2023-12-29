@@ -13,8 +13,15 @@ export default function useOrderConfirm() {
   const router = useRouter();
 
   const { selectedProducts, orderInfo } = router.query;
-  const parsedSelectedProducts = JSON.parse(selectedProducts as string);
-  const parsedOrderInfo = JSON.parse(orderInfo as string);
+  let parsedSelectedProducts;
+  let parsedOrderInfo;
+  if (typeof selectedProducts === "string") {
+    parsedSelectedProducts = JSON.parse(selectedProducts as string);
+  }
+  if (typeof selectedProducts === "string") {
+    parsedOrderInfo = JSON.parse(orderInfo as string);
+  }
+
   let ProductList: ProductItem[];
   console.log(parsedSelectedProducts);
   console.log(parsedOrderInfo);
@@ -56,5 +63,6 @@ export default function useOrderConfirm() {
   return {
     ProductList,
     OrdererInfo,
+    parsedOrderInfo,
   };
 }

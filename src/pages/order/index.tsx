@@ -2,7 +2,8 @@ import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/order/index.styles";
 import useMypage from "@/hooks/useMypage";
-import { useRouter } from "next/dist/client/router";
+import LoadingBar from "@/components/LoadingBar";
+import React from "react";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -28,44 +29,22 @@ export default function Order() {
     DeliveryButtons,
     OrdererInfo,
     handlePaymentSubmit,
+    totalPriceSum,
+    orderProducts,
+    totalPriceSumDirect,
+    totalPriceFinal,
+    PriceInfo,
+    selectedProducts,
+    cartProduct,
   } = useOrder();
-  const { cartProduct } = useMypage();
-  const router = useRouter();
-  const { orderList } = router.query;
-  const { selectedProducts } = router.query;
-  // const { orderNumber } = router.query;
-  // const { productOrderNumbers } = router.query;
 
-  const orderProducts: string = String(orderList);
-  const totalPriceSum = cartProduct?.data.content
-    .filter(
-      (v: any) =>
-        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
-    )
-    .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
-  let totalPriceSumDirect = 0;
-  if (typeof selectedProducts === "string") {
-    totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
-      (sum: any, item: any) => sum + item.price * item.count,
-      0,
-    );
+  if (totalPriceSumDirect === undefined) {
+    return <LoadingBar type={6} />;
   }
-  const PriceInfo = [
-    {
-      meta: "상품 합계",
-      data:
-        totalPriceSum !== 0
-          ? `${(totalPriceSum >= 80000
-              ? totalPriceSum
-              : totalPriceSum + 3000
-            ).toLocaleString()}원`
-          : `${(totalPriceSumDirect >= 80000
-              ? totalPriceSumDirect
-              : totalPriceSumDirect + 3000
-            ).toLocaleString()}원`,
-    },
-    { meta: "할인 금액", data: "0원" },
-  ];
+
+  if (totalPriceSum === undefined) {
+    return <LoadingBar type={6} />;
+  }
 
   return (
     <S.Temp>
@@ -170,7 +149,6 @@ export default function Order() {
               ) : (
                 <S.DeliveryInput
                   label={input.label}
-                  placeholder={input.placeholder}
                   size={input.size}
                   value={input.value}
                   onChange={input.onChange}
@@ -207,11 +185,7 @@ export default function Order() {
             </S.PaymentInfoBox>
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
-              <S.TotalPrice>
-                {totalPriceSum !== 0
-                  ? `${(totalPriceSum + 3000).toLocaleString()}원`
-                  : `${(totalPriceSumDirect + 3000).toLocaleString()}원`}
-              </S.TotalPrice>
+              <S.TotalPrice>{totalPriceFinal}</S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
           <h2>결제 방법</h2>

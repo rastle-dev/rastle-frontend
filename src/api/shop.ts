@@ -1,6 +1,5 @@
-import { portoneClient, unAuthorizationClient } from ".";
+import { unAuthorizationClient } from ".";
 import API from "./config";
-import axios from "axios";
 
 export const loadBundleProduct = async () => {
   const { data } = await unAuthorizationClient.get(API.BUNDLE_PRODUCT);

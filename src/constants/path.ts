@@ -9,6 +9,7 @@ const PATH = {
   MYPAGE: "/mypage",
   ORDER: "/order",
   ORDERCONFIRM: "/orderConfirm",
+  ORDERCONFIRMMOBILE: "/orderConfirmMobile",
   AGREEMENT: "/shopinfo/agreement",
   PRIVACY: "/shopinfo/privacy",
   GUIDE: "/shopinfo/guide",

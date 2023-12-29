@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
@@ -6,9 +6,9 @@ import useMypage from "@/hooks/useMypage";
 import { useRouter } from "next/dist/client/router";
 
 import useInput from "@/hooks/useInput";
-import { paymentConfirm } from "@/api/shop";
-import { RequestPayResponse } from "../../portone";
 import PATH from "@/constants/path";
+import { RequestPayResponse } from "../../portone";
+import { paymentConfirm } from "@/api/shop";
 
 type Address = {
   address: string | undefined;
@@ -17,15 +17,80 @@ type Address = {
 export default function useOrder() {
   const router = useRouter();
   console.log(router.query);
+  const [receiver, onChangeReceiver, setReceiver] = useInput("");
+  const [detailPostal, onChangeDetailPostal] = useInput("");
+  const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
 
-  const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
-  console.log(data);
+  const { data: myInfo, isSuccess } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
+
+  useEffect(() => {
+    // isSuccess가 true이고 myInfo.data가 존재할 때에만 setReceiver 호출
+    if (isSuccess && myInfo?.data) {
+      setReceiver(myInfo.data.userName);
+      setPhoneNumber(myInfo.data.phoneNumber);
+    }
+  }, [isSuccess, myInfo]);
+  console.log(myInfo);
   const { cartProduct } = useMypage();
   const OrdererInfo = [
-    { meta: "이름", data: data?.data.userName },
-    { meta: "연락처", data: data?.data.phoneNumber },
-    { meta: "이메일", data: data?.data.email },
+    { meta: "이름", data: myInfo?.data.userName },
+    { meta: "연락처", data: myInfo?.data.phoneNumber },
+    { meta: "이메일", data: myInfo?.data.email },
   ];
+  const { orderList } = router.query;
+  const { selectedProducts } = router.query;
+  const orderProducts: string = String(orderList);
+  const totalPriceSum = cartProduct?.data.content
+    .filter(
+      (v: any) =>
+        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+    )
+    .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+  let totalPriceSumDirect = 0;
+  if (typeof selectedProducts === "string") {
+    totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
+      (sum: any, item: any) => sum + item.price * item.count,
+      0,
+    );
+  }
+  let totalPriceFinal: any;
+
+  if (totalPriceSum !== 0) {
+    totalPriceFinal =
+      totalPriceSum >= 80000
+        ? `${totalPriceSum.toLocaleString()}원`
+        : `${(totalPriceSum + 3000).toLocaleString()}원`;
+  } else {
+    totalPriceFinal =
+      totalPriceSumDirect >= 80000
+        ? `${totalPriceSumDirect.toLocaleString()}원`
+        : `${(totalPriceSumDirect + 3000).toLocaleString()}원`;
+  }
+
+  const PriceInfo = [
+    {
+      meta: "상품 금액",
+      data:
+        totalPriceSum !== 0
+          ? `${totalPriceSum.toLocaleString()}원`
+          : `${totalPriceSumDirect.toLocaleString()}원`,
+    },
+    {
+      meta: "배송비",
+      data:
+        totalPriceSum !== 0
+          ? `+ ${(totalPriceSum >= 80000 ? 0 : 3000).toLocaleString()}원`
+          : `+ ${(totalPriceSumDirect >= 80000 ? 0 : 3000).toLocaleString()}원`,
+    },
+    {
+      meta: "쿠폰할인",
+      data: "-0원",
+      // totalPriceSum !== 0
+      //   ? `- ${(totalPriceSum >= 80000 ? 0 : 3000).toLocaleString()}원`
+      //   : `- ${(totalPriceSumDirect >= 80000 ? 0 : 3000).toLocaleString()}원`,
+    },
+  ];
+
   const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
     useState(null);
   const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
@@ -43,9 +108,6 @@ export default function useOrder() {
   const handleDeliveryButtonClick = (index: any) => {
     setClickedDeliveryButtonIndex(index);
   };
-  const [receiver, onChangeReceiver] = useInput("");
-  const [detailPostal, onChangeDetailPostal] = useInput("");
-  const [phoneNumber, onChangePhoneNumber] = useInput("");
 
   const handlePaymentButtonClick = (index: any) => {
     setClickedPaymentButtonIndex(index);
@@ -89,11 +151,18 @@ export default function useOrder() {
     // Add other properties as needed
   }
 
+  console.log(myInfo);
+
   const deliveryInputs = [
     {
       label: "받는 분",
-      placeholder: "함민혁",
       onChange: onChangeReceiver,
+      value: receiver,
+    },
+    {
+      label: "연락처",
+      onChange: onChangePhoneNumber,
+      value: phoneNumber,
     },
     {
       label: "우편번호",
@@ -104,11 +173,6 @@ export default function useOrder() {
     },
     { label: "주소", value: postalAddress.address },
     { label: "상세 주소", onChange: onChangeDetailPostal },
-    {
-      label: "연락처",
-      placeholder: "010-3009-2255",
-      onChange: onChangePhoneNumber,
-    },
   ];
 
   /* 3. 콜백 함수 정의하기 */
@@ -126,42 +190,28 @@ export default function useOrder() {
     if (success) {
       // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
       alert(`결제에 성공했습니다. 결제검증을 구현하세요`);
-      // try {
-      //   const paymentData = await paymentConfirm({
-      //     data: {
-      //       imp_uid: response.imp_uid,
-      //       merchant_uid: response.merchant_uid,
-      //     },
-      //   });
-      //
-      //   if (paymentData.verified) {
-      //     console.log(paymentData);
-      //     alert("결제 성공");
-      //     //밑의 코드 추가
-      //   }
-      // } catch (err) {
-      //   console.error(err);
-      // }
-      //   switch (res.status) {
-      //     case: "vbankIssued":
-      //       // 가상계좌 발급 시 로직
-      //       break;
-      //     case: "success":
-      //       // 결제 성공 시 로직
-      //       break;
-      //   }
-      // }
-      // );
+      try {
+        const paymentData = await paymentConfirm({
+          data: {
+            imp_uid: response.imp_uid,
+            merchant_uid: response.merchant_uid,
+          },
+        });
 
-      const { selectedProducts } = router.query;
-
-      router.push({
-        pathname: PATH.ORDERCONFIRM,
-        query: {
-          selectedProducts: selectedProducts,
-          orderInfo: JSON.stringify(response),
-        },
-      });
+        if (paymentData.verified) {
+          console.log(paymentData);
+          alert("결제 성공");
+          router.push({
+            pathname: PATH.ORDERCONFIRM,
+            query: {
+              selectedProducts,
+              orderInfo: JSON.stringify(response),
+            },
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
     } else {
       alert(error_msg);
       alert("결제 실패");
@@ -171,48 +221,14 @@ export default function useOrder() {
   console.log(cartProduct);
 
   async function handlePaymentSubmit() {
-    const { orderList } = router.query; // 일반구매
-    const { selectedProducts } = router.query;
     const { orderNumber } = router.query;
     // const { productOrderNumbers } = router.query;
-    const orderProducts: string = String(orderList);
-
-    console.log(clickedPaymentButtonIndex);
 
     if (typeof selectedProducts === "string") {
       console.log("selectedProducts", JSON.parse(selectedProducts));
     }
     // const directProducts: string = String(selectedProducts);
-    const totalPriceSum = cartProduct?.data.content
-      .filter(
-        (v: any) =>
-          orderProducts.split(",").map(Number)?.includes(v.cartProductId),
-      )
-      .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
-    let totalPriceSumDirect = 0;
-    if (typeof selectedProducts === "string") {
-      totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
-        (sum: any, item: any) => sum + item.price * item.count,
-        0,
-      );
-    }
-    console.log("price", totalPriceSum);
-    const PriceInfo = [
-      {
-        meta: "상품 합계",
-        data:
-          totalPriceSum !== 0
-            ? `${totalPriceSum >= 80000 ? totalPriceSum : totalPriceSum + 3000}`
-            : `${
-                totalPriceSumDirect >= 80000
-                  ? totalPriceSumDirect
-                  : totalPriceSumDirect + 3000
-              }`,
-      },
-      { meta: "할인 금액", data: "0원" },
-    ];
 
-    console.log(PriceInfo);
     let selectedItems;
     let parsedSelectedProducts;
     let directPurchase;
@@ -273,14 +289,14 @@ export default function useOrder() {
           pg: "naverpay",
           merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
           name: parsedSelectedProducts[0].title,
-          amount: totalPriceSumDirect,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
           naverPopupMode: false, // 팝업모드 활성화 -> redirecturl을 설정해야함
-          m_redirect_url: "{결제 완료 후 리디렉션 될 URL}", // -> 어떻게 해야할지 결정
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
           // naverPurchaserName: "구매자이름",
           // naverPurchaserBirthday: "20151201",
           // naverChainId: "sAMplEChAINid",
@@ -302,13 +318,13 @@ export default function useOrder() {
           // pay_method: "card", // 생략가능
           merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
-          amount: totalPriceSumDirect,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
-          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
         };
       }
       // 2) 일반결제일때
@@ -325,14 +341,14 @@ export default function useOrder() {
           pay_method: "card", // 생략가능
           merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
-          amount: totalPriceSumDirect,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
           language: "ko", // 결제창 언어 선택 파라미터  ko: 한국어, en: 영문
-          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
         };
       }
     } else {
@@ -358,14 +374,14 @@ export default function useOrder() {
           pg: "naverpay",
           merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
           name: parsedSelectedProducts[0].title,
-          amount: totalPriceSum,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
           naverPopupMode: false, // 팝업모드 활성화 -> redirecturl을 설정해야함
-          m_redirect_url: "{결제 완료 후 리디렉션 될 URL}", // -> 어떻게 해야할지 결정
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
           // naverPurchaserName: "구매자이름",
           // naverPurchaserBirthday: "20151201",
           // naverChainId: "sAMplEChAINid",
@@ -387,13 +403,14 @@ export default function useOrder() {
           // pay_method: "card", // 생략가능
           merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
-          amount: totalPriceSum,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
-          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
+          custom_data: 3000,
         };
       }
       // 2) 일반결제일때
@@ -410,14 +427,14 @@ export default function useOrder() {
           pay_method: "card", // 생략가능
           merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
-          amount: totalPriceSum,
+          amount: totalPriceFinal,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
           buyer_name: receiver,
           buyer_tel: phoneNumber,
           buyer_addr: `${postalAddress.address} ${detailPostal}`,
           buyer_postcode: postalAddress.zonecode,
           language: "ko", // 결제창 언어 선택 파라미터  ko: 한국어, en: 영문
-          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
         };
       }
     }
@@ -454,5 +471,12 @@ export default function useOrder() {
     DeliveryButtons,
     OrdererInfo,
     handlePaymentSubmit,
+    totalPriceSum,
+    orderProducts,
+    totalPriceSumDirect,
+    totalPriceFinal,
+    PriceInfo,
+    selectedProducts,
+    cartProduct,
   };
 }
