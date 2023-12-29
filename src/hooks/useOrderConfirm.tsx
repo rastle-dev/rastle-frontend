@@ -1,35 +1,51 @@
+import { useRouter } from "next/dist/client/router";
+
 type ProductItem = {
-  productName: string;
-  totalPrice: string;
-  amount: number;
+  title: string;
+  price: string;
+  count: number;
   size: string;
   color: string;
+  mainThumbnailImage: string;
 };
 
 export default function useOrderConfirm() {
-  const ProductList: ProductItem[] = [
-    {
-      productName: "틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "95,800원",
-      amount: 3,
-      size: "L",
-      color: "인디고",
-    },
-    {
-      productName:
-        "트랙 샌딩 워시드 와이드 흑청 데님 틴 워시드 버뮤다 데님 팬츠",
-      totalPrice: "35,800원",
-      amount: 1,
-      size: "M",
-      color: "검정",
-    },
-  ];
+  const router = useRouter();
+
+  const { selectedProducts, orderInfo } = router.query;
+  const parsedSelectedProducts = JSON.parse(selectedProducts as string);
+  const parsedOrderInfo = JSON.parse(orderInfo as string);
+  let ProductList: ProductItem[];
+  console.log(parsedSelectedProducts);
+  console.log(parsedOrderInfo);
+
+  //장바구니 동선
+  if (!parsedSelectedProducts[0].cartProductId) {
+    ProductList = parsedSelectedProducts.map((product: any) => ({
+      title: product.title,
+      price: product.price,
+      count: product.count,
+      size: product.size,
+      color: product.color,
+      mainThumbnailImage: product.mainThumbnailImage,
+    }));
+  } else {
+    ProductList = parsedSelectedProducts.map((product: any) => ({
+      title: product.productName,
+      price: product.productPrice,
+      count: product.count,
+      size: product.size,
+      color: product.color,
+      mainThumbnailImage: product.mainThumbnailImage,
+    }));
+  }
+
   const OrdererInfo = [
-    { meta: "받는사람", data: "함민혁" },
-    { meta: "연락처", data: "010-3009-2255" },
+    { meta: "받는사람", data: parsedOrderInfo.buyer_name },
+    { meta: "연락처", data: parsedOrderInfo.buyer_tel },
     {
       meta: "받는주소",
-      data: "(05769) 서울특별시 송파구 오금로 44길 21 상상프리 401호",
+      data: `(${parsedOrderInfo.buyer_postcode}) ${parsedOrderInfo.buyer_addr}`,
     },
     {
       meta: "배송요청사항",

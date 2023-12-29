@@ -24,13 +24,13 @@ export default function Order() {
           {ProductList.map((item) => (
             <S.Product>
               <S.Thumbnail
-                src="/image/product1.jpg"
-                alt="/image/product1.jpg"
+                src={item.mainThumbnailImage}
+                alt={item.mainThumbnailImage}
               />
               <S.Info>
-                <S.ProductName>{item.productName}</S.ProductName>
+                <S.ProductName>{item.title}</S.ProductName>
                 <S.NumPrice>
-                  {item.amount}개 / {item.totalPrice}
+                  {item.count}개 / {item.price}원
                 </S.NumPrice>
                 <S.SizeColor>
                   {item.size} / {item.color}

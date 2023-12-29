@@ -1,4 +1,5 @@
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_PORTONE_URL = "https://api.iamport.kr";
 const AUTH = "/auth/";
 const LOGIN = "login";
 const REFRESH = "refreshAccessToken";

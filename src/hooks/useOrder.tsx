@@ -8,6 +8,7 @@ import { useRouter } from "next/dist/client/router";
 import useInput from "@/hooks/useInput";
 import { paymentConfirm } from "@/api/shop";
 import { RequestPayResponse } from "../../portone";
+import PATH from "@/constants/path";
 
 type Address = {
   address: string | undefined;
@@ -15,6 +16,7 @@ type Address = {
 };
 export default function useOrder() {
   const router = useRouter();
+  console.log(router.query);
 
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   console.log(data);
@@ -41,7 +43,6 @@ export default function useOrder() {
   const handleDeliveryButtonClick = (index: any) => {
     setClickedDeliveryButtonIndex(index);
   };
-
   const [receiver, onChangeReceiver] = useInput("");
   const [detailPostal, onChangeDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber] = useInput("");
@@ -117,31 +118,63 @@ export default function useOrder() {
 
     console.log(response);
 
-    if (success) {
-      try {
-        const paymentData = await paymentConfirm({
-          data: {
-            imp_uid: response.imp_uid,
-            merchant_uid: response.merchant_uid,
-          },
-        });
+    if (!success) {
+      alert(`결제에 실패하였습니다. 에러 내용: ${error_msg}`);
+      return;
+    }
 
-        if (paymentData) {
-          console.log(paymentData);
-          alert("결제 성공");
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    if (success) {
+      // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
+      alert(`결제에 성공했습니다. 결제검증을 구현하세요`);
+      // try {
+      //   const paymentData = await paymentConfirm({
+      //     data: {
+      //       imp_uid: response.imp_uid,
+      //       merchant_uid: response.merchant_uid,
+      //     },
+      //   });
+      //
+      //   if (paymentData.verified) {
+      //     console.log(paymentData);
+      //     alert("결제 성공");
+      //     //밑의 코드 추가
+      //   }
+      // } catch (err) {
+      //   console.error(err);
+      // }
+      //   switch (res.status) {
+      //     case: "vbankIssued":
+      //       // 가상계좌 발급 시 로직
+      //       break;
+      //     case: "success":
+      //       // 결제 성공 시 로직
+      //       break;
+      //   }
+      // }
+      // );
+
+      const { selectedProducts } = router.query;
+
+      router.push({
+        pathname: PATH.ORDERCONFIRM,
+        query: {
+          selectedProducts: selectedProducts,
+          orderInfo: JSON.stringify(response),
+        },
+      });
     } else {
       alert(error_msg);
       alert("결제 실패");
     }
   }
 
-  const handlePaymentSubmit = () => {
+  console.log(cartProduct);
+
+  async function handlePaymentSubmit() {
     const { orderList } = router.query; // 일반구매
     const { selectedProducts } = router.query;
+    const { orderNumber } = router.query;
+    // const { productOrderNumbers } = router.query;
     const orderProducts: string = String(orderList);
 
     console.log(clickedPaymentButtonIndex);
@@ -184,6 +217,7 @@ export default function useOrder() {
     let parsedSelectedProducts;
     let directPurchase;
 
+    console.log(cartProduct);
     if (
       cartProduct?.data.content.filter(
         (v: any) =>
@@ -200,6 +234,7 @@ export default function useOrder() {
         // eslint-disable-next-line array-callback-return
         .map((item: any) => {
           console.log("장바구니에서 선택된 제품", item);
+          return item;
         });
 
       console.log("장바구니에서 선택된 제품 배열: ", selectedItems);
@@ -214,6 +249,8 @@ export default function useOrder() {
       }
     }
     let values: any = {};
+    console.log(directPurchase);
+
     // 구매하기에서 온 동선
     if (directPurchase) {
       // 1) 네이버 페이 pg사 선택
@@ -234,7 +271,7 @@ export default function useOrder() {
 
         values = {
           pg: "naverpay",
-          merchant_uid: `min_${new Date().getTime()}`, // 상점에서 관리하는 주문 번호
+          merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
           name: parsedSelectedProducts[0].title,
           amount: totalPriceSumDirect,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
@@ -263,7 +300,7 @@ export default function useOrder() {
         values = {
           pg: "kakaopay",
           // pay_method: "card", // 생략가능
-          merchant_uid: `min_${new Date().getTime()}`, // 상점에서 생성한 고유 주문번호
+          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
           amount: totalPriceSumDirect,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
@@ -286,9 +323,94 @@ export default function useOrder() {
         values = {
           pg: "nice",
           pay_method: "card", // 생략가능
-          merchant_uid: `min_${new Date().getTime()}`, // 상점에서 생성한 고유 주문번호
+          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
           name,
           amount: totalPriceSumDirect,
+          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
+          buyer_name: receiver,
+          buyer_tel: phoneNumber,
+          buyer_addr: `${postalAddress.address} ${detailPostal}`,
+          buyer_postcode: postalAddress.zonecode,
+          language: "ko", // 결제창 언어 선택 파라미터  ko: 한국어, en: 영문
+          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+        };
+      }
+    } else {
+      console.log("장바구니 동선");
+
+      // 1) 네이버 페이 pg사 선택
+      if (pgData === "naverpay") {
+        const naverProducts: NaverProduct[] = [];
+
+        parsedSelectedProducts.forEach((product: any) => {
+          naverProducts.push({
+            categoryType: "PRODUCT",
+            categoryId: "GENERAL",
+            uid: product.uid, // 상품id로 변경해야함
+            name: product.title,
+            count: product.count || 1,
+          });
+        });
+
+        values.naverProducts = naverProducts;
+
+        values = {
+          pg: "naverpay",
+          merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
+          name: parsedSelectedProducts[0].title,
+          amount: totalPriceSum,
+          buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
+          buyer_name: receiver,
+          buyer_tel: phoneNumber,
+          buyer_addr: `${postalAddress.address} ${detailPostal}`,
+          buyer_postcode: postalAddress.zonecode,
+          naverPopupMode: false, // 팝업모드 활성화 -> redirecturl을 설정해야함
+          m_redirect_url: "{결제 완료 후 리디렉션 될 URL}", // -> 어떻게 해야할지 결정
+          // naverPurchaserName: "구매자이름",
+          // naverPurchaserBirthday: "20151201",
+          // naverChainId: "sAMplEChAINid",
+          // naverMerchantUserKey: "가맹점의 사용자 키",
+          // naverCultureBenefit: true, // 문화비 소득공제 적용여부,
+        };
+      }
+      // 2) 카카오페이일때
+      else if (pgData === "kakaopay") {
+        let name;
+        if (selectedItems.length === 1) {
+          name = selectedItems[0].productName;
+        } else if (selectedItems.length > 1) {
+          const additionalItems = selectedItems.length - 1;
+          name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
+        }
+        values = {
+          pg: "kakaopay",
+          // pay_method: "card", // 생략가능
+          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
+          name,
+          amount: totalPriceSum,
+          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
+          buyer_name: receiver,
+          buyer_tel: phoneNumber,
+          buyer_addr: `${postalAddress.address} ${detailPostal}`,
+          buyer_postcode: postalAddress.zonecode,
+          m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
+        };
+      }
+      // 2) 일반결제일때
+      else if (pgData === "nice") {
+        let name;
+        if (selectedItems.length === 1) {
+          name = selectedItems[0].productName;
+        } else if (selectedItems.length > 1) {
+          const additionalItems = selectedItems.length - 1;
+          name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
+        }
+        values = {
+          pg: "nice",
+          pay_method: "card", // 생략가능
+          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
+          name,
+          amount: totalPriceSum,
           buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
           buyer_name: receiver,
           buyer_tel: phoneNumber,
@@ -315,8 +437,9 @@ export default function useOrder() {
     /* 4. 결제 창 호출하기 */
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+
     IMP.request_pay(values, callback);
-  };
+  }
 
   return {
     clickedPaymentButtonIndex,

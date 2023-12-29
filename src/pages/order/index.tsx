@@ -33,6 +33,9 @@ export default function Order() {
   const router = useRouter();
   const { orderList } = router.query;
   const { selectedProducts } = router.query;
+  // const { orderNumber } = router.query;
+  // const { productOrderNumbers } = router.query;
+
   const orderProducts: string = String(orderList);
   const totalPriceSum = cartProduct?.data.content
     .filter(
