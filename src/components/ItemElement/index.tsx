@@ -4,18 +4,7 @@ import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
-
-type ProductCategory = "전체" | "1차 마켓" | "이전 마켓" | "이벤트";
-type ItemElementProps = {
-  defaultImg: string;
-  hoverImg?: string;
-  productName: string;
-  price: number;
-  category?: ProductCategory;
-  id: any;
-  isEvent?: boolean;
-  discountPrice?: number;
-};
+import ItemElementProps from "@/interface/itemElement";
 
 const ItemWrapper = styled.div`
   width: 100%;
@@ -64,11 +53,10 @@ const PriceDiv = styled.div`
   padding-top: 1rem;
 `;
 function ItemElement({
-  defaultImg,
-  productName,
+  mainThumbnail,
+  subThumbnail,
+  name,
   price,
-  hoverImg,
-  category,
   id,
   isEvent,
   discountPrice,
@@ -89,17 +77,17 @@ function ItemElement({
   return (
     <ItemWrapper>
       <StyledImage
-        src={defaultImg}
-        alt={defaultImg}
+        src={mainThumbnail}
+        alt={mainThumbnail}
         onMouseEnter={(e) => {
           const target = e.currentTarget as HTMLImageElement;
-          if (typeof hoverImg === "string") {
-            target.src = hoverImg;
+          if (typeof subThumbnail === "string") {
+            target.src = subThumbnail;
           }
         }}
         onMouseLeave={(e) => {
           const target = e.currentTarget as HTMLImageElement;
-          target.src = defaultImg;
+          target.src = mainThumbnail;
         }}
         onClick={() => {
           router.push({
@@ -108,7 +96,7 @@ function ItemElement({
           });
         }}
       />
-      <ItemName>{productName}</ItemName>
+      <ItemName>{name}</ItemName>
       {discountPrice !== undefined ? (
         <PriceDiv>
           <DiscountPrice>{price.toLocaleString()}원</DiscountPrice>
