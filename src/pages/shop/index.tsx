@@ -8,6 +8,8 @@ import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 import { useRouter } from "next/dist/client/router";
+import Category from "@/interface/category";
+import ItemElementProps from "@/interface/itemElement";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -36,29 +38,29 @@ export async function getStaticProps() {
 }
 export default function Shop() {
   const [activeCategory, setActiveCategory] = useState<string>("전체");
-  const [activeCategoryId, setActiveCategoryId] = useState<any>();
-  const [categoryList, setCategoryList] = useState<any>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState<Category>();
+  const [categoryList, setCategoryList] = useState<string[]>([]);
   const queryClient = useQueryClient();
   const router = useRouter();
   const productData = queryClient.getQueryData([
     QUERYKEYS.LOAD_PRODUCT_PAGING,
   ]) as {
     data: {
-      content: Array<any>;
+      content: Array<ItemElementProps>;
     };
   };
   const eventData = queryClient.getQueryData([
     QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
   ]) as {
-    data: Array<any>;
+    data: Array<ItemElementProps>;
   };
   const categoryData = queryClient.getQueryData([
     QUERYKEYS.ADMIN_GET_CATEGORY,
-  ]) as { data: Array<any> };
+  ]) as { data: Array<Category> };
   const handleCategoryChange = (category: string) => {
     setActiveCategory(category);
     setActiveCategoryId(
-      categoryData?.data.find((item: any) => item.name === category),
+      categoryData?.data.find((item: Category) => item.name === category),
     );
 
     // 업데이트하기: 선택된 탭을 세션 스토리지에 저장
@@ -73,7 +75,7 @@ export default function Shop() {
       categoryData?.data && [
         "전체",
         "코디상품",
-        ...categoryData.data.map((v: any) => v.name),
+        ...categoryData.data.map((v: Category) => v.name),
         "이벤트",
       ],
     );
@@ -84,11 +86,12 @@ export default function Shop() {
     const storedTab = sessionStorage.getItem("activeTab");
     // tab이 없거나 세션 스토리지에 저장된 값이 없으면 기본값 사용
     const initialTab = tab || storedTab || "전체";
-    categoryList?.forEach((item: any) => {
+    // console.log("categoryList", typeof categoryList);
+    categoryList?.forEach((item: string) => {
       if (tab && item === initialTab) {
         setActiveCategory(item);
         setActiveCategoryId(
-          categoryData?.data.find((v: any) => v.name === item),
+          categoryData?.data.find((v: Category) => v.name === item),
         );
       }
     });
@@ -102,6 +105,7 @@ export default function Shop() {
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData, categoryList]);
+  console.log("type", productData?.data.content);
   return (
     <S.Container>
       <S.Header>
@@ -111,7 +115,7 @@ export default function Shop() {
             categoryData?.data && [
               "전체",
               "코디상품",
-              ...categoryData.data.map((v: any) => v.name),
+              ...categoryData.data.map((v: Category) => v.name),
               "이벤트",
             ]
           }
@@ -126,32 +130,30 @@ export default function Shop() {
       ) : // eslint-disable-next-line no-nested-ternary
       activeCategory === "전체" ? (
         <S.ProductList>
-          {productData?.data.content.map((item: any) => (
+          {productData?.data.content.map((item: ItemElementProps) => (
             <ItemElement
               key={item.id}
-              defaultImg={item.mainThumbnail}
-              hoverImg={item.subThumbnail}
-              productName={item.name}
+              mainThumbnail={item.mainThumbnail}
+              subThumbnail={item.subThumbnail}
+              name={item.name}
               price={item.price}
               discountPrice={item.discountPrice}
               id={item.id}
-              category={item.categoryId}
               isEvent={!!item.eventId}
             />
           ))}
         </S.ProductList>
       ) : activeCategory === "이벤트" ? (
         <S.ProductList>
-          {eventData?.data.map((item: any) => (
+          {eventData?.data.map((item: ItemElementProps) => (
             <ItemElement
-              key={item.productId}
-              defaultImg={item.mainThumbnail}
-              hoverImg={item.subThumbnail}
-              productName={item.name}
+              key={item.id}
+              mainThumbnail={item.mainThumbnail}
+              subThumbnail={item.subThumbnail}
+              name={item.name}
               price={item.price}
               discountPrice={0}
-              id={item.productId}
-              category={item.categoryId}
+              id={item.id}
               isEvent={!!item.eventId}
             />
           ))}
@@ -159,7 +161,8 @@ export default function Shop() {
       ) : (
         <S.ProductList>
           {productData?.data.content.filter(
-            (item: any) => item.categoryId === activeCategoryId?.id,
+            (item: ItemElementProps) =>
+              item.categoryId === activeCategoryId?.id,
           ).length === 0 ? (
             <S.NOPRODUCT>
               제품 준비 중이에요. &nbsp;빠른 시일 내로 준비해서 찾아뵐게요!
@@ -167,17 +170,19 @@ export default function Shop() {
             </S.NOPRODUCT>
           ) : (
             productData?.data.content
-              .filter((item: any) => item.categoryId === activeCategoryId?.id)
-              .map((item: any) => (
+              .filter(
+                (item: ItemElementProps) =>
+                  item.categoryId === activeCategoryId?.id,
+              )
+              .map((item: ItemElementProps) => (
                 <ItemElement
                   key={item.id}
-                  defaultImg={item.mainThumbnail}
-                  hoverImg={item.subThumbnail}
-                  productName={item.name}
+                  mainThumbnail={item.mainThumbnail}
+                  subThumbnail={item.subThumbnail}
+                  name={item.name}
                   price={item.price}
                   discountPrice={item.discountPrice}
                   id={item.id}
-                  category={item.categoryId}
                   isEvent={!!item.eventId}
                 />
               ))
