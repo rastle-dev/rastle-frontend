@@ -266,7 +266,6 @@ export default function Cart() {
   } = useMypage();
   const router = useRouter();
   const [cartOrderProducts, setCartOrderProducts] = useState<any>([]);
-  // console.log()
   const handleProductCheckboxChange = (item: ProductItem) => {
     // 항목이 이미 선택되었는지 확인
     const isSelected = selectedItems.includes(item);
@@ -276,6 +275,19 @@ export default function Cart() {
       setSelectedItems(
         selectedItems.filter((selectedItem) => selectedItem !== item),
       );
+      setCartOrderProducts(
+        cartOrderProducts.filter((v: number) => v !== item.cartProductId),
+      );
+      setDeleteProducts(
+        deleteProducts.filter((v: number) => v !== item.cartProductId),
+      );
+      console.log(
+        "이미 선택",
+        selectedItems,
+        cartOrderProducts.filter((v: number) => v !== item.cartProductId),
+      );
+
+      console.log("item", item.cartProductId);
     } else {
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
@@ -287,6 +299,7 @@ export default function Cart() {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
     if (selectedItems.length === cartProduct?.data.content.length) {
       setSelectedItems([]);
+      setCartOrderProducts([]);
       setDeleteProducts([]);
     } else {
       setSelectedItems(cartProduct?.data.content);
@@ -424,6 +437,9 @@ export default function Cart() {
   };
 
   console.log("cart", cartProduct);
+  console.log("cartOrderProducts", cartOrderProducts);
+  console.log("deleteProducts", deleteProducts);
+
   return (
     <Wrap isLoading={isLoading}>
       <h2>장바구니</h2>
