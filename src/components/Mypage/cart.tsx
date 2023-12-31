@@ -281,13 +281,6 @@ export default function Cart() {
       setDeleteProducts(
         deleteProducts.filter((v: number) => v !== item.cartProductId),
       );
-      console.log(
-        "이미 선택",
-        selectedItems,
-        cartOrderProducts.filter((v: number) => v !== item.cartProductId),
-      );
-
-      console.log("item", item.cartProductId);
     } else {
       setSelectedItems([...selectedItems, item]);
       setDeleteProducts([...deleteProducts, item.cartProductId]);
@@ -418,8 +411,6 @@ export default function Cart() {
             product.productOrderNumber,
         );
 
-        console.log(productOrderNumbers);
-
         router.push({
           pathname: PATH.ORDER,
           query: {
@@ -435,10 +426,6 @@ export default function Cart() {
       console.log(err);
     }
   };
-
-  console.log("cart", cartProduct);
-  console.log("cartOrderProducts", cartOrderProducts);
-  console.log("deleteProducts", deleteProducts);
 
   return (
     <Wrap isLoading={isLoading}>
