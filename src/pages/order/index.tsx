@@ -2,7 +2,7 @@ import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/order/index.styles";
 import { useRouter } from "next/dist/client/router";
-import useCart from "@/hooks/mypage/useCart";
+import useCart from "@/hooks/mypage/cart/useCart";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {

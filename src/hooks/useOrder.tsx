@@ -4,7 +4,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import { useRouter } from "next/dist/client/router";
 import useInput from "@/hooks/useInput";
-import useCart from "@/hooks/mypage/useCart";
+import useCart from "@/hooks/mypage/cart/useCart";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {

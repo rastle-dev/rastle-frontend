@@ -11,7 +11,7 @@ import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import IconButton from "@/components/common/IconButton";
 import { toast } from "react-toastify";
-import useCart from "@/hooks/mypage/useCart";
+import useCart from "@/hooks/mypage/cart/useCart";
 
 export default function Product() {
   const {

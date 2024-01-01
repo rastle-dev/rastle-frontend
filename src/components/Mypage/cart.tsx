@@ -3,7 +3,7 @@ import LoadingBar from "@/components/LoadingBar";
 import errorMsg from "@/components/Toast/error";
 import { toast } from "react-toastify";
 import * as S from "@/styles/mypage/cart/index.styles";
-import useCart from "@/hooks/mypage/useCart";
+import useCart from "@/hooks/mypage/cart/useCart";
 import { ProductItem } from "@/interface/cartProductItem";
 
 export default function Cart() {
