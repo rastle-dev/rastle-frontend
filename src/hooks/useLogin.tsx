@@ -7,14 +7,46 @@ import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
 import { useRecoilState } from "recoil";
 import { tokenState } from "@/stores/atom/recoilState";
+import React from "react";
 
 export default function useLogin() {
   const router = useRouter();
   const [password, onChangePassword] = useInput("");
   const [email, onChangeEmail] = useInput("");
   const [accessToken, setToken] = useRecoilState(tokenState);
-
-  // yslim162@naver.com
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+  const bottomButtons = [
+    {
+      productName: "이메일 가입",
+      width: "12.3rem",
+      onClick: () => router.push(PATH.SIGNUP),
+    },
+    {
+      productName: "비밀번호 찾기",
+      width: "12.3rem",
+    },
+    {
+      productName: "비회원 주문 조회",
+      width: "12.3rem",
+      onClick: () => router.push(PATH.GUEST),
+    },
+  ];
+  const loginFormInputs = [
+    {
+      placeholder: "예) rastle@rastle.com",
+      label: "이메일 주소",
+      value: email,
+      onChange: onChangeEmail,
+    },
+    {
+      label: "비밀번호",
+      type: "password",
+      value: password,
+      onChange: onChangePassword,
+    },
+  ];
   const mutateLogin = useMutation(["loadMutation"], authLogin, {
     onSuccess: async (response) => {
       // HTTP 응답에서 "Authorization" 헤더 값을 추출
@@ -60,5 +92,8 @@ export default function useLogin() {
     onChangeEmail,
     mutateSocialLogin,
     accessToken,
+    bottomButtons,
+    loginFormInputs,
+    handleSubmit,
   };
 }

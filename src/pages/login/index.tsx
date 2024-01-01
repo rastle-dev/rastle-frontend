@@ -1,50 +1,19 @@
 import React from "react";
-import { useRouter } from "next/dist/client/router";
 import { toast } from "react-toastify";
 import SNSLogin from "@/components/Login/sns";
-import PATH from "@/constants/path";
 import useLogin from "@/hooks/useLogin";
 import * as S from "@/styles/login/index.styles";
 import errorMsg from "@/components/Toast/error";
 
 export default function Login() {
-  const router = useRouter();
-  const { email, onChangeEmail, password, onChangePassword, mutateLogin } =
-    useLogin();
-  const buttons = [
-    {
-      productName: "이메일 가입",
-      width: "12.3rem",
-      onClick: () => router.push(PATH.SIGNUP),
-    },
-    {
-      productName: "비밀번호 찾기",
-      width: "12.3rem",
-      // onClick: () => logout(),
-    },
-    {
-      productName: "비회원 주문 조회",
-      width: "12.3rem",
-      onClick: () => router.push(PATH.GUEST),
-    },
-  ];
-  const inputs = [
-    {
-      placeholder: "예) rastle@rastle.com",
-      label: "이메일 주소",
-      value: email,
-      onChange: onChangeEmail,
-    },
-    {
-      label: "비밀번호",
-      type: "password",
-      value: password,
-      onChange: onChangePassword,
-    },
-  ];
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-  };
+  const {
+    email,
+    password,
+    mutateLogin,
+    bottomButtons,
+    loginFormInputs,
+    handleSubmit,
+  } = useLogin();
   return (
     <form onSubmit={handleSubmit}>
       <S.Container>
@@ -53,7 +22,7 @@ export default function Login() {
           <h3>코디로 이해시키는 제품의 가치, @rastle_fashion</h3>
         </S.Header>
         <S.Wrapper>
-          {inputs.map((input) => (
+          {loginFormInputs.map((input) => (
             <S.StyledInput
               key={input.label}
               placeholder={input.placeholder}
@@ -76,14 +45,14 @@ export default function Login() {
           />
         </S.Wrapper>
         <S.Box>
-          {buttons.map((button, index) => (
+          {bottomButtons.map((button, index) => (
             <React.Fragment key={button.productName}>
               <S.StyledButton
                 title={button.productName}
                 width={button.width}
                 onClick={button.onClick}
               />
-              {index < buttons.length - 1 && <S.Line />}
+              {index < bottomButtons.length - 1 && <S.Line />}
             </React.Fragment>
           ))}
         </S.Box>

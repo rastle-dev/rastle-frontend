@@ -33,7 +33,6 @@ export async function getStaticProps() {
 }
 export default function Shop() {
   const router = useRouter();
-
   const {
     setActiveCategoryId,
     categoryList,
@@ -44,7 +43,7 @@ export default function Shop() {
     setActiveCategory,
     categoryView,
   } = useShop();
-  //
+
   useEffect(() => {
     setCategoryList(
       categoryData?.data && [
