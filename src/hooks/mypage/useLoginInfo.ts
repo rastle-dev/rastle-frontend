@@ -7,7 +7,7 @@ import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
 
-export default function useMypage() {
+export default function useLoginInfo() {
   const router = useRouter();
   const [email, onChangeEmail] = useInput("");
 
