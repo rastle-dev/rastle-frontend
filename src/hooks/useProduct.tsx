@@ -28,6 +28,7 @@ export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
   const { productId } = router.query;
+
   const { data: detailData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
     () => {
@@ -37,15 +38,6 @@ export default function useProduct() {
       return null;
     },
   );
-  // const { data: detailData } = useQuery(
-  //   [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
-  //   () => {
-  //     if (productId) {
-  //       return loadProductDetail(Number(productId));
-  //     }
-  //     return null;
-  //   },
-  // );
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(
@@ -227,6 +219,7 @@ export default function useProduct() {
     }));
     setCartProducts(newCartProducts);
   }, [selectedProducts]);
+
   return {
     handleColorClick,
     handleSizeClick,

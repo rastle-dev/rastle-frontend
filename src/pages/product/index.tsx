@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/common/ColorButton";
 import COLORS from "@/constants/color";
@@ -12,8 +12,15 @@ import toastMsg from "@/components/Toast";
 import IconButton from "@/components/common/IconButton";
 import { toast } from "react-toastify";
 import useCart from "@/hooks/mypage/cart/useCart";
+import useDialog from "@/hooks/useDialog";
+import useScroll from "@/hooks/useScroll";
 
 export default function Product() {
+  const router = useRouter();
+  const { mutateAddCartProduct } = useCart();
+  const { openDialog, closeDialog, isDialogOpen } = useDialog();
+  const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
+    useScroll();
   const {
     handleColorClick,
     handleSizeClick,
@@ -31,46 +38,16 @@ export default function Product() {
     cartProducts,
     onClickOrderButton,
   } = useProduct();
-  const router = useRouter();
-  const { mutateAddCartProduct } = useCart();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Show the button when the scroll position is greater than 20 pixels
-      setShowScrollButton(window.scrollY > 20);
-    };
-
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Add smooth scrolling behavior
-    });
-  };
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-  };
-  const openDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
-  console.log("detailData", detailData);
   return (
     <S.Wrapper>
       {isDialogOpen && (
