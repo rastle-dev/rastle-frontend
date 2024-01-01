@@ -20,7 +20,7 @@ export default function useCart() {
 
   const [cartOrderProducts, setCartOrderProducts] = useState<number[]>([]);
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
-  const [deleteProducts, setDeleteProducts] = useState<any>([]);
+  const [deleteProducts, setDeleteProducts] = useState<number[]>([]);
   const [isDataLoading, setIsDataLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const orderList = cartOrderProducts.join(",");
