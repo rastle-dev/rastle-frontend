@@ -5,10 +5,12 @@ import {
 } from "@tanstack/react-query";
 import { loadBundle, loadSelectBundle } from "@/api/shop";
 import QUERYKEYS from "@/constants/querykey";
-import { useState } from "react";
+import React, { useState } from "react";
 import Category from "@/interface/category";
 import { useRouter } from "next/dist/client/router";
 import ItemElementProps from "@/interface/itemElement";
+import * as S from "@/styles/shop/index.styles";
+import ItemElement from "@/components/ItemElement";
 
 export default function useShop() {
   const [activeCategory, setActiveCategory] = useState<string>("전체");
@@ -76,6 +78,73 @@ export default function useShop() {
     }
   };
 
+  // shop페이지 view
+  let categoryView: React.ReactNode;
+
+  if (activeCategory === "전체") {
+    categoryView = (
+      <S.ProductList>
+        {productData?.data.content.map((item: ItemElementProps) => (
+          <ItemElement
+            key={item.id}
+            mainThumbnail={item.mainThumbnail}
+            subThumbnail={item.subThumbnail}
+            name={item.name}
+            price={item.price}
+            discountPrice={item.discountPrice}
+            id={item.id}
+            isEvent={!!item.eventId}
+          />
+        ))}
+      </S.ProductList>
+    );
+  } else if (activeCategory === "이벤트") {
+    categoryView = (
+      <S.ProductList>
+        {eventData?.data.map((item: ItemElementProps) => (
+          <ItemElement
+            key={item.id}
+            mainThumbnail={item.mainThumbnail}
+            subThumbnail={item.subThumbnail}
+            name={item.name}
+            price={item.price}
+            discountPrice={0}
+            id={item.id}
+            isEvent={!!item.eventId}
+          />
+        ))}
+      </S.ProductList>
+    );
+  } else {
+    const filteredProducts = productData?.data.content.filter(
+      (item: ItemElementProps) => item.categoryId === activeCategoryId?.id,
+    );
+
+    categoryView =
+      filteredProducts?.length === 0 ? (
+        <S.ProductList>
+          <S.NOPRODUCT>
+            제품 준비 중이에요. 빠른 시일 내로 준비해서 찾아뵐게요! 🙇🏻
+          </S.NOPRODUCT>
+        </S.ProductList>
+      ) : (
+        <S.ProductList>
+          {filteredProducts?.map((item: ItemElementProps) => (
+            <ItemElement
+              key={item.id}
+              mainThumbnail={item.mainThumbnail}
+              subThumbnail={item.subThumbnail}
+              name={item.name}
+              price={item.price}
+              discountPrice={item.discountPrice}
+              id={item.id}
+              isEvent={!!item.eventId}
+            />
+          ))}
+        </S.ProductList>
+      );
+  }
+
   return {
     useLoadSelectBundle,
     infiniteData,
@@ -91,5 +160,6 @@ export default function useShop() {
     setActiveCategoryId,
     categoryData,
     setActiveCategory,
+    categoryView,
   };
 }

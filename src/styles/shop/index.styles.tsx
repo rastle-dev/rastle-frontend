@@ -10,6 +10,12 @@ export const Container = styled.div`
   margin-top: 5.5rem;
   padding-top: 2rem;
 `;
+export const Default = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
 
 export const Header = styled.div`
   width: 88%;
