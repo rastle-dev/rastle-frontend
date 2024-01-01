@@ -45,7 +45,6 @@ export const Wrapper = styled.div`
   }
   margin-top: 3rem;
   width: 100%;
-  //border: 1px solid red;
   display: flex;
   flex-direction: column;
   gap: 2.7rem;
@@ -69,7 +68,7 @@ export const StyledInput = styled(Input)`
   }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
-  ${media.mobile} {
+  @media (max-width: 1007px) {
     //width: 44rem;
     font-size: 1.4rem;
     &::placeholder {
