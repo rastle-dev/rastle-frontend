@@ -51,7 +51,7 @@ export const loadMe = async () => {
   return data;
 };
 
-export const changePassword = async (newPassword: any) => {
+export const changePassword = async (newPassword: { newPassword: string }) => {
   const { data } = await authorizationClient.put(
     API.CHANGEPASSWORD,
     newPassword,
