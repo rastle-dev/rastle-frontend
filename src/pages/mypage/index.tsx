@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import LoginInfo from "@/components/Mypage/loginInfo";
-import useMypage from "@/hooks/useMypage";
+import useMypage from "@/hooks/mypage/useMypage";
 import DefaultAddress from "@/components/Mypage/defaultAddress";
 import * as S from "../../styles/mypage/index.styles";
 

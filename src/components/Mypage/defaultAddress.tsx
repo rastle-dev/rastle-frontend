@@ -1,5 +1,5 @@
 import React from "react";
-import { NODATA } from "@/components/Mypage/cart";
+import { NODATA } from "@/styles/mypage/cart/index.styles";
 
 export default function DefaultAddress() {
   return (

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import * as S from "@/styles/login/index.styles";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import useMypage from "@/hooks/useMypage";
+import useMypage from "@/hooks/mypage/useMypage";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";

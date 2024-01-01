@@ -6,12 +6,12 @@ import Icon from "@/components/common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
-import useMypage from "@/hooks/useMypage";
 import Dialog from "@/components/common/Dialog";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import IconButton from "@/components/common/IconButton";
 import { toast } from "react-toastify";
+import useCart from "@/hooks/mypage/useCart";
 
 export default function Product() {
   const {
@@ -32,7 +32,7 @@ export default function Product() {
     onClickOrderButton,
   } = useProduct();
   const router = useRouter();
-  const { mutateAddCartProduct } = useMypage();
+  const { mutateAddCartProduct } = useCart();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [showScrollButton, setShowScrollButton] = useState(false);
