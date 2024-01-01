@@ -14,7 +14,7 @@ export default function useMypage() {
     { label: "기본 배송지" },
   ];
 
-  const handleTabClick = (tabs: any) => {
+  const handleTabClick = (tabs: string) => {
     setActiveTab(tabs);
     // 업데이트하기: 선택된 탭을 세션 스토리지에 저장
     sessionStorage.setItem("tab", tabs);
