@@ -9,14 +9,14 @@ import {
 import useShop from "@/hooks/useShop";
 
 export default function CodyProduct() {
-  const { infiniteData, handleScroll, isFetchingNextPage } = useShop();
+  const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", infiniteHandleScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", infiniteHandleScroll);
     };
-  }, [handleScroll]);
+  }, [infiniteHandleScroll]);
   return (
     <>
       <S.SetBox>
