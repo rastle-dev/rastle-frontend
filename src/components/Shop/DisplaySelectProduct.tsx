@@ -2,22 +2,27 @@ import React from "react";
 import useShop from "@/hooks/useShop";
 import ItemElement from "@/components/ItemElement";
 import * as S from "@/styles/shop/index.styles";
+import ItemElementProps from "@/interface/itemElement";
 
-export default function DisplaySelectProduct({ id }: any) {
+interface Id {
+  id: number;
+}
+
+export default function DisplaySelectProduct({ id }: Id) {
   const { useLoadSelectBundle } = useShop();
   const { data: bundleSelectData } = useLoadSelectBundle(id);
   return (
     <S.ProductList>
-      {bundleSelectData?.data.map((item: any) => (
+      {bundleSelectData?.data.map((item: ItemElementProps) => (
         <ItemElement
           key={item.id}
-          defaultImg={item.mainThumbnail}
-          hoverImg={item.subThumbnail}
-          productName={item.name}
+          mainThumbnail={item.mainThumbnail}
+          subThumbnail={item.subThumbnail}
+          name={item.name}
           price={item.price}
           discountPrice={item.discountPrice}
           id={item.id}
-          isEvent={item.event}
+          isEvent={item.isEvent}
         />
       ))}
     </S.ProductList>
