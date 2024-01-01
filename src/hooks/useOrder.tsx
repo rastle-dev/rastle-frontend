@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
-import useMypage from "@/hooks/useMypage";
 import { useRouter } from "next/dist/client/router";
-
 import useInput from "@/hooks/useInput";
+import useCart from "@/hooks/mypage/cart/useCart";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
@@ -17,7 +16,7 @@ export default function useOrder() {
 
   const { data } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   console.log(data);
-  const { cartProduct } = useMypage();
+  const { cartProduct } = useCart();
   const OrdererInfo = [
     { meta: "이름", data: data?.data.userName },
     { meta: "연락처", data: data?.data.phoneNumber },

@@ -2,12 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 
-type ProductCategory = "전체" | "코디상품" | "상의" | "하의" | "이벤트";
-
 interface ProductCategoryTabsProps {
-  categories: ProductCategory[];
+  categories: string[];
   activeCategory: string;
-  onCategoryChange: (category: ProductCategory) => void;
+  onCategoryChange: (category: string) => void;
 }
 
 const TabContainer = styled.div`
@@ -45,7 +43,7 @@ export default function ProductCategoryTabs({
 }: ProductCategoryTabsProps) {
   return (
     <TabContainer>
-      {categories?.map((category) => (
+      {categories?.map((category: string) => (
         <TabItem
           key={category}
           active={category === activeCategory}

@@ -1,8 +1,8 @@
 import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/common/Input";
 import * as S from "@/styles/order/index.styles";
-import useMypage from "@/hooks/useMypage";
 import { useRouter } from "next/dist/client/router";
+import useCart from "@/hooks/mypage/cart/useCart";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -29,7 +29,7 @@ export default function Order() {
     OrdererInfo,
     handlePaymentSubmit,
   } = useOrder();
-  const { cartProduct } = useMypage();
+  const { cartProduct } = useCart();
   const router = useRouter();
   const { orderList } = router.query;
   const { selectedProducts } = router.query;
