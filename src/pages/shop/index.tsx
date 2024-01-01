@@ -10,10 +10,10 @@ import { adminGetCategory } from "@/api/admin";
 import { useRouter } from "next/dist/client/router";
 import Category from "@/interface/category";
 import ItemElementProps from "@/interface/itemElement";
+import useShop from "@/hooks/useShop";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
-
   // Prefetch queries
   // await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT], loadMarketProduct);
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
@@ -23,7 +23,6 @@ export async function getStaticProps() {
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
     loadEventProductPaging,
   );
-
   await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
@@ -37,38 +36,20 @@ export async function getStaticProps() {
   };
 }
 export default function Shop() {
-  const [activeCategory, setActiveCategory] = useState<string>("전체");
-  const [activeCategoryId, setActiveCategoryId] = useState<Category>();
-  const [categoryList, setCategoryList] = useState<string[]>([]);
-  const queryClient = useQueryClient();
   const router = useRouter();
-  const productData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_PRODUCT_PAGING,
-  ]) as {
-    data: {
-      content: Array<ItemElementProps>;
-    };
-  };
-  const eventData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
-  ]) as {
-    data: Array<ItemElementProps>;
-  };
-  const categoryData = queryClient.getQueryData([
-    QUERYKEYS.ADMIN_GET_CATEGORY,
-  ]) as { data: Array<Category> };
-  const handleCategoryChange = (category: string) => {
-    setActiveCategory(category);
-    setActiveCategoryId(
-      categoryData?.data.find((item: Category) => item.name === category),
-    );
 
-    // 업데이트하기: 선택된 탭을 세션 스토리지에 저장
-    sessionStorage.setItem("activeTab", category);
-
-    router.replace(`/shop?tab=${encodeURIComponent(category)}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const {
+    activeCategoryId,
+    setActiveCategoryId,
+    categoryList,
+    setCategoryList,
+    productData,
+    eventData,
+    categoryData,
+    handleCategoryChange,
+    activeCategory,
+    setActiveCategory,
+  } = useShop();
   //
   useEffect(() => {
     setCategoryList(
@@ -105,7 +86,6 @@ export default function Shop() {
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData, categoryList]);
-  console.log("type", productData?.data.content);
   return (
     <S.Container>
       <S.Header>

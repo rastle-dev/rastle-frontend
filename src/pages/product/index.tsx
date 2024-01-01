@@ -193,10 +193,7 @@ export default function Product() {
           <S.ProductDetail src={img} />
         ))}
       </S.ProductDetailList>
-      <S.ScrollWrapper
-        className={showScrollButton ? "show" : ""}
-        // onClick={scrollToTop}
-      >
+      <S.ScrollWrapper className={showScrollButton ? "show" : ""}>
         <IconButton
           onClick={scrollToTop}
           iconName="arrowUp"
