@@ -6,7 +6,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 import LoadingBar from "@/components/LoadingBar";
-import Dialog from "@/components/common/Dialog";
+import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/loginInfo/index.styles";

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "@/components/common/Input";
+import Input from "@/components/Common/Input";
 import { adminGetCategory, adminGetEvent } from "@/api/admin";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";

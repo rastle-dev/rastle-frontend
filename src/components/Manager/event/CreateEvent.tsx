@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useCreateEvent from "@/hooks/manager/event/useCreateEvent";
-import Input from "@/components/common/Input";
+import Input from "@/components/Common/Input";
 import Image from "next/image";
 import COLORS from "@/constants/color";
 

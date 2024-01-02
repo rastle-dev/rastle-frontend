@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Button from "@/components/common/Button";
-import Input from "@/components/common/Input";
+import Button from "@/components/Common/Button";
+import Input from "@/components/Common/Input";
 import media from "@/styles/media";
 import COLORS from "../../constants/color";
 
