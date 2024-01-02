@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import * as S from "@/styles/shop/index.styles";
-import SwiperComponent from "@/components/Shop/codySwiper";
+import SwiperComponent from "@/components/Shop/CategoryView/Cody/codySwiper";
 import DisplaySelectProduct from "@/components/Shop/DisplaySelectProduct";
 import {
   LoadingSpinner,
@@ -8,7 +8,7 @@ import {
 } from "@/components/LoadingSpinner";
 import useShop from "@/hooks/useShop";
 
-export default function CodyProduct() {
+export default function Index() {
   const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
