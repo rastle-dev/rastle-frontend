@@ -4,11 +4,12 @@ import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import * as S from "@/styles/shop/index.styles";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
-import CodyProduct from "@/components/Shop/CodyProduct";
 import { adminGetCategory } from "@/api/admin";
 import { useRouter } from "next/dist/client/router";
 import Category from "@/interface/category";
 import useShop from "@/hooks/useShop";
+import CategoryView from "@/components/Shop/CategoryView";
+import Index from "@/components/Shop/CategoryView/Cody";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -41,7 +42,7 @@ export default function Shop() {
     handleCategoryChange,
     activeCategory,
     setActiveCategory,
-    categoryView,
+    activeCategoryId,
   } = useShop();
 
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function Shop() {
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData, categoryList]);
+  console.log("actev", activeCategoryId);
 
   return (
     <S.Container>
@@ -98,9 +100,12 @@ export default function Shop() {
       </S.Header>
       <S.Line />
       {activeCategory === "코디상품" ? (
-        <CodyProduct />
+        <Index />
       ) : (
-        <S.Default>{categoryView}</S.Default>
+        <CategoryView
+          activeCategory={activeCategory}
+          activeCategoryId={activeCategoryId}
+        />
       )}
     </S.Container>
   );
