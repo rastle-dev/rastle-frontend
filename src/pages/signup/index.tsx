@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "@/components/common/Input";
+import Input from "@/components/Common/Input";
 import * as S from "@/styles/signup/index.styles";
 import useSignup from "@/hooks/useSignup";
 import LazyLink from "@/components/LazyLink";

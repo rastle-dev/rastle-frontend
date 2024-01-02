@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import IconButton from "@/components/common/IconButton";
+import IconButton from "@/components/Common/IconButton";
 import COLORS from "@/constants/color";
 
 interface WrapperProps {

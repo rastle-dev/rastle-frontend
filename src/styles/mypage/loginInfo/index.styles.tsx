@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Input from "@/components/common/Input";
-import Button from "@/components/common/Button";
+import Input from "@/components/Common/Input";
+import Button from "@/components/Common/Button";
 
 interface ButtonProps {
   inValid: boolean;

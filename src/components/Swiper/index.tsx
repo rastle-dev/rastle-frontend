@@ -7,7 +7,7 @@ import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import Icon from "@/components/common/Icon";
+import Icon from "@/components/Common/Icon";
 import media from "@/styles/media";
 
 SwiperCore.use([Navigation, Pagination]);
