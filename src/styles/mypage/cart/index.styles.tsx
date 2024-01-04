@@ -5,8 +5,6 @@ import Button from "@/components/Common/Button";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
-  //border: 1px solid red;
-  //background-color: blueviolet;
 `;
 export const TabMenu = styled.div`
   display: flex;
