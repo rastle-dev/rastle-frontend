@@ -11,6 +11,7 @@ export default function useMypage() {
   ];
   const myTabs = [
     { label: "로그인 정보", category: "내 정보" },
+    { label: "쿠폰함" },
     { label: "기본 배송지" },
   ];
 
