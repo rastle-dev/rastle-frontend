@@ -6,22 +6,25 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 interface IconProps {
   /** 아이콘 이름 */
   iconName: string;
-  size?: string;
+  size?: number;
   color?: string;
   border?: number;
   opacity?: number;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const StyledIcon = styled.i<{ border?: number }>`
-  ${({ border }) => `
+const StyledIcon = styled.i<{ border?: number; size?: number }>`
+  ${({ border, size }) => `
    -webkit-text-stroke: ${border}px;
+       width: ${size};
+
+   
 `}
 `;
 
 function Icon({
   iconName,
-  size = "1.5rem",
+  size = 1.5,
   color,
   border = 0.1,
   opacity,
@@ -33,6 +36,7 @@ function Icon({
       style={{ fontSize: size, color, opacity }}
       border={border}
       onClick={onClick}
+      size={size}
     />
   );
 }
