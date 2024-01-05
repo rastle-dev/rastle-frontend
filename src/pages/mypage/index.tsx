@@ -1,11 +1,12 @@
 import { useRouter } from "next/dist/client/router";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import LoginInfo from "@/components/Mypage/loginInfo";
 import DefaultAddress from "@/components/Mypage/defaultAddress";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
 import useMypage from "@/hooks/mypage/useMypage";
+import Coupon from "@/components/Mypage/coupon";
 import * as S from "../../styles/mypage/index.styles";
 
 export default function Mypage() {
@@ -24,6 +25,8 @@ export default function Mypage() {
     switch (activeTab) {
       case "주문 내역":
         return <OrderList />;
+      case "쿠폰함":
+        return <Coupon />;
       case "장바구니":
         return <Cart />;
       case "로그인 정보":
@@ -35,7 +38,13 @@ export default function Mypage() {
     }
   };
   useEffect(() => {
-    setTabList(["주문 내역", "장바구니", "로그인 정보", "기본 배송지"]);
+    setTabList([
+      "주문 내역",
+      "장바구니",
+      "쿠폰함",
+      "로그인 정보",
+      "기본 배송지",
+    ]);
   }, []);
 
   // URL 파라미터를 확인하여 활성 탭을 설정

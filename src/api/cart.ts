@@ -21,3 +21,8 @@ export const deleteAllCartProduct = async () => {
   const { data } = await authorizationClient.delete(API.CART);
   return data;
 };
+
+export const loadCoupon = async () => {
+  const { data } = await authorizationClient.get(API.COUPON);
+  return data;
+};

@@ -34,6 +34,8 @@ export default function CategoryView({
     );
   }
   if (activeCategory === "이벤트") {
+    console.log("이벤트", eventData);
+    console.log("hi");
     return (
       <S.ProductList>
         {eventData?.data.map((item: ItemElementProps) => (

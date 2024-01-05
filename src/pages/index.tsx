@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "@/styles/index/index.styles";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -9,6 +9,7 @@ import useShop from "@/hooks/useShop";
 import TopLayer from "@/components/Home/TopLayer";
 import ProductLayer from "@/components/Home/ProductLayer";
 import EventProductLayer from "@/components/Home/EventProductLayer";
+import SignupPopup from "@/components/Home/SignupPopup/index";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ export default function Home() {
   const { mutateSocialLogin } = useLogin();
   const { productData, eventData } = useShop();
   const router = useRouter();
+  const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
 
   useEffect(() => {
     const currentPath = router.asPath;
@@ -42,9 +44,29 @@ export default function Home() {
       localStorage.setItem("loginType", "social");
       mutateSocialLogin.mutate();
     }
-  }, []);
+    if (typeof window !== "undefined") {
+      const hideUntil = localStorage.getItem("hideSignupPopupUntil");
+      if (hideUntil) {
+        if (Date.now() > parseInt(hideUntil, 10)) {
+          setSignupPopupVisible(true);
+        } else {
+          setSignupPopupVisible(false);
+        }
+      } else if (!localStorage.getItem("popup")) {
+        setSignupPopupVisible(true);
+      } else {
+        localStorage.removeItem("popup");
+      }
+    }
+  }, [router, mutateSocialLogin]);
+
+  const handleSignupClose = () => {
+    setSignupPopupVisible(false);
+  };
+
   return (
     <S.StyledHome>
+      {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <ProductLayer productData={productData} />
       <EventProductLayer eventData={eventData} />
