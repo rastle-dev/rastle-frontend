@@ -72,8 +72,10 @@ export const TextInfo = styled.div`
     font-weight: 500;
   }
   @media (max-width: 769px) {
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
   }
 `;
 export const MobileTextInfo = styled.div`
