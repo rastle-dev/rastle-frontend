@@ -1,14 +1,26 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import COLORS from "@/constants/color";
 import IconButton from "@/components/Common/IconButton";
 import * as S from "@/components/Home/SignupPopup/index.styles";
+
 interface SignupPopupProps {
   onClose: () => void;
 }
 
-function Index({ onClose }: SignupPopupProps): React.ReactNode {
+function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
+  const handleClose = () => {
+    localStorage.setItem("popup", "true");
+    onClose();
+  };
+
+  const handleWeekClose = () => {
+    // '일주일 동안 보지 않기' 로직 추가
+    localStorage.setItem(
+      "hideSignupPopupUntil",
+      String(Date.now() + 24 * 60 * 60 * 1000),
+    );
+    onClose();
+  };
   return (
     <S.ModalBackground>
       <S.PopupContainer>
@@ -18,7 +30,7 @@ function Index({ onClose }: SignupPopupProps): React.ReactNode {
             border={1.3}
             iconName="deleteSmall"
             color={COLORS.BLACK}
-            onClick={onClose}
+            onClick={handleClose}
           />
         </S.DeleteIconWrapper>
         <S.LOGOBOX>
@@ -40,13 +52,13 @@ function Index({ onClose }: SignupPopupProps): React.ReactNode {
             objectFit="cover"
           />
         </S.CouponWrapper>
-        {/* 팝업 내용 및 회원가입 폼 */}
         <p>회원가입 시 3,000원 할인 쿠폰을 드려요.</p>
-        {/* 여기에 회원가입 폼 및 버튼 등을 추가하세요 */}
-        <S.CloseButton onClick={onClose}>x 일주일동안 보지 않기</S.CloseButton>
+        <S.CloseButton onClick={handleWeekClose}>
+          x 하루 동안 보지 않기
+        </S.CloseButton>
       </S.PopupContainer>
     </S.ModalBackground>
   );
 }
 
-export default Index;
+export default SignupPopup;
