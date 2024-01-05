@@ -10,6 +10,7 @@ const ICONS: IconProps = {
   arrowRight: "bi bi-chevron-right",
   arrowLeft: "bi bi-chevron-left",
   delete: "bi bi-x-circle-fill",
+  deleteSmall: "bi bi-x",
   arrowUp: "bi bi-arrow-up-circle-fill",
   arrowDown: "bi bi-arrow-down-circle-fill",
 };
