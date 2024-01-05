@@ -31,10 +31,7 @@ export const TableHeader = styled.div`
   padding-left: 15rem;
   display: grid;
   align-items: center;
-
-  //grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
   grid-template-columns: 26rem 17rem 14rem 7.7rem;
-  //border: 1px solid red;
   font-size: 1.2rem;
   @media (max-width: 769px) {
     display: none;
@@ -42,7 +39,6 @@ export const TableHeader = styled.div`
   p {
     margin: 1rem 0 1rem 0;
     font-weight: 500;
-    //border: 1px solid red;
   }
 `;
 export const TableContent = styled.div``;
@@ -52,7 +48,6 @@ export const NODATA = styled.div`
   color: ${COLORS.GREY[500]};
   font-size: 1.5rem;
   height: 30rem;
-  //border: 1px solid red;
 `;
 export const ProductInfo = styled.div`
   display: flex;
@@ -68,18 +63,13 @@ export const ProductInfo = styled.div`
   }
 `;
 export const TextInfo = styled.div`
-  //border: 1px solid red;
-  //width: 24rem;
-  //display: flex;
-  //padding-right: 1rem;
-  gap: 1rem;
+  gap: 1.4rem;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   h4 {
     font-weight: 500;
-    //margin: 0;
   }
   @media (max-width: 769px) {
     display: flex;
@@ -88,7 +78,6 @@ export const TextInfo = styled.div`
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  //padding-left: 5rem;
   grid-template-columns: 36.5rem 16rem 15rem 15rem;
   margin: 1.9rem 0 1.9rem 0;
   text-align: center;
@@ -107,7 +96,6 @@ export const MobileTextInfo = styled.div`
     border-radius: 10px;
     padding: 1.5rem 0 1.5rem 0;
     flex-direction: row;
-    //gap: 5rem;
     justify-content: space-around;
     p {
       font-weight: 400;
@@ -115,13 +103,10 @@ export const MobileTextInfo = styled.div`
       padding-bottom: 0.2rem;
       display: none;
     }
-
     p:nth-child(2):before {
-      //content: "판매가 : ";
       display: none;
     }
     p:nth-child(3):before {
-      //content: "수량 : ";
       display: none;
     }
     p:nth-child(4):before {
@@ -135,14 +120,10 @@ export const MobileDescription = styled.div`
   }
 `;
 export const CouponWrapper = styled.div`
-  width: 8rem;
-  height: 5.28rem;
+  width: 9.3rem;
+  height: 6rem;
   position: relative;
 `;
 export const CouponImage = styled(Image)`
-  //width: 5rem;
-  //height: 5rem;
   width: 100%;
-  //border: 1px solid black;
-  //width: 30%;
 `;
