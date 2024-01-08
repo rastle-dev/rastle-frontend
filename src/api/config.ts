@@ -33,6 +33,7 @@ const AUTHORITY = "authority";
 const ORDERS = "/orders";
 const PAYMENTS = "/payments";
 const COMPLETE = "/complete";
+const COUPON = "/coupon";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -81,5 +82,6 @@ const API = {
   LOCAL_NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
   ORDERS: `${ORDERS}`,
   PAYMENTCOMPLETE: `${PAYMENTS}${COMPLETE}`,
+  COUPON: `${COUPON}`,
 };
 export default API;

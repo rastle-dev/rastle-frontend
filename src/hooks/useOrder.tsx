@@ -295,6 +295,7 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
+        // amount: totalPriceFinal,
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
@@ -317,6 +318,7 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
+        // amount: totalPriceFinal,
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
