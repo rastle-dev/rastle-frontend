@@ -1,9 +1,45 @@
 import React from "react";
 import * as S from "@/styles/orderconfirm/index.styles";
-import useOrderConfirm from "@/hooks/useOrderConfirm";
 
-export default function Order() {
-  const { ProductList, OrdererInfo, parsedOrderInfo } = useOrderConfirm();
+export default function OrderConfirmMobile() {
+  type ProductItem = {
+    productName: string;
+    totalPrice: string;
+    amount: number;
+    size: string;
+    color: string;
+  };
+
+  const ProductList: ProductItem[] = [
+    {
+      productName: "틴 워시드 버뮤다 데님 팬츠",
+      totalPrice: "95,800원",
+      amount: 3,
+      size: "L",
+      color: "인디고",
+    },
+    {
+      productName:
+        "트랙 샌딩 워시드 와이드 흑청 데님 틴 워시드 버뮤다 데님 팬츠",
+      totalPrice: "35,800원",
+      amount: 1,
+      size: "M",
+      color: "검정",
+    },
+  ];
+  const OrdererInfo = [
+    { meta: "받는사람", data: "홍레슬" },
+    { meta: "연락처", data: "010-xxxx-xxxx" },
+    {
+      meta: "받는주소",
+      data: "(00000) 서울특별시 송파구 xxx xx길 xx",
+    },
+    {
+      meta: "배송요청사항",
+      data: "부재시 경비실에 맡겨주세요 !",
+    },
+  ];
+
   return (
     <S.Temp>
       <style>
@@ -24,13 +60,13 @@ export default function Order() {
           {ProductList.map((item) => (
             <S.Product>
               <S.Thumbnail
-                src={item.mainThumbnailImage}
-                alt={item.mainThumbnailImage}
+                src="/image/product1.jpg"
+                alt="/image/product1.jpg"
               />
               <S.Info>
-                <S.ProductName>{item.title}</S.ProductName>
+                <S.ProductName>{item.productName}</S.ProductName>
                 <S.NumPrice>
-                  {item.count}개 / {item.price}원
+                  {item.amount}개 / {item.totalPrice}
                 </S.NumPrice>
                 <S.SizeColor>
                   {item.size} / {item.color}
@@ -49,9 +85,7 @@ export default function Order() {
           </S.OrdererInfo>
           <S.Total>
             <S.TotalInfo>결제 금액</S.TotalInfo>
-            <S.TotalPrice>
-              {parsedOrderInfo.paid_amount.toLocaleString()}원
-            </S.TotalPrice>
+            <S.TotalPrice>86,600원</S.TotalPrice>
           </S.Total>
           <S.ButtonDiv>
             <S.StyledBuyButton title="쇼핑하러 가기" type="shop" />

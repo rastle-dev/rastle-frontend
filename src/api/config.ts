@@ -30,6 +30,8 @@ const CART = "/cart";
 const REMOVE = "/removeSelected";
 const AUTHORITY = "authority";
 const ORDERS = "/orders";
+const PAYMENTS = "/payments";
+const COMPLETE = "/complete";
 const COUPON = "/coupon";
 
 const API = {
@@ -78,6 +80,7 @@ const API = {
   NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=https://www.recordyslow.com`,
   LOCAL_NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
   ORDERS: `${ORDERS}`,
+  PAYMENTCOMPLETE: `${PAYMENTS}${COMPLETE}`,
   COUPON: `${COUPON}`,
 };
 export default API;

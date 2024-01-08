@@ -303,3 +303,92 @@ export const PaymentButton = styled(Button)`
   width: 100%;
   margin-bottom: 16rem;
 `;
+
+export const Wrap = styled.div<{ isLoading?: boolean }>`
+  height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
+`;
+export const TabMenu = styled.div``;
+export const Table = styled.div`
+  width: 100%;
+  border: none;
+  margin-bottom: 1rem;
+`;
+export const TableHeader = styled.div`
+  display: none;
+  p {
+    margin: 1rem 0 1rem 0;
+    font-weight: 500;
+  }
+`;
+export const TableContent = styled.div``;
+export const NODATA = styled.div`
+  margin-top: 3rem;
+  font-weight: 400;
+  color: ${COLORS.GREY[500]};
+  font-size: 1.5rem;
+  height: 30rem;
+`;
+export const ProductInfo = styled.div`
+  p {
+    margin: 0;
+
+    font-weight: 200;
+  }
+`;
+export const TextInfo = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+`;
+export const MobileTextInfo = styled.div`
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  display: flex;
+  width: 100%;
+  border: 1px solid ${COLORS.BLACK};
+  border-radius: 10px;
+  padding: 0rem 1em 1rem 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  p {
+    font-weight: 400;
+    font-size: 1rem;
+    padding-bottom: 0.2rem;
+    display: none;
+  }
+  p:nth-child(2):before {
+    display: none;
+  }
+  p:nth-child(3):before {
+    display: none;
+  }
+  p:nth-child(4):before {
+    display: none;
+  }
+`;
+export const MobileDescription = styled.div`
+  display: none;
+`;
+
+export const CouponText = styled.h4``;
+export const CouponWrapper = styled.div`
+  width: 9.3rem;
+  height: 6rem;
+  position: relative;
+`;
+export const CouponImage = styled.image`
+  width: 100%;
+`;

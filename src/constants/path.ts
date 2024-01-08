@@ -8,6 +8,8 @@ const PATH = {
   SHOP: "/shop",
   MYPAGE: "/mypage",
   ORDER: "/order",
+  ORDERCONFIRM: "/orderConfirm",
+  ORDERCONFIRMMOBILE: "/orderConfirmMobile",
   AGREEMENT: "/shopinfo/agreement",
   PRIVACY: "/shopinfo/privacy",
   GUIDE: "/shopinfo/guide",
