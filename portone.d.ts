@@ -296,7 +296,7 @@ export interface RequestPayResponse extends RequestPayAdditionalResponse {
    * ### 결제 실패메세지
    * - 결제가 실패하는 경우 PG사 원천메세지가 내려갑니다.
    */
-  error_msg?: string;
+  errorMsg?: string;
   /**
    * ### 포트원 고유 결제번호
    * - success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음

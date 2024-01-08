@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
-import useMypage from "@/hooks/mypage/useMypage";
 import { useRouter } from "next/dist/client/router";
-
 import useInput from "@/hooks/useInput";
 import PATH from "@/constants/path";
 import { paymentConfirm } from "@/api/shop";
-import { RequestPayResponse } from "../../portone";
 import useCart from "@/hooks/mypage/cart/useCart";
+import { RequestPayResponse } from "../../portone";
 
 type Address = {
   address: string | undefined;
@@ -169,13 +167,12 @@ export default function useOrder() {
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { success, error_msg } = response;
+    const { success, errorMsg } = response;
 
     console.log(response);
 
     if (!success) {
-      alert(`결제에 실패하였습니다. 에러 내용: ${error_msg}`);
+      alert(`결제에 실패하였습니다. 에러 내용: ${errorMsg}`);
       return;
     }
 
@@ -205,7 +202,7 @@ export default function useOrder() {
         console.error(err);
       }
     } else {
-      alert(error_msg);
+      alert(errorMsg);
       alert("결제 실패");
     }
   }
@@ -251,7 +248,6 @@ export default function useOrder() {
           (v: any) =>
             orderProducts.split(",").map(Number)?.includes(v.cartProductId),
         )
-        // eslint-disable-next-line array-callback-return
         .map((item: any) => {
           console.log("장바구니에서 선택된 제품", item);
           return item;
@@ -331,15 +327,10 @@ export default function useOrder() {
     // if (!window.IMP) return;
     /* 1. 가맹점 식별하기 */
     const { IMP } = window;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    IMP.init("imp47805780"); // 가맹점 식별코드
+    IMP?.init("imp47805780"); // 가맹점 식별코드
 
     /* 4. 결제 창 호출하기 */
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-
-    IMP.request_pay(values, callback);
+    IMP?.request_pay(values, callback);
   }
   const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
 

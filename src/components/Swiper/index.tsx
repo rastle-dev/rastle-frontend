@@ -107,8 +107,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
           navigation: false,
         },
       }}
-      /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-      // @ts-ignore
+      // @ts-expect-error 이 부분은 의도적으로 에러를 억제하기 위해 사용되었습니다.
       ref={swiperRef}
     >
       {images?.map((image, index) => (

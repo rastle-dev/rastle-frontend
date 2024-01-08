@@ -5,7 +5,7 @@ import COLORS from "@/constants/color";
 import LazyLink from "@/components/LazyLink";
 import useDetectOutside from "@/hooks/useDetectOutside";
 import { useRecoilState } from "recoil";
-import { tokenState } from "@/stores/atom/recoilState";
+import tokenState from "@/stores/atom/recoilState";
 import * as S from "./index.styles";
 
 const navList = [
