@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
-import useMypage from "@/hooks/useMypage";
+import useMypage from "@/hooks/mypage/useMypage";
 import { useRouter } from "next/dist/client/router";
 
 import useInput from "@/hooks/useInput";
 import PATH from "@/constants/path";
-import { RequestPayResponse } from "../../portone";
 import { paymentConfirm } from "@/api/shop";
+import { RequestPayResponse } from "../../portone";
+import useCart from "@/hooks/mypage/cart/useCart";
 
 type Address = {
   address: string | undefined;
@@ -22,7 +23,7 @@ export default function useOrder() {
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
 
   const { data: myInfo, isSuccess } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
-
+  const { cartProduct } = useCart();
   useEffect(() => {
     // isSuccess가 true이고 myInfo.data가 존재할 때에만 setReceiver 호출
     if (isSuccess && myInfo?.data) {
@@ -31,7 +32,6 @@ export default function useOrder() {
     }
   }, [isSuccess, myInfo]);
   console.log(myInfo);
-  const { cartProduct } = useMypage();
   const OrdererInfo = [
     { meta: "이름", data: myInfo?.data.userName },
     { meta: "연락처", data: myInfo?.data.phoneNumber },
@@ -142,14 +142,6 @@ export default function useOrder() {
     { id: 1, clicked: false, default: "일반결제" },
     { id: 2, clicked: false, default: "무통장입금" },
   ];
-  interface NaverProduct {
-    categoryType: string;
-    categoryId: string;
-    uid: string;
-    name: string;
-    count: number;
-    // Add other properties as needed
-  }
 
   console.log(myInfo);
 
@@ -192,11 +184,11 @@ export default function useOrder() {
       alert(`결제에 성공했습니다. 결제검증을 구현하세요`);
       try {
         const paymentData = await paymentConfirm({
-          data: {
-            imp_uid: response.imp_uid,
-            merchant_uid: response.merchant_uid,
-          },
+          imp_uid: response.imp_uid,
+          merchant_uid: response.merchant_uid,
         });
+
+        console.log(paymentData);
 
         if (paymentData.verified) {
           console.log(paymentData);
@@ -279,6 +271,7 @@ export default function useOrder() {
     let values: any = {};
     console.log(directPurchase);
     console.log(totalPriceFinal);
+    totalPriceFinal = 100;
 
     // 구매하기에서 온 동선
     if (directPurchase) {
@@ -348,6 +341,19 @@ export default function useOrder() {
 
     IMP.request_pay(values, callback);
   }
+  const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
+
+  const toggleCoupon = (couponId: number) => {
+    // 쿠폰 ID가 이미 선택된 목록에 있는지 확인
+    const isSelected = selectedCoupons.includes(couponId);
+
+    // 선택되지 않은 경우 추가, 선택된 경우 제거
+    if (!isSelected) {
+      setSelectedCoupons((prev) => [...prev, couponId]);
+    } else {
+      setSelectedCoupons((prev) => prev.filter((id) => id !== couponId));
+    }
+  };
 
   return {
     clickedPaymentButtonIndex,
@@ -369,5 +375,7 @@ export default function useOrder() {
     PriceInfo,
     selectedProducts,
     cartProduct,
+    toggleCoupon,
+    selectedCoupons,
   };
 }

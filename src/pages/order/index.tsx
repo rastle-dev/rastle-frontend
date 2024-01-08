@@ -1,11 +1,11 @@
 import DaumPostcode from "react-daum-postcode";
 import Input from "@/components/Common/Input";
 import * as S from "@/styles/order/index.styles";
-import useMypage from "@/hooks/useMypage";
 import LoadingBar from "@/components/LoadingBar";
 import React from "react";
-import { useRouter } from "next/dist/client/router";
-import useCart from "@/hooks/mypage/cart/useCart";
+
+import { CouponImage } from "@/styles/mypage/coupon/index.styles";
+import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -38,7 +38,13 @@ export default function Order() {
     PriceInfo,
     selectedProducts,
     cartProduct,
+    toggleCoupon,
+    selectedCoupons,
   } = useOrder();
+
+  const { couponData, isLoading } = useCoupon();
+
+  console.log(couponData);
 
   if (totalPriceSumDirect === undefined) {
     return <LoadingBar type={6} />;
@@ -151,7 +157,6 @@ export default function Order() {
               ) : (
                 <S.DeliveryInput
                   label={input.label}
-                  placeholder={input.placeholder}
                   size={input.size}
                   value={input.value}
                   onChange={input.onChange}
@@ -177,6 +182,49 @@ export default function Order() {
             </p>
           </S.OrderCommentWrapper>
           <S.PaymentInfoWrapper>
+            <h2>마이 쿠폰 목록</h2>
+            {couponData?.data.couponInfos.length === 0 ? (
+              <S.NODATA>보유 중인 쿠폰이 없어요.</S.NODATA>
+            ) : (
+              <>
+                <S.TabMenu>
+                  {isLoading && <LoadingBar type={6} />}
+                  <p>사용 가능 쿠폰 {couponData?.data.couponInfos.length}장</p>
+                </S.TabMenu>
+                <S.Table>
+                  <S.TableContent>
+                    {couponData?.data.couponInfos.map((item: any) => {
+                      return (
+                        <S.ProductInfo>
+                          <S.MobileTextInfo>
+                            <S.TextInfo onClick={() => toggleCoupon(item.id)}>
+                              <S.CouponWrapper>
+                                <CouponImage
+                                  src="/image/coupon.png"
+                                  alt="/image/coupon.png"
+                                  layout="fill"
+                                  objectFit="cover"
+                                />
+                              </S.CouponWrapper>
+                              <S.CouponText>{item.name}</S.CouponText>
+                              <S.ClickBox
+                                isChecked={selectedCoupons.includes(item.id)}
+                              />
+                            </S.TextInfo>
+                            <p>전 상품 적용</p>
+                            <p>{item.discount?.toLocaleString()}원 할인</p>
+                            <p>~2024.04.17</p>
+                            <S.MobileDescription>
+                              2024.04.17까지 사용 가능
+                            </S.MobileDescription>
+                          </S.MobileTextInfo>
+                        </S.ProductInfo>
+                      );
+                    })}
+                  </S.TableContent>
+                </S.Table>
+              </>
+            )}
             <h2>결제 정보</h2>
             <S.PaymentInfoBox>
               {PriceInfo.map((info) => (
