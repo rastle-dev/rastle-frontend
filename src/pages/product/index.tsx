@@ -38,7 +38,6 @@ export default function Product() {
     cartProducts,
     onClickOrderButton,
   } = useProduct();
-
   useEffect(() => {
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -47,6 +46,8 @@ export default function Product() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  console.log("uniqueColors", uniqueColors);
+  console.log("selectedProduct.color", selectedProduct.color);
 
   return (
     <S.Wrapper>
@@ -80,9 +81,7 @@ export default function Product() {
             {uniqueColors.map((color) => (
               <ColorButton
                 clicked={color === selectedProduct.color}
-                /* eslint-disable @typescript-eslint/ban-ts-comment */
-                // @ts-ignore
-                color={COLORS[color]}
+                color={COLORS[color as keyof typeof COLORS]}
                 onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
               />
             ))}

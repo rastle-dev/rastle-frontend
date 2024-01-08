@@ -8,7 +8,7 @@ interface ColorButtonProps {
   /** button 사이즈  */
   size?: number;
   /** icon 색 조정 */
-  color?: string;
+  color: string | { [key: string]: string };
   /** 버튼의 type : 클릭 | 클릭X */
   clicked?: boolean;
 }
@@ -30,7 +30,7 @@ const Wrapper = styled.div<{
 `;
 
 const Inner = styled.div<{
-  color: string;
+  color: string | { [key: string]: string };
 }>`
   ${({ color }) => `
   background-color: ${color};
