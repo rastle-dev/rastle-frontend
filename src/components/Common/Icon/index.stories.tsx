@@ -17,8 +17,6 @@ export function Arrow() {
   return <Icon size="1rem" iconName="arrowLeft" color={COLORS.블랙} />;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-
 export function Person() {
   return <Icon iconName="person" color={COLORS.블랙} />;
 }
