@@ -71,16 +71,14 @@ export default function useOrder() {
     {
       meta: "상품 금액",
       data:
-        totalPriceSum !== 0
-          ? `${totalPriceSum.toLocaleString()}원`
-          : `${totalPriceSumDirect.toLocaleString()}원`,
+        totalPriceSum !== 0 ? `${totalPriceSum}원` : `${totalPriceSumDirect}원`,
     },
     {
       meta: "배송비",
       data:
         totalPriceSum !== 0
-          ? `+ ${(totalPriceSum >= 80000 ? 0 : 3000).toLocaleString()}원`
-          : `+ ${(totalPriceSumDirect >= 80000 ? 0 : 3000).toLocaleString()}원`,
+          ? `+ ${totalPriceSum >= 80000 ? 0 : 3000}원`
+          : `+ ${totalPriceSumDirect >= 80000 ? 0 : 3000}원`,
     },
     {
       meta: "쿠폰할인",
