@@ -6,7 +6,7 @@ import { authLogin, authSocialReissue } from "@/api/auth";
 import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
 import { useRecoilState } from "recoil";
-import { tokenState } from "@/stores/atom/recoilState";
+import tokenState from "@/stores/atom/recoilState";
 import React from "react";
 
 export default function useLogin() {
