@@ -53,18 +53,18 @@ export default function useOrder() {
       0,
     );
   }
+
+  console.log(totalPriceSum);
   let totalPriceFinal: any;
 
   if (totalPriceSum !== 0) {
     totalPriceFinal =
-      totalPriceSum >= 80000
-        ? `${totalPriceSum.toLocaleString()}원`
-        : `${(totalPriceSum + 3000).toLocaleString()}원`;
+      totalPriceSum >= 80000 ? totalPriceSum : totalPriceSum + 3000;
   } else {
     totalPriceFinal =
       totalPriceSumDirect >= 80000
-        ? `${totalPriceSumDirect.toLocaleString()}원`
-        : `${(totalPriceSumDirect + 3000).toLocaleString()}원`;
+        ? totalPriceSumDirect
+        : totalPriceSumDirect + 3000;
   }
 
   const PriceInfo = [
@@ -101,7 +101,7 @@ export default function useOrder() {
     zonecode: undefined,
   });
 
-  type PgType = "kakaopay" | "naverpay" | "nice"; // 원하는 PG 사를 나열합니다.
+  type PgType = "kakaopay" | "card" | "vbank"; // 원하는 PG 사를 나열합니다.
 
   const [pgData, setPgData] = useState<PgType | undefined>();
 
@@ -112,11 +112,11 @@ export default function useOrder() {
   const handlePaymentButtonClick = (index: any) => {
     setClickedPaymentButtonIndex(index);
     if (index === 0) {
-      setPgData("naverpay");
-    } else if (index === 1) {
       setPgData("kakaopay");
+    } else if (index === 1) {
+      setPgData("card");
     } else if (index === 2) {
-      setPgData("nice");
+      setPgData("vbank");
     }
   };
   const handlePostal = {
@@ -138,9 +138,9 @@ export default function useOrder() {
     { id: 2, clicked: false, default: "신규 배송지" },
   ];
   const PaymentOptionsButtons = [
-    { id: 1, clicked: false, default: "네이버페이" },
-    { id: 2, clicked: false, default: "카카오페이" },
-    { id: 3, clicked: false, default: "일반결제" },
+    { id: 0, clicked: false, default: "카카오페이" },
+    { id: 1, clicked: false, default: "일반결제" },
+    { id: 2, clicked: false, default: "무통장입금" },
   ];
   interface NaverProduct {
     categoryType: string;
@@ -234,6 +234,18 @@ export default function useOrder() {
     let directPurchase;
 
     console.log(cartProduct);
+
+    if (
+      !receiver ||
+      !phoneNumber ||
+      !postalAddress.zonecode ||
+      !postalAddress.address ||
+      !detailPostal
+    ) {
+      alert("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
+      return;
+    }
+
     if (
       cartProduct?.data.content.filter(
         (v: any) =>
@@ -266,177 +278,54 @@ export default function useOrder() {
     }
     let values: any = {};
     console.log(directPurchase);
+    console.log(totalPriceFinal);
 
     // 구매하기에서 온 동선
     if (directPurchase) {
-      // 1) 네이버 페이 pg사 선택
-      if (pgData === "naverpay") {
-        const naverProducts: NaverProduct[] = [];
-
-        parsedSelectedProducts.forEach((product: any) => {
-          naverProducts.push({
-            categoryType: "PRODUCT",
-            categoryId: "GENERAL",
-            uid: product.uid, // 상품id로 변경해야함
-            name: product.title,
-            count: product.count || 1,
-          });
-        });
-
-        values.naverProducts = naverProducts;
-
-        values = {
-          pg: "naverpay",
-          merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
-          name: parsedSelectedProducts[0].title,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          naverPopupMode: false, // 팝업모드 활성화 -> redirecturl을 설정해야함
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-          // naverPurchaserName: "구매자이름",
-          // naverPurchaserBirthday: "20151201",
-          // naverChainId: "sAMplEChAINid",
-          // naverMerchantUserKey: "가맹점의 사용자 키",
-          // naverCultureBenefit: true, // 문화비 소득공제 적용여부,
-        };
-      }
       // 2) 카카오페이일때
-      else if (pgData === "kakaopay") {
-        let name;
-        if (parsedSelectedProducts.length === 1) {
-          name = parsedSelectedProducts[0].title;
-        } else if (parsedSelectedProducts.length > 1) {
-          const additionalItems = parsedSelectedProducts.length - 1;
-          name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
-        }
-        values = {
-          pg: "kakaopay",
-          // pay_method: "card", // 생략가능
-          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
-          name,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-        };
+      let name;
+      if (parsedSelectedProducts.length === 1) {
+        name = parsedSelectedProducts[0].title;
+      } else if (parsedSelectedProducts.length > 1) {
+        const additionalItems = parsedSelectedProducts.length - 1;
+        name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
-      // 2) 일반결제일때
-      else if (pgData === "nice") {
-        let name;
-        if (parsedSelectedProducts.length === 1) {
-          name = parsedSelectedProducts[0].title;
-        } else if (parsedSelectedProducts.length > 1) {
-          const additionalItems = parsedSelectedProducts.length - 1;
-          name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
-        }
-        values = {
-          pg: "nice",
-          pay_method: "card", // 생략가능
-          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
-          name,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          language: "ko", // 결제창 언어 선택 파라미터  ko: 한국어, en: 영문
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-        };
-      }
+      values = {
+        pg: "nice",
+        pay_method: pgData, // 생략가능
+        merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
+        name,
+        amount: totalPriceFinal,
+        buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
+        buyer_name: receiver,
+        buyer_tel: phoneNumber,
+        buyer_addr: `${postalAddress.address} ${detailPostal}`,
+        buyer_postcode: postalAddress.zonecode,
+        m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
+      };
     } else {
       console.log("장바구니 동선");
-
-      // 1) 네이버 페이 pg사 선택
-      if (pgData === "naverpay") {
-        const naverProducts: NaverProduct[] = [];
-
-        parsedSelectedProducts.forEach((product: any) => {
-          naverProducts.push({
-            categoryType: "PRODUCT",
-            categoryId: "GENERAL",
-            uid: product.uid, // 상품id로 변경해야함
-            name: product.title,
-            count: product.count || 1,
-          });
-        });
-
-        values.naverProducts = naverProducts;
-
-        values = {
-          pg: "naverpay",
-          merchant_uid: orderNumber, // 상점에서 관리하는 주문 번호
-          name: parsedSelectedProducts[0].title,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일"),
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          naverPopupMode: false, // 팝업모드 활성화 -> redirecturl을 설정해야함
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-          // naverPurchaserName: "구매자이름",
-          // naverPurchaserBirthday: "20151201",
-          // naverChainId: "sAMplEChAINid",
-          // naverMerchantUserKey: "가맹점의 사용자 키",
-          // naverCultureBenefit: true, // 문화비 소득공제 적용여부,
-        };
+      let name;
+      if (selectedItems.length === 1) {
+        name = selectedItems[0].productName;
+      } else if (selectedItems.length > 1) {
+        const additionalItems = selectedItems.length - 1;
+        name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
       }
-      // 2) 카카오페이일때
-      else if (pgData === "kakaopay") {
-        let name;
-        if (selectedItems.length === 1) {
-          name = selectedItems[0].productName;
-        } else if (selectedItems.length > 1) {
-          const additionalItems = selectedItems.length - 1;
-          name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
-        }
-        values = {
-          pg: "kakaopay",
-          // pay_method: "card", // 생략가능
-          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
-          name,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-          custom_data: 3000,
-        };
-      }
-      // 2) 일반결제일때
-      else if (pgData === "nice") {
-        let name;
-        if (selectedItems.length === 1) {
-          name = selectedItems[0].productName;
-        } else if (selectedItems.length > 1) {
-          const additionalItems = selectedItems.length - 1;
-          name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
-        }
-        values = {
-          pg: "nice",
-          pay_method: "card", // 생략가능
-          merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
-          name,
-          amount: totalPriceFinal,
-          buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
-          buyer_name: receiver,
-          buyer_tel: phoneNumber,
-          buyer_addr: `${postalAddress.address} ${detailPostal}`,
-          buyer_postcode: postalAddress.zonecode,
-          language: "ko", // 결제창 언어 선택 파라미터  ko: 한국어, en: 영문
-          m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-        };
-      }
+      values = {
+        pg: "nice",
+        pay_method: pgData, // 생략가능
+        merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
+        name,
+        amount: totalPriceFinal,
+        buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
+        buyer_name: receiver,
+        buyer_tel: phoneNumber,
+        buyer_addr: `${postalAddress.address} ${detailPostal}`,
+        buyer_postcode: postalAddress.zonecode,
+        m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
+        custom_data: 3000,
+      };
     }
 
     console.log(values);

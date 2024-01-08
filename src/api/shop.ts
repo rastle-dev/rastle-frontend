@@ -1,4 +1,4 @@
-import { unAuthorizationClient } from ".";
+import { authorizationClient, unAuthorizationClient } from ".";
 import API from "./config";
 
 export const loadBundleProduct = async () => {
@@ -74,7 +74,7 @@ export const createOrder = async (orderData: object) => {
 };
 
 export const paymentConfirm = async (paymentData: object) => {
-  const { data } = await unAuthorizationClient.post(
+  const { data } = await authorizationClient.post(
     `${API.PAYMENTCOMPLETE}`,
     paymentData,
   );

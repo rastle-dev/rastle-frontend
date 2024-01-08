@@ -185,7 +185,7 @@ export default function Order() {
             </S.PaymentInfoBox>
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
-              <S.TotalPrice>{totalPriceFinal}</S.TotalPrice>
+              <S.TotalPrice>{totalPriceFinal}원</S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
           <h2>결제 방법</h2>
