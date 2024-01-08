@@ -44,21 +44,23 @@ export default function Home() {
       localStorage.setItem("loginType", "social");
       mutateSocialLogin.mutate();
     }
-    if (typeof window !== "undefined") {
-      const hideUntil = localStorage.getItem("hideSignupPopupUntil");
-      if (hideUntil) {
-        if (Date.now() > parseInt(hideUntil, 10)) {
-          setSignupPopupVisible(true);
-        } else {
-          setSignupPopupVisible(false);
-        }
-      } else if (!localStorage.getItem("popup")) {
-        setSignupPopupVisible(true);
-      } else {
-        localStorage.removeItem("popup");
-      }
-    }
   }, [router, mutateSocialLogin]);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const hideUntil = localStorage.getItem("hideSignupPopupUntil");
+  //     if (hideUntil) {
+  //       if (Date.now() > parseInt(hideUntil, 10)) {
+  //         setSignupPopupVisible(true);
+  //       } else {
+  //         setSignupPopupVisible(false);
+  //       }
+  //     } else if (!localStorage.getItem("popup")) {
+  //       setSignupPopupVisible(true);
+  //     } else {
+  //       localStorage.removeItem("popup");
+  //     }
+  //   }
+  // }, []);
 
   const handleSignupClose = () => {
     setSignupPopupVisible(false);
