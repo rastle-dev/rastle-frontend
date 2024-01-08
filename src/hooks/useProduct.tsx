@@ -15,25 +15,34 @@ interface SelectedProduct {
   count: number;
   key?: string;
   mainThumbnailImage: string;
-  productId: string | string[] | undefined;
+  productId: number | undefined;
 }
 interface CartProduct {
-  productId: any;
+  productId: number | undefined;
   color?: string | null;
   count: number;
   size?: string | null;
 }
+type Color = {
+  color: string;
+  sizes: Size[];
+};
+type Size = {
+  count: number;
+  size: string;
+};
 
 export default function useProduct() {
   // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
   const { productId } = router.query;
+  const numericProductId = Number(productId);
 
   const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, productId],
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, numericProductId],
     () => {
       if (productId) {
-        return loadProductDetail(Number(productId));
+        return loadProductDetail(numericProductId);
       }
       return null;
     },
@@ -41,17 +50,18 @@ export default function useProduct() {
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(
-        (item: any) => item.color,
+        (item: Color) => item.color,
       ),
     ),
   ];
   const uniqueSizes = [
     ...new Set(
-      detailData?.data.productColor.productColors.flatMap((item: any) =>
-        item.sizes.map((v: any) => v.size),
+      detailData?.data.productColor.productColors.flatMap((item: Color) =>
+        item.sizes.map((v: Size) => v.size),
       ),
     ),
   ];
+
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
@@ -60,7 +70,7 @@ export default function useProduct() {
     size: null,
     count: 0, // 기본 수량
     mainThumbnailImage: detailData?.data.mainThumbnailImage,
-    productId,
+    productId: numericProductId,
   });
 
   // 선택된 제품 정보들을 관리하는 상태 변수
@@ -70,7 +80,8 @@ export default function useProduct() {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
   // 컬러 버튼 클릭 핸들러
-  const handleColorClick = (color: any) => {
+  const handleColorClick = (color: string) => {
+    console.log("무너데...", color);
     setSelectedProduct((prevProduct) => ({
       ...prevProduct,
       color,
@@ -99,7 +110,7 @@ export default function useProduct() {
         count: 1, // 사이즈를 고르면 count가 1 증가함
         key: `${size}-${selectedProduct.color}`,
         mainThumbnailImage: detailData?.data.mainThumbnailImage, // 문자열로 결합
-        productId,
+        productId: numericProductId,
       };
 
       // 이미 동일한 color와 size를 가진 제품이 있는지 확인
@@ -212,7 +223,7 @@ export default function useProduct() {
   }
   useEffect(() => {
     const newCartProducts: CartProduct[] = selectedProducts.map((product) => ({
-      productId,
+      productId: numericProductId,
       color: product.color,
       size: product.size,
       count: product.count,

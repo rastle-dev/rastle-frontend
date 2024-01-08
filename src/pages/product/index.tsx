@@ -46,8 +46,6 @@ export default function Product() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  console.log("uniqueColors", uniqueColors);
-  console.log("selectedProduct.color", selectedProduct.color);
 
   return (
     <S.Wrapper>
@@ -82,7 +80,7 @@ export default function Product() {
               <ColorButton
                 clicked={color === selectedProduct.color}
                 color={COLORS[color as keyof typeof COLORS]}
-                onClick={() => handleColorClick(color)} // 클릭 핸들러 연결
+                onClick={() => handleColorClick(color as keyof typeof COLORS)} // 클릭 핸들러 연결
               />
             ))}
           </S.ColorList>
