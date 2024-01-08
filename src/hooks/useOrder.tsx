@@ -69,23 +69,18 @@ export default function useOrder() {
     {
       meta: "상품 금액",
       data:
-        totalPriceSum !== 0
-          ? `${totalPriceSum.toLocaleString()}원`
-          : `${totalPriceSumDirect.toLocaleString()}원`,
+        totalPriceSum !== 0 ? `${totalPriceSum}원` : `${totalPriceSumDirect}원`,
     },
     {
       meta: "배송비",
       data:
         totalPriceSum !== 0
-          ? `+ ${(totalPriceSum >= 80000 ? 0 : 3000).toLocaleString()}원`
-          : `+ ${(totalPriceSumDirect >= 80000 ? 0 : 3000).toLocaleString()}원`,
+          ? `+ ${totalPriceSum >= 80000 ? 0 : 3000}원`
+          : `+ ${totalPriceSumDirect >= 80000 ? 0 : 3000}원`,
     },
     {
       meta: "쿠폰할인",
       data: "-0원",
-      // totalPriceSum !== 0
-      //   ? `- ${(totalPriceSum >= 80000 ? 0 : 3000).toLocaleString()}원`
-      //   : `- ${(totalPriceSumDirect >= 80000 ? 0 : 3000).toLocaleString()}원`,
     },
   ];
 
@@ -179,28 +174,35 @@ export default function useOrder() {
     if (success) {
       // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
       alert(`결제에 성공했습니다. 결제검증을 구현하세요`);
-      try {
-        const paymentData = await paymentConfirm({
-          imp_uid: response.imp_uid,
-          merchant_uid: response.merchant_uid,
-        });
-
-        console.log(paymentData);
-
-        if (paymentData.verified) {
-          console.log(paymentData);
-          alert("결제 성공");
-          router.push({
-            pathname: PATH.ORDERCONFIRM,
-            query: {
-              selectedProducts,
-              orderInfo: JSON.stringify(response),
-            },
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
+      router.push({
+        pathname: PATH.ORDERCONFIRM,
+        query: {
+          selectedProducts,
+          orderInfo: JSON.stringify(response),
+        },
+      });
+      // try {
+      //   const paymentData = await paymentConfirm({
+      //     imp_uid: response.imp_uid,
+      //     merchant_uid: response.merchant_uid,
+      //   });
+      //
+      //   console.log(paymentData);
+      //
+      //   if (paymentData.verified) {
+      //     console.log(paymentData);
+      //     alert("결제 성공");
+      //     router.push({
+      //       pathname: PATH.ORDERCONFIRM,
+      //       query: {
+      //         selectedProducts,
+      //         orderInfo: JSON.stringify(response),
+      //       },
+      //     });
+      //   }
+      // } catch (err) {
+      //   console.error(err);
+      // }
     } else {
       alert(errorMsg);
       alert("결제 실패");

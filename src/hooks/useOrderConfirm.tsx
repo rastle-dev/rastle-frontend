@@ -13,8 +13,8 @@ export default function useOrderConfirm() {
   const router = useRouter();
 
   const { selectedProducts, orderInfo } = router.query;
-  let parsedSelectedProducts;
-  let parsedOrderInfo;
+  let parsedSelectedProducts = [];
+  let parsedOrderInfo = [];
   if (typeof selectedProducts === "string") {
     parsedSelectedProducts = JSON.parse(selectedProducts as string);
   }
@@ -27,8 +27,11 @@ export default function useOrderConfirm() {
   console.log(parsedOrderInfo);
 
   //장바구니 동선
-  if (!parsedSelectedProducts[0].cartProductId) {
-    ProductList = parsedSelectedProducts.map((product: any) => ({
+  if (
+    parsedSelectedProducts.length === 0 ||
+    !parsedSelectedProducts[0]?.cartProductId
+  ) {
+    ProductList = parsedSelectedProducts?.map((product: any) => ({
       title: product.title,
       price: product.price,
       count: product.count,
@@ -37,7 +40,7 @@ export default function useOrderConfirm() {
       mainThumbnailImage: product.mainThumbnailImage,
     }));
   } else {
-    ProductList = parsedSelectedProducts.map((product: any) => ({
+    ProductList = parsedSelectedProducts?.map((product: any) => ({
       title: product.productName,
       price: product.productPrice,
       count: product.count,
