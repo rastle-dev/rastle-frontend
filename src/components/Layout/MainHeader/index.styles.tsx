@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import IconButton from "@/components/common/IconButton";
+import IconButton from "@/components/Common/IconButton";
 import COLORS from "@/constants/color";
 
 interface WrapperProps {
   scrolled: boolean;
 }
-
 const Wrapper = styled.div<WrapperProps>`
   //width: 92%;
   width: 100%;
@@ -71,14 +70,15 @@ const MenuIcon = styled(IconButton)<{ open?: boolean }>`
     font-size: 3rem;
     margin-top: 3rem;
     background-color: transparent;
-    display: ${(props) =>
-      props.open ? "none" : "block"}; /* 메뉴가 열렸을 때 버튼을 숨깁니다. */
+    display: ${(props) => (props.open ? "none" : "block")};
   }
+  //border: 1px solid red;
 `;
+
 const Hidden = styled.div``;
 
 const MenuBackground = styled.div`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {
@@ -93,7 +93,7 @@ const MenuBackground = styled.div`
 `;
 
 const MenuList = styled.ul<{ open?: boolean }>`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {
@@ -111,7 +111,7 @@ const MenuList = styled.ul<{ open?: boolean }>`
   }
 `;
 const MenuItem = styled.li`
-  @media (min-width: 769px) {
+  @media (min-width: 770px) {
     display: none;
   }
   @media (max-width: 769px) {

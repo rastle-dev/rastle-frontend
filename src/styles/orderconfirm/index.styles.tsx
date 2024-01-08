@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import Button from "@/components/common/Button";
+import Button from "@/components/Common/Button";
 import media from "@/styles/media";
 
 export const Temp = styled.div`

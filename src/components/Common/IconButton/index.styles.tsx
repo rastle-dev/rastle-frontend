@@ -5,7 +5,7 @@ const Wrapper = styled.button``;
 
 const StyledIcon = styled.i<{ border: number }>`
   ${({ border }) => `
-   -webkit-text-stroke: ${border}px;
+   -webkit-text-stroke: ${border}px;  
 `}
 `;
 

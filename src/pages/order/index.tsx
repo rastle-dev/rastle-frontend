@@ -1,9 +1,11 @@
 import DaumPostcode from "react-daum-postcode";
-import Input from "@/components/common/Input";
+import Input from "@/components/Common/Input";
 import * as S from "@/styles/order/index.styles";
 import useMypage from "@/hooks/useMypage";
 import LoadingBar from "@/components/LoadingBar";
 import React from "react";
+import { useRouter } from "next/dist/client/router";
+import useCart from "@/hooks/mypage/cart/useCart";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -149,6 +151,7 @@ export default function Order() {
               ) : (
                 <S.DeliveryInput
                   label={input.label}
+                  placeholder={input.placeholder}
                   size={input.size}
                   value={input.value}
                   onChange={input.onChange}

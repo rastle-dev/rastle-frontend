@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/dist/client/router";
-import ColorButton from "@/components/common/ColorButton";
+import ColorButton from "@/components/Common/ColorButton";
 import COLORS from "@/constants/color";
-import Icon from "@/components/common/Icon";
+import Icon from "@/components/Common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
-import useMypage from "@/hooks/useMypage";
-import Dialog from "@/components/common/Dialog";
+import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
-import IconButton from "@/components/common/IconButton";
+import IconButton from "@/components/Common/IconButton";
 import { toast } from "react-toastify";
+import useCart from "@/hooks/mypage/cart/useCart";
+import useDialog from "@/hooks/useDialog";
+import useScroll from "@/hooks/useScroll";
 
 export default function Product() {
+  const router = useRouter();
+  const { mutateAddCartProduct } = useCart();
+  const { openDialog, closeDialog, isDialogOpen } = useDialog();
+  const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
+    useScroll();
   const {
     handleColorClick,
     handleSizeClick,
@@ -31,46 +38,16 @@ export default function Product() {
     cartProducts,
     onClickOrderButton,
   } = useProduct();
-  const router = useRouter();
-  const { mutateAddCartProduct } = useMypage();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Show the button when the scroll position is greater than 20 pixels
-      setShowScrollButton(window.scrollY > 20);
-    };
-
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Add smooth scrolling behavior
-    });
-  };
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: "smooth",
-    });
-  };
-  const openDialog = () => {
-    setIsDialogOpen(true);
-  };
-
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
-  console.log("selectedProducts", selectedProducts);
   return (
     <S.Wrapper>
       {isDialogOpen && (
@@ -216,10 +193,7 @@ export default function Product() {
           <S.ProductDetail src={img} />
         ))}
       </S.ProductDetailList>
-      <S.ScrollWrapper
-        className={showScrollButton ? "show" : ""}
-        // onClick={scrollToTop}
-      >
+      <S.ScrollWrapper className={showScrollButton ? "show" : ""}>
         <IconButton
           onClick={scrollToTop}
           iconName="arrowUp"

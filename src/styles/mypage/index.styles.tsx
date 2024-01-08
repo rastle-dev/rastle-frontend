@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import Button from "@/components/common/Button";
+import Button from "@/components/Common/Button";
 
 export const Container = styled.div`
   width: 100%;
@@ -41,6 +41,11 @@ export const Sidebar = styled.div`
     padding-left: 3rem;
     padding-top: 0;
   }
+  @media (max-width: 430px) {
+    flex-direction: row;
+    border-bottom: 1px solid ${COLORS.GREY[200]};
+    gap: 2rem;
+  }
 `;
 export const Content = styled.div`
   flex: 83;
@@ -70,8 +75,11 @@ export const Menu = styled.div`
   }
   @media (max-width: 1007px) {
     display: flex;
-    //width: 17rem;
     gap: 3rem;
+  }
+  @media (max-width: 430px) {
+    display: flex;
+    gap: 2rem;
   }
 `;
 export const Logout = styled(Button)`
@@ -102,19 +110,5 @@ export const SubMenu = styled.div<{ active: boolean }>`
   font-weight: 300;
   @media (max-width: 1007px) {
     font-size: 1.63rem;
-  }
-`;
-export const TabMenu = styled.div`
-  width: 90.5rem;
-  display: flex;
-  gap: 1rem;
-  justify-content: right;
-  p {
-    font-size: 1.18rem;
-    border-bottom: 1px solid ${COLORS.GREY[400]};
-    color: ${COLORS.GREY[400]};
-    font-weight: 200;
-    cursor: pointer;
-    margin: 0 0 1.4rem 0;
   }
 `;

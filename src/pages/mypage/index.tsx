@@ -1,30 +1,32 @@
 import { useRouter } from "next/dist/client/router";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import OrderList from "@/components/Mypage/orderList";
 import Cart from "@/components/Mypage/cart";
 import LoginInfo from "@/components/Mypage/loginInfo";
-import useMypage from "@/hooks/useMypage";
 import DefaultAddress from "@/components/Mypage/defaultAddress";
+import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
+import useMypage from "@/hooks/mypage/useMypage";
+import Coupon from "@/components/Mypage/coupon";
 import * as S from "../../styles/mypage/index.styles";
-
-const shoppingTabs = [
-  { label: "주문 내역", category: "쇼핑 정보" },
-  { label: "장바구니" },
-];
-const myTabs = [
-  { label: "로그인 정보", category: "내 정보" },
-  { label: "기본 배송지" },
-];
 
 export default function Mypage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState("주문 내역");
-  const { logout } = useMypage();
-
+  const { logout } = useLoginInfo();
+  const {
+    handleTabClick,
+    shoppingTabs,
+    myTabs,
+    activeTab,
+    setActiveTab,
+    tabList,
+    setTabList,
+  } = useMypage();
   const renderTabContent = () => {
     switch (activeTab) {
       case "주문 내역":
         return <OrderList />;
+      case "쿠폰함":
+        return <Coupon />;
       case "장바구니":
         return <Cart />;
       case "로그인 정보":
@@ -35,31 +37,35 @@ export default function Mypage() {
         return <OrderList />;
     }
   };
+  useEffect(() => {
+    setTabList([
+      "주문 내역",
+      "장바구니",
+      "쿠폰함",
+      "로그인 정보",
+      "기본 배송지",
+    ]);
+  }, []);
 
   // URL 파라미터를 확인하여 활성 탭을 설정
   useEffect(() => {
     const { tab } = router.query;
-
-    // URL 파라미터에 따라 활성 탭 설정
-    if (tab === "장바구니") {
-      setActiveTab("장바구니");
-    } else if (tab === "로그인정보") {
-      setActiveTab("로그인 정보");
-    } else if (tab === "기본배송지") {
-      setActiveTab("기본 배송지");
+    const storedTab = sessionStorage.getItem("tab");
+    const initialTab = tab || storedTab || "로그인 정보";
+    tabList?.forEach((item: any) => {
+      if (tab && item === initialTab) {
+        setActiveTab(item);
+      }
+    });
+    if (typeof initialTab === "string") {
+      sessionStorage.setItem("tab", initialTab);
     }
-
-    // URL 파라미터가 없을 경우, "로그인정보" 탭으로 설정하고 URL에 파라미터를 추가
-    if (!tab) {
-      setActiveTab("로그인정보");
-      router.replace("/mypage?tab=로그인정보");
-    }
-  }, [router.query]);
-
-  const handleTabClick = (tabs: any) => {
-    setActiveTab(tabs);
-    router.push(`/mypage?tab=${encodeURIComponent(tabs)}`);
-  };
+    // 컴포넌트가 마운트될 때만 실행되는 코드
+    return () => {
+      // 언마운트될 때 세션 스토리지에서 데이터 삭제
+      sessionStorage.removeItem("tab");
+    };
+  }, [router.query.tab, tabList]);
 
   return (
     <S.Container>

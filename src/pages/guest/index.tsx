@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/dist/client/router";
-import Input from "@/components/common/Input";
-import Button from "@/components/common/Button";
+import Input from "@/components/Common/Input";
+import Button from "@/components/Common/Button";
 import PATH from "@/constants/path";
 import * as S from "@/styles/guest/index.styles";
 

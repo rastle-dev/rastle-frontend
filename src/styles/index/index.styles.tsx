@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Button from "@/components/common/Button";
+import Button from "@/components/Common/Button";
 import COLORS from "@/constants/color";
 import media from "@/styles/media";
 

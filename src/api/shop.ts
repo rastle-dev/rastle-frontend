@@ -27,7 +27,7 @@ export const loadMarketProduct = async () => {
 export const loadMarketProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}?size=${size}&visible=true`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=true`,
   );
   return data;
 };
