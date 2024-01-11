@@ -13,5 +13,9 @@ const nextConfig = {
     unoptimized: true,
   },
 };
+const withPlugins = require("next-compose-plugins");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-module.exports = nextConfig;
+module.exports = withPlugins([[withBundleAnalyzer], nextConfig]);
