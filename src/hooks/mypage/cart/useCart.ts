@@ -29,13 +29,9 @@ export default function useCart() {
   const queryClient = useQueryClient();
   useEffect(() => {
     const currentPath = router.asPath;
-    console.log(currentPath);
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
-        if (
-          currentPath === "/mypage?tab=%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88" ||
-          currentPath === "/mypage"
-        ) {
+        if (currentPath.includes("/mypage")) {
           setIsDataLoading(true);
         }
       }
