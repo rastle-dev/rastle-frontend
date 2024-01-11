@@ -25,10 +25,11 @@ export default function useCart() {
   const [isLoading, setIsLoading] = useState(false);
   const orderList = cartOrderProducts.join(",");
   const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
-  const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
+  const menuList = ["정보", "판매가", "수량", "선택", "배송비"];
   const queryClient = useQueryClient();
   useEffect(() => {
     const currentPath = router.asPath;
+    console.log(currentPath);
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
         if (

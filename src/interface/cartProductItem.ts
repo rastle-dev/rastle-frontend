@@ -5,7 +5,7 @@ export type ProductItem = {
   mainThumbnailImage?: string;
   productId: number;
   productName: string;
-  price: string;
   size: string;
   productPrice: number;
+  discountPrice?: number;
 };

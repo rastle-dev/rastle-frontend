@@ -63,73 +63,90 @@ export default function Cart() {
               장바구니 비우기
             </button>
           </S.TabMenu>
-          <S.Table>
-            <S.TableHeader>
-              <S.Select
-                type="checkbox"
-                checked={
-                  selectedItems.length === cartProduct?.data.content.length
-                }
-                onChange={handleHeaderCheckboxChange}
-              />
-              {menuList.map((menu) => (
-                <p>{menu}</p>
-              ))}
-            </S.TableHeader>
-            <S.TableContent>
-              {cartProduct?.data.content.map((item: ProductItem) => {
-                // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
-                const totalPrice = item.productPrice * item.count + 3000;
-                return (
-                  <S.ProductInfo key={item.cartProductId}>
-                    <S.Select
-                      type="checkbox"
-                      checked={selectedItems.includes(item)}
-                      onChange={() => handleProductCheckboxChange(item)}
-                    />
-                    <S.Img src={item.mainThumbnailImage} />
-                    <S.MobileTextInfo>
-                      <S.TextInfo>
-                        <h4>{item.productName}</h4>
-                        <h4>
-                          {item.size}/{item.color}
-                        </h4>
-                      </S.TextInfo>
-                      <p>{item.productPrice.toLocaleString()}원</p>
-                      <p>{item.count}개</p>
-                      <p>3,000원</p>
-                      <p>{totalPrice.toLocaleString()}원</p>
-                      {/* 계산된 총 가격 표시 */}
-                    </S.MobileTextInfo>
-                    <S.SelectTab>
-                      <S.SelectButton
-                        title="주문하기"
-                        onClick={async () => {
-                          try {
-                            await onClickSelectedOrderButton(item);
-                          } catch (error) {
-                            console.error(error);
-                          }
-                        }}
+          <S.CartBox>
+            <S.Table>
+              <S.TableHeader>
+                <S.Select
+                  type="checkbox"
+                  checked={
+                    selectedItems.length === cartProduct?.data.content.length
+                  }
+                  onChange={handleHeaderCheckboxChange}
+                />
+                {menuList.map((menu) => (
+                  <p>{menu}</p>
+                ))}
+              </S.TableHeader>
+              <S.TableContent>
+                {cartProduct?.data.content.map((item: ProductItem) => {
+                  // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
+                  const totalPrice = item.productPrice * item.count + 3000;
+                  return (
+                    <S.ProductInfo key={item.cartProductId}>
+                      <S.Select
+                        type="checkbox"
+                        checked={selectedItems.includes(item)}
+                        onChange={() => handleProductCheckboxChange(item)}
                       />
-                      <S.DeleteButton
-                        title="X"
-                        onClick={() => {
-                          // 버튼이 활성화되어 있을 때만 뮤테이션을 시작합니다.
-                          if (!deleteButtonDisabled) {
-                            mutateDeleteCartProduct.mutate(
-                              `${item.cartProductId}`,
-                            );
-                          }
-                        }}
-                        disabled={deleteButtonDisabled}
-                      />
-                    </S.SelectTab>
-                  </S.ProductInfo>
-                );
-              })}
-            </S.TableContent>
-          </S.Table>
+                      <S.Img src={item.mainThumbnailImage} />
+                      <S.MobileTextInfo>
+                        <S.TextInfo>
+                          <h4>{item.productName}</h4>
+                          <h4>
+                            {item.size}/{item.color}
+                          </h4>
+                        </S.TextInfo>
+                        {item.discountPrice !== undefined ? (
+                          <S.Price>
+                            <S.DiscountPrice>
+                              {item.productPrice.toLocaleString()}원
+                            </S.DiscountPrice>
+                            <S.DiscountedPrice>
+                              {item.discountPrice.toLocaleString()}원
+                            </S.DiscountedPrice>
+                          </S.Price>
+                        ) : (
+                          <S.Price>
+                            {item.productPrice.toLocaleString()}원
+                          </S.Price>
+                        )}
+                        <p>{item.count}개</p>
+                        {/* 계산된 총 가격 표시 */}
+                      </S.MobileTextInfo>
+                      <S.SelectTab>
+                        <S.SelectButton
+                          title="주문하기"
+                          onClick={async () => {
+                            try {
+                              await onClickSelectedOrderButton(item);
+                            } catch (error) {
+                              console.error(error);
+                            }
+                          }}
+                        />
+                        <S.DeleteButton
+                          title="X"
+                          onClick={() => {
+                            // 버튼이 활성화되어 있을 때만 뮤테이션을 시작합니다.
+                            if (!deleteButtonDisabled) {
+                              mutateDeleteCartProduct.mutate(
+                                `${item.cartProductId}`,
+                              );
+                            }
+                          }}
+                          disabled={deleteButtonDisabled}
+                        />
+                      </S.SelectTab>
+                    </S.ProductInfo>
+                  );
+                })}
+              </S.TableContent>
+            </S.Table>
+            <S.DeliveryCharge>
+              <p>기본</p>
+              <h3>3000원</h3>
+            </S.DeliveryCharge>
+          </S.CartBox>
 
           <S.TotalPrice>
             {totalPriceSum === 0 ? (
