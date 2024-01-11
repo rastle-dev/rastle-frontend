@@ -26,12 +26,18 @@ export default function useCart() {
   const orderList = cartOrderProducts.join(",");
   const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
   const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
-
   const queryClient = useQueryClient();
   useEffect(() => {
+    const currentPath = router.asPath;
+    console.log("current", currentPath);
+
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
-        setIsDataLoading(true);
+        if (
+          currentPath === "/mypage?tab=%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88"
+        ) {
+          setIsDataLoading(true);
+        }
       }
     }
   }, []);
