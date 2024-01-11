@@ -5,6 +5,9 @@ import Button from "@/components/Common/Button";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
+  h2 {
+    margin-bottom: 1rem;
+  }
 `;
 export const TabMenu = styled.div`
   display: flex;
@@ -17,7 +20,7 @@ export const TabMenu = styled.div`
     color: ${COLORS.GREY[400]};
     font-weight: 200;
     cursor: pointer;
-    margin: 0 0 1.4rem 0;
+    margin: 0 0 3rem 0;
     padding: 0 0 0.4rem 0;
     background-color: transparent;
   }
@@ -31,6 +34,7 @@ export const Table = styled.div`
 `;
 export const Select = styled(Input)`
   width: 2rem;
+  margin-bottom: 0.7rem;
   @media (max-width: 769px) {
     margin-right: 1rem;
     display: none;
