@@ -45,7 +45,7 @@ export default function useCart() {
   );
   const totalPrice = cartProduct?.data.content
     .map((v: ProductItem) => v.discountPrice * v.count)
-    .reduce((a: any, c: any) => a + c);
+    .reduce((a: number, c: number) => a + c, 0);
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();

@@ -106,11 +106,22 @@ export default function Cart() {
                           </S.Price>
                         ) : (
                           <S.Price>
-                            {item.productPrice.toLocaleString()}원
+                            <S.DiscountedPrice>
+                              {item.productPrice.toLocaleString()}원
+                            </S.DiscountedPrice>
                           </S.Price>
                         )}
-                        <p>{item.count}개</p>
-                        {/* 계산된 총 가격 표시 */}
+                        <div>{item.count}개</div>
+                        <S.MobileSelectButton
+                          title="주문하기"
+                          onClick={async () => {
+                            try {
+                              await onClickSelectedOrderButton(item);
+                            } catch (error) {
+                              console.error(error);
+                            }
+                          }}
+                        />
                       </S.MobileTextInfo>
                       <S.SelectTab>
                         <S.SelectButton
@@ -144,8 +155,8 @@ export default function Cart() {
             <S.DeliveryCharge>
               {totalPrice >= 80000 ? (
                 <>
-                  <h3>배송비</h3>
-                  <h3>무료</h3>
+                  <h4>배송비</h4>
+                  <h4>무료</h4>
                 </>
               ) : (
                 <>
@@ -157,15 +168,15 @@ export default function Cart() {
           </S.CartBox>
 
           <S.TotalPrice>
-            {totalPriceSum === 0 ? (
+            {totalPrice === 0 ? (
               <>
                 <p>상품 구매 금액</p>
-                <div>{totalPriceSum?.toLocaleString()}원</div>
+                <div>{totalPrice?.toLocaleString()}원</div>
               </>
             ) : (
               <>
                 <p>상품 구매 금액</p>
-                <div>{totalPriceSum?.toLocaleString()}원</div>
+                <div>{totalPrice?.toLocaleString()}원</div>
                 <p>+ 배송비</p>
                 <div>
                   {totalPrice >= 80000 ? (

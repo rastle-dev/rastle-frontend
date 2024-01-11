@@ -27,7 +27,7 @@ export const TabMenu = styled.div`
   width: 80rem;
 `;
 export const Table = styled.div`
-  width: 74.5rem;
+  width: 74.2rem;
 `;
 export const Select = styled(Input)`
   width: 2rem;
@@ -74,6 +74,9 @@ export const ProductInfo = styled.div`
     }
     font-weight: 200;
   }
+  @media (max-width: 769px) {
+    align-items: unset;
+  }
 `;
 export const Img = styled.img`
   width: 7.5rem;
@@ -81,9 +84,11 @@ export const Img = styled.img`
   margin-right: 1rem;
   margin-left: 0.8rem;
   @media (max-width: 769px) {
-    margin-right: 3rem;
-    width: 9rem;
-    height: 9.84rem;
+    width: 11.5rem;
+    border-radius: 3px;
+    height: 12.5rem;
+    padding: 0;
+    margin: 0 1rem 0 0;
   }
 `;
 export const TextInfo = styled.div`
@@ -93,29 +98,34 @@ export const TextInfo = styled.div`
     font-weight: 500;
     margin: 0;
   }
+  @media (max-width: 769px) {
+    font-size: 1.4rem;
+  }
   padding-bottom: 0.5rem;
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
   grid-template-columns: 25.5rem 12.8rem 10rem;
   margin: 1.9rem 0 1.9rem 1rem;
-  p {
-    padding-top: 1rem;
-  }
+  align-items: center;
   @media (max-width: 769px) {
+    align-items: unset;
+    margin: 0;
+    div {
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
     display: flex;
     flex-direction: column;
-    p {
-      font-weight: 400;
-      font-size: 1.3rem;
-      padding-bottom: 0.2rem;
-    }
-    p:nth-child(2):before {
+    div:nth-child(2):before {
       content: "판매가 : ";
+      font-weight: 500;
+      margin-right: 1rem;
     }
-    p:nth-child(3):before {
+    div:nth-child(3):before {
       content: "수량 : ";
-      font-size: 1.3rem;
+      font-weight: 500;
     }
   }
 `;
@@ -127,7 +137,6 @@ export const SelectTab = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    margin-top: 1.5rem;
   }
 `;
 export const SelectButton = styled(Button)`
@@ -144,12 +153,25 @@ export const SelectButton = styled(Button)`
     display: none;
   }
 `;
-export const DeleteButton = styled(Button)`
+export const MobileSelectButton = styled(Button)`
   margin: 0;
+  text-align: center;
   padding: 0.5rem 0 0.5rem 0;
+  font-weight: 200;
+  font-size: 1.2rem;
+  width: 6.2rem;
+  border-radius: 3px;
+  border: 1px solid ${COLORS.GREY[300]};
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+export const DeleteButton = styled(Button)`
+  margin-right: 0.4rem;
+  padding: 0;
   font-weight: 600;
   font-size: 1.4rem;
-  width: 3.2rem;
+  width: 1.5rem;
   border-radius: 0;
   border: none;
   &:focus {
@@ -159,6 +181,7 @@ export const DeleteButton = styled(Button)`
     border: none;
   }
   @media (min-width: 769px) {
+    padding: 0.5rem 0 0.5rem 0;
     border: 1px solid ${COLORS.GREY[300]};
     border-radius: 0;
     font-weight: 200;
@@ -183,7 +206,7 @@ export const TotalPrice = styled.div`
   padding: 2.2rem 0 2.2rem 0;
   width: 80rem;
   @media (max-width: 769px) {
-    width: 88%;
+    width: 100%;
     font-size: 1.3rem;
   }
   p {
@@ -201,7 +224,7 @@ export const ButtonWrapper = styled.div`
   gap: 1.45rem;
   justify-content: right;
   @media (max-width: 769px) {
-    width: 88%;
+    width: 100%;
   }
 `;
 export const OrderButton = styled(Button)`
@@ -228,6 +251,9 @@ export const SelectOrderButton = styled(Button)`
 export const Price = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 769px) {
+    flex-direction: row;
+  }
 `;
 
 export const DiscountPrice = styled.span`
@@ -248,8 +274,14 @@ export const DeliveryCharge = styled.div`
   padding-top: 3rem;
   align-items: center;
   justify-content: center;
+  width: 5rem;
   @media (max-width: 769px) {
     display: none;
+  }
+  h4 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1.2rem;
   }
 `;
 export const CartBox = styled.div`
@@ -268,6 +300,6 @@ export const CartBox = styled.div`
   }
   border-bottom: 1px solid;
   @media (max-width: 769px) {
-    width: 88%;
+    width: 100%;
   }
 `;
