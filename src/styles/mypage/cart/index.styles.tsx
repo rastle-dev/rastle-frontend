@@ -5,6 +5,9 @@ import Button from "@/components/Common/Button";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
+  h2 {
+    margin-bottom: 1rem;
+  }
 `;
 export const TabMenu = styled.div`
   display: flex;
@@ -17,7 +20,7 @@ export const TabMenu = styled.div`
     color: ${COLORS.GREY[400]};
     font-weight: 200;
     cursor: pointer;
-    margin: 0 0 1.4rem 0;
+    margin: 0 0 3rem 0;
     padding: 0 0 0.4rem 0;
     background-color: transparent;
   }
@@ -27,25 +30,22 @@ export const TabMenu = styled.div`
   width: 80rem;
 `;
 export const Table = styled.div`
-  border-bottom: 1px solid;
-  width: 80rem;
-  @media (max-width: 769px) {
-    width: 88%;
-  }
+  width: 74.2rem;
 `;
 export const Select = styled(Input)`
   width: 2rem;
+  margin-bottom: 0.7rem;
   @media (max-width: 769px) {
     margin-right: 1rem;
     display: none;
   }
 `;
 export const TableHeader = styled.div`
+  width: 80rem;
   border-bottom: 1px solid;
   display: grid;
   align-items: center;
-  //grid-template-columns: 17rem 22rem 12.5rem 11rem 12.5rem 11rem 5rem;
-  grid-template-columns: 15rem 20rem 10.5rem 9rem 10.5rem 9rem 3rem;
+  grid-template-columns: 18rem 21rem 12rem 12.3rem 12rem 4rem;
   font-size: 1.2rem;
   @media (max-width: 769px) {
     display: none;
@@ -55,14 +55,16 @@ export const TableHeader = styled.div`
     font-weight: 500;
   }
 `;
-export const TableContent = styled.div``;
+export const TableContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 export const NODATA = styled.div`
   margin-top: 3rem;
   font-weight: 400;
   color: ${COLORS.GREY[500]};
   font-size: 1.5rem;
   height: 30rem;
-  //border: 1px solid red;
 `;
 export const ProductInfo = styled.div`
   display: flex;
@@ -76,6 +78,9 @@ export const ProductInfo = styled.div`
     }
     font-weight: 200;
   }
+  @media (max-width: 769px) {
+    align-items: unset;
+  }
 `;
 export const Img = styled.img`
   width: 7.5rem;
@@ -83,9 +88,11 @@ export const Img = styled.img`
   margin-right: 1rem;
   margin-left: 0.8rem;
   @media (max-width: 769px) {
-    margin-right: 3rem;
-    width: 9rem;
-    height: 9.84rem;
+    width: 11.5rem;
+    border-radius: 3px;
+    height: 12.5rem;
+    padding: 0;
+    margin: 0 1rem 0 0;
   }
 `;
 export const TextInfo = styled.div`
@@ -95,31 +102,34 @@ export const TextInfo = styled.div`
     font-weight: 500;
     margin: 0;
   }
+  @media (max-width: 769px) {
+    font-size: 1.4rem;
+  }
   padding-bottom: 0.5rem;
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  grid-template-columns: 22rem 11.8rem 7.8rem 9.5rem 9rem;
-  margin: 1.9rem 0 1.9rem 0;
+  grid-template-columns: 25.5rem 12.8rem 10rem;
+  margin: 1.9rem 0 1.9rem 1rem;
+  align-items: center;
   @media (max-width: 769px) {
+    align-items: unset;
+    margin: 0;
+    div {
+      font-size: 1.3rem;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
     display: flex;
     flex-direction: column;
-    p {
-      font-weight: 400;
-      font-size: 1rem;
-      padding-bottom: 0.2rem;
-    }
-    p:nth-child(2):before {
+    div:nth-child(2):before {
       content: "판매가 : ";
+      font-weight: 500;
+      margin-right: 1rem;
     }
-    p:nth-child(3):before {
+    div:nth-child(3):before {
       content: "수량 : ";
-    }
-    p:nth-child(4):before {
-      content: "배송비 : ";
-    }
-    p:nth-child(5):before {
-      content: "합계 : ";
+      font-weight: 500;
     }
   }
 `;
@@ -127,12 +137,10 @@ export const SelectTab = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.36rem;
-  //border: 1px solid red;
   @media (max-width: 769px) {
     position: absolute;
     top: 0;
     right: 0;
-    margin-top: 1.5rem;
   }
 `;
 export const SelectButton = styled(Button)`
@@ -149,12 +157,25 @@ export const SelectButton = styled(Button)`
     display: none;
   }
 `;
-export const DeleteButton = styled(Button)`
+export const MobileSelectButton = styled(Button)`
   margin: 0;
+  text-align: center;
   padding: 0.5rem 0 0.5rem 0;
+  font-weight: 200;
+  font-size: 1.2rem;
+  width: 6.2rem;
+  border-radius: 3px;
+  border: 1px solid ${COLORS.GREY[300]};
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+export const DeleteButton = styled(Button)`
+  margin-right: 0.4rem;
+  padding: 0;
   font-weight: 600;
   font-size: 1.4rem;
-  width: 3.2rem;
+  width: 1.5rem;
   border-radius: 0;
   border: none;
   &:focus {
@@ -164,6 +185,7 @@ export const DeleteButton = styled(Button)`
     border: none;
   }
   @media (min-width: 769px) {
+    padding: 0.5rem 0 0.5rem 0;
     border: 1px solid ${COLORS.GREY[300]};
     border-radius: 0;
     font-weight: 200;
@@ -188,7 +210,7 @@ export const TotalPrice = styled.div`
   padding: 2.2rem 0 2.2rem 0;
   width: 80rem;
   @media (max-width: 769px) {
-    width: 88%;
+    width: 100%;
     font-size: 1.3rem;
   }
   p {
@@ -206,7 +228,7 @@ export const ButtonWrapper = styled.div`
   gap: 1.45rem;
   justify-content: right;
   @media (max-width: 769px) {
-    width: 88%;
+    width: 100%;
   }
 `;
 export const OrderButton = styled(Button)`
@@ -228,5 +250,60 @@ export const SelectOrderButton = styled(Button)`
   }
   @media (max-width: 769px) {
     display: none;
+  }
+`;
+export const Price = styled.div`
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 769px) {
+    flex-direction: row;
+  }
+`;
+
+export const DiscountPrice = styled.span`
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-decoration: line-through;
+  color: ${COLORS.GREY.상세페이지};
+  padding-right: 0.5rem;
+`;
+
+export const DiscountedPrice = styled.span`
+  font-size: 1.3rem;
+  font-weight: 400;
+`;
+export const DeliveryCharge = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 3rem;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  @media (max-width: 769px) {
+    display: none;
+  }
+  h4 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 1.2rem;
+  }
+`;
+export const CartBox = styled.div`
+  display: flex;
+  width: 80rem;
+  p {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 200;
+    padding-bottom: 0.5rem;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 200;
+  }
+  border-bottom: 1px solid;
+  @media (max-width: 769px) {
+    width: 100%;
   }
 `;

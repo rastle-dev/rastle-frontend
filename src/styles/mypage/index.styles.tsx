@@ -17,6 +17,10 @@ export const Header = styled.header`
     font-weight: 200;
     padding: 4rem 0 5rem 0;
   }
+  @media (max-width: 500px) {
+    width: 100%;
+    padding-left: 1.5rem;
+  }
 `;
 export const Wrapper = styled.div`
   display: flex;
@@ -41,10 +45,11 @@ export const Sidebar = styled.div`
     padding-left: 3rem;
     padding-top: 0;
   }
-  @media (max-width: 430px) {
+  @media (max-width: 500px) {
     flex-direction: row;
     border-bottom: 1px solid ${COLORS.GREY[200]};
     gap: 2rem;
+    padding-left: 1.5rem;
   }
 `;
 export const Content = styled.div`
@@ -58,6 +63,11 @@ export const Content = styled.div`
   @media (max-width: 1007px) {
     flex-direction: row;
     padding-left: 3rem;
+  }
+  @media (max-width: 500px) {
+    flex-direction: row;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 `;
 export const Menu = styled.div`

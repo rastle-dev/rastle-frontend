@@ -17,7 +17,6 @@ import { ProductItem } from "@/interface/cartProductItem";
 
 export default function useCart() {
   const router = useRouter();
-
   const [cartOrderProducts, setCartOrderProducts] = useState<number[]>([]);
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
   const [deleteProducts, setDeleteProducts] = useState<number[]>([]);
@@ -25,13 +24,15 @@ export default function useCart() {
   const [isLoading, setIsLoading] = useState(false);
   const orderList = cartOrderProducts.join(",");
   const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
-  const menuList = ["정보", "판매가", "수량", "배송비", "합계", "선택"];
-
+  const menuList = ["정보", "판매가", "수량", "선택", "배송비"];
   const queryClient = useQueryClient();
   useEffect(() => {
+    const currentPath = router.asPath;
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
-        setIsDataLoading(true);
+        if (currentPath.includes("/mypage")) {
+          setIsDataLoading(true);
+        }
       }
     }
   }, []);
@@ -42,6 +43,9 @@ export default function useCart() {
       enabled: isDataLoading,
     },
   );
+  const totalPrice = cartProduct?.data.content
+    .map((v: ProductItem) => v.discountPrice * v.count)
+    .reduce((a: number, c: number) => a + c, 0);
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -280,5 +284,6 @@ export default function useCart() {
     setSelectedItems,
     refetch,
     isDataLoading,
+    totalPrice,
   };
 }
