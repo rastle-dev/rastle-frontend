@@ -17,7 +17,6 @@ import { ProductItem } from "@/interface/cartProductItem";
 
 export default function useCart() {
   const router = useRouter();
-
   const [cartOrderProducts, setCartOrderProducts] = useState<number[]>([]);
   const [selectedItems, setSelectedItems] = useState<ProductItem[]>([]);
   const [deleteProducts, setDeleteProducts] = useState<number[]>([]);
@@ -44,6 +43,9 @@ export default function useCart() {
       enabled: isDataLoading,
     },
   );
+  const totalPrice = cartProduct?.data.content
+    .map((v: ProductItem) => v.discountPrice * v.count)
+    .reduce((a: any, c: any) => a + c);
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -282,5 +284,6 @@ export default function useCart() {
     setSelectedItems,
     refetch,
     isDataLoading,
+    totalPrice,
   };
 }

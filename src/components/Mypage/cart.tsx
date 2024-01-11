@@ -25,8 +25,8 @@ export default function Cart() {
     setDeleteProducts,
     setSelectedItems,
     cartProduct,
+    totalPrice,
   } = useCart();
-
   return (
     <S.Wrap isLoading={isLoading}>
       <h2>장바구니</h2>
@@ -80,7 +80,6 @@ export default function Cart() {
               <S.TableContent>
                 {cartProduct?.data.content.map((item: ProductItem) => {
                   // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
-                  const totalPrice = item.productPrice * item.count + 3000;
                   return (
                     <S.ProductInfo key={item.cartProductId}>
                       <S.Select
@@ -96,7 +95,7 @@ export default function Cart() {
                             {item.size}/{item.color}
                           </h4>
                         </S.TextInfo>
-                        {item.discountPrice !== undefined ? (
+                        {item.discountPrice !== item.productPrice ? (
                           <S.Price>
                             <S.DiscountPrice>
                               {item.productPrice.toLocaleString()}원
@@ -143,8 +142,17 @@ export default function Cart() {
               </S.TableContent>
             </S.Table>
             <S.DeliveryCharge>
-              <p>기본</p>
-              <h3>3000원</h3>
+              {totalPrice >= 80000 ? (
+                <>
+                  <h3>배송비</h3>
+                  <h3>무료</h3>
+                </>
+              ) : (
+                <>
+                  <p>기본</p>
+                  <h3>3000원</h3>
+                </>
+              )}
             </S.DeliveryCharge>
           </S.CartBox>
 
@@ -159,9 +167,21 @@ export default function Cart() {
                 <p>상품 구매 금액</p>
                 <div>{totalPriceSum?.toLocaleString()}원</div>
                 <p>+ 배송비</p>
-                <div>3,000원</div>
+                <div>
+                  {totalPrice >= 80000 ? (
+                    <div>0원(무료)</div>
+                  ) : (
+                    <div>3,000원</div>
+                  )}
+                </div>
                 <p>= 합계</p>
-                <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
+                <div>
+                  {totalPrice >= 80000 ? (
+                    <div>{totalPriceSum.toLocaleString()}원</div>
+                  ) : (
+                    <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
+                  )}
+                </div>
               </>
             )}
           </S.TotalPrice>
