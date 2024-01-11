@@ -7,5 +7,5 @@ export type ProductItem = {
   productName: string;
   size: string;
   productPrice: number;
-  discountPrice?: number;
+  discountPrice: number;
 };
