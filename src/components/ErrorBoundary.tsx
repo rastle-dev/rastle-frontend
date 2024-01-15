@@ -8,9 +8,10 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0;
   justify-content: center;
-  height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
-  margin: 0; /* body의 기본 margin 제거 */
+  height: 97.9vh;
+  overflow: hidden;
   h2 {
     font-weight: 400;
   }
@@ -19,6 +20,9 @@ const Wrap = styled.div`
     width: 25rem;
     margin-bottom: 3rem;
     text-align: center;
+    @media (max-width: 769px) {
+      width: 20rem;
+    }
   }
 `;
 const StyledButton = styled(Button)`
