@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoadingBar from "@/components/LoadingBar";
 import errorMsg from "@/components/Toast/error";
 import { toast } from "react-toastify";
 import * as S from "@/styles/mypage/cart/index.styles";
 import useCart from "@/hooks/mypage/cart/useCart";
 import { ProductItem } from "@/interface/cartProductItem";
+import { useRouter } from "next/dist/client/router";
+import useDialog from "@/hooks/useDialog";
+import Dialog from "@/components/Common/Dialog";
+import PATH from "@/constants/path";
 
 export default function Cart() {
   const {
@@ -26,9 +30,54 @@ export default function Cart() {
     setSelectedItems,
     cartProduct,
     totalPrice,
+    isCartDataLoading,
+    timedOut,
+    setTimedOut,
   } = useCart();
+  const { isDialogOpen, openDialog, closeDialog } = useDialog();
+  const router = useRouter();
+  let timeoutId: NodeJS.Timeout | undefined;
+  console.log("isCartDataLoading", isCartDataLoading, isLoading);
+  useEffect(() => {
+    if ((isCartDataLoading || isLoading) && timedOut) {
+      openDialog();
+      console.log("why?");
+    }
+  }, [timedOut]);
+  useEffect(() => {
+    if (isCartDataLoading || isLoading) {
+      timeoutId = setTimeout(() => {
+        setTimedOut(true);
+        console.log("why?", timedOut);
+      }, 5000);
+    } else {
+      setTimedOut(false);
+      console.log("why22?", timedOut);
+
+      clearTimeout(timeoutId);
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [isCartDataLoading, isLoading]);
+  console.log("why33?", timedOut);
+
+  if (isCartDataLoading && !timedOut) return <LoadingBar type={6} />;
   return (
     <S.Wrap isLoading={isLoading}>
+      {isDialogOpen && (
+        <Dialog
+          onClickBasketButton={() => {
+            localStorage.clear();
+            closeDialog();
+            router.push(PATH.LOGIN);
+          }}
+          visible
+          title="세션이 만료되어 로그아웃합니다."
+          refuse="확인"
+          confirm=""
+          size={40}
+        />
+      )}
       <h2>장바구니</h2>
       {cartProduct?.data.content.length === 0 ? (
         <S.NODATA>
@@ -37,7 +86,9 @@ export default function Cart() {
       ) : (
         <>
           <S.TabMenu>
-            {isLoading && <LoadingBar type={6} />}
+            {(isLoading || isCartDataLoading) && !timedOut && (
+              <LoadingBar type={6} />
+            )}
             <button
               type="button"
               onClick={() => {
@@ -122,6 +173,7 @@ export default function Cart() {
                             }
                           }}
                         />
+                        기
                       </S.MobileTextInfo>
                       <S.SelectTab>
                         <S.SelectButton

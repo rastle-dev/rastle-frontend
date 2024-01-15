@@ -26,6 +26,8 @@ export default function useCart() {
   const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
   const menuList = ["정보", "판매가", "수량", "선택", "배송비"];
   const queryClient = useQueryClient();
+  const [timedOut, setTimedOut] = useState(false);
+
   useEffect(() => {
     const currentPath = router.asPath;
     if (typeof window !== "undefined") {
@@ -36,13 +38,13 @@ export default function useCart() {
       }
     }
   }, []);
-  const { data: cartProduct, refetch } = useQuery(
-    [QUERYKEYS.LOAD_CART],
-    loadCartProduct,
-    {
-      enabled: isDataLoading,
-    },
-  );
+  const {
+    data: cartProduct,
+    refetch,
+    isLoading: isCartDataLoading,
+  } = useQuery([QUERYKEYS.LOAD_CART], loadCartProduct, {
+    enabled: isDataLoading,
+  });
   const totalPrice = cartProduct?.data.content
     .map((v: ProductItem) => v.discountPrice * v.count)
     .reduce((a: number, c: number) => a + c, 0);
@@ -285,5 +287,8 @@ export default function useCart() {
     refetch,
     isDataLoading,
     totalPrice,
+    timedOut,
+    setTimedOut,
+    isCartDataLoading,
   };
 }

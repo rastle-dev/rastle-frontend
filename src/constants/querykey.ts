@@ -21,6 +21,7 @@ const QUERYKEYS = {
   LOAD_PRODUCT_COLOR: "loadProductColor",
   LOAD_CART: "loadCartProduct",
   LOAD_COUPON: "loadCoupon",
+  LOAD_ORDER_LIST: "loadOrderList",
 } as const;
 
 export default QUERYKEYS;
