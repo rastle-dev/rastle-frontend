@@ -26,3 +26,8 @@ export const loadCoupon = async () => {
   const { data } = await authorizationClient.get(API.COUPON);
   return data;
 };
+
+export const loadOrderList = async () => {
+  const { data } = await authorizationClient.get(API.ORDERS);
+  return data;
+};
