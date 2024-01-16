@@ -31,3 +31,8 @@ export const loadOrderList = async () => {
   const { data } = await authorizationClient.get(API.ORDERS);
   return data;
 };
+
+export const loadDefaultAddress = async () => {
+  const { data } = await authorizationClient.get(API.LOAD_ADDRESS);
+  return data;
+};
