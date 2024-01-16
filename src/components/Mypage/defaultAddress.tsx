@@ -13,16 +13,18 @@ import useDialog from "@/hooks/useDialog";
 export default function DefaultAddress() {
   const {
     mutateUpdateAddressProduct,
-    data,
+    defaultAddressData,
     isLoading,
     openPostcode,
     handlePostal,
     DefaultAddressInputs,
+    postalAddress,
+    detailPostal,
   } = useDefaultAddress();
   const { deleteUser, logout } = useLoginInfo();
   const { openDialog, closeDialog, isDialogOpen } = useDialog();
 
-  console.log("address", data?.data);
+  console.log("address", defaultAddressData?.data);
 
   // useEffect(() => {
   //   if (typeof window !== "undefined") {
@@ -121,8 +123,16 @@ export default function DefaultAddress() {
         ))}
       </S.Wrapper>
       <S.DeleteButtonWrapper>
-        <S.MobileLogoutButton title="로그아웃" onClick={logout} />
-        <S.DeleteButton title="탈퇴하기" onClick={deleteUser} />
+        <S.DeleteButton
+          title="수정하기"
+          onClick={() => {
+            mutateUpdateAddressProduct.mutate({
+              zipCode: postalAddress.zonecode,
+              roadAddress: postalAddress.address,
+              detailAddress: detailPostal,
+            });
+          }}
+        />
       </S.DeleteButtonWrapper>
     </div>
   );

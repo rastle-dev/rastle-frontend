@@ -1,11 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toastMsg from "@/components/Toast";
 import QUERYKEYS from "@/constants/querykey";
-import { loadDefaultAddress, updateDefaultAddress } from "@/api/cart";
+import {
+  loadCartProduct,
+  loadDefaultAddress,
+  updateDefaultAddress,
+} from "@/api/cart";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
 import useInput from "@/hooks/useInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Address = {
   address: string | undefined;
@@ -26,17 +30,23 @@ type CommonInputField = {
 export default function useDefaultAddress() {
   const queryClient = useQueryClient();
   const [receiver, onChangeReceiver, setReceiver] = useInput("");
-  const [detailPostal, onChangeDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
+  const [isDataLoading, setIsDataLoading] = useState(true);
+  const { data: defaultAddressData, isLoading } = useQuery(
+    [QUERYKEYS.LOAD_CART],
+    loadDefaultAddress,
+    {
+      enabled: isDataLoading,
+    },
+  );
   const [postalAddress, setAddress] = useState<Address>({
-    address: undefined,
-    zonecode: undefined,
+    address: defaultAddressData?.data.roadAddress,
+    zonecode: defaultAddressData?.data.zipCode,
   });
-  const { data, isLoading } = useQuery({
-    queryKey: [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
-    queryFn: loadDefaultAddress,
-  });
+  const [detailPostal, onChangeDetailPostal] = useInput(
+    defaultAddressData?.data.detailAddress,
+  );
   const handlePostal = {
     // 버튼 클릭 이벤트
     clickButton: () => {
@@ -96,13 +106,20 @@ export default function useDefaultAddress() {
     },
   ];
   const DefaultAddressInputs = [...commonInputFields];
+
+  // onChange도중에는 useQuery불리지 않게 하기 커서 들어가는 순간 false로 막기 ref써서
+  // useEffect(() => {
+  //   setIsDataLoading(false);
+  // }, []);
   return {
     mutateUpdateAddressProduct,
-    data,
+    defaultAddressData,
     isLoading,
     openPostcode,
     DefaultAddressInputs,
     OrderInputs,
     handlePostal,
+    postalAddress,
+    detailPostal,
   };
 }
