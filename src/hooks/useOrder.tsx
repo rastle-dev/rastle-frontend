@@ -137,6 +137,17 @@ export default function useOrder() {
   ];
 
   console.log(myInfo);
+  const commonInputFields = [
+    {
+      label: "우편번호",
+      size: 75,
+      title: "검색하기",
+      onClick: handlePostal,
+      value: postalAddress.zonecode,
+    },
+    { label: "주소", value: postalAddress.address },
+    { label: "상세 주소", onChange: onChangeDetailPostal },
+  ];
 
   const deliveryInputs = [
     {
@@ -149,16 +160,9 @@ export default function useOrder() {
       onChange: onChangePhoneNumber,
       value: phoneNumber,
     },
-    {
-      label: "우편번호",
-      size: 75,
-      title: "검색하기",
-      onClick: handlePostal,
-      value: postalAddress.zonecode,
-    },
-    { label: "주소", value: postalAddress.address },
-    { label: "상세 주소", onChange: onChangeDetailPostal },
+    ...commonInputFields,
   ];
+  const DefaultAddressInputs = [...commonInputFields];
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
@@ -370,5 +374,6 @@ export default function useOrder() {
     cartProduct,
     toggleCoupon,
     selectedCoupons,
+    DefaultAddressInputs,
   };
 }
