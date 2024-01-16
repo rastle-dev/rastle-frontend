@@ -33,6 +33,8 @@ const ORDERS = "/orders";
 const PAYMENTS = "/payments";
 const COMPLETE = "/complete";
 const COUPON = "/coupon";
+const LOAD_ADDRESS = "/getMemberAddress";
+const UPDATE_ADDRESS = "/updateMemberAddress";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -82,5 +84,7 @@ const API = {
   ORDERS: `${ORDERS}`,
   PAYMENTCOMPLETE: `${PAYMENTS}${COMPLETE}`,
   COUPON: `${COUPON}`,
+  LOAD_ADDRESS: `${MEMBER}${LOAD_ADDRESS}`,
+  UPDATE_ADDRESS: `${MEMBER}${UPDATE_ADDRESS}`,
 };
 export default API;
