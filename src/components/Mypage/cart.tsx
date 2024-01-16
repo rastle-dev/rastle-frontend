@@ -41,25 +41,20 @@ export default function Cart() {
   useEffect(() => {
     if ((isCartDataLoading || isLoading) && timedOut) {
       openDialog();
-      console.log("why?");
     }
   }, [timedOut]);
   useEffect(() => {
     if (isCartDataLoading || isLoading) {
       timeoutId = setTimeout(() => {
         setTimedOut(true);
-        console.log("why?", timedOut);
       }, 5000);
     } else {
       setTimedOut(false);
-      console.log("why22?", timedOut);
-
       clearTimeout(timeoutId);
     }
 
     return () => clearTimeout(timeoutId);
   }, [isCartDataLoading, isLoading]);
-  console.log("why33?", timedOut);
 
   if (isCartDataLoading && !timedOut) return <LoadingBar type={6} />;
   return (
@@ -173,7 +168,6 @@ export default function Cart() {
                             }
                           }}
                         />
-                        기
                       </S.MobileTextInfo>
                       <S.SelectTab>
                         <S.SelectButton
