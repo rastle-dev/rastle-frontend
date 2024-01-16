@@ -12,6 +12,7 @@ import MainLayout from "@/components/Layout/MainLayout";
 import "../styles/font.css";
 import StyledContainer from "@/components/Toast/container";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import Head from "next/head";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -76,12 +77,24 @@ export default function App({ Component, pageProps }: AppProps) {
     if (Comp.displayName === "User") {
       return (
         <DefaultLayout>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            />
+          </Head>
           <Comp {...pageProps} />
         </DefaultLayout>
       );
     }
     return (
       <MainLayout>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+          />
+        </Head>
         <Comp {...pageProps} />
       </MainLayout>
     );
