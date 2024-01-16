@@ -79,7 +79,6 @@ export default function Shop() {
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData, categoryList]);
-  console.log("actev", activeCategoryId);
 
   return (
     <S.Container>
