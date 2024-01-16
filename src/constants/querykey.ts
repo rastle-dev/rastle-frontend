@@ -23,6 +23,7 @@ const QUERYKEYS = {
   LOAD_COUPON: "loadCoupon",
   LOAD_ORDER_LIST: "loadOrderList",
   LOAD_DEFAULT_ADDRESS: "loadDefaultAddress",
+  UPDATE_DEFAULT_ADDRESS: "updateDefaultAddress",
 } as const;
 
 export default QUERYKEYS;
