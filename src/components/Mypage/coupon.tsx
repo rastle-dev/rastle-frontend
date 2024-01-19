@@ -7,30 +7,20 @@ import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useDialog from "@/hooks/useDialog";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function Coupon() {
-  const { menuList, couponData, isLoading, timedOut, setTimedOut } =
-    useCoupon();
+  const { menuList, couponData, isLoading } = useCoupon();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
+  const { timedOut } = useLoadingWithTimeout(isLoading);
+
   const router = useRouter();
-  let timeoutId: NodeJS.Timeout | undefined;
   useEffect(() => {
     if (isLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
-  useEffect(() => {
-    if (isLoading) {
-      timeoutId = setTimeout(() => {
-        setTimedOut(true);
-      }, 5000);
-    } else {
-      setTimedOut(false);
-      clearTimeout(timeoutId);
-    }
 
-    return () => clearTimeout(timeoutId);
-  }, [isLoading]);
   if (isLoading && !timedOut) return <LoadingBar type={6} />;
 
   return (

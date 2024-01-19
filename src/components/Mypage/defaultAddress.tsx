@@ -1,74 +1,36 @@
-import React, { useEffect, useState } from "react";
-import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
+import React, { useEffect } from "react";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/defaultAddress/index.styles";
 import DaumPostcode from "react-daum-postcode";
-import useOrder from "@/hooks/useOrder";
 import useDefaultAddress from "@/hooks/mypage/defaultAddress/useDefaultAddress";
 import useDialog from "@/hooks/useDialog";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function DefaultAddress() {
   const {
     mutateUpdateAddressProduct,
-    defaultAddressData,
     isLoading,
     openPostcode,
     handlePostal,
     DefaultAddressInputs,
     postalAddress,
     detailPostal,
+    defaultAddressData,
   } = useDefaultAddress();
-  const { deleteUser, logout } = useLoginInfo();
   const { openDialog, closeDialog, isDialogOpen } = useDialog();
-
-  console.log("address", defaultAddressData?.data);
-
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     mutateUpdateAddressProduct.mutate({
-  //       zipCode: "12345",
-  //       roadAddress: "서울특별시 강남구 테헤란로 427",
-  //       detailAddress: "테헤란로 427",
-  //     });
-  //   }
-  // }, []);
   const router = useRouter();
-  const [timedOut, setTimedOut] = useState(false);
-  let timeoutId: NodeJS.Timeout | undefined;
+  const { timedOut } = useLoadingWithTimeout(isLoading);
   useEffect(() => {
     if (isLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
-  useEffect(() => {
-    if (isLoading) {
-      timeoutId = setTimeout(() => {
-        setTimedOut(true);
-      }, 5000);
-    } else {
-      setTimedOut(false);
-      clearTimeout(timeoutId);
-    }
-
-    return () => clearTimeout(timeoutId);
-  }, [isLoading]);
 
   if (isLoading && !timedOut) return <LoadingBar type={6} />;
-
-  // const inputs = [
-  //   {
-  //     label: "우편번호",
-  //     size: 75,
-  //     title: "검색하기",
-  //     onClick: handlePostal,
-  //     value: postalAddress.zonecode,
-  //   },
-  //   { label: "주소", value: postalAddress.address },
-  //   { label: "상세 주소", value: detailPostal, onChange: onChangeDetailPostal },
-  // ];
+  console.log("주소값", defaultAddressData);
 
   return (
     <div>
