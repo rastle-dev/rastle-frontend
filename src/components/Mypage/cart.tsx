@@ -9,6 +9,7 @@ import { useRouter } from "next/dist/client/router";
 import useDialog from "@/hooks/useDialog";
 import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function Cart() {
   const {
@@ -31,32 +32,19 @@ export default function Cart() {
     cartProduct,
     totalPrice,
     isCartDataLoading,
-    timedOut,
-    setTimedOut,
   } = useCart();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
+  const { timedOut } = useLoadingWithTimeout(isLoading, isCartDataLoading);
+
   const router = useRouter();
-  let timeoutId: NodeJS.Timeout | undefined;
-  console.log("isCartDataLoading", isCartDataLoading, isLoading);
   useEffect(() => {
     if ((isCartDataLoading || isLoading) && timedOut) {
       openDialog();
     }
   }, [timedOut]);
-  useEffect(() => {
-    if (isCartDataLoading || isLoading) {
-      timeoutId = setTimeout(() => {
-        setTimedOut(true);
-      }, 5000);
-    } else {
-      setTimedOut(false);
-      clearTimeout(timeoutId);
-    }
 
-    return () => clearTimeout(timeoutId);
-  }, [isCartDataLoading, isLoading]);
-
-  if (isCartDataLoading && !timedOut) return <LoadingBar type={6} />;
+  if ((isCartDataLoading || isLoading) && !timedOut)
+    return <LoadingBar type={6} />;
   return (
     <S.Wrap isLoading={isLoading}>
       {isDialogOpen && (
@@ -74,7 +62,7 @@ export default function Cart() {
         />
       )}
       <h2>장바구니</h2>
-      {cartProduct?.data.content.length === 0 ? (
+      {cartProduct?.data?.content?.length === 0 ? (
         <S.NODATA>
           장바구니에 상품이 없어요. &nbsp;장바구니에 상품을 담아보세요! 😋
         </S.NODATA>
@@ -115,7 +103,7 @@ export default function Cart() {
                 <S.Select
                   type="checkbox"
                   checked={
-                    selectedItems.length === cartProduct?.data.content.length
+                    selectedItems.length === cartProduct?.data?.content?.length
                   }
                   onChange={handleHeaderCheckboxChange}
                 />
@@ -124,7 +112,7 @@ export default function Cart() {
                 ))}
               </S.TableHeader>
               <S.TableContent>
-                {cartProduct?.data.content.map((item: ProductItem) => {
+                {cartProduct?.data?.content?.map((item: ProductItem) => {
                   // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
                   return (
                     <S.ProductInfo key={item.cartProductId}>
