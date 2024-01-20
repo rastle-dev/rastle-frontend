@@ -1,15 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toastMsg from "@/components/Toast";
 import QUERYKEYS from "@/constants/querykey";
-import {
-  loadCartProduct,
-  loadDefaultAddress,
-  updateDefaultAddress,
-} from "@/api/cart";
+import { loadDefaultAddress, updateDefaultAddress } from "@/api/cart";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
 import useInput from "@/hooks/useInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Address = {
   address: string | undefined;
@@ -44,7 +40,7 @@ export default function useDefaultAddress() {
     address: defaultAddressData?.data.roadAddress,
     zonecode: defaultAddressData?.data.zipCode,
   });
-  const [detailPostal, onChangeDetailPostal] = useInput(
+  const [detailPostal, onChangeDetailPostal, setDetailPostal] = useInput(
     defaultAddressData?.data.detailAddress,
   );
   const handlePostal = {
@@ -107,10 +103,6 @@ export default function useDefaultAddress() {
   ];
   const DefaultAddressInputs = [...commonInputFields];
 
-  // onChange도중에는 useQuery불리지 않게 하기 커서 들어가는 순간 false로 막기 ref써서
-  // useEffect(() => {
-  //   setIsDataLoading(false);
-  // }, []);
   return {
     mutateUpdateAddressProduct,
     defaultAddressData,
@@ -121,5 +113,8 @@ export default function useDefaultAddress() {
     handlePostal,
     postalAddress,
     detailPostal,
+    setAddress,
+    onChangeDetailPostal,
+    setDetailPostal,
   };
 }

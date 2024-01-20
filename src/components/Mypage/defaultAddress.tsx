@@ -19,6 +19,8 @@ export default function DefaultAddress() {
     postalAddress,
     detailPostal,
     defaultAddressData,
+    setAddress,
+    setDetailPostal,
   } = useDefaultAddress();
   const { openDialog, closeDialog, isDialogOpen } = useDialog();
   const router = useRouter();
@@ -28,9 +30,16 @@ export default function DefaultAddress() {
       openDialog();
     }
   }, [timedOut]);
+  useEffect(() => {
+    // handlePostal();
+    setAddress({
+      address: defaultAddressData?.data.roadAddress,
+      zonecode: defaultAddressData?.data.zipCode,
+    });
+    setDetailPostal(defaultAddressData?.data.detailAddress);
+  }, [defaultAddressData]);
 
   if (isLoading && !timedOut) return <LoadingBar type={6} />;
-  console.log("주소값", defaultAddressData);
 
   return (
     <div>
