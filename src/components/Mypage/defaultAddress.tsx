@@ -31,7 +31,6 @@ export default function DefaultAddress() {
     }
   }, [timedOut]);
   useEffect(() => {
-    // handlePostal();
     setAddress({
       address: defaultAddressData?.data.roadAddress,
       zonecode: defaultAddressData?.data.zipCode,
