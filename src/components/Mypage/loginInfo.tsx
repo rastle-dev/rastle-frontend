@@ -10,11 +10,14 @@ import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/loginInfo/index.styles";
+import useDialog from "@/hooks/useDialog";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
   const { mutateChangePassword, deleteUser, logout } = useLoginInfo();
+  const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { data, isLoading } = useQuery({
     queryKey: [QUERYKEYS.LOAD_ME],
     queryFn: loadMe,
@@ -29,32 +32,14 @@ export default function LoginInfo() {
       }
     }
   }, []);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const openDialog = () => {
-    setIsDialogOpen(true);
-  };
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
-  const [timedOut, setTimedOut] = useState(false);
-  let timeoutId: NodeJS.Timeout | undefined;
+
+  const { timedOut } = useLoadingWithTimeout(isLoading);
+
   useEffect(() => {
     if (isLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
-  useEffect(() => {
-    if (isLoading) {
-      timeoutId = setTimeout(() => {
-        setTimedOut(true);
-      }, 5000);
-    } else {
-      setTimedOut(false);
-      clearTimeout(timeoutId);
-    }
-
-    return () => clearTimeout(timeoutId);
-  }, [isLoading]);
 
   if (isLoading && !timedOut) return <LoadingBar type={6} />;
 

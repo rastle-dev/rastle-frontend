@@ -44,8 +44,6 @@ export default function Order() {
 
   const { couponData, isLoading } = useCoupon();
 
-  console.log(couponData);
-
   if (totalPriceSumDirect === undefined) {
     return <LoadingBar type={6} />;
   }

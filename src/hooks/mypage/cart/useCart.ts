@@ -27,7 +27,7 @@ export default function useCart() {
   const menuList = ["정보", "판매가", "수량", "선택", "배송비"];
   const queryClient = useQueryClient();
   const [timedOut, setTimedOut] = useState(false);
-
+  const [loadingProps, setLoadingProps] = useState(false);
   useEffect(() => {
     const currentPath = router.asPath;
     if (typeof window !== "undefined") {
@@ -45,9 +45,11 @@ export default function useCart() {
   } = useQuery([QUERYKEYS.LOAD_CART], loadCartProduct, {
     enabled: isDataLoading,
   });
-  const totalPrice = cartProduct?.data.content
-    .map((v: ProductItem) => v.discountPrice * v.count)
-    .reduce((a: number, c: number) => a + c, 0);
+  const totalPrice =
+    cartProduct?.data?.content
+      ?.map((v: ProductItem) => v.discountPrice * v.count)
+      ?.reduce((a: number, c: number) => a + c, 0) || 0;
+
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -128,26 +130,28 @@ export default function useCart() {
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
-    if (selectedItems.length === cartProduct?.data.content.length) {
+    if (selectedItems.length === cartProduct?.data?.content?.length) {
       setSelectedItems([]);
       setCartOrderProducts([]);
       setDeleteProducts([]);
     } else {
-      setSelectedItems(cartProduct?.data.content);
-      const cartProductIds = cartProduct?.data.content.map(
+      setSelectedItems(cartProduct?.data?.content);
+      const cartProductIds = cartProduct?.data?.content?.map(
         (item: ProductItem) => item.cartProductId,
       );
-      const productIds = cartProduct?.data.content.map(
+      const productIds = cartProduct?.data?.content?.map(
         (item: ProductItem) => item.cartProductId,
       );
       setDeleteProducts(cartProductIds);
       setCartOrderProducts(productIds);
     }
   };
-  const totalPriceSum = cartProduct?.data.content.reduce(
-    (sum: number, item: ProductItem) => sum + item.productPrice * item.count,
-    0,
-  );
+  const totalPriceSum =
+    cartProduct?.data?.content?.reduce(
+      (sum: number, item: ProductItem) => sum + item.productPrice * item.count,
+      0,
+    ) ?? 0;
+
   const onClickOrderButton = async () => {
     const orderProducts = selectedItems.map((product: ProductItem) => ({
       productId: product.productId,
@@ -189,7 +193,7 @@ export default function useCart() {
     }
   };
   const onClickWholeOrderButton = async () => {
-    const orderProducts = cartProduct?.data.content.map(
+    const orderProducts = cartProduct?.data?.content?.map(
       (product: ProductItem) => ({
         productId: product.productId,
         name: product.productName,
@@ -199,7 +203,7 @@ export default function useCart() {
         totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
       }),
     );
-    const whole = cartProduct?.data.content.map(
+    const whole = cartProduct?.data?.content?.map(
       (product: ProductItem) => product.cartProductId,
     );
     const wholeOrderList = whole.join(",");
@@ -217,7 +221,7 @@ export default function useCart() {
           pathname: PATH.ORDER,
           query: {
             orderList: wholeOrderList,
-            selectedProducts: JSON.stringify(cartProduct?.data.content),
+            selectedProducts: JSON.stringify(cartProduct?.data?.content),
             orderDetailId: data.data.orderDetailId,
             orderNumber: data.data.orderNumber,
             productOrderNumbers,
@@ -290,5 +294,7 @@ export default function useCart() {
     timedOut,
     setTimedOut,
     isCartDataLoading,
+    setLoadingProps,
+    loadingProps,
   };
 }

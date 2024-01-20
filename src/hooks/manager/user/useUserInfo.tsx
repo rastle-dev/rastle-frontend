@@ -19,7 +19,6 @@ export default function useUserInfo() {
 
   const onChangePage = (page: number) => {
     setCurPage(page);
-    console.log("클릭");
   };
 
   const [searchType, setSearchType] = useState("이메일 주소");

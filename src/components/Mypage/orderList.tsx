@@ -9,33 +9,24 @@ import { useRouter } from "next/dist/client/router";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function OrderList() {
   const router = useRouter();
-  const { menuList, timedOut, setTimedOut } = useOrderList();
+  const { menuList } = useOrderList();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { data: orderListData, isLoading } = useQuery(
     [QUERYKEYS.LOAD_ORDER_LIST],
     loadOrderList,
   );
-  let timeoutId: NodeJS.Timeout | undefined;
+  const { timedOut } = useLoadingWithTimeout(isLoading);
+
   useEffect(() => {
     if (isLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
-  useEffect(() => {
-    if (isLoading) {
-      timeoutId = setTimeout(() => {
-        setTimedOut(true);
-      }, 5000);
-    } else {
-      setTimedOut(false);
-      clearTimeout(timeoutId);
-    }
 
-    return () => clearTimeout(timeoutId);
-  }, [isLoading]);
   if (isLoading && !timedOut) return <LoadingBar type={6} />;
   return (
     <S.Wrap isLoading={isLoading}>

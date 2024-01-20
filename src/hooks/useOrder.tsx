@@ -13,6 +13,18 @@ type Address = {
   address: string | undefined;
   zonecode: number | undefined;
 };
+type CommonInputField = {
+  label: string;
+  size?: number;
+  title?: string;
+  onClick?: {
+    clickButton: () => void;
+    selectAddress: (addressData: any) => void;
+  };
+  value?: any;
+  onChange?: any;
+};
+
 export default function useOrder() {
   const router = useRouter();
   console.log(router.query);
@@ -137,8 +149,20 @@ export default function useOrder() {
   ];
 
   console.log(myInfo);
+  const commonInputFields: CommonInputField[] = [
+    {
+      label: "우편번호",
+      size: 75,
+      title: "검색하기",
+      onClick: handlePostal,
+      value: postalAddress.zonecode,
+    },
+    { label: "주소", value: postalAddress.address },
+    { label: "상세 주소", value: detailPostal, onChange: onChangeDetailPostal },
+  ];
 
   const deliveryInputs = [
+    ...commonInputFields,
     {
       label: "받는 분",
       onChange: onChangeReceiver,
@@ -149,16 +173,8 @@ export default function useOrder() {
       onChange: onChangePhoneNumber,
       value: phoneNumber,
     },
-    {
-      label: "우편번호",
-      size: 75,
-      title: "검색하기",
-      onClick: handlePostal,
-      value: postalAddress.zonecode,
-    },
-    { label: "주소", value: postalAddress.address },
-    { label: "상세 주소", onChange: onChangeDetailPostal },
   ];
+  const DefaultAddressInputs = [...commonInputFields];
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
@@ -370,5 +386,6 @@ export default function useOrder() {
     cartProduct,
     toggleCoupon,
     selectedCoupons,
+    DefaultAddressInputs,
   };
 }
