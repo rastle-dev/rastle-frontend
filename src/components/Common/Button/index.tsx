@@ -77,7 +77,6 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
       width={width!}
-      isActive
     >
       {title}
     </Wrapper>
