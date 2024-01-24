@@ -153,7 +153,7 @@ export default function Signup() {
                   label={data.label}
                   onChange={data.onChange}
                   message={data.message}
-                  invalid={data.inValid}
+                  invalid={data.inValid ? "true" : "false"}
                 />
                 <S.ButtonWrapper>
                   <S.StyledButton
@@ -172,7 +172,7 @@ export default function Signup() {
                     label={data.label}
                     onChange={data.onChange}
                     message={data.message}
-                    invalid={data.inValid}
+                    invalid={data.inValid ? "true" : "false"}
                   />
                   <S.ButtonTimerWrapper>
                     <S.StyledButton
@@ -193,7 +193,7 @@ export default function Signup() {
                 label={data.label}
                 onChange={data.onChange}
                 message={data.message}
-                invalid={data.inValid}
+                invalid={data.inValid ? "true" : "false"}
               />
             </S.DefaultInputDiv>
           )}

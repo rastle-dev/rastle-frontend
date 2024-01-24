@@ -116,7 +116,7 @@ export default function LoginInfo() {
                 value={input.value}
                 onChange={input.onChange}
                 message={input.message}
-                invalid={input.inValid}
+                invalid={data.inValid ? "true" : "false"}
                 disabled={isSocial}
                 readOnly={isSocial}
               />

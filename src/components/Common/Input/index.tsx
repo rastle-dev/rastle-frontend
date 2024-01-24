@@ -3,15 +3,15 @@ import styled from "styled-components";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
-const Label = styled.div<{ invalid?: boolean }>`
+const Label = styled.div<{ invalid?: string }>`
   font-size: 1rem;
-  color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid === "false" ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
 `;
 
 const InputWrapper = styled.input<{
   size: number;
-  invalid?: boolean;
+  invalid?: string;
   readOnly: boolean;
 }>`
   ${({ size, readOnly }) => `
@@ -22,7 +22,7 @@ const InputWrapper = styled.input<{
   padding: 0.9rem 0.2rem;
   border: none;
   border-bottom: 0.07rem solid
-    ${(props) => (props.invalid ? COLORS.RED : COLORS.GREY[300])};
+    ${(props) => (props.invalid === "false" ? COLORS.RED : COLORS.GREY[300])};
   color: ${COLORS.블랙};
   font-size: 1rem;
   ::placeholder {
@@ -33,10 +33,10 @@ const InputWrapper = styled.input<{
   border-radius: 0;
 `;
 
-const Message = styled.p<{ invalid?: boolean }>`
+const Message = styled.p<{ invalid?: string }>`
   font-size: 0.7rem;
   margin-bottom: 0;
-  color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid === "string" ? COLORS.RED : COLORS.블랙)};
 `;
 
 type InputProps = {
@@ -61,7 +61,7 @@ type InputProps = {
   /** classname */
   className?: string;
   checked?: boolean;
-  invalid?: boolean;
+  invalid?: string;
   disabled?: boolean;
 };
 
@@ -77,7 +77,7 @@ export default function Input({
   message = "",
   className,
   checked,
-  invalid = false,
+  invalid = "false",
   disabled = false,
 }: InputProps) {
   const isCheckbox = type === "checkbox"; // 체크박스인지 확인

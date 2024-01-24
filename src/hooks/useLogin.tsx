@@ -42,7 +42,6 @@ export default function useLogin() {
     },
     {
       label: "비밀번호",
-      placeholder: "••••••••",
       type: "password",
       value: password,
       onChange: onChangePassword,
