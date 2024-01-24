@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
@@ -24,11 +23,6 @@ const InputWrapper = styled.input<{
   border: none;
   border-bottom: 0.07rem solid
     ${(props) => (props.invalid ? COLORS.RED : COLORS.GREY[300])};
-  // border-bottom:
-  ${(props) =>
-    props.onChange
-      ? `0.07rem solid ${COLORS.블랙}`
-      : `0.14rem solid ${COLORS.GREY[300]}`};
   color: ${COLORS.블랙};
   font-size: 1rem;
   ::placeholder {
