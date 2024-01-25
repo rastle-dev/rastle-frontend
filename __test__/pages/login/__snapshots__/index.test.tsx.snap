@@ -25,11 +25,13 @@ exports[`로그인 페이지 테스트 로그인 페이지 스냅샷 테스트 1
         >
           <div
             class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
           >
             이메일 주소
           </div>
           <input
             class="Input__InputWrapper-sc-10wte69-2 hPCkEC indexstyles__StyledInput-sc-mpai23-3 duZdSs"
+            invalid="false"
             placeholder="예) rastle@rastle.com"
             size="26.25"
           />
@@ -40,12 +42,14 @@ exports[`로그인 페이지 테스트 로그인 페이지 스냅샷 테스트 1
         >
           <div
             class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
           >
             비밀번호
           </div>
           <input
             class="Input__InputWrapper-sc-10wte69-2 hPCkEC indexstyles__StyledInput-sc-mpai23-3 duZdSs"
-            placeholder="••••••••"
+            invalid="false"
+            placeholder=""
             size="26.25"
             type="password"
           />

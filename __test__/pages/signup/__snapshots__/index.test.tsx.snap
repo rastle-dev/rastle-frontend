@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`회원가입 페이지 테스트 회원가입 페이지 스냅샷 테스트 1`] = `
+<div>
+  <div
+    class="indexstyles__Wrapper-sc-aclli0-0 hOXuWw"
+  >
+    <style>
+      
+            html{
+              font-size: 12px;
+            }
+        
+    </style>
+    <h1
+      class="indexstyles__Title-sc-aclli0-1 itdqNQ"
+    >
+      회원가입
+    </h1>
+    <div>
+      <div
+        class="indexstyles__InputWithButtonDiv-sc-aclli0-2 dxWxNX"
+      >
+        <div
+          class="Input__Wrapper-sc-10wte69-0"
+          style="width: 100%;"
+        >
+          <div
+            class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
+          >
+            이메일주소
+          </div>
+          <input
+            class="Input__InputWrapper-sc-10wte69-2 bqfzLl"
+            invalid="false"
+            placeholder="예) rastle@rastle.com"
+            size="28.75"
+          />
+        </div>
+        <div
+          class="indexstyles__ButtonWrapper-sc-aclli0-4 jEhkoa"
+        >
+          <button
+            class="Button__Wrapper-sc-1pr2hos-0 fDnleS indexstyles__StyledButton-sc-aclli0-8 hZzlfU"
+            type="default"
+          >
+            인증
+          </button>
+        </div>
+      </div>
+    </div>
+    <div />
+    <div>
+      <div
+        class="indexstyles__DefaultInputDiv-sc-aclli0-3 bxHYOZ"
+      >
+        <div
+          class="Input__Wrapper-sc-10wte69-0"
+          style="width: 100%;"
+        >
+          <div
+            class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
+          >
+            비밀번호
+          </div>
+          <input
+            class="Input__InputWrapper-sc-10wte69-2 qPLnR"
+            invalid="false"
+            placeholder="영문,숫자,특수문자 조합 8~16자"
+            size="35"
+            type="password"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="indexstyles__DefaultInputDiv-sc-aclli0-3 bxHYOZ"
+      >
+        <div
+          class="Input__Wrapper-sc-10wte69-0"
+          style="width: 100%;"
+        >
+          <div
+            class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
+          >
+            비밀번호 확인
+          </div>
+          <input
+            class="Input__InputWrapper-sc-10wte69-2 qPLnR"
+            invalid="false"
+            placeholder=""
+            size="35"
+            type="password"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="indexstyles__DefaultInputDiv-sc-aclli0-3 bxHYOZ"
+      >
+        <div
+          class="Input__Wrapper-sc-10wte69-0"
+          style="width: 100%;"
+        >
+          <div
+            class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
+          >
+            이름
+          </div>
+          <input
+            class="Input__InputWrapper-sc-10wte69-2 qPLnR"
+            invalid="false"
+            placeholder="예) 홍레슬"
+            size="35"
+          />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        class="indexstyles__DefaultInputDiv-sc-aclli0-3 bxHYOZ"
+      >
+        <div
+          class="Input__Wrapper-sc-10wte69-0"
+          style="width: 100%;"
+        >
+          <div
+            class="Input__Label-sc-10wte69-1 hcuicQ"
+            invalid="false"
+          >
+            휴대폰 번호
+          </div>
+          <input
+            class="Input__InputWrapper-sc-10wte69-2 qPLnR"
+            invalid="false"
+            placeholder="예) 01012345678"
+            size="35"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="indexstyles__CheckBoxWithText-sc-aclli0-6 kTzzot"
+    >
+      <input
+        type="checkbox"
+      />
+      <h3>
+        개인정보 수집 및 이용 동의 (필수)
+      </h3>
+      <a
+        href="/shopinfo/agreement"
+      >
+        <h3>
+          자세히
+        </h3>
+      </a>
+    </div>
+    <div
+      class="indexstyles__SignupButtonDiv-sc-aclli0-7 jFwWXf"
+    >
+      <button
+        class="Button__Wrapper-sc-1pr2hos-0 grbLvS indexstyles__SignupButton-sc-aclli0-9 jLygGn"
+        disabled=""
+        type="default"
+      >
+        가입하기
+      </button>
+    </div>
+  </div>
+</div>
+`;

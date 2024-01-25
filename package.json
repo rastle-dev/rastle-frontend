@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "coverage": "jest --coverage",
     "export": "next export",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",

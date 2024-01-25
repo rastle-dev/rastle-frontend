@@ -5,7 +5,7 @@ import COLORS from "../../../constants/color";
 const Wrapper = styled.div``;
 const Label = styled.div<{ invalid?: string }>`
   font-size: 1rem;
-  color: ${(props) => (props.invalid === "false" ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid === "true" ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
 `;
 
@@ -22,7 +22,7 @@ const InputWrapper = styled.input<{
   padding: 0.9rem 0.2rem;
   border: none;
   border-bottom: 0.07rem solid
-    ${(props) => (props.invalid === "false" ? COLORS.RED : COLORS.GREY[300])};
+    ${(props) => (props.invalid === "true" ? COLORS.RED : COLORS.GREY[300])};
   color: ${COLORS.블랙};
   font-size: 1rem;
   ::placeholder {
@@ -36,7 +36,7 @@ const InputWrapper = styled.input<{
 const Message = styled.p<{ invalid?: string }>`
   font-size: 0.7rem;
   margin-bottom: 0;
-  color: ${(props) => (props.invalid === "string" ? COLORS.RED : COLORS.블랙)};
+  color: ${(props) => (props.invalid === "true" ? COLORS.RED : COLORS.블랙)};
 `;
 
 type InputProps = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import Login from "@/pages/login/index";
@@ -31,19 +31,15 @@ function renderLogin() {
   );
 
   const Email = () => testUtils.getByPlaceholderText("예) rastle@rastle.com");
-  const Password = () => testUtils.getByPlaceholderText("••••••••");
-
+  const PasswordLabelElement = screen.getByText("비밀번호");
+  const Password = PasswordLabelElement.nextSibling as HTMLInputElement;
   const typeEmail = (email: string) => {
     const emailInput = Email();
     fireEvent.change(emailInput, { target: { value: email } });
   };
-  // const typePassword = (password: string) => {
-  //   //   const passwordInput = Password();
-  //   //   userEvent.type(passwordInput, password);
-  //   // };
+
   const typePassword = (password: string) => {
-    const passwordInput = Password();
-    fireEvent.input(passwordInput, { target: { value: password } });
+    fireEvent.input(Password, { target: { value: password } });
   };
 
   const LoginButton = () =>
@@ -52,7 +48,7 @@ function renderLogin() {
   const onClickLoginButton = () => {
     userEvent.click(LoginButton());
     const email = (Email() as HTMLInputElement).value;
-    const password = (Password() as HTMLInputElement).value;
+    const password = (Password as HTMLInputElement).value;
     mutateLogin({ email, password });
   };
   return {
@@ -74,7 +70,7 @@ describe("로그인 페이지 테스트", () => {
   it("로그인 페이지 렌더링 테스트", () => {
     const { Email, Password, LoginButton } = renderLogin();
     expect(Email()).toBeInTheDocument();
-    expect(Password()).toBeInTheDocument();
+    expect(Password).toBeInTheDocument();
     expect(LoginButton()).toBeInTheDocument();
   });
   it("mutateLogin 함수 테스트", async () => {
@@ -92,7 +88,7 @@ describe("로그인 페이지 테스트", () => {
 
     onClickLoginButton();
     expect((Email() as HTMLInputElement).value).toBe("minhyuk9893@google.com");
-    expect((Password() as HTMLInputElement).value).toBe("ham061625@");
+    expect((Password as HTMLInputElement).value).toBe("ham061625@");
 
     expect(mutateLogin).toHaveBeenCalledWith({
       email: "minhyuk9893@google.com",
