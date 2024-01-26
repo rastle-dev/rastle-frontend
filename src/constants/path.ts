@@ -5,6 +5,7 @@ const PATH = {
   HOME: "/",
   CART: "/mypage?tab=장바구니",
   PRODUCT: "/product",
+  EVENT: "/event",
   SHOP: "/shop",
   MYPAGE: "/mypage",
   ORDER: "/order",
