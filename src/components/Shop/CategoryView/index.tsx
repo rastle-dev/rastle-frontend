@@ -38,13 +38,13 @@ export default function CategoryView({
       <S.ProductList>
         {eventData?.data.map((item: ItemElementProps) => (
           <ItemElement
-            key={item.id}
+            key={item.productId}
             mainThumbnail={item.mainThumbnail}
             subThumbnail={item.subThumbnail}
             name={item.name}
             price={item.price}
             discountPrice={0}
-            id={item.id}
+            id={item.productId}
             isEvent={!!item.eventId}
           />
         ))}
