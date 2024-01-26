@@ -15,7 +15,7 @@ export async function getStaticProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
-    loadMarketProductPaging({ page: 0, size: 4 }),
+    loadMarketProductPaging({ page: 0 }),
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
@@ -51,7 +51,6 @@ export default function Shop() {
         "전체",
         "코디상품",
         ...categoryData.data.map((v: Category) => v.name),
-        "이벤트",
       ],
     );
   }, []);
@@ -90,7 +89,6 @@ export default function Shop() {
               "전체",
               "코디상품",
               ...categoryData.data.map((v: Category) => v.name),
-              "이벤트",
             ]
           }
           activeCategory={activeCategory}
