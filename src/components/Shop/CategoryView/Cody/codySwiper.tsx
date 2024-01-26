@@ -65,7 +65,7 @@ interface SwiperComponentProps {
 }
 
 function SwiperComponent({ imgUrls }: SwiperComponentProps) {
-  const slides = imgUrls.split(",");
+  const slides = imgUrls?.split(",");
   return (
     <SwiperContainer>
       <SwiperWrapper>
