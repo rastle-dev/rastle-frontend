@@ -60,17 +60,15 @@ export default function Order() {
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
-          {cartProduct?.data.content.filter(
-            (v: any) =>
-              orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+          {cartProduct?.data.content.filter((v: any) =>
+            orderProducts.split(",").map(Number)?.includes(v.cartProductId),
           ).length !== 0
             ? cartProduct?.data.content
-                .filter(
-                  (v: any) =>
-                    orderProducts
-                      .split(",")
-                      .map(Number)
-                      ?.includes(v.cartProductId),
+                .filter((v: any) =>
+                  orderProducts
+                    .split(",")
+                    .map(Number)
+                    ?.includes(v.cartProductId),
                 )
                 .map((item: ProductItem) => (
                   <S.Product>
