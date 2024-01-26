@@ -81,7 +81,6 @@ export default function useProduct() {
 
   // 컬러 버튼 클릭 핸들러
   const handleColorClick = (color: string) => {
-    console.log("무너데...", color);
     setSelectedProduct((prevProduct) => ({
       ...prevProduct,
       color,
