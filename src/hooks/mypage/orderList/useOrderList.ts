@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { loadCoupon } from "@/api/cart";
+import { loadOrderList } from "@/api/cart";
 
 export default function useOrderList() {
   const menuList = [
@@ -10,10 +10,10 @@ export default function useOrderList() {
     "상품구매금액",
     "주문처리상태",
   ];
-
-  const { data: couponData, isLoading } = useQuery(
-    [QUERYKEYS.LOAD_COUPON],
-    loadCoupon,
+  const { data: orderListData, isLoading } = useQuery(
+    [QUERYKEYS.LOAD_ORDER_LIST],
+    loadOrderList,
   );
-  return { menuList, couponData, isLoading };
+
+  return { menuList, orderListData, isLoading };
 }
