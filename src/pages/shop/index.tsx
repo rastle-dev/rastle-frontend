@@ -51,7 +51,6 @@ export default function Shop() {
         "전체",
         "코디상품",
         ...categoryData.data.map((v: Category) => v.name),
-        "이벤트",
       ],
     );
   }, []);
@@ -90,7 +89,6 @@ export default function Shop() {
               "전체",
               "코디상품",
               ...categoryData.data.map((v: Category) => v.name),
-              "이벤트",
             ]
           }
           activeCategory={activeCategory}

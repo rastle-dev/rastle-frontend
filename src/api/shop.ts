@@ -80,3 +80,11 @@ export const paymentConfirm = async (paymentData: object) => {
   );
   return data;
 };
+
+export const paymentPrepare = async (paymentData: object) => {
+  const { data } = await authorizationClient.post(
+    `${API.PAYMENTPREPARE}`,
+    paymentData,
+  );
+  return data;
+};

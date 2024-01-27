@@ -14,7 +14,7 @@ export function Cart() {
 }
 
 export function Arrow() {
-  return <Icon size="1rem" iconName="arrowLeft" color={COLORS.블랙} />;
+  return <Icon iconSize="1rem" iconName="arrowLeft" color={COLORS.블랙} />;
 }
 
 export function Person() {

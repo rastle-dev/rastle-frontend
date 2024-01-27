@@ -49,7 +49,12 @@ export default function Order() {
           </S.OrdererInfo>
           <S.Total>
             <S.TotalInfo>결제 금액</S.TotalInfo>
-            <S.TotalPrice>{parsedOrderInfo.paid_amount}원</S.TotalPrice>
+            <S.TotalPrice>
+              {parsedOrderInfo.paid_amount
+                ? `${parsedOrderInfo.paid_amount}`
+                : `${parsedOrderInfo.amount}`}
+              원
+            </S.TotalPrice>
           </S.Total>
           <S.ButtonDiv>
             <S.StyledBuyButton title="쇼핑하러 가기" type="shop" />
