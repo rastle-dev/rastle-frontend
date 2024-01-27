@@ -13,6 +13,7 @@ import EnterEventModal from "@/components/Event/EnterEventModal";
 import Dialog from "@/components/Common/Dialog";
 import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
+import CountDownTimer from "@/components/Event/CountDownTimer";
 
 export default function Event() {
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Event() {
             // openDialog();
           }}
         >
-          <EnterEventModal />
+          <EnterEventModal eventProductId={detailData?.data.id} />
         </Modal>
       )}
       {isEventDialogOpen && (
@@ -93,7 +94,7 @@ export default function Event() {
             title="응모하기"
             type="shop"
           />
-          <S.TimerButton title="7일 23:23:54 남음" type="shop" />
+          <CountDownTimer endDate="2024-01-28T12:00:00" />
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>

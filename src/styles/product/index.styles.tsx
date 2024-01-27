@@ -346,21 +346,21 @@ export const Script = styled.div`
   }
 `;
 
-export const TimerButton = styled(Button)`
+export const Timer = styled.div`
   margin-top: 1rem;
   font-size: 1.35rem;
   font-weight: 400;
   height: 4.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    margin: 0;
+  }
   color: ${COLORS.WHITE};
-  cursor: text;
   background-color: ${COLORS.BLACK};
   border-radius: 0.45455rem;
-  &:hover {
-    background-color: ${COLORS.BLACK};
-    color: ${COLORS.WHITE};
-  }
   ${media.mobile} {
-    flex-grow: 1;
     width: 100%;
   }
 `;
@@ -372,7 +372,6 @@ export const StyledEventButton = styled(Button)`
   border: 0.5px solid #000;
   border-radius: 0.45455rem;
   ${media.mobile} {
-    flex-grow: 1;
-    width: 40%;
+    width: 100%;
   }
 `;
