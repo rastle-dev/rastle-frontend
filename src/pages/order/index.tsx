@@ -50,11 +50,20 @@ export default function Order() {
 
   const { couponData, isLoading } = useCoupon();
 
+  let parsedProducts;
+  if (selectedProducts) {
+    parsedProducts = JSON.parse(selectedProducts as string);
+  }
+
   if (totalPriceSumDirect === undefined) {
     return <LoadingBar type={6} />;
   }
 
   if (totalPriceSum === undefined) {
+    return <LoadingBar type={6} />;
+  }
+
+  if (parsedProducts === undefined) {
     return <LoadingBar type={6} />;
   }
 
@@ -95,25 +104,23 @@ export default function Order() {
                     </S.Info>
                   </S.Product>
                 ))
-            : JSON.parse(selectedProducts as string).map(
-                (item: ProductItem) => (
-                  <S.Product>
-                    <S.Thumbnail
-                      src={item.mainThumbnailImage}
-                      alt={item.mainThumbnailImage}
-                    />
-                    <S.Info>
-                      <S.ProductName>{item.title}</S.ProductName>
-                      <S.NumPrice>
-                        {item.count}개 / {`${item.price.toLocaleString()}원`}
-                      </S.NumPrice>
-                      <S.SizeColor>
-                        {item.size} / {item.color}
-                      </S.SizeColor>
-                    </S.Info>
-                  </S.Product>
-                ),
-              )}
+            : parsedProducts.map((item: ProductItem) => (
+                <S.Product>
+                  <S.Thumbnail
+                    src={item.mainThumbnailImage}
+                    alt={item.mainThumbnailImage}
+                  />
+                  <S.Info>
+                    <S.ProductName>{item.title}</S.ProductName>
+                    <S.NumPrice>
+                      {item.count}개 / {`${item.price.toLocaleString()}원`}
+                    </S.NumPrice>
+                    <S.SizeColor>
+                      {item.size} / {item.color}
+                    </S.SizeColor>
+                  </S.Info>
+                </S.Product>
+              ))}
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (
