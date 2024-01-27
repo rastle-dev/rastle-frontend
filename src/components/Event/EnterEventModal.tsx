@@ -2,6 +2,9 @@ import styled from "styled-components";
 import Input from "@/components/Common/Input";
 import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
+import { useRecoilState } from "recoil";
+import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
+import React from "react";
 
 const Wrapper = styled.div`
   width: 89%;
@@ -62,6 +65,8 @@ const inputFields = [
   { label: "인스타그램", id: "instagram" },
 ];
 export default function EnterEventModal() {
+  const [, setIsEventModalOpen] = useRecoilState(eventModalState);
+  const [, setIsEventDialogOpen] = useRecoilState(eventDialogState);
   return (
     <Wrapper>
       <h2>응모하기</h2>
@@ -74,7 +79,13 @@ export default function EnterEventModal() {
       ))}
       <h3>* 해당번호와 아이디로 당첨 메시지가 전송될 예정이에요.</h3>
       <h4>응모하기 버튼을 누르시면 정보를 바꿀 수 없어요!</h4>
-      <EnterButton title="응모하기" />
+      <EnterButton
+        title="응모하기"
+        onClick={() => {
+          setIsEventModalOpen(false);
+          setIsEventDialogOpen(true);
+        }}
+      />
     </Wrapper>
   );
 }

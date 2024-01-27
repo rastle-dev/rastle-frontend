@@ -7,18 +7,23 @@ import useProduct from "@/hooks/useProduct";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import IconButton from "@/components/Common/IconButton";
-import useCart from "@/hooks/mypage/cart/useCart";
-import useDialog from "@/hooks/useDialog";
 import useScroll from "@/hooks/useScroll";
 import Modal from "@/components/Common/Modal";
 import EnterEventModal from "@/components/Event/EnterEventModal";
+import Dialog from "@/components/Common/Dialog";
+import { useRecoilState } from "recoil";
+import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 
 export default function Event() {
   const router = useRouter();
-  const { openDialog, closeDialog, isDialogOpen } = useDialog();
+  const [isEventModalOpen, setIsEventModalOpen] =
+    useRecoilState(eventModalState);
+  const [isEventDialogOpen, setIsEventDialogOpen] =
+    useRecoilState(eventDialogState);
+
   const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
     useScroll();
-  const { selectedProducts, detailData, cartProducts } = useProduct();
+  const { detailData } = useProduct();
   useEffect(() => {
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -30,14 +35,29 @@ export default function Event() {
 
   return (
     <S.Wrapper>
-      {isDialogOpen && (
+      {isEventModalOpen && (
         <Modal
           closeModal={() => {
-            closeDialog();
+            setIsEventModalOpen(false);
+            // openDialog();
           }}
         >
           <EnterEventModal />
         </Modal>
+      )}
+      {isEventDialogOpen && (
+        <Dialog
+          onClickBasketButton={() => {
+            // localStorage.clear();
+            setIsEventDialogOpen(false);
+            // router.push(PATH.LOGIN);
+          }}
+          visible
+          title="응모가 완료되었어요! 🥳"
+          refuse="응모내역 확인하기"
+          confirm="쇼핑 계속하기"
+          size={43}
+        />
       )}
       <S.TopLayer>
         <S.ImageLayer>
@@ -64,7 +84,7 @@ export default function Event() {
           <S.StyledEventButton
             onClick={() => {
               if (localStorage.getItem("accessToken")) {
-                openDialog();
+                setIsEventModalOpen(true);
               } else {
                 toastMsg("로그인페이지로 이동합니다.");
                 router.push(PATH.LOGIN);
