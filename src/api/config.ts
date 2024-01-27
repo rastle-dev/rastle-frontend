@@ -35,6 +35,7 @@ const COMPLETE = "/complete";
 const COUPON = "/coupon";
 const LOAD_ADDRESS = "/getMemberAddress";
 const UPDATE_ADDRESS = "/updateMemberAddress";
+const APPLY = "/apply";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -86,5 +87,6 @@ const API = {
   COUPON: `${COUPON}`,
   LOAD_ADDRESS: `${MEMBER}${LOAD_ADDRESS}`,
   UPDATE_ADDRESS: `${MEMBER}${UPDATE_ADDRESS}`,
+  APPLY_EVENT: `${EVENT}${APPLY}`,
 };
 export default API;
