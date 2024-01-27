@@ -228,6 +228,54 @@ export const PaymentInfoWrapper = styled.div`
   padding-bottom: 9.5rem;
   margin-bottom: 2.5rem;
 `;
+
+export const CouponTittleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const CouponTittleInner1 = styled.div`
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding-bottom: 1rem;
+`;
+
+export const CouponTittleInner2 = styled.div`
+  font-size: 1rem;
+  font-weight: 300;
+`;
+
+export const CouponToggleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 6rem;
+  width: 100%;
+  align-items: center; /* 추가 */
+  padding: 1rem;
+  border-radius: 0.45455rem;
+  border: 1px solid #000;
+  cursor: pointer;
+  margin-bottom: 2rem;
+`;
+
+export const CouponToggleInner1 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* 추가 */
+`;
+
+export const CouponToggleText = styled.div`
+  padding-left: 1rem;
+  align-self: center; /* 추가 */
+  font-size: 1.4rem;
+`;
+
+export const CouponListWrapper = styled.div`
+  display: flex;
+`;
+
 export const PaymentInfoBox = styled.div`
   border-top: 1px solid;
   border-bottom: 1px solid;
@@ -343,11 +391,13 @@ export const TextInfo = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  height: 9rem;
 `;
 export const MobileTextInfo = styled.div`
   margin-bottom: 0.5rem;
   padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
+  border-radius: 0.45455rem;
+  border: 1px solid #d9d9d9;
   cursor: pointer;
   transition:
     background-color 0.3s,
@@ -358,8 +408,6 @@ export const MobileTextInfo = styled.div`
   }
   display: flex;
   width: 100%;
-  border: 1px solid ${COLORS.BLACK};
-  border-radius: 10px;
   padding: 0rem 1em 1rem 1rem;
   flex-direction: row;
   justify-content: space-between;
@@ -383,12 +431,34 @@ export const MobileDescription = styled.div`
   display: none;
 `;
 
-export const CouponText = styled.h4``;
-export const CouponWrapper = styled.div`
+export const CouponText = styled.h4`
+  margin: 0;
+`;
+export const CouponImgWrapper = styled.div`
   width: 9.3rem;
   height: 6rem;
   position: relative;
+  margin-left: 1rem;
 `;
 export const CouponImage = styled.image`
   width: 100%;
+`;
+
+export const CouponWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* 추가 */
+`;
+
+export const CouponTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 5rem;
+`;
+
+export const CouponSubText = styled.div`
+  margin-top: 0.4rem;
+
+  font-size: 1.2rem;
+  font-weight: 300;
 `;

@@ -128,7 +128,7 @@ export default function Product() {
                       </S.NumberInputContainer>
                       <S.ProductCountDelete>
                         <Icon
-                          size="1.2rem"
+                          iconSize="1.2rem"
                           iconName="delete"
                           color={COLORS.GREY.상세페이지}
                           onClick={() => handleDelete(product.key)}

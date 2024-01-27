@@ -6,6 +6,8 @@ import React from "react";
 
 import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
+import COLORS from "@/constants/color";
+import Icon from "@/components/Common/Icon";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -39,7 +41,11 @@ export default function Order() {
     selectedProducts,
     cartProduct,
     toggleCoupon,
-    selectedCoupons,
+    selectedCoupon,
+    handleCouponToggle,
+    isCouponVisible,
+    isDefaultAddress,
+    handleCheckboxChange,
   } = useOrder();
 
   const { couponData, isLoading } = useCoupon();
@@ -60,17 +66,16 @@ export default function Order() {
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
-          {cartProduct?.data.content.filter(
-            (v: any) =>
-              orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+          {cartProduct &&
+          cartProduct.data.content.filter((v: any) =>
+            orderProducts.split(",").map(Number)?.includes(v.cartProductId),
           ).length !== 0
-            ? cartProduct?.data.content
-                .filter(
-                  (v: any) =>
-                    orderProducts
-                      .split(",")
-                      .map(Number)
-                      ?.includes(v.cartProductId),
+            ? cartProduct.data.content
+                .filter((v: any) =>
+                  orderProducts
+                    .split(",")
+                    .map(Number)
+                    ?.includes(v.cartProductId),
                 )
                 .map((item: ProductItem) => (
                   <S.Product>
@@ -109,7 +114,6 @@ export default function Order() {
                   </S.Product>
                 ),
               )}
-
           <h2>주문자 정보</h2>
           <S.OrdererInfo>
             {OrdererInfo.map((info) => (
@@ -169,7 +173,11 @@ export default function Order() {
             </S.DeliveryBox>
           ))}
           <S.SettingDefaultAddress>
-            <Input type="checkbox" />
+            <Input
+              type="checkbox"
+              checked={isDefaultAddress}
+              onChange={handleCheckboxChange}
+            />
             <p>기본 배송지로 설정하기</p>
           </S.SettingDefaultAddress>
           <S.OrderCommentWrapper>
@@ -180,48 +188,86 @@ export default function Order() {
             </p>
           </S.OrderCommentWrapper>
           <S.PaymentInfoWrapper>
-            <h2>마이 쿠폰 목록</h2>
-            {couponData?.data.couponInfos.length === 0 ? (
-              <S.NODATA>보유 중인 쿠폰이 없어요.</S.NODATA>
-            ) : (
-              <>
-                <S.TabMenu>
-                  {isLoading && <LoadingBar type={6} />}
-                  <p>사용 가능 쿠폰 {couponData?.data.couponInfos.length}장</p>
-                </S.TabMenu>
-                <S.Table>
-                  <S.TableContent>
-                    {couponData?.data.couponInfos.map((item: any) => {
-                      return (
-                        <S.ProductInfo>
-                          <S.MobileTextInfo>
-                            <S.TextInfo onClick={() => toggleCoupon(item.id)}>
-                              <S.CouponWrapper>
-                                <CouponImage
-                                  src="/image/coupon.png"
-                                  alt="/image/coupon.png"
-                                  layout="fill"
-                                  objectFit="cover"
-                                />
-                              </S.CouponWrapper>
-                              <S.CouponText>{item.name}</S.CouponText>
-                              <S.ClickBox
-                                isChecked={selectedCoupons.includes(item.id)}
-                              />
-                            </S.TextInfo>
-                            <p>전 상품 적용</p>
-                            <p>{item.discount?.toLocaleString()}원 할인</p>
-                            <p>~2024.04.17</p>
-                            <S.MobileDescription>
-                              2024.04.17까지 사용 가능
-                            </S.MobileDescription>
-                          </S.MobileTextInfo>
-                        </S.ProductInfo>
-                      );
-                    })}
-                  </S.TableContent>
-                </S.Table>
-              </>
+            <S.CouponTittleWrapper>
+              <S.CouponTittleInner1>할인쿠폰</S.CouponTittleInner1>
+              <S.CouponTittleInner2>
+                보유쿠폰 {couponData?.data.couponInfos.length}장
+              </S.CouponTittleInner2>
+            </S.CouponTittleWrapper>
+            <S.CouponToggleWrapper onClick={handleCouponToggle}>
+              <S.CouponToggleInner1>
+                <Icon
+                  iconSize="2rem"
+                  border={0.1}
+                  iconName="ticket"
+                  color={COLORS.BLACK}
+                />
+                <S.CouponToggleText>
+                  사용가능한 쿠폰이 1장 있어요.
+                </S.CouponToggleText>
+              </S.CouponToggleInner1>
+              <Icon
+                iconSize="2rem"
+                border={0.1}
+                iconName="toggleDown"
+                color={COLORS.BLACK}
+              />
+            </S.CouponToggleWrapper>
+            {isCouponVisible && (
+              <div>
+                {couponData?.data.couponInfos.length === 0 ? (
+                  <S.NODATA>사용 가능한 쿠폰이 없어요.</S.NODATA>
+                ) : (
+                  <>
+                    <S.TabMenu>
+                      {isLoading && <LoadingBar type={6} />}
+                    </S.TabMenu>
+                    <S.Table>
+                      <S.TableContent>
+                        {couponData?.data.couponInfos.map((item: any) => (
+                          <S.ProductInfo key={item.id}>
+                            <S.MobileTextInfo>
+                              <S.TextInfo onClick={() => toggleCoupon(item.id)}>
+                                <S.CouponWrapper>
+                                  <S.CouponImgWrapper>
+                                    <CouponImage
+                                      src="/image/coupon.png"
+                                      alt="/image/coupon.png"
+                                      layout="fill"
+                                      objectFit="cover"
+                                    />
+                                  </S.CouponImgWrapper>
+                                  <S.CouponTextWrapper>
+                                    <S.CouponText>{item.name}</S.CouponText>
+                                    <S.CouponSubText>
+                                      2024/03/29까지 전상품 적용
+                                    </S.CouponSubText>
+                                  </S.CouponTextWrapper>
+                                </S.CouponWrapper>
+                                {selectedCoupon === item.id ? (
+                                  <Icon
+                                    iconSize="2rem"
+                                    border={0.1}
+                                    iconName="checkCircleFill"
+                                    color={COLORS.BLACK}
+                                  />
+                                ) : (
+                                  <Icon
+                                    iconSize="2rem"
+                                    border={0.1}
+                                    iconName="checkCircle"
+                                    color={COLORS.BLACK}
+                                  />
+                                )}
+                              </S.TextInfo>
+                            </S.MobileTextInfo>
+                          </S.ProductInfo>
+                        ))}
+                      </S.TableContent>
+                    </S.Table>
+                  </>
+                )}
+              </div>
             )}
             <h2>결제 정보</h2>
             <S.PaymentInfoBox>

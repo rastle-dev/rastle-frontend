@@ -27,11 +27,6 @@ export const loadCoupon = async () => {
   return data;
 };
 
-export const loadOrderList = async () => {
-  const { data } = await authorizationClient.get(API.ORDERS);
-  return data;
-};
-
 export const loadDefaultAddress = async () => {
   const { data } = await authorizationClient.get(API.LOAD_ADDRESS);
   return data;
@@ -41,6 +36,19 @@ export const updateDefaultAddress = async (addressData: object) => {
   const { data } = await authorizationClient.put(
     API.UPDATE_ADDRESS,
     addressData,
+  );
+  return data;
+};
+
+export const loadOrderList = async () => {
+  const { data } = await authorizationClient.get(API.ORDERS);
+  return data;
+};
+
+export const updatePhoneNumber = async (phonenumber: object) => {
+  const { data } = await authorizationClient.put(
+    API.UPDATE_PHONENUMBER,
+    phonenumber,
   );
   return data;
 };

@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadMe } from "@/api/auth";
 import { useRouter } from "next/dist/client/router";
 import useInput from "@/hooks/useInput";
 import PATH from "@/constants/path";
-import { paymentConfirm } from "@/api/shop";
+import { paymentConfirm, paymentPrepare } from "@/api/shop";
 import useCart from "@/hooks/mypage/cart/useCart";
+import {
+  loadDefaultAddress,
+  updateDefaultAddress,
+  updatePhoneNumber,
+} from "@/api/cart";
+import { toast } from "react-toastify";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
-  address: string | undefined;
-  zonecode: number | undefined;
+  address: string | undefined | null;
+  zonecode: number | undefined | null;
 };
 type CommonInputField = {
   label: string;
@@ -29,11 +35,18 @@ export default function useOrder() {
   const router = useRouter();
   console.log(router.query);
   const [receiver, onChangeReceiver, setReceiver] = useInput("");
-  const [detailPostal, onChangeDetailPostal] = useInput("");
+  const [detailPostal, onChangeDetailPostal, setDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
+  const [isDefaultAddress, setIsDefaultAddress] = useState(true);
+
+  const handleCheckboxChange = () => {
+    setIsDefaultAddress(!isDefaultAddress);
+    // 추가로 기본 배송지로 설정하는 로직을 여기에 추가할 수 있습니다.
+  };
 
   const { data: myInfo, isSuccess } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   const { cartProduct } = useCart();
+  console.log(cartProduct);
   useEffect(() => {
     // isSuccess가 true이고 myInfo.data가 존재할 때에만 setReceiver 호출
     if (isSuccess && myInfo?.data) {
@@ -41,6 +54,7 @@ export default function useOrder() {
       setPhoneNumber(myInfo.data.phoneNumber);
     }
   }, [isSuccess, myInfo]);
+
   console.log(myInfo);
   const OrdererInfo = [
     { meta: "이름", data: myInfo?.data.userName },
@@ -49,13 +63,17 @@ export default function useOrder() {
   ];
   const { orderList } = router.query;
   const { selectedProducts } = router.query;
+  console.log(router.query);
   const orderProducts: string = String(orderList);
-  const totalPriceSum = cartProduct?.data.content
-    .filter(
-      (v: any) =>
+  let totalPriceSum = 0;
+  if (cartProduct !== undefined) {
+    totalPriceSum = cartProduct?.data.content
+      .filter((v: any) =>
         orderProducts.split(",").map(Number)?.includes(v.cartProductId),
-    )
-    .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+      )
+      .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+  }
+
   let totalPriceSumDirect = 0;
   if (typeof selectedProducts === "string") {
     totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
@@ -63,19 +81,71 @@ export default function useOrder() {
       0,
     );
   }
+  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+  // TODO: 쿠폰가격 변경
+  const couponPrice = 3000;
+
+  const toggleCoupon = (couponId: number) => {
+    // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
+    if (selectedCoupon === couponId) {
+      setSelectedCoupon(null); // 선택 취소
+    } else {
+      setSelectedCoupon(couponId); // 다른 쿠폰 선택
+    }
+  };
+
+  const [isCouponVisible, setIsCouponVisible] = useState(false);
+
+  const handleCouponToggle = () => {
+    setIsCouponVisible(!isCouponVisible);
+  };
+
+  console.log(selectedCoupon);
 
   console.log(totalPriceSum);
-  let totalPriceFinal: any;
+  const [totalPriceFinal, setTotalPriceFinal] = useState<number>(0);
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(3000);
 
-  if (totalPriceSum !== 0) {
-    totalPriceFinal =
-      totalPriceSum >= 80000 ? totalPriceSum : totalPriceSum + 3000;
-  } else {
-    totalPriceFinal =
-      totalPriceSumDirect >= 80000
-        ? totalPriceSumDirect
-        : totalPriceSumDirect + 3000;
-  }
+  useEffect(() => {
+    console.log(totalPriceFinal);
+
+    let calculatedTotalPrice;
+
+    if (totalPriceSum !== 0) {
+      if (totalPriceSum >= 80000) {
+        calculatedTotalPrice = totalPriceSum;
+        setDeliveryPrice(0); // No delivery charge
+      } else {
+        calculatedTotalPrice = totalPriceSum + deliveryPrice;
+      }
+    } else if (totalPriceSumDirect >= 80000) {
+      calculatedTotalPrice = totalPriceSumDirect;
+      setDeliveryPrice(0); // No delivery charge
+    } else {
+      calculatedTotalPrice = totalPriceSumDirect + deliveryPrice;
+    }
+
+    // Apply coupon discount if selectedCoupon is not null
+    const discountedTotalPrice = selectedCoupon
+      ? calculatedTotalPrice - couponPrice
+      : calculatedTotalPrice;
+
+    console.log(discountedTotalPrice);
+
+    // Set the final total price
+    setTotalPriceFinal(discountedTotalPrice);
+  }, [
+    totalPriceSum,
+    totalPriceSumDirect,
+    deliveryPrice,
+    selectedCoupon,
+    couponPrice,
+  ]);
+
+  console.log("----------");
+  console.log(totalPriceSum);
+  console.log(totalPriceSumDirect);
+  console.log(totalPriceFinal);
 
   const PriceInfo = [
     {
@@ -92,19 +162,65 @@ export default function useOrder() {
     },
     {
       meta: "쿠폰할인",
-      data: "-0원",
+      data: selectedCoupon ? "-3000원" : "-0원",
     },
+    // Add other items in PriceInfo array as needed
   ];
+
+  const queryClient = new QueryClient();
+
+  const mutateUpdateAddressProduct = useMutation(
+    ["updateDefaultAddress"],
+    updateDefaultAddress,
+    {
+      onSuccess: async () => {
+        console.log("주소 업데이트 성공");
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_DEFAULT_ADDRESS]);
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
+
+  const mutateUpdatePhoneNumber = useMutation(
+    ["updatePhoneNumber"],
+    updatePhoneNumber,
+    {
+      onSuccess: async () => {
+        console.log("핸드폰번호 업데이트 성공");
+        queryClient.invalidateQueries([QUERYKEYS.UPDATE_DEFAULT_PHONENUMBER]);
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
 
   const [clickedPaymentButtonIndex, setClickedPaymentButtonIndex] =
     useState(null);
   const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
-    useState(null);
+    useState<number>();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [postalAddress, setAddress] = useState<Address>({
     address: undefined,
     zonecode: undefined,
   });
+
+  const { data: defaultAddress, isLoading } = useQuery(
+    [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
+    loadDefaultAddress,
+  );
+
+  console.log(defaultAddress);
 
   type PgType = "kakaopay" | "card" | "vbank"; // 원하는 PG 사를 나열합니다.
 
@@ -138,10 +254,53 @@ export default function useOrder() {
       setOpenPostcode(false);
     },
   };
-  const DeliveryButtons = [
-    { id: 1, clicked: false, default: "기본 배송지" },
-    { id: 2, clicked: false, default: "신규 배송지" },
-  ];
+  const [DeliveryButtons, setDeliveryButtons] = useState([
+    { id: 1, default: "기본 배송지" },
+    { id: 2, default: "신규 배송지" },
+  ]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      // 데이터가 있으면
+      if (
+        defaultAddress &&
+        defaultAddress.data &&
+        defaultAddress.data.detailAddress &&
+        defaultAddress.data.roadAddress &&
+        defaultAddress.data.zipCode
+      ) {
+        setAddress({
+          address: defaultAddress.data.roadAddress,
+          zonecode: defaultAddress.data.zipCode,
+        });
+        setDetailPostal(defaultAddress.data.detailAddress);
+
+        setClickedDeliveryButtonIndex(0);
+      } else {
+        setClickedDeliveryButtonIndex(1);
+      }
+    }
+  }, [defaultAddress, isLoading]);
+
+  useEffect(() => {
+    console.log(postalAddress);
+    if (clickedDeliveryButtonIndex === 1) {
+      setAddress((prevAddress) => ({
+        address: undefined,
+        zonecode: undefined,
+      }));
+      setDetailPostal(undefined);
+    } else if (clickedDeliveryButtonIndex === 0) {
+      if (defaultAddress) {
+        setAddress((prevAddress) => ({
+          ...prevAddress,
+          address: defaultAddress.data.roadAddress,
+          zonecode: defaultAddress.data.zipCode,
+        }));
+      }
+    }
+  }, [clickedDeliveryButtonIndex]);
+
   const PaymentOptionsButtons = [
     { id: 0, clicked: false, default: "카카오페이" },
     { id: 1, clicked: false, default: "일반결제" },
@@ -162,7 +321,6 @@ export default function useOrder() {
   ];
 
   const deliveryInputs = [
-    ...commonInputFields,
     {
       label: "받는 분",
       onChange: onChangeReceiver,
@@ -173,7 +331,9 @@ export default function useOrder() {
       onChange: onChangePhoneNumber,
       value: phoneNumber,
     },
+    ...commonInputFields,
   ];
+  console.log(deliveryInputs);
   const DefaultAddressInputs = [...commonInputFields];
 
   /* 3. 콜백 함수 정의하기 */
@@ -189,43 +349,40 @@ export default function useOrder() {
 
     if (success) {
       // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
-      alert(`결제에 성공했습니다. 결제검증을 구현하세요`);
-      router.push({
-        pathname: PATH.ORDERCONFIRM,
-        query: {
-          selectedProducts,
-          orderInfo: JSON.stringify(response),
-        },
-      });
-      // try {
-      //   const paymentData = await paymentConfirm({
-      //     imp_uid: response.imp_uid,
-      //     merchant_uid: response.merchant_uid,
-      //   });
-      //
-      //   console.log(paymentData);
-      //
-      //   if (paymentData.verified) {
-      //     console.log(paymentData);
-      //     alert("결제 성공");
-      //     router.push({
-      //       pathname: PATH.ORDERCONFIRM,
-      //       query: {
-      //         selectedProducts,
-      //         orderInfo: JSON.stringify(response),
-      //       },
-      //     });
-      //   }
-      // } catch (err) {
-      //   console.error(err);
-      // }
+      alert("결제 callback 성공, 사후검증 실행");
+
+      try {
+        const paymentData = await paymentConfirm({
+          imp_uid: response.imp_uid,
+          merchant_uid: response.merchant_uid,
+        });
+
+        console.log(paymentData);
+
+        if (paymentData.data.verified) {
+          console.log(paymentData);
+          alert("사후 검증에 성공했습니다.");
+          try {
+            await router.push({
+              pathname: PATH.ORDERCONFIRM,
+              query: {
+                selectedProducts,
+                orderInfo: JSON.stringify(response),
+              },
+            });
+          } catch (error) {
+            console.error("Router push error:", error);
+          }
+        }
+      } catch (err) {
+        console.error(err);
+        alert("사후 검증에 실패했습니다");
+      }
     } else {
       alert(errorMsg);
       alert("결제 실패");
     }
   }
-
-  console.log(cartProduct);
 
   async function handlePaymentSubmit() {
     const { orderNumber } = router.query;
@@ -253,19 +410,28 @@ export default function useOrder() {
       return;
     }
 
+    if (isDefaultAddress) {
+      mutateUpdateAddressProduct.mutate({
+        zipCode: postalAddress.zonecode,
+        roadAddress: postalAddress.address,
+        detailAddress: detailPostal,
+      });
+      mutateUpdatePhoneNumber.mutate({ newPhoneNumber: phoneNumber });
+    }
+
     if (
-      cartProduct?.data.content.filter(
-        (v: any) =>
-          orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+      cartProduct &&
+      cartProduct?.data.content.filter((v: any) =>
+        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
       ).length !== 0
     ) {
       directPurchase = false; // 장바구니에서 선택, 직접 구매한 제품이 아님
       // If the condition is true
       selectedItems = cartProduct?.data.content
-        .filter(
-          (v: any) =>
-            orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+        .filter((v: any) =>
+          orderProducts.split(",").map(Number)?.includes(v.cartProductId),
         )
+        // eslint-disable-next-line array-callback-return
         .map((item: any) => {
           console.log("장바구니에서 선택된 제품", item);
           return item;
@@ -285,7 +451,6 @@ export default function useOrder() {
     let values: any = {};
     console.log(directPurchase);
     console.log(totalPriceFinal);
-    totalPriceFinal = 100;
 
     // 구매하기에서 온 동선
     if (directPurchase) {
@@ -302,14 +467,14 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
-        // amount: totalPriceFinal,
+        custom_data: { couponId: selectedCoupon, deliveryPrice },
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         buyer_tel: phoneNumber,
         buyer_addr: `${postalAddress.address} ${detailPostal}`,
         buyer_postcode: postalAddress.zonecode,
-        m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
+        m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     } else {
       console.log("장바구니 동선");
@@ -325,44 +490,48 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
-        // amount: totalPriceFinal,
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
+        custom_data: { couponId: selectedCoupon, deliveryPrice },
         buyer_tel: phoneNumber,
         buyer_addr: `${postalAddress.address} ${detailPostal}`,
         buyer_postcode: postalAddress.zonecode,
-        m_redirect_url: `https://recordyslow.com/orderConfirmMobile`,
-        custom_data: 3000,
+        m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     }
 
     console.log(values);
+    // //사전검증
+    alert("사전검증 실행");
+    try {
+      const paymentData = await paymentPrepare({
+        merchant_uid: orderNumber,
+        ...(selectedCoupon !== undefined && { couponId: selectedCoupon }),
+        deliveryPrice,
+      });
 
-    console.log(pgData);
-    console.log(OrdererInfo.find((info) => info.meta === "이메일")?.data);
+      if (paymentData) {
+        alert("사전검증 성공, 결제창 띄움");
+        const { IMP } = window;
+        IMP?.init("imp47805780"); // 가맹점 식별코드
+
+        /* 4. 결제 창 호출하기 */
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+
+        IMP.request_pay({ ...values, niceMobileV2: true }, callback);
+      }
+      // Rest of your code handling paymentData
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+      alert("사전검증 실패(error)");
+    }
 
     // if (!window.IMP) return;
     /* 1. 가맹점 식별하기 */
-    const { IMP } = window;
-    IMP?.init("imp47805780"); // 가맹점 식별코드
-
-    /* 4. 결제 창 호출하기 */
-    IMP?.request_pay(values, callback);
   }
-  const [selectedCoupons, setSelectedCoupons] = useState<number[]>([]);
-
-  const toggleCoupon = (couponId: number) => {
-    // 쿠폰 ID가 이미 선택된 목록에 있는지 확인
-    const isSelected = selectedCoupons.includes(couponId);
-
-    // 선택되지 않은 경우 추가, 선택된 경우 제거
-    if (!isSelected) {
-      setSelectedCoupons((prev) => [...prev, couponId]);
-    } else {
-      setSelectedCoupons((prev) => prev.filter((id) => id !== couponId));
-    }
-  };
 
   return {
     clickedPaymentButtonIndex,
@@ -385,7 +554,11 @@ export default function useOrder() {
     selectedProducts,
     cartProduct,
     toggleCoupon,
-    selectedCoupons,
+    selectedCoupon,
     DefaultAddressInputs,
+    handleCouponToggle,
+    isCouponVisible,
+    handleCheckboxChange,
+    isDefaultAddress,
   };
 }

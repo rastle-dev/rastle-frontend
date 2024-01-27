@@ -33,8 +33,10 @@ const ORDERS = "/orders";
 const PAYMENTS = "/payments";
 const COMPLETE = "/complete";
 const COUPON = "/coupon";
+const PREPARE = "/prepare";
 const LOAD_ADDRESS = "/getMemberAddress";
 const UPDATE_ADDRESS = "/updateMemberAddress";
+const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -83,8 +85,10 @@ const API = {
   LOCAL_NAVER_AUTH_URL: `https://api.recordyslow.com/oauth2/authorization/naver?redirect_uri=http://localhost:3000`,
   ORDERS: `${ORDERS}`,
   PAYMENTCOMPLETE: `${PAYMENTS}${COMPLETE}`,
+  PAYMENTPREPARE: `${PAYMENTS}${PREPARE}`,
   COUPON: `${COUPON}`,
   LOAD_ADDRESS: `${MEMBER}${LOAD_ADDRESS}`,
   UPDATE_ADDRESS: `${MEMBER}${UPDATE_ADDRESS}`,
+  UPDATE_PHONENUMBER: `${MEMBER}${UPDATE_PHONENUMBER}`,
 };
 export default API;

@@ -6,7 +6,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 interface IconProps {
   /** 아이콘 이름 */
   iconName: string;
-  size?: string;
+  iconSize?: string;
   color?: string;
   border?: number;
   opacity?: number;
@@ -21,7 +21,7 @@ const StyledIcon = styled.i<{ border?: number }>`
 
 function Icon({
   iconName,
-  size = "1.5rem",
+  iconSize = "1.5rem",
   color,
   border = 0.1,
   opacity,
@@ -30,7 +30,7 @@ function Icon({
   return (
     <StyledIcon
       className={Icons[iconName]}
-      style={{ fontSize: size, color, opacity }}
+      style={{ fontSize: iconSize, color, opacity }}
       border={border}
       onClick={onClick}
     />
