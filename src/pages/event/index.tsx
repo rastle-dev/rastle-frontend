@@ -14,6 +14,7 @@ import Dialog from "@/components/Common/Dialog";
 import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
+import dayjs from "dayjs";
 
 export default function Event() {
   const router = useRouter();
@@ -93,8 +94,15 @@ export default function Event() {
             }}
             title="응모하기"
             type="shop"
+            disabled={
+              dayjs().isBefore(detailData?.data.eventStartDate) ||
+              dayjs().isAfter(detailData?.data.eventEndDate)
+            }
           />
-          <CountDownTimer endDate={detailData?.data.eventEndDate} />
+          <CountDownTimer
+            endDate={detailData?.data.eventEndDate}
+            startDate={detailData?.data.eventStartDate}
+          />
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
