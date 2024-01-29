@@ -73,7 +73,9 @@ export default function Event() {
             {detailData?.data.discountPrice.toLocaleString()}원
           </S.DiscountPrice>
           <S.Script>
-            <h3>지금까지 총 437명 참여했어요!</h3>
+            <h3>
+              지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요!
+            </h3>
             <h4>* 주의사항</h4>
             <div>
               응모하기전, 마이페이지에 등록된 전화번호를 확인해주세요!
