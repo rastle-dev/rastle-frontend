@@ -78,7 +78,7 @@ export default function Input({
   placeholder = "",
   labelHidden = false,
   label,
-  size = 26.25,
+  size = 0,
   readOnly = false,
   message = "",
   className,
@@ -86,10 +86,13 @@ export default function Input({
   invalid = false,
   disabled = false,
 }: InputProps) {
-  const isCheckbox = type === "checkbox"; // 체크박스인지 확인
+  const isCheckbox = type === "checkbox";
+  let inputWidth = "100%"; // 기본값 설정
+  if (isCheckbox) inputWidth = "auto";
+  else if (size !== 0) inputWidth = `${size}%`; // size를 입력하지 않을 경우 100%
 
   return (
-    <Wrapper style={{ width: isCheckbox ? "auto" : "100%" }}>
+    <Wrapper style={{ width: inputWidth }}>
       {!labelHidden && <Label invalid={invalid}>{label}</Label>}
       <InputWrapper
         value={value}
