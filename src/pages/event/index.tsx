@@ -94,7 +94,7 @@ export default function Event() {
             title="응모하기"
             type="shop"
           />
-          <CountDownTimer endDate="2024-01-28T12:00:00" />
+          <CountDownTimer endDate={detailData?.data.eventEndDate} />
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
