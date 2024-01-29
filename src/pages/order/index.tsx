@@ -3,9 +3,10 @@ import Input from "@/components/Common/Input";
 import * as S from "@/styles/order/index.styles";
 import LoadingBar from "@/components/LoadingBar";
 import React from "react";
-
 import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
+import COLORS from "@/constants/color";
+import Icon from "@/components/Common/Icon";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
