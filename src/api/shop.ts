@@ -41,7 +41,7 @@ export const loadProductImage = async (productId: number | undefined) => {
 
 export const loadProductDetail = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}/${productId}${API.DETAIL}`,
+    `${API.PRODUCT}/${productId}`,
   );
   return data;
 };
@@ -66,6 +66,10 @@ export const loadEventProduct = async () => {
   return data;
 };
 
+export const 이벤트조회API = async () => {
+  const { data } = await unAuthorizationClient.get(`${API.EVENT}`);
+  return data;
+};
 export const loadEventProductPaging = async (pageData: any) => {
   const { page, size, visible } = pageData;
   const { data } = await unAuthorizationClient.get(
