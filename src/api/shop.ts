@@ -41,7 +41,13 @@ export const loadProductImage = async (productId: number | undefined) => {
 
 export const loadProductDetail = async (productId: number | undefined) => {
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}/${productId}${API.DETAIL}`,
+    `${API.PRODUCT}/${productId}`,
+  );
+  return data;
+};
+export const loadEventProductDetail = async (eventId: number | undefined) => {
+  const { data } = await unAuthorizationClient.get(
+    `${API.EVENT}/${eventId}${API.PRODUCTS}`,
   );
   return data;
 };
@@ -77,6 +83,14 @@ export const paymentConfirm = async (paymentData: object) => {
   const { data } = await authorizationClient.post(
     `${API.PAYMENTCOMPLETE}`,
     paymentData,
+  );
+  return data;
+};
+
+export const applyEvent = async (userEventData: object) => {
+  const { data } = await authorizationClient.post(
+    `${API.APPLY_EVENT}`,
+    userEventData,
   );
   return data;
 };

@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
-import { useQuery } from "@tanstack/react-query";
-import QUERYKEYS from "@/constants/querykey";
-import { loadOrderList } from "@/api/cart";
 import useOrderList from "@/hooks/mypage/orderList/useOrderList";
 import useDialog from "@/hooks/useDialog";
 import { useRouter } from "next/dist/client/router";
@@ -13,12 +10,8 @@ import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function OrderList() {
   const router = useRouter();
-  const { menuList } = useOrderList();
+  const { menuList, orderListData, isLoading } = useOrderList();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
-  const { data: orderListData, isLoading } = useQuery(
-    [QUERYKEYS.LOAD_ORDER_LIST],
-    loadOrderList,
-  );
   const { timedOut } = useLoadingWithTimeout(isLoading);
 
   useEffect(() => {

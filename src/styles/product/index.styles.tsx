@@ -292,22 +292,6 @@ export const StyledBuyButton = styled(Button)`
   }
 `;
 
-export const StyledNpayButton = styled(Button)`
-  font-size: 1.35rem;
-  font-weight: 400;
-  flex-grow: 1;
-  width: 22rem;
-  height: 4.8rem;
-  color: ${COLORS.블랙};
-  border: 0.5px solid #000;
-  border-radius: 0.45455rem;
-
-  ${media.mobile} {
-    flex-grow: 1;
-    width: 100%;
-  }
-`;
-
 export const ProductDetailList = styled.div`
   display: flex;
   flex-direction: column;
@@ -338,5 +322,54 @@ export const ScrollWrapper = styled.div`
   &.show {
     display: flex;
     flex-direction: column;
+  }
+`;
+
+export const Script = styled.div`
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-top: 0;
+  }
+  h4 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 0 0 1rem 0;
+  }
+  div {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+  p {
+    font-size: 1.25rem;
+    font-weight: 300;
+  }
+`;
+
+export const Timer = styled.div`
+  margin-top: 1rem;
+  font-size: 1.35rem;
+  font-weight: 400;
+  height: 4.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    margin: 0;
+  }
+  color: ${COLORS.WHITE};
+  background-color: ${COLORS.BLACK};
+  border-radius: 0.45455rem;
+  ${media.mobile} {
+    width: 100%;
+  }
+`;
+export const StyledEventButton = styled(Button)`
+  font-size: 1.35rem;
+  font-weight: 400;
+  height: 4.6rem;
+  border-radius: 0.45455rem;
+  ${media.mobile} {
+    width: 100%;
   }
 `;

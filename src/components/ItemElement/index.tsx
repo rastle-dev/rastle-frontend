@@ -90,10 +90,17 @@ function ItemElement({
           target.src = mainThumbnail;
         }}
         onClick={() => {
-          router.push({
-            pathname: PATH.PRODUCT, // 이동할 페이지 경로
-            query: { productId, events }, // 전달할 데이터 (id)
-          });
+          if (isEvent) {
+            router.push({
+              pathname: PATH.EVENT, // 이동할 페이지 경로
+              query: { productId, events }, // 전달할 데이터 (id)
+            });
+          } else {
+            router.push({
+              pathname: PATH.PRODUCT, // 이동할 페이지 경로
+              query: { productId, events }, // 전달할 데이터 (id)
+            });
+          }
         }}
       />
       <ItemName>{name}</ItemName>

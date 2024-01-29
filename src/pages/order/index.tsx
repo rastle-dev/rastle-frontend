@@ -3,7 +3,6 @@ import Input from "@/components/Common/Input";
 import * as S from "@/styles/order/index.styles";
 import LoadingBar from "@/components/LoadingBar";
 import React from "react";
-
 import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
@@ -76,10 +75,10 @@ export default function Order() {
         <S.InfoWrapper>
           <h2>제품 정보</h2>
           {cartProduct &&
-          cartProduct.data.content.filter((v: any) =>
+          cartProduct?.data.content.filter((v: any) =>
             orderProducts.split(",").map(Number)?.includes(v.cartProductId),
           ).length !== 0
-            ? cartProduct.data.content
+            ? cartProduct?.data.content
                 .filter((v: any) =>
                   orderProducts
                     .split(",")

@@ -15,7 +15,7 @@ export async function getStaticProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
-    loadMarketProductPaging({ page: 0, size: 4 }),
+    loadMarketProductPaging({ page: 0 }),
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],

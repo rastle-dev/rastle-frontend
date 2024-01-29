@@ -4,7 +4,8 @@ export default interface ItemElementProps {
   categoryId?: number;
   discountPrice?: number;
   displayOrder?: 100;
-  id: number;
+  id?: number;
+  productId?: number;
   mainThumbnail: string;
   subThumbnail?: string;
   name: string;

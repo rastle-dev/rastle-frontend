@@ -5,131 +5,19 @@ import useSignup from "@/hooks/useSignup";
 import LazyLink from "@/components/LazyLink";
 import PATH from "@/constants/path";
 
-type InputProps = {
-  label: string;
-  size: number;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
-  message?: string;
-  placeholder?: string;
-  readOnly?: boolean;
-  isCertification?: {
-    title?: string;
-    size?: "large" | "medium" | "small";
-    disabled?: boolean;
-    theme?: string;
-    onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
-  };
-  inValid?: boolean;
-};
-
 export default function Signup() {
   const {
     username,
-    onChangeUserName,
-    onChangeEmailHandler,
-    email,
-    onChangeCode,
     password,
-    onChangePassword,
     passwordCheck,
-    onChangePasswordCheck,
     phoneNumber,
-    onChangePhoneNumber,
-    sendEmailCode,
     showText,
     codeMatch,
-    checkEmailCode,
-    isValidEmail,
-    emailMessage,
-    emailButton,
-    duplicateCheck,
-    codeMessage,
     signUp,
     togglePrivate,
     privateChecked,
+    inputData,
   } = useSignup();
-
-  const inputData: InputProps[] = [
-    {
-      label: "이메일주소",
-      size: 28.75,
-      placeholder: "예) rastle@rastle.com",
-      // buttonTitle: "전송",
-      onChange: onChangeEmailHandler,
-      message:
-        email.length > 0 && !isValidEmail(email)
-          ? "이메일 형식이 틀렸습니다"
-          : emailMessage,
-      inValid: email.length > 0 && (!isValidEmail(email) || duplicateCheck),
-      isCertification: {
-        title: emailButton,
-        disabled: (email.length > 0 && !isValidEmail(email)) || codeMatch,
-        onClick: () => {
-          sendEmailCode();
-        },
-      },
-    },
-    {
-      label: "인증번호",
-      size: 28.75,
-      placeholder: "",
-      onChange: onChangeCode,
-      message: codeMessage,
-      inValid: codeMessage === "코드가 일치하지 않습니다" && !codeMatch,
-      isCertification: {
-        title: "확인",
-        disabled: codeMatch,
-        onClick: () => {
-          checkEmailCode();
-        },
-      },
-    },
-    {
-      label: "비밀번호",
-      type: "password",
-      size: 35,
-      placeholder: "영문,숫자,특수문자 조합 8~16자",
-      onChange: onChangePassword,
-      message:
-        password.length > 0 && password.length < 8
-          ? "비밀번호를 8자리 이상 입력하세요 "
-          : "",
-      inValid: password.length > 0 && password.length < 8,
-    },
-    {
-      label: "비밀번호 확인",
-      type: "password",
-      size: 35,
-      onChange: onChangePasswordCheck,
-      message:
-        password !== passwordCheck && passwordCheck.length > 0
-          ? "비밀번호가 일치하지 않습니다."
-          : "",
-      inValid: password !== passwordCheck && passwordCheck.length > 0,
-    },
-    {
-      label: "이름",
-      size: 35,
-      placeholder: "예) 홍레슬",
-      onChange: onChangeUserName,
-    },
-    {
-      label: "휴대폰 번호",
-      size: 35,
-      placeholder: "예) 01012345678",
-      onChange: onChangePhoneNumber,
-      inValid:
-        phoneNumber.length > 0 &&
-        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber),
-      message:
-        phoneNumber.length > 0 &&
-        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber)
-          ? "유효하지 않은 전화번호입니다"
-          : "",
-    },
-  ];
 
   return (
     <S.Wrapper>
@@ -149,7 +37,6 @@ export default function Signup() {
               <S.InputWithButtonDiv>
                 <Input
                   placeholder={data.placeholder}
-                  size={data.size}
                   label={data.label}
                   onChange={data.onChange}
                   message={data.message}
@@ -168,7 +55,6 @@ export default function Signup() {
                 <S.CodeContainer className="show-text">
                   <Input
                     placeholder={data.placeholder}
-                    size={data.size}
                     label={data.label}
                     onChange={data.onChange}
                     message={data.message}
@@ -187,7 +73,6 @@ export default function Signup() {
           ) : (
             <S.DefaultInputDiv>
               <Input
-                size={data.size}
                 type={data.type}
                 placeholder={data.placeholder}
                 label={data.label}

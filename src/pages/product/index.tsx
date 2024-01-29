@@ -181,7 +181,6 @@ export default function Product() {
               title="장바구니에 담기"
               type="shop"
             />
-            <S.StyledNpayButton title="N Pay 구매하기" type="shop" />
           </S.Pay>
         </S.ProductContent>
       </S.TopLayer>

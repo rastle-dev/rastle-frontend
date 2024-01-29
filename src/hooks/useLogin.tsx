@@ -6,8 +6,8 @@ import { authLogin, authSocialReissue } from "@/api/auth";
 import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
 import { useRecoilState } from "recoil";
-import tokenState from "@/stores/atom/recoilState";
 import React from "react";
+import { tokenState } from "@/stores/atom/recoilState";
 
 export default function useLogin() {
   const router = useRouter();
