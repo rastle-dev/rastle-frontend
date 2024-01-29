@@ -17,6 +17,7 @@ interface IconButtonProps {
 }
 const Wrapper = styled.button`
   padding: 0;
+  margin: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;

@@ -66,10 +66,6 @@ export const loadEventProduct = async () => {
   return data;
 };
 
-export const 이벤트조회API = async () => {
-  const { data } = await unAuthorizationClient.get(`${API.EVENT}`);
-  return data;
-};
 export const loadEventProductPaging = async (pageData: any) => {
   const { page, size, visible } = pageData;
   const { data } = await unAuthorizationClient.get(
@@ -95,6 +91,14 @@ export const applyEvent = async (userEventData: object) => {
   const { data } = await authorizationClient.post(
     `${API.APPLY_EVENT}`,
     userEventData,
+  );
+  return data;
+};
+
+export const paymentPrepare = async (paymentData: object) => {
+  const { data } = await authorizationClient.post(
+    `${API.PAYMENTPREPARE}`,
+    paymentData,
   );
   return data;
 };

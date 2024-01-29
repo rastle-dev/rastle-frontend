@@ -13,6 +13,10 @@ const ICONS: IconProps = {
   deleteSmall: "bi bi-x",
   arrowUp: "bi bi-arrow-up-circle-fill",
   arrowDown: "bi bi-arrow-down-circle-fill",
+  toggleDown: "bi bi-chevron-down",
+  ticket: "bi bi-ticket-perforated",
+  checkCircle: "bi bi-check-circle",
+  checkCircleFill: "bi bi-check-circle-fill",
 };
 
 export default ICONS;

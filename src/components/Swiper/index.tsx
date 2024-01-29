@@ -121,7 +121,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
         <CustomArrow onClick={handlePrevClick}>
           <ArrowIcon>
             <Icon
-              size="1rem"
+              iconSize="1rem"
               iconName="arrowLeft"
               color={COLORS.블랙}
               opacity={0.7}
@@ -133,7 +133,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
         <CustomArrow onClick={handleNextClick}>
           <ArrowIcon>
             <Icon
-              size="1rem"
+              iconSize="1rem"
               iconName="arrowRight"
               color={COLORS.블랙}
               opacity={0.7}
