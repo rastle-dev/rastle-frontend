@@ -5,12 +5,13 @@ import Button from "@/components/Common/Button";
 import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import React from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
 import toastMsg from "@/components/Toast";
 import { applyEvent } from "@/api/shop";
 import useInput from "@/hooks/useInput";
+import QUERYKEYS from "@/constants/querykey";
 
 const Wrapper = styled.div`
   width: 89%;
@@ -75,6 +76,7 @@ export default function EnterEventModal({
   const [, setIsEventDialogOpen] = useRecoilState(eventDialogState);
   const [eventPhoneNumber, onChangeEventPhoneNumber] = useInput("");
   const [instagramId, onChangeInstagramId] = useInput("");
+  const queryClient = useQueryClient();
 
   const inputFields = [
     {
@@ -106,6 +108,7 @@ export default function EnterEventModal({
     onSuccess: async () => {
       toast.dismiss();
       toastMsg("이벤트 응모가 완료되었습니다! 👏");
+      queryClient.invalidateQueries([QUERYKEYS.LOAD_PRODUCT_DETAIL]);
       setIsEventModalOpen(false);
       setIsEventDialogOpen(true);
     },
