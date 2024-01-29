@@ -81,13 +81,13 @@ export default function EnterEventModal({
       label: "전화번호",
       id: "phone",
       onChange: onChangeEventPhoneNumber,
-      value: eventPhoneNumber,
+      value: eventPhoneNumber.replace(/\D/g, "").slice(0, 11),
     },
     {
       label: "인스타그램",
       id: "instagram",
       onChange: onChangeInstagramId,
-      value: instagramId,
+      value: instagramId.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, ""),
     },
   ];
   const mutateApplyEvent = useMutation(["applyEvent"], applyEvent, {
