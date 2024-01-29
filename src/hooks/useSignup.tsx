@@ -198,5 +198,7 @@ export default function useSignup() {
     togglePrivate,
     privateChecked,
     inputData,
+    onChangePasswordCheck,
+    onChangePassword,
   };
 }
