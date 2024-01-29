@@ -2,29 +2,50 @@ import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { Timer } from "@/styles/product/index.styles";
 
-export default function CountDownTimer({ endDate }: { endDate: string }) {
-  const [remainingTime, setRemainingTime] = useState(0);
+interface CountdownTimerProps {
+  startDate: string;
+  endDate: string;
+}
+export default function CountdownTimer({
+  startDate,
+  endDate,
+}: CountdownTimerProps) {
+  const [remainingTime, setRemainingTime] = useState(
+    dayjs(endDate).diff(dayjs(), "second"),
+  );
 
   useEffect(() => {
-    // endDate를 dayjs 객체로 파싱합니다.
+    const startDateTime = dayjs(startDate);
     const endDateTime = dayjs(endDate);
 
-    // 1초마다 현재 시간과 종료 시간 간의 차이를 계산하여 remainingTime 상태를 업데이트합니다.
+    // 현재 시간이 시작 시간보다 이전인 경우에는 이벤트가 시작되지 않았음을 나타냅니다.
+    if (dayjs().isBefore(startDateTime)) {
+      setRemainingTime(-1); // -1은 이벤트가 시작되지 않았음을 나타냅니다.
+      return () => {};
+    }
+
     const interval = setInterval(() => {
       const now = dayjs();
       const diffSeconds = endDateTime.diff(now, "second");
       setRemainingTime(diffSeconds > 0 ? diffSeconds : 0);
     }, 1000);
 
-    // 컴포넌트가 언마운트되면 clearInterval을 사용하여 interval을 정리합니다.
     return () => clearInterval(interval);
-  }, [endDate]);
+  }, [startDate, endDate]);
 
-  // 초를 남은 일, 시간, 분, 초로 변환합니다.
+  if (remainingTime === -1) {
+    return (
+      <Timer>
+        <p>이벤트 시작 전입니다.</p>
+      </Timer>
+    );
+  }
+
   const days = Math.floor(remainingTime / (60 * 60 * 24));
   const hours = Math.floor((remainingTime % (60 * 60 * 24)) / (60 * 60));
   const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
   const seconds = remainingTime % 60;
+
   return (
     <Timer>
       {remainingTime > 0 ? (
