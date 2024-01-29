@@ -368,8 +368,6 @@ export const StyledEventButton = styled(Button)`
   font-size: 1.35rem;
   font-weight: 400;
   height: 4.6rem;
-  color: ${COLORS.블랙};
-  border: 0.5px solid #000;
   border-radius: 0.45455rem;
   ${media.mobile} {
     width: 100%;
