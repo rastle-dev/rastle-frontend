@@ -25,6 +25,7 @@ const QUERYKEYS = {
   LOAD_DEFAULT_ADDRESS: "loadDefaultAddress",
   UPDATE_DEFAULT_ADDRESS: "updateDefaultAddress",
   UPDATE_DEFAULT_PHONENUMBER: "updateDefaultPhoneNumber",
+  LOAD_EVENT_HISTORY: "loadEventHistory",
 } as const;
 
 export default QUERYKEYS;
