@@ -241,3 +241,59 @@ export const LoadDeliveryButton = styled(Button)`
   border: 0.5px solid;
   padding: 0.5rem 1rem 0.5rem 1rem;
 `;
+export const PagingWrapper = styled.div`
+  padding-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 80rem;
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    gap: 0.5rem;
+    cursor: pointer;
+    z-index: 998;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.pagination li {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${COLORS.GREY[600]};
+    border-radius: 5rem;
+  }
+
+  ul.pagination li:first-child {
+    border-radius: 1rem;
+  }
+
+  ul.pagination li:last-child {
+    border-radius: 1rem;
+  }
+
+  ul.pagination li a {
+    text-decoration: none;
+    color: ${COLORS.GREY[600]};
+    font-size: 1.5rem;
+  }
+
+  ul.pagination li.active a {
+    color: white;
+  }
+
+  ul.pagination li.active {
+    background-color: ${COLORS.BLACK};
+  }
+`;
