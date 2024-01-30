@@ -1,12 +1,12 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
-import OrderList from "@/components/Mypage/orderList";
-import Cart from "@/components/Mypage/cart";
-import LoginInfo from "@/components/Mypage/loginInfo";
-import DefaultAddress from "@/components/Mypage/defaultAddress";
+import OrderHistory from "@/components/Mypage/OrderHistory";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
 import useMypage from "@/hooks/mypage/useMypage";
-import Coupon from "@/components/Mypage/coupon";
+import LoginInfo from "@/components/Mypage/LoginInfo";
+import DefaultAddress from "@/components/Mypage/DefaultAddress";
+import Cart from "@/components/Mypage/Cart";
+import Coupon from "@/components/Mypage/Coupon";
 import * as S from "../../styles/mypage/index.styles";
 
 export default function Mypage() {
@@ -24,7 +24,7 @@ export default function Mypage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "주문 내역":
-        return <OrderList />;
+        return <OrderHistory />;
       case "쿠폰함":
         return <Coupon />;
       case "장바구니":
@@ -34,7 +34,7 @@ export default function Mypage() {
       case "기본 배송지":
         return <DefaultAddress />;
       default:
-        return <OrderList />;
+        return <OrderHistory />;
     }
   };
   useEffect(() => {
