@@ -4,7 +4,6 @@ import Button from "@/components/Common/Button";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
-  //margin-top: 3.68rem;
 `;
 export const OrderDateNum = styled.div`
   width: 13rem;
@@ -41,7 +40,7 @@ export const OrderDetail = styled.div`
   }
 `;
 export const Table = styled.div`
-  width: 80rem;
+  width: 100%;
 `;
 export const TableHeader = styled.div`
   width: 80rem;
@@ -247,6 +246,9 @@ export const PagingWrapper = styled.div`
   flex-direction: column;
   position: relative;
   width: 80rem;
+  @media (max-width: 769px) {
+    width: 100%;
+  }
 
   .pagination {
     display: flex;
