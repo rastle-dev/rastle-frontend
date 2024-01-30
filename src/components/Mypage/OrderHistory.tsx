@@ -1,28 +1,36 @@
 import React, { useEffect } from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
-import useOrderList from "@/hooks/mypage/orderList/useOrderList";
+import useOrderHistory from "@/hooks/mypage/orderList/useOrderHistory";
 import useDialog from "@/hooks/useDialog";
 import { useRouter } from "next/dist/client/router";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import Pagination from "react-js-pagination";
+import EventHistory from "@/components/Event/EventHistory";
 
-export default function OrderList() {
+export default function OrderHistory() {
   const router = useRouter();
-  const { menuList, orderListData, isLoading } = useOrderList();
+  const {
+    menuList,
+    orderLoading,
+    orderListData,
+    orderCurPage,
+    onChangeOrderPage,
+    ORDER_ITEM_SIZE,
+  } = useOrderHistory();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
-  const { timedOut } = useLoadingWithTimeout(isLoading);
-
+  const { timedOut } = useLoadingWithTimeout(orderLoading);
   useEffect(() => {
-    if (isLoading && timedOut) {
+    if (orderLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
+  if (orderLoading && !timedOut) return <LoadingBar type={6} />;
 
-  if (isLoading && !timedOut) return <LoadingBar type={6} />;
   return (
-    <S.Wrap isLoading={isLoading}>
+    <S.Wrap isLoading={orderLoading}>
       {isDialogOpen && (
         <Dialog
           onClickBasketButton={() => {
@@ -50,7 +58,6 @@ export default function OrderList() {
             </S.TableHeader>
             <S.TableContent>
               {orderListData?.data.content.map((item: any) => {
-                // 제품 가격과 수량을 곱하고 3,000원을 더한 값을 계산
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>
@@ -80,7 +87,7 @@ export default function OrderList() {
                           </S.UpperBox>
                           <S.BottomBox>
                             <S.MobileDeliveryStatus>
-                              <div>{item.orderInfo.deliveryStatus}22</div>
+                              <div>{item.orderInfo.deliveryStatus}</div>
                               <S.LoadDeliveryButton
                                 type="default"
                                 title="배송조회"
@@ -101,6 +108,18 @@ export default function OrderList() {
           </S.Table>
         </S.CartBox>
       )}
+      <S.PagingWrapper>
+        <Pagination
+          activePage={orderCurPage}
+          itemsCountPerPage={ORDER_ITEM_SIZE}
+          totalItemsCount={orderListData?.data.totalElements || 1}
+          pageRangeDisplayed={2}
+          onChange={onChangeOrderPage}
+          prevPageText="<"
+          nextPageText=">"
+        />
+      </S.PagingWrapper>
+      <EventHistory />
     </S.Wrap>
   );
 }
