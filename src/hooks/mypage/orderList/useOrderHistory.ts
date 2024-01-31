@@ -11,8 +11,8 @@ export default function useOrderHistory() {
     "상품구매금액",
     "주문처리상태",
   ];
-  const [orderCurPage, setOrderCurPage] = useState(2);
-  const ORDER_ITEM_SIZE = 2;
+  const [orderCurPage, setOrderCurPage] = useState(1);
+  const ORDER_ITEM_SIZE = 3;
   const {
     data: orderListData,
     isLoading: orderLoading,

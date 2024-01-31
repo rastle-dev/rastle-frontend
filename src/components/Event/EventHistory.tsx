@@ -1,16 +1,9 @@
 import React from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
-import { useQuery } from "@tanstack/react-query";
-import QUERYKEYS from "@/constants/querykey";
-import { loadEventHistory } from "@/api/cart";
 import Pagination from "react-js-pagination";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
 
 export default function EventHistory() {
-  const { data: eventHistory } = useQuery(
-    [QUERYKEYS.LOAD_EVENT_HISTORY],
-    loadEventHistory,
-  );
   const {
     eventMenuList,
     eventCurPage,
@@ -23,7 +16,7 @@ export default function EventHistory() {
   return (
     <S.Wrap>
       <h2>응모내역</h2>
-      {eventHistory?.data.content.length === 0 ? (
+      {eventHistoryData?.data.content.length === 0 ? (
         <S.NODATA>아직 응모하신 상품이 없어요! 😋</S.NODATA>
       ) : (
         <S.CartBox>
@@ -34,7 +27,7 @@ export default function EventHistory() {
               ))}
             </S.TableHeader>
             <S.TableContent>
-              {eventHistory?.data.content.map((item: any) => {
+              {eventHistoryData?.data.content.map((item: any) => {
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>

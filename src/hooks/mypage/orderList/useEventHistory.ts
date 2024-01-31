@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 
 export default function useEventHistory() {
   const eventMenuList = ["응모일자", "상품 정보", "수량", "금액", "응모 상태"];
-  const [eventCurPage, setEventCurPage] = useState(2);
-  const EVENT_ITEM_SIZE = 2;
+  const [eventCurPage, setEventCurPage] = useState(1);
+  const EVENT_ITEM_SIZE = 3;
   const {
     data: eventHistoryData,
     isLoading: eventLoading,
