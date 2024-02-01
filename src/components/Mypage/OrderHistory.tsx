@@ -108,17 +108,20 @@ export default function OrderHistory() {
           </S.Table>
         </S.CartBox>
       )}
-      <S.PagingWrapper>
-        <Pagination
-          activePage={orderCurPage}
-          itemsCountPerPage={ORDER_ITEM_SIZE}
-          totalItemsCount={orderListData?.data.totalElements || 1}
-          pageRangeDisplayed={2}
-          onChange={onChangeOrderPage}
-          prevPageText="<"
-          nextPageText=">"
-        />
-      </S.PagingWrapper>
+      {orderListData?.data.content.length !== 0 && (
+        <S.PagingWrapper>
+          <Pagination
+            activePage={orderCurPage}
+            itemsCountPerPage={ORDER_ITEM_SIZE}
+            totalItemsCount={orderListData?.data.totalElements || 1}
+            pageRangeDisplayed={2}
+            onChange={onChangeOrderPage}
+            prevPageText="<"
+            nextPageText=">"
+          />
+        </S.PagingWrapper>
+      )}
+
       <EventHistory />
     </S.Wrap>
   );

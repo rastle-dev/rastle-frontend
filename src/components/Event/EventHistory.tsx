@@ -63,17 +63,19 @@ export default function EventHistory() {
           </S.Table>
         </S.CartBox>
       )}
-      <S.PagingWrapper>
-        <Pagination
-          activePage={eventCurPage}
-          itemsCountPerPage={EVENT_ITEM_SIZE}
-          totalItemsCount={eventHistoryData?.data.totalElements || 1}
-          pageRangeDisplayed={2}
-          onChange={onChangeEventPage}
-          prevPageText="<"
-          nextPageText=">"
-        />
-      </S.PagingWrapper>
+      {eventHistoryData?.data.content.length !== 0 && (
+        <S.PagingWrapper>
+          <Pagination
+            activePage={eventCurPage}
+            itemsCountPerPage={EVENT_ITEM_SIZE}
+            totalItemsCount={eventHistoryData?.data.totalElements || 1}
+            pageRangeDisplayed={2}
+            onChange={onChangeEventPage}
+            prevPageText="<"
+            nextPageText=">"
+          />
+        </S.PagingWrapper>
+      )}
     </S.Wrap>
   );
 }
