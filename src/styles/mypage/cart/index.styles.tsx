@@ -9,6 +9,9 @@ export const Wrap = styled.div<{ isLoading?: boolean }>`
     margin-bottom: 1rem;
   }
 `;
+export const LoadingWrapper = styled.div`
+  //height: 100%;
+`;
 export const TabMenu = styled.div`
   display: flex;
   gap: 1rem;

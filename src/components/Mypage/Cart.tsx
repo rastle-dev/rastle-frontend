@@ -44,7 +44,11 @@ export default function Cart() {
   }, [timedOut]);
 
   if ((isCartDataLoading || isLoading) && !timedOut)
-    return <LoadingBar type={6} />;
+    return (
+      <S.LoadingWrapper>
+        <LoadingBar type={6} />
+      </S.LoadingWrapper>
+    );
   return (
     <S.Wrap isLoading={isLoading}>
       {isDialogOpen && (

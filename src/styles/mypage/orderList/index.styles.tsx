@@ -6,7 +6,6 @@ export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
 `;
 export const OrderDateNum = styled.div`
-  width: 13rem;
   font-size: 1.3rem;
   text-align: center;
   div {
@@ -86,6 +85,7 @@ export const ProductInfo = styled.div`
     align-items: unset;
     flex-direction: column;
     border: 1px solid ${COLORS.GREY[300]};
+    padding-bottom: 0;
   }
 `;
 export const Box = styled.div`
@@ -103,9 +103,7 @@ export const ProductBox = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 769px) {
-    //border-bottom: 1px solid ${COLORS.GREY[300]};
     flex-direction: column;
-    padding-bottom: 1rem;
   }
 `;
 export const UpperBox = styled.div`
@@ -116,11 +114,24 @@ export const UpperBox = styled.div`
   }
 `;
 export const BottomBox = styled.div`
-  @media (max-width: 769px) {
-    //border-bottom: 1px solid ${COLORS.GREY[300]};
-    //border: 1px solid red;
-    padding-top: 2rem;
+  @media (min-width: 769px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem 0 0;
   }
+  padding-top: 2rem;
+`;
+export const EventBottomBox = styled.div`
+  @media (min-width: 769px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem 0 1rem;
+  }
+  padding-top: 2rem;
 `;
 export const Img = styled.img`
   width: 7.5rem;
@@ -136,7 +147,6 @@ export const Img = styled.img`
   }
 `;
 export const TextInfo = styled.div`
-  width: 24rem;
   padding-right: 1rem;
   h4 {
     font-weight: 500;
@@ -151,11 +161,13 @@ export const TextInfo = styled.div`
   padding-bottom: 0.5rem;
 `;
 export const Count = styled.div`
-  //text-align: center;
+  @media (min-width: 769px) {
+    text-align: center;
+  }
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  grid-template-columns: 25.5rem 12rem 10.7rem;
+  grid-template-columns: 22.3rem 9rem 17rem;
   align-items: center;
   @media (max-width: 769px) {
     align-items: unset;
@@ -194,6 +206,7 @@ export const Price = styled.div`
   @media (max-width: 769px) {
     flex-direction: row;
   }
+  text-align: center;
 `;
 
 export const DiscountedPrice = styled.span`
@@ -215,9 +228,9 @@ export const CartBox = styled.div`
     font-size: 1.3rem;
     font-weight: 200;
   }
-  border-bottom: 1px solid;
   @media (max-width: 769px) {
     width: 100%;
+    border-bottom: none;
   }
 `;
 export const MobileDeliveryStatus = styled.div`

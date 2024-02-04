@@ -49,11 +49,11 @@ export default function EventHistory() {
                             </S.Price>
                           </S.MobileTextInfo>
                         </S.UpperBox>
-                        <S.BottomBox>
+                        <S.EventBottomBox>
                           <S.DeskTopDeliveryStatus>
-                            응모완료
+                            <div>응모완료</div>
                           </S.DeskTopDeliveryStatus>
-                        </S.BottomBox>
+                        </S.EventBottomBox>
                       </S.ProductBox>
                     </S.Box>
                   </S.ProductInfo>
