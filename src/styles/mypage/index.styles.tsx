@@ -63,6 +63,7 @@ export const Content = styled.div`
   @media (max-width: 1007px) {
     flex-direction: row;
     padding-left: 3rem;
+    padding-right: 3rem;
   }
   @media (max-width: 500px) {
     flex-direction: row;

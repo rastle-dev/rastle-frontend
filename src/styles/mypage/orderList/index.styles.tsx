@@ -4,10 +4,8 @@ import Button from "@/components/Common/Button";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
-  //margin-top: 3.68rem;
 `;
 export const OrderDateNum = styled.div`
-  width: 13rem;
   font-size: 1.3rem;
   text-align: center;
   div {
@@ -41,7 +39,7 @@ export const OrderDetail = styled.div`
   }
 `;
 export const Table = styled.div`
-  width: 80rem;
+  width: 100%;
 `;
 export const TableHeader = styled.div`
   width: 80rem;
@@ -87,6 +85,7 @@ export const ProductInfo = styled.div`
     align-items: unset;
     flex-direction: column;
     border: 1px solid ${COLORS.GREY[300]};
+    padding-bottom: 0;
   }
 `;
 export const Box = styled.div`
@@ -104,9 +103,7 @@ export const ProductBox = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 769px) {
-    //border-bottom: 1px solid ${COLORS.GREY[300]};
     flex-direction: column;
-    padding-bottom: 1rem;
   }
 `;
 export const UpperBox = styled.div`
@@ -117,11 +114,24 @@ export const UpperBox = styled.div`
   }
 `;
 export const BottomBox = styled.div`
-  @media (max-width: 769px) {
-    //border-bottom: 1px solid ${COLORS.GREY[300]};
-    //border: 1px solid red;
-    padding-top: 2rem;
+  @media (min-width: 769px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem 0 0;
   }
+  padding-top: 2rem;
+`;
+export const EventBottomBox = styled.div`
+  @media (min-width: 769px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem 0 1rem;
+  }
+  padding-top: 2rem;
 `;
 export const Img = styled.img`
   width: 7.5rem;
@@ -137,7 +147,6 @@ export const Img = styled.img`
   }
 `;
 export const TextInfo = styled.div`
-  width: 24rem;
   padding-right: 1rem;
   h4 {
     font-weight: 500;
@@ -152,11 +161,13 @@ export const TextInfo = styled.div`
   padding-bottom: 0.5rem;
 `;
 export const Count = styled.div`
-  //text-align: center;
+  @media (min-width: 769px) {
+    text-align: center;
+  }
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  grid-template-columns: 25.5rem 12rem 10.7rem;
+  grid-template-columns: 22.3rem 9rem 17rem;
   align-items: center;
   @media (max-width: 769px) {
     align-items: unset;
@@ -195,6 +206,7 @@ export const Price = styled.div`
   @media (max-width: 769px) {
     flex-direction: row;
   }
+  text-align: center;
 `;
 
 export const DiscountedPrice = styled.span`
@@ -216,9 +228,9 @@ export const CartBox = styled.div`
     font-size: 1.3rem;
     font-weight: 200;
   }
-  border-bottom: 1px solid;
   @media (max-width: 769px) {
     width: 100%;
+    border-bottom: none;
   }
 `;
 export const MobileDeliveryStatus = styled.div`
@@ -240,4 +252,63 @@ export const LoadDeliveryButton = styled(Button)`
   font-weight: 300;
   border: 0.5px solid;
   padding: 0.5rem 1rem 0.5rem 1rem;
+`;
+export const PagingWrapper = styled.div`
+  padding-top: 10rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 80rem;
+  @media (max-width: 769px) {
+    width: 100%;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    gap: 0.5rem;
+    cursor: pointer;
+    z-index: 998;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.pagination li {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${COLORS.GREY[600]};
+    border-radius: 5rem;
+  }
+
+  ul.pagination li:first-child {
+    border-radius: 1rem;
+  }
+
+  ul.pagination li:last-child {
+    border-radius: 1rem;
+  }
+
+  ul.pagination li a {
+    text-decoration: none;
+    color: ${COLORS.GREY[600]};
+    font-size: 1.5rem;
+  }
+
+  ul.pagination li.active a {
+    color: white;
+  }
+
+  ul.pagination li.active {
+    background-color: ${COLORS.BLACK};
+  }
 `;

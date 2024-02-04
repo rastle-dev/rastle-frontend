@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
+import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
 
 export default function Event() {
   const router = useRouter();
@@ -34,7 +35,15 @@ export default function Event() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  const { eventHistoryData } = useEventHistory();
+  console.log("detail", detailData?.data.id);
+  console.log(
+    "eventHistoryData",
+    eventHistoryData?.data.content.filter(
+      (v: any) => v.id === detailData?.data.id,
+    ).length,
+  );
+  console.log("ev", eventHistoryData?.data.content);
   return (
     <S.Wrapper>
       {isEventModalOpen && (
@@ -94,11 +103,20 @@ export default function Event() {
                 router.push(PATH.LOGIN);
               }
             }}
-            title="응모하기"
+            title={
+              eventHistoryData?.data.content.filter(
+                (v: any) => v.id === detailData?.data.id,
+              ).length === 0
+                ? "응모하기"
+                : "이미 응모하신 상품이에요!"
+            }
             type="shop"
             disabled={
               dayjs().isBefore(detailData?.data.eventStartDate) ||
-              dayjs().isAfter(detailData?.data.eventEndDate)
+              dayjs().isAfter(detailData?.data.eventEndDate) ||
+              eventHistoryData?.data.content.filter(
+                (v: any) => v.id === detailData?.data.id,
+              ).length
             }
           />
           <CountDownTimer

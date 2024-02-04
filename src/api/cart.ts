@@ -40,15 +40,25 @@ export const updateDefaultAddress = async (addressData: object) => {
   return data;
 };
 
-export const loadOrderList = async () => {
-  const { data } = await authorizationClient.get(API.ORDERS);
+export const loadOrderList = async (bundleData: any) => {
+  const { page, size } = bundleData;
+  const { data } = await authorizationClient.get(
+    `${API.ORDERS}?page=${page}&size=${size}`,
+  );
   return data;
 };
-
 export const updatePhoneNumber = async (phonenumber: object) => {
   const { data } = await authorizationClient.put(
     API.UPDATE_PHONENUMBER,
     phonenumber,
+  );
+  return data;
+};
+
+export const loadEventHistory = async (bundleData: any) => {
+  const { page, size } = bundleData;
+  const { data } = await authorizationClient.get(
+    `${API.EVENT}?page=${page}&size=${size}`,
   );
   return data;
 };

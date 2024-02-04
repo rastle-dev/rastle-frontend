@@ -17,9 +17,8 @@ export async function getStaticProps() {
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
     loadMarketProductPaging({ page: 0, size: 4 }),
   );
-  await queryClient.prefetchQuery(
-    [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
-    loadEventProductPaging,
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
+    loadEventProductPaging({ page: 0, size: 4 }),
   );
 
   return {
@@ -61,7 +60,7 @@ export default function Home() {
       }
     }
   }, []);
-
+  console.log("eventData", eventData);
   const handleSignupClose = () => {
     setSignupPopupVisible(false);
   };
