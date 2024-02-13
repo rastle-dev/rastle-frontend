@@ -58,7 +58,7 @@ export const updatePhoneNumber = async (phonenumber: object) => {
 export const loadEventHistory = async (bundleData: any) => {
   const { page, size } = bundleData;
   const { data } = await authorizationClient.get(
-    `${API.EVENT}?page=${page}&size=${size}`,
+    `${API.APPLY_EVENT}?page=${page}&size=${size}`,
   );
   return data;
 };
