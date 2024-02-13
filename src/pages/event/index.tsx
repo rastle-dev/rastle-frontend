@@ -36,14 +36,6 @@ export default function Event() {
     };
   }, []);
   const { eventHistoryData } = useEventHistory();
-  console.log("detail", detailData?.data.id);
-  console.log(
-    "eventHistoryData",
-    eventHistoryData?.data.content.filter(
-      (v: any) => v.id === detailData?.data.id,
-    ).length,
-  );
-  console.log("ev", eventHistoryData?.data.content);
   return (
     <S.Wrapper>
       {isEventModalOpen && (
