@@ -31,7 +31,6 @@ export default function Signup() {
       <S.Title>회원가입</S.Title>
       {inputData.map((data) => (
         <div key={data.label}>
-          {/* eslint-disable-next-line no-nested-ternary */}
           {data.isCertification ? (
             data.label === "이메일주소" ? (
               <S.InputWithButtonDiv>

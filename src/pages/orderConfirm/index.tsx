@@ -1,6 +1,8 @@
 import React from "react";
 import * as S from "@/styles/orderconfirm/index.styles";
 import useOrderConfirm from "@/hooks/useOrderConfirm";
+import PATH from "@/constants/path";
+import { router } from "next/client";
 
 export default function Order() {
   const { ProductList, OrdererInfo, parsedOrderInfo } = useOrderConfirm();
@@ -57,7 +59,13 @@ export default function Order() {
             </S.TotalPrice>
           </S.Total>
           <S.ButtonDiv>
-            <S.StyledBuyButton title="쇼핑하러 가기" type="shop" />
+            <S.StyledBuyButton
+              title="쇼핑하러 가기"
+              type="shop"
+              onClick={() => {
+                router.push(PATH.SHOP);
+              }}
+            />
           </S.ButtonDiv>
         </S.InfoWrapper>
       </S.Container>

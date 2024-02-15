@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 interface SelectedProduct {
   title?: string;
   price: number;
+  discountPrice: number;
   color?: string | null;
   size?: string | null;
   count: number;
@@ -66,6 +67,7 @@ export default function useProduct() {
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
     price: detailData?.data.price,
+    discountPrice: detailData?.data.discountPrice,
     color: null,
     size: null,
     count: 0, // 기본 수량
@@ -104,6 +106,7 @@ export default function useProduct() {
       const newProduct: SelectedProduct = {
         title: detailData?.data.name,
         price: detailData?.data.price,
+        discountPrice: detailData?.data.discountPrice,
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
@@ -164,6 +167,8 @@ export default function useProduct() {
       });
     });
   };
+
+  console.log(selectedProducts);
 
   const onClickOrderButton = async () => {
     const orderProducts = selectedProducts.map((product) => ({

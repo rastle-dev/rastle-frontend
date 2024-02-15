@@ -84,6 +84,16 @@ export const NumPrice = styled.div`
   font-size: 1.333rem;
   font-weight: 200;
 `;
+
+export const DiscountPrice = styled.div`
+  font-size: 1.333rem;
+  font-weight: 200;
+
+  span {
+    color: ${COLORS.레드};
+    font-size: 1.333rem;
+  }
+`;
 export const SizeColor = styled.div`
   font-size: 1.333rem;
   font-weight: 400;

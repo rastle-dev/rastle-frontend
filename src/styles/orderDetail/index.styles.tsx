@@ -33,14 +33,28 @@ export const Header = styled.div`
     width: 92%;
   }
   h1 {
-    font-size: 2.5rem;
-    font-weight: 200;
-    padding: 4rem 0 4.27rem 0;
-    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
   }
 `;
+
+export const MainTitle = styled.span`
+  border-bottom: 1px solid;
+  padding: 1rem 0 1rem 0;
+  margin-bottom: 1.5rem;
+`;
+
+export const Title = styled.div`
+  border-bottom: 0.5px solid grey;
+  padding: 1rem 0 1rem 0;
+  margin-bottom: 1.5rem;
+`;
+
 export const InfoWrapper = styled.div`
   width: 81%;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
   ${media.small} {
     width: 92%;
   }
@@ -49,10 +63,41 @@ export const InfoWrapper = styled.div`
   }
   background-color: ${COLORS.WHITE};
   h2 {
-    font-size: 1.666rem;
+    font-size: 1.3rem;
     margin: 0;
     padding-bottom: 1.65rem;
   }
+  p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+`;
+
+export const TableDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+`;
+
+export const InnerLeft = styled.div`
+  flex: 1.5;
+  font-size: 1.1rem;
+  font-weight: 400;
+`;
+
+export const InnerRight = styled.div`
+  flex: 8.5;
+  font-size: 1.1rem;
+  font-weight: 500;
+`;
+export const PriceTable = styled.span`
+  display: flex;
+`;
+
+export const subText = styled.span`
+  margin-left: 1rem;
+  font-size: 1.1rem;
+  font-weight: 400;
 `;
 export const Product = styled.div`
   display: flex;
@@ -124,9 +169,8 @@ export const TotalInfo = styled.div`
   font-weight: 500;
 `;
 export const TotalPrice = styled.div`
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: ${COLORS.BLUE};
+  background-color: #fafafa;
+  height: 5rem;
 `;
 
 export const ButtonDiv = styled.div`
