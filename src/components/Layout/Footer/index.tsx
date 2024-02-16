@@ -62,7 +62,7 @@ const ReturnInformationWrapperRIGHT = styled.div`
   //border: 1px solid red;
 `;
 
-function DefaultHeader() {
+function Footer() {
   return (
     <Container>
       <Wrapper>
@@ -97,7 +97,7 @@ function DefaultHeader() {
           </InformationDetail>
           <InformationDetail>
             <a href="https://www.instagram.com/rastle__fashion/">
-              @rastle__fasihon
+              @rastle__fashion
             </a>
           </InformationDetail>
         </ReturnInformationWrapper>
@@ -124,4 +124,4 @@ function DefaultHeader() {
   );
 }
 
-export default DefaultHeader;
+export default Footer;

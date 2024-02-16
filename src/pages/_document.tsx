@@ -8,6 +8,7 @@ import Document, {
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import Script from "next/script";
+import LazyHydrate from "react-lazy-hydration";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -50,7 +51,9 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <NextScript />
+          <LazyHydrate whenVisible>
+            <NextScript />
+          </LazyHydrate>
         </body>
       </Html>
     );
