@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import * as S from "@/styles/index/index.styles";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/dist/client/router";
-import useShop from "@/hooks/useShop";
 import TopLayer from "@/components/Home/TopLayer";
 import ProductLayer from "@/components/Home/ProductLayer";
 import EventProductLayer from "@/components/Home/EventProductLayer";
 import SignupPopup from "@/components/Home/SignupPopup/index";
+import useHome from "@/hooks/useHome";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -33,7 +33,7 @@ export async function getStaticProps() {
 
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
-  const { productData, eventData } = useShop();
+  const { productData, eventData } = useHome();
   const router = useRouter();
   const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
 
