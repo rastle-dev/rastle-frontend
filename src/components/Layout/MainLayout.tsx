@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import MainHeader from "@/components/Layout/MainHeader";
 // import Footer from "@/components/Layout/Footer";
 import dynamic from "next/dynamic";
+import LazyHydrate from "react-lazy-hydration";
 
 const Full = styled.div`
   width: 100%;
@@ -32,7 +33,9 @@ function MainLayout({ children }: MainLayoutProps) {
     <Full>
       <MainHeader />
       <Inner>{children}</Inner>
-      <Footer />
+      <LazyHydrate whenVisible>
+        <Footer />
+      </LazyHydrate>
     </Full>
   );
 }
