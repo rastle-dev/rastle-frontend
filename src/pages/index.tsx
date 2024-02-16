@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "@/styles/index/index.styles";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -8,8 +8,8 @@ import { useRouter } from "next/dist/client/router";
 import TopLayer from "@/components/Home/TopLayer";
 import ProductLayer from "@/components/Home/ProductLayer";
 import EventProductLayer from "@/components/Home/EventProductLayer";
-import SignupPopup from "@/components/Home/SignupPopup/index";
 import useHome from "@/hooks/useHome";
+import dynamic from "next/dynamic";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -30,7 +30,9 @@ export async function getStaticProps() {
 }
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
-
+const SignupPopup = dynamic(
+  () => import("@/components/Home/SignupPopup/index"),
+);
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
   const { productData, eventData } = useHome();
