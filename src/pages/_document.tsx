@@ -49,9 +49,7 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <LazyHydrate whenVisible>
-            <NextScript />
-          </LazyHydrate>
+          <NextScript />
         </body>
       </Html>
     );
