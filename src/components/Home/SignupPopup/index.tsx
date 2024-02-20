@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import COLORS from "@/constants/color";
 import IconButton from "@/components/Common/IconButton";
 import * as S from "@/components/Home/SignupPopup/index.styles";
+import CouponImage from "../../../../public/image/coupon.png";
+import LOGO_WHITE from "../../../../public/image/LOGO_WHITE.png";
 
 interface SignupPopupProps {
   onClose: () => void;
@@ -36,8 +38,8 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
         <S.LOGOBOX>
           <S.LOGOWrapper>
             <S.LOGOImage
-              src="/image/LOGO_WHITE.png"
-              alt="/image/LOGO_WHITE.png"
+              src={LOGO_WHITE}
+              alt="로고"
               layout="fill"
               objectFit="cover"
             />
@@ -46,8 +48,8 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
         </S.LOGOBOX>
         <S.CouponWrapper>
           <S.CouponImage
-            src="/image/coupon.png"
-            alt="/image/coupon.png"
+            src={CouponImage}
+            alt="쿠폰 이미지"
             layout="fill"
             objectFit="cover"
           />

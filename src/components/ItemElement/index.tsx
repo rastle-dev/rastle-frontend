@@ -5,12 +5,13 @@ import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import ItemElementProps from "@/interface/itemElement";
+import Image from "next/image";
 
 const ItemWrapper = styled.div`
   width: 100%;
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled(Image)`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77; /* width의 1.25배에 해당하는 비율로 height 설정 */
@@ -73,12 +74,15 @@ function ItemElement({
     discountPercent = result.discountPercent;
     discountedPrice = result.discountedPrice;
   }
-
   return (
     <ItemWrapper>
       <StyledImage
         src={mainThumbnail}
         alt={mainThumbnail}
+        width={100}
+        height={100}
+        blurDataURL={mainThumbnail}
+        placeholder="blur"
         onMouseEnter={(e) => {
           const target = e.currentTarget as HTMLImageElement;
           if (typeof subThumbnail === "string") {
