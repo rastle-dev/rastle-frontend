@@ -50,10 +50,19 @@ class MyDocument extends Document {
             src="https://cdn.iamport.kr/v1/iamport.js"
             strategy="beforeInteractive"
           />
+          <link
+            rel="preload"
+            href="../../public/font/S-CoreDream-4Regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
         </Head>
         <body>
           <Main />
+          {/*<LazyHydrate whenVisible>*/}
           <NextScript />
+          {/*</LazyHydrate>*/}
         </body>
       </Html>
     );
