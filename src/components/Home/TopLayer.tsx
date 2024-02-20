@@ -10,7 +10,6 @@ function TopLayer() {
         alt="home.jpg"
         layout="fill"
         objectFit="cover"
-        placeholder="blur"
       />
       <S.MobileImage
         src="/image/homeMobile1.jpg"

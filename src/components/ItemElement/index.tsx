@@ -81,8 +81,8 @@ function ItemElement({
         alt={mainThumbnail}
         width={100}
         height={100}
-        blurDataURL={mainThumbnail}
-        placeholder="blur"
+        // blurDataURL={mainThumbnail}
+        // placeholder="blur"
         onMouseEnter={(e) => {
           const target = e.currentTarget as HTMLImageElement;
           if (typeof subThumbnail === "string") {
