@@ -14,6 +14,10 @@ import { toast } from "react-toastify";
 import useCart from "@/hooks/mypage/cart/useCart";
 import useDialog from "@/hooks/useDialog";
 import useScroll from "@/hooks/useScroll";
+import { GetServerSideProps } from "next";
+import commonServerSideProps from "@/components/Product/commonServerSideProps";
+
+export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
 export default function Product() {
   const router = useRouter();
