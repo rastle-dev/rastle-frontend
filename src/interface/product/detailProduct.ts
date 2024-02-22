@@ -7,7 +7,11 @@ export interface ProductDetailData {
   discountPrice: number;
   displayOrder: number;
   eventApplyCount: number;
-  eventId: number;
+  eventId: number | null;
+  eventImageUrls?: string;
+  eventName?: string;
+  eventStartDate?: string;
+  eventEndDate?: string;
   id: number;
   mainImage: {
     imageUrls: string[];
@@ -30,9 +34,9 @@ export type Size = {
   size: string;
 };
 export interface SelectedProduct {
-  title?: string;
+  title: string;
   price: number;
-  color?: string | null;
+  color: string | null;
   size?: string | null;
   count: number;
   key?: string;
