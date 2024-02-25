@@ -73,9 +73,10 @@ const ArrowIcon = styled.div`
 
 interface ImageGalleryProps {
   images: string[];
+  alt: string;
 }
 
-const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
+const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const handlePrevClick = () => {
@@ -110,9 +111,9 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images }) {
       // @ts-expect-error 이 부분은 의도적으로 에러를 억제하기 위해 사용되었습니다.
       ref={swiperRef}
     >
-      {images?.map((image, index) => (
+      {images?.map((image) => (
         <SwiperSlide key={image}>
-          <StyledImage src={image} alt={`Image ${index + 1}`} />
+          <StyledImage src={image} alt={alt} />
         </SwiperSlide>
       ))}
 
