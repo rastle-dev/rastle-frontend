@@ -69,7 +69,10 @@ export default function Product() {
       )}
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={detailData?.data.mainImage.imageUrls} />
+          <ImageSliderPage
+            images={detailData?.data.mainImage.imageUrls}
+            alt={detailData?.data.name}
+          />
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>
