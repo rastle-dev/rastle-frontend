@@ -16,6 +16,10 @@ import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
+import { GetServerSideProps } from "next";
+import commonServerSideProps from "@/components/Product/commonServerSideProps";
+
+export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
 export default function Event() {
   const router = useRouter();

@@ -42,18 +42,19 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* 다른 head 요소들을 여기에 추가할 수 있습니다. */}
+          <meta
+            name="google-site-verification"
+            content="Nc_sSvyarboeB2_SdcMBbEu7iqNn_X870XSMbakjGKg"
+          />
           <Script
             src="https://cdn.iamport.kr/v1/iamport.js"
             strategy="beforeInteractive"
           />
-          <Script src="https://pay.naver.com/customer/js/naverPayButton.js" />
-          <Script src="https://pay.naver.com/customer/js/mobile/naverPayButton.js" />
         </Head>
         <body>
           <Main />
-          <LazyHydrate whenVisible>
-            <NextScript />
-          </LazyHydrate>
+          {/*<LazyHydrate whenVisible>*/}
+          <NextScript />
         </body>
       </Html>
     );

@@ -24,9 +24,8 @@ const Inner = styled.div`
 interface MainLayoutProps {
   children: ReactNode;
 }
-const Footer = dynamic(() => import("@/components/Layout/Footer/index"), {
-  ssr: false, // 서버 사이드에서 Lazy 로딩을 지원
-});
+const Footer = dynamic(() => import("@/components/Layout/Footer/index"));
+
 function MainLayout({ children }: MainLayoutProps) {
   return (
     <Full>

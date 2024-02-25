@@ -10,7 +10,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    domains: ["rastle-dev.s3.ap-northeast-2.amazonaws.com"],
   },
 };
 const withPlugins = require("next-compose-plugins");
