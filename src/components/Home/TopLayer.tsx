@@ -7,13 +7,13 @@ function TopLayer() {
     <S.ImageWrapper>
       <S.DesktopImage
         src={homeDesktopImage}
-        alt="home.jpg"
+        alt="래슬패션"
         layout="fill"
         objectFit="cover"
       />
       <S.MobileImage
         src="/image/homeMobile1.jpg"
-        alt="/image/homeMobile1.jpg"
+        alt="래슬패션"
         layout="fill"
         objectFit="cover"
       />
