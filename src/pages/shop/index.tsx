@@ -10,6 +10,7 @@ import Category from "@/interface/category";
 import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
 import Index from "@/components/Shop/CategoryView/Cody";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -81,6 +82,9 @@ export default function Shop() {
 
   return (
     <S.Container>
+      <Head>
+        <title>레코디 슬로우 {activeCategory}</title>
+      </Head>
       <S.Header>
         <h1>SHOP</h1>
         <ProductCategoryTabs
