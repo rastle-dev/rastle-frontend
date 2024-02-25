@@ -4,6 +4,7 @@ import ItemElementProps from "@/interface/itemElement";
 import ItemElement from "@/components/ItemElement";
 import useShop from "@/hooks/useShop";
 import Category from "@/interface/category";
+import Head from "next/head";
 
 interface CategoryViewProps {
   activeCategory: string;
@@ -65,6 +66,21 @@ export default function CategoryView({
   }
   return (
     <S.ProductList>
+      <Head>
+        <title>레코디 슬로우 {activeCategory}</title>
+        <meta
+          name="description"
+          content={filteredProducts
+            ?.map((item: ItemElementProps) => item.name)
+            .join(",")}
+        />
+        <meta
+          name="keywords"
+          content={filteredProducts
+            ?.map((item: ItemElementProps) => item.name)
+            .join(",")}
+        />
+      </Head>
       {filteredProducts?.map((item: ItemElementProps) => (
         <ItemElement
           key={item.id}

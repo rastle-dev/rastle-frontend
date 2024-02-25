@@ -10,6 +10,7 @@ import ProductLayer from "@/components/Home/ProductLayer";
 import EventProductLayer from "@/components/Home/EventProductLayer";
 import useHome from "@/hooks/useHome";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -67,6 +68,10 @@ export default function Home() {
   };
   return (
     <S.StyledHome>
+      <Head>
+        <title>recordy slow</title>
+      </Head>
+      <link rel="canonical" href="https://www.recordyslow.com/" />
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <ProductLayer productData={productData} />

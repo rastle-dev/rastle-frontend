@@ -7,11 +7,12 @@ import React from "react";
 
 type Props = {
   children: React.ReactNode;
+  title?: string; // title 속성 추가
 } & LinkProps;
 
-export default function LazyLink({ children, ...props }: Props) {
+export default function LazyLink({ children, title, ...props }: Props) {
   return (
-    <Link {...props} prefetch={false}>
+    <Link {...props} prefetch={false} title={title}>
       {children}
     </Link>
   );

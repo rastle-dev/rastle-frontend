@@ -78,7 +78,7 @@ function ItemElement({
     <ItemWrapper>
       <StyledImage
         src={mainThumbnail}
-        alt={mainThumbnail}
+        alt={name}
         width={100}
         height={100}
         // blurDataURL={mainThumbnail}
