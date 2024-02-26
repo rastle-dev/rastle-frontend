@@ -55,7 +55,7 @@ export default function Product() {
   return (
     <S.Wrapper>
       <Head>
-        <title>{detailData?.data.name}</title>
+        <title>{detailData?.data.name} | RECORDY SLOW</title>
         <meta name="description" content={detailData?.data.name} />
         <meta name="keywords" content={detailData?.data.name} />
       </Head>

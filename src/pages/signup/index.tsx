@@ -4,6 +4,7 @@ import * as S from "@/styles/signup/index.styles";
 import useSignup from "@/hooks/useSignup";
 import LazyLink from "@/components/LazyLink";
 import PATH from "@/constants/path";
+import Head from "next/head";
 
 export default function Signup() {
   const {
@@ -28,6 +29,9 @@ export default function Signup() {
             }
         `}
       </style>
+      <Head>
+        <title>회원가입 - RECORDY SLOW</title>
+      </Head>
       <S.Title>회원가입</S.Title>
       {inputData.map((data) => (
         <div key={data.label}>

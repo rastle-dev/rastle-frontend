@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <S.StyledHome>
       <Head>
-        <title>레코디 슬로우</title>
+        <title>RECORDY SLOW - 코디로 이해시키는 제품의 가치</title>
         <meta
           name="description"
           content="과하지 않고 크게 유행 타지 않는 아이템을 신중하게 고르고 천천히, 다양하게 입어보며 제품의 코디를 기록합니다. 코디로 제품의 가치를 이해시키는 레코디 슬로우"

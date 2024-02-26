@@ -7,6 +7,7 @@ import {
   LoadingSpinnerWrapper,
 } from "@/components/LoadingSpinner";
 import useShop from "@/hooks/useShop";
+import Head from "next/head";
 
 export default function Index() {
   const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
@@ -19,6 +20,9 @@ export default function Index() {
   }, [infiniteHandleScroll]);
   return (
     <>
+      <Head>
+        <title>코디 상품 | RECORDY SLOW</title>
+      </Head>
       <S.SetBox>
         {infiniteData?.pages.flatMap((page: any, idx: number) =>
           page.data.content.map((item: any) => (

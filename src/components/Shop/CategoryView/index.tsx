@@ -37,6 +37,9 @@ export default function CategoryView({
   if (activeCategory === "이벤트") {
     return (
       <S.ProductList>
+        <Head>
+          <title>{activeCategory} | RECORDY SLOW</title>
+        </Head>
         {eventData?.data.map((item: ItemElementProps) => (
           <ItemElement
             key={item.productId}
@@ -58,16 +61,21 @@ export default function CategoryView({
   if (filteredProducts?.length === 0) {
     return (
       <S.ProductList>
+        <Head>
+          <title>{activeCategory} | RECORDY SLOW</title>
+        </Head>
         <S.NOPRODUCT>
           제품 준비 중이에요. 빠른 시일 내로 준비해서 찾아뵐게요! 🙇🏻
         </S.NOPRODUCT>
       </S.ProductList>
     );
   }
+  console.log("active2", activeCategory);
+
   return (
     <S.ProductList>
       <Head>
-        <title>레코디 슬로우 {activeCategory}</title>
+        <title>{activeCategory} | RECORDY SLOW</title>
         <meta
           name="description"
           content={filteredProducts

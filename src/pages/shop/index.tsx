@@ -83,7 +83,11 @@ export default function Shop() {
   return (
     <S.Container>
       <Head>
-        <title>레코디 슬로우 {activeCategory}</title>
+        <title>SHOP - RECORDY SLOW</title>
+        <meta
+          name="description"
+          content="언제나 확신이 드는 이쁘고 좋은 상품만을 판매할것을 약속드립니다."
+        />
       </Head>
       <S.Header>
         <h1>SHOP</h1>
