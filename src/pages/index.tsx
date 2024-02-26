@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <S.StyledHome>
       <Head>
-        <title>recordy slow</title>
+        <title>레코디 슬로우</title>
       </Head>
       <link rel="canonical" href="https://www.recordyslow.com/" />
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
