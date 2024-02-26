@@ -135,7 +135,7 @@ const CenterElement = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  span {
+  h1 {
     font-size: 2.3rem;
     font-weight: 200;
     @media (max-width: 769px) {
