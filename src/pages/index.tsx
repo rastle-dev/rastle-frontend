@@ -75,7 +75,6 @@ export default function Home() {
           content="과하지 않고 크게 유행 타지 않는 아이템을 신중하게 고르고 천천히, 다양하게 입어보며 제품의 코디를 기록합니다. 코디로 제품의 가치를 이해시키는 레코디 슬로우"
         />
       </Head>
-      <link rel="canonical" href="https://www.recordyslow.com/" />
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <ProductLayer productData={productData} />
