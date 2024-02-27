@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
@@ -65,7 +65,16 @@ function ItemElement({
   const router = useRouter();
   const productId = id;
   const events = isEvent;
+  const [thumbnailSrc, setThumbnailSrc] = useState(mainThumbnail);
+  const handleMouseEnter = () => {
+    if (typeof subThumbnail === "string") {
+      setThumbnailSrc(subThumbnail);
+    }
+  };
 
+  const handleMouseLeave = () => {
+    setThumbnailSrc(mainThumbnail);
+  };
   let discountPercent;
   let discountedPrice;
 
@@ -77,22 +86,12 @@ function ItemElement({
   return (
     <ItemWrapper>
       <StyledImage
-        src={mainThumbnail}
+        src={thumbnailSrc}
         alt={name}
         width={100}
         height={100}
-        // blurDataURL={mainThumbnail}
-        // placeholder="blur"
-        onMouseEnter={(e) => {
-          const target = e.currentTarget as HTMLImageElement;
-          if (typeof subThumbnail === "string") {
-            target.src = subThumbnail;
-          }
-        }}
-        onMouseLeave={(e) => {
-          const target = e.currentTarget as HTMLImageElement;
-          target.src = mainThumbnail;
-        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={() => {
           if (isEvent) {
             router.push({
