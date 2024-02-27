@@ -48,6 +48,9 @@ export default function useShop() {
     const { data } = useQuery(
       [QUERYKEYS.LOAD_BUNDLE_PRODUCT, { bundleId }],
       queryFn,
+      {
+        staleTime: Infinity, // 데이터가 변경될 때까지 유효
+      },
     );
     return { data };
   };
@@ -64,6 +67,7 @@ export default function useShop() {
         const nextPage = lastPage.data.pageable.pageNumber + 1;
         return nextPage < lastPage.data.totalPages ? nextPage : undefined;
       },
+      staleTime: Infinity, // 데이터가 변경될 때까지 유효
     },
   );
   const infiniteHandleScroll = () => {
