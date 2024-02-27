@@ -30,7 +30,7 @@ export default function useDefaultAddress() {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { data: defaultAddressData, isLoading } = useQuery(
-    [QUERYKEYS.LOAD_CART],
+    [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
     loadDefaultAddress,
     {
       enabled: isDataLoading,

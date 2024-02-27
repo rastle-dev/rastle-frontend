@@ -10,6 +10,7 @@ import Category from "@/interface/category";
 import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
 import Index from "@/components/Shop/CategoryView/Cody";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -81,6 +82,13 @@ export default function Shop() {
 
   return (
     <S.Container>
+      <Head>
+        <title>SHOP - RECORDY SLOW</title>
+        <meta
+          name="description"
+          content="언제나 확신이 드는 이쁘고 좋은 상품만을 판매할것을 약속드립니다."
+        />
+      </Head>
       <S.Header>
         <h1>SHOP</h1>
         <ProductCategoryTabs

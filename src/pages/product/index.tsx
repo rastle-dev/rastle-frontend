@@ -14,6 +14,11 @@ import { toast } from "react-toastify";
 import useCart from "@/hooks/mypage/cart/useCart";
 import useDialog from "@/hooks/useDialog";
 import useScroll from "@/hooks/useScroll";
+import { GetServerSideProps } from "next";
+import commonServerSideProps from "@/components/Product/commonServerSideProps";
+import Head from "next/head";
+
+export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
 export default function Product() {
   const router = useRouter();
@@ -51,6 +56,11 @@ export default function Product() {
 
   return (
     <S.Wrapper>
+      <Head>
+        <title>{detailData?.data.name} | RECORDY SLOW</title>
+        <meta name="description" content={detailData?.data.name} />
+        <meta name="keywords" content={detailData?.data.name} />
+      </Head>
       {isDialogOpen && (
         <Dialog
           onClickBasketButton={() => {
@@ -67,7 +77,10 @@ export default function Product() {
       )}
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={detailData?.data.mainImage.imageUrls} />
+          <ImageSliderPage
+            images={detailData?.data.mainImage.imageUrls}
+            alt={detailData?.data.name}
+          />
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>

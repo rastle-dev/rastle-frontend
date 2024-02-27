@@ -1,18 +1,19 @@
 import * as S from "@/styles/index/index.styles";
 import React from "react";
+import homeDesktopImage from "../../../public/image/homeDesktop2.jpg";
 
 function TopLayer() {
   return (
     <S.ImageWrapper>
       <S.DesktopImage
-        src="/image/homeDesktop2.jpg"
-        alt="/image/homeDesktop2.jpg"
+        src={homeDesktopImage}
+        alt="래슬패션"
         layout="fill"
         objectFit="cover"
       />
       <S.MobileImage
         src="/image/homeMobile1.jpg"
-        alt="/image/homeMobile1.jpg"
+        alt="래슬패션"
         layout="fill"
         objectFit="cover"
       />

@@ -4,6 +4,7 @@ import SNSLogin from "@/components/Login/sns";
 import useLogin from "@/hooks/useLogin";
 import * as S from "@/styles/login/index.styles";
 import errorMsg from "@/components/Toast/error";
+import Head from "next/head";
 
 export default function Login() {
   const {
@@ -16,6 +17,9 @@ export default function Login() {
   } = useLogin();
   return (
     <form onSubmit={handleSubmit}>
+      <Head>
+        <title>로그인 - RECORDY SLOW</title>
+      </Head>
       <S.Container>
         <S.Header>
           <h1>R E C O R D Y&nbsp;&nbsp; S L O W</h1>

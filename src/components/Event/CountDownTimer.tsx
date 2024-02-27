@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 import { Timer } from "@/styles/product/index.styles";
 
 interface CountdownTimerProps {
-  startDate: string;
-  endDate: string;
+  startDate: string | undefined;
+  endDate: string | undefined;
 }
 export default function CountdownTimer({
   startDate,

@@ -1,53 +1,31 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
-import { createOrder, loadProductDetail } from "@/api/shop";
+import { createOrder } from "@/api/shop";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
 import { toast } from "react-toastify";
-
-interface SelectedProduct {
-  title?: string;
-  price: number;
-  discountPrice: number;
-  color?: string | null;
-  size?: string | null;
-  count: number;
-  key?: string;
-  mainThumbnailImage: string;
-  productId: number | undefined;
-}
-interface CartProduct {
-  productId: number | undefined;
-  color?: string | null;
-  count: number;
-  size?: string | null;
-}
-type Color = {
-  color: string;
-  sizes: Size[];
-};
-type Size = {
-  count: number;
-  size: string;
-};
+import {
+  CartProduct,
+  Color,
+  ProductDetailData,
+  SelectedProduct,
+  Size,
+} from "@/interface/product/detailProduct";
 
 export default function useProduct() {
-  // TODO: 의성) 실제 데이터 api호출로 추가 , 비동기처리 주의해야함
   const router = useRouter();
   const { productId } = router.query;
   const numericProductId = Number(productId);
+  const queryClient = useQueryClient();
 
-  const { data: detailData } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL, numericProductId],
-    () => {
-      if (productId) {
-        return loadProductDetail(numericProductId);
-      }
-      return null;
-    },
-  );
+  const detailData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_PRODUCT_DETAIL,
+    numericProductId,
+  ]) as { data: ProductDetailData };
+  console.log("data", detailData);
+
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(
@@ -67,7 +45,6 @@ export default function useProduct() {
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
     price: detailData?.data.price,
-    discountPrice: detailData?.data.discountPrice,
     color: null,
     size: null,
     count: 0, // 기본 수량
@@ -106,7 +83,6 @@ export default function useProduct() {
       const newProduct: SelectedProduct = {
         title: detailData?.data.name,
         price: detailData?.data.price,
-        discountPrice: detailData?.data.discountPrice,
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
@@ -168,8 +144,6 @@ export default function useProduct() {
     });
   };
 
-  console.log(selectedProducts);
-
   const onClickOrderButton = async () => {
     const orderProducts = selectedProducts.map((product) => ({
       productId: product.productId,
@@ -181,12 +155,12 @@ export default function useProduct() {
     }));
 
     try {
-      const data = await createOrder({
+      const orderData = await createOrder({
         orderProducts,
       });
 
-      if (data) {
-        const productOrderNumbers: string[] = data.data.orderProducts.map(
+      if (orderData) {
+        const productOrderNumbers: string[] = orderData.data.orderProducts.map(
           (product: { productOrderNumber: string }) =>
             product.productOrderNumber,
         );
@@ -195,8 +169,8 @@ export default function useProduct() {
           pathname: PATH.ORDER,
           query: {
             selectedProducts: JSON.stringify(selectedProducts),
-            orderDetailId: data.data.orderDetailId,
-            orderNumber: data.data.orderNumber,
+            orderDetailId: orderData.data.orderDetailId,
+            orderNumber: orderData.data.orderNumber,
             productOrderNumbers,
           },
         });

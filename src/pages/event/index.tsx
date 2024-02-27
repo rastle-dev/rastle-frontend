@@ -16,6 +16,10 @@ import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
+import { GetServerSideProps } from "next";
+import commonServerSideProps from "@/components/Product/commonServerSideProps";
+
+export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
 export default function Event() {
   const router = useRouter();
@@ -36,14 +40,6 @@ export default function Event() {
     };
   }, []);
   const { eventHistoryData } = useEventHistory();
-  console.log("detail", detailData?.data.id);
-  console.log(
-    "eventHistoryData",
-    eventHistoryData?.data.content.filter(
-      (v: any) => v.id === detailData?.data.id,
-    ).length,
-  );
-  console.log("ev", eventHistoryData?.data.content);
   return (
     <S.Wrapper>
       {isEventModalOpen && (
@@ -72,7 +68,10 @@ export default function Event() {
       )}
       <S.TopLayer>
         <S.ImageLayer>
-          <ImageSliderPage images={detailData?.data.mainImage.imageUrls} />
+          <ImageSliderPage
+            images={detailData?.data.mainImage.imageUrls}
+            alt={detailData?.data.name}
+          />
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>

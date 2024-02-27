@@ -79,7 +79,7 @@ export default function MainHeader() {
         </S.LeftElement>
         <S.CenterElement>
           <LazyLink href="/">
-            <span>R E C O R D Y&nbsp;&nbsp; S L O W</span>
+            <h1>R E C O R D Y&nbsp;&nbsp; S L O W</h1>
           </LazyLink>
         </S.CenterElement>
         {accessToken ? (

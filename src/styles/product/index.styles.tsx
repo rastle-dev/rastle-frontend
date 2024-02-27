@@ -58,11 +58,11 @@ export const ProductContent = styled.div`
   }
 `;
 
-export const Title = styled.div`
+export const Title = styled.h1`
   font-size: 2.18rem;
   font-weight: 400;
   padding-bottom: 2rem;
-
+  margin-top: 0;
   ${media.mobile} {
     padding-bottom: 1.5rem;
   }

@@ -5,11 +5,12 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
 import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/dist/client/router";
-import useShop from "@/hooks/useShop";
 import TopLayer from "@/components/Home/TopLayer";
 import ProductLayer from "@/components/Home/ProductLayer";
 import EventProductLayer from "@/components/Home/EventProductLayer";
-import SignupPopup from "@/components/Home/SignupPopup/index";
+import useHome from "@/hooks/useHome";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -30,10 +31,12 @@ export async function getStaticProps() {
 }
 
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
-
+const SignupPopup = dynamic(
+  () => import("@/components/Home/SignupPopup/index"),
+);
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
-  const { productData, eventData } = useShop();
+  const { productData, eventData } = useHome();
   const router = useRouter();
   const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
 
@@ -60,12 +63,18 @@ export default function Home() {
       }
     }
   }, []);
-  console.log("eventData", eventData);
   const handleSignupClose = () => {
     setSignupPopupVisible(false);
   };
   return (
     <S.StyledHome>
+      <Head>
+        <title>RECORDY SLOW - 코디로 이해시키는 제품의 가치</title>
+        <meta
+          name="description"
+          content="과하지 않고 크게 유행 타지 않는 아이템을 신중하게 고르고 천천히, 다양하게 입어보며 제품의 코디를 기록합니다. 코디로 제품의 가치를 이해시키는 레코디 슬로우"
+        />
+      </Head>
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <ProductLayer productData={productData} />

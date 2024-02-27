@@ -31,16 +31,16 @@ export default function EventHistory() {
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>
-                      <div>{item.startDate.split("T")[0]}</div>
+                      <div>{item.eventApplyDate.split("T")[0]}</div>
                       <S.OrderDetail>응모상세조회 {">"}</S.OrderDetail>
                     </S.OrderDateNum>
                     <S.Box>
                       <S.ProductBox>
                         <S.UpperBox>
-                          <S.Img src={item.imageUrls} />
+                          <S.Img src={item.eventProductMainThumbnailImage} />
                           <S.MobileTextInfo>
                             <S.TextInfo>
-                              <h4>{item.name}</h4>
+                              <h4>{item.eventProductName}</h4>
                               <h4>L/인디고</h4>
                             </S.TextInfo>
                             <S.Count>1개</S.Count>
