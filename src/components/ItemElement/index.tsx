@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
@@ -66,6 +66,8 @@ function ItemElement({
   const productId = id;
   const events = isEvent;
   const [thumbnailSrc, setThumbnailSrc] = useState(mainThumbnail);
+  const [isMobile, setIsMobile] = useState(false);
+
   const handleMouseEnter = () => {
     if (typeof subThumbnail === "string") {
       setThumbnailSrc(subThumbnail);
@@ -75,6 +77,34 @@ function ItemElement({
   const handleMouseLeave = () => {
     setThumbnailSrc(mainThumbnail);
   };
+
+  const handleClick = () => {
+    const pathname = isEvent ? PATH.EVENT : PATH.PRODUCT;
+    router.push({
+      pathname,
+      query: { productId, events },
+    });
+  };
+
+  const [tapCount, setTapCount] = useState(0);
+  useEffect(() => {
+    const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+    setIsMobile(isMobileDevice);
+  }, []);
+
+  const handleTap = () => {
+    setTapCount(tapCount + 1);
+
+    if (tapCount === 0) {
+      if (typeof subThumbnail === "string") {
+        setThumbnailSrc(subThumbnail);
+      }
+    } else if (tapCount === 1) {
+      // 두 번째 탭부터 페이지 이동
+      handleClick();
+    }
+  };
+
   let discountPercent;
   let discountedPrice;
 
@@ -92,19 +122,8 @@ function ItemElement({
         height={100}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        onClick={() => {
-          if (isEvent) {
-            router.push({
-              pathname: PATH.EVENT, // 이동할 페이지 경로
-              query: { productId, events }, // 전달할 데이터 (id)
-            });
-          } else {
-            router.push({
-              pathname: PATH.PRODUCT, // 이동할 페이지 경로
-              query: { productId, events }, // 전달할 데이터 (id)
-            });
-          }
-        }}
+        onTouchStart={handleTap}
+        onClick={isMobile ? () => {} : handleClick}
       />
       <ItemName>{name}</ItemName>
       {discountPrice !== undefined ? (
