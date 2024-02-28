@@ -126,7 +126,13 @@ export default function Event() {
       </S.TopLayer>
       <S.ProductDetailList>
         {detailData?.data.detailImage.imageUrls?.map((img: string) => (
-          <S.ProductDetail src={img} />
+          <S.ProductDetail
+            src={img}
+            alt={detailData?.data.name}
+            layout="responsive"
+            width={100}
+            height={100}
+          />
         ))}
       </S.ProductDetailList>
       <S.ScrollWrapper className={showScrollButton ? "show" : ""}>
