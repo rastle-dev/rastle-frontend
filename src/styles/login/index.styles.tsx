@@ -18,6 +18,7 @@ export const Container = styled.div`
 export const Header = styled.div`
   ${media.mobile} {
     margin-top: 5rem;
+    //margin-bottom: 1rem;
     width: 100%;
   }
   width: 36rem;
@@ -29,13 +30,26 @@ export const Header = styled.div`
     padding-top: 2rem;
     font-size: 2.5rem;
     font-weight: 400;
+    //margin-bottom: 2rem;
     text-align: center;
+
+    ${media.mobile} {
+      font-weight: 500;
+      font-size: 2.7rem;
+    }
   }
   h3 {
+    margin-top: 0.5rem;
     text-align: center;
     font-weight: 400;
     font-size: 1.5rem;
     margin-bottom: 4rem;
+
+    ${media.mobile} {
+      margin-top: 0rem;
+      font-weight: 400;
+      font-size: 1.7rem;
+    }
   }
 `;
 
@@ -68,8 +82,9 @@ export const StyledInput = styled(Input)`
   }
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
-  @media (max-width: 1007px) {
-    //width: 44rem;
+
+  ${media.mobile} {
+    width: 44rem;
     font-size: 1.4rem;
     &::placeholder {
       font-size: 1.4rem;

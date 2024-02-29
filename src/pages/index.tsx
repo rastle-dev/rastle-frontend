@@ -78,6 +78,7 @@ export default function Home() {
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <ProductLayer productData={productData} />
+      <ProductLayer productData={productData} />
       <EventProductLayer eventData={eventData} />
     </S.StyledHome>
   );

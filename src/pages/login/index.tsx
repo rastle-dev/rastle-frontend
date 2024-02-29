@@ -23,7 +23,7 @@ export default function Login() {
       <S.Container>
         <S.Header>
           <h1>R E C O R D Y&nbsp;&nbsp; S L O W</h1>
-          <h3>코디로 이해시키는 제품의 가치, @rastle_fashion</h3>
+          <h3>코디로 이해시키는 제품의 가치</h3>
         </S.Header>
         <S.Wrapper>
           {loginFormInputs.map((input) => (

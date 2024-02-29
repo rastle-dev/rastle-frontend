@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import Button from "@/components/Common/Button";
 import media from "@/styles/media";
 
 export const Temp = styled.div`
@@ -17,21 +16,18 @@ export const Container = styled.div`
   flex-direction: column;
   background-color: white;
   width: 79%;
-  ${media.xsmall} {
+  ${media.mobile} {
     width: 100%;
   }
-  margin-bottom: 15rem;
 `;
 
 export const Header = styled.div`
   width: 81%;
   background-color: ${COLORS.WHITE};
-  ${media.small} {
+  ${media.mobile} {
     width: 92%;
   }
-  ${media.xsmall} {
-    width: 92%;
-  }
+
   h1 {
     font-size: 1.6rem;
     font-weight: 500;
@@ -50,17 +46,20 @@ export const Title = styled.div`
   margin-bottom: 1.5rem;
 `;
 
+export const PriceTitle = styled.div`
+  border-bottom: 0.5px solid grey;
+  padding: 1rem 0 1rem 0;
+`;
+
 export const InfoWrapper = styled.div`
   width: 81%;
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
-  ${media.small} {
+  ${media.mobile} {
     width: 92%;
   }
-  ${media.xsmall} {
-    width: 92%;
-  }
+
   background-color: ${COLORS.WHITE};
   h2 {
     font-size: 1.3rem;
@@ -77,32 +76,53 @@ export const TableDiv = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
+  margin-top: 0.5rem;
 `;
 
 export const InnerLeft = styled.div`
   flex: 1.5;
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 300;
+
+  ${media.mobile} {
+    flex: 8;
+  }
 `;
 
 export const InnerRight = styled.div`
   flex: 8.5;
   font-size: 1.1rem;
-  font-weight: 500;
+  font-weight: 400;
+
+  ${media.mobile} {
+    flex: 2;
+  }
 `;
-export const PriceTable = styled.span`
-  display: flex;
+export const InnerPriceLeft = styled.div`
+  flex: 1.5;
+  font-size: 1.3rem;
+  font-weight: 300;
+
+  ${media.mobile} {
+    flex: 8;
+  }
 `;
 
-export const subText = styled.span`
-  margin-left: 1rem;
-  font-size: 1.1rem;
+export const InnerPriceRight = styled.div`
+  flex: 8.5;
+  font-size: 1.3rem;
   font-weight: 400;
+
+  ${media.mobile} {
+    flex: 2;
+  }
 `;
+
 export const Product = styled.div`
   display: flex;
   gap: 3.27rem;
-  padding-bottom: 2.65rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ebebeb;
 `;
 export const Thumbnail = styled.img`
   width: 7.7rem;
@@ -130,15 +150,6 @@ export const SizeColor = styled.div`
   font-weight: 400;
 `;
 
-export const OrdererInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  padding-top: 2.65rem;
-  padding-bottom: 2.65rem;
-  border-top: 1px solid #9b9b9b;
-  border-bottom: 1px solid #9b9b9b;
-`;
 export const Box = styled.div`
   display: flex;
   //gap: 6rem;
@@ -148,10 +159,10 @@ export const Meta = styled.div`
   font-size: 1.1rem;
   width: 7rem;
   margin-right: 2rem;
-  ${media.small} {
+  ${media.mobile} {
     width: 7rem;
   }
-  ${media.xsmall} {
+  ${media.mobile} {
     width: 7rem;
   }
 `;
@@ -159,37 +170,66 @@ export const Data = styled.div`
   font-weight: 400;
   font-size: 1.1rem;
 `;
-export const Total = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding-top: 2.6rem;
-`;
-export const TotalInfo = styled.div`
-  font-size: 1.4rem;
-  font-weight: 500;
-`;
+
 export const TotalPrice = styled.div`
   background-color: #fafafa;
-  height: 5rem;
-`;
-
-export const ButtonDiv = styled.div`
-  padding-top: 5rem;
-  width: 100%;
+  height: 6rem;
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
+  padding: 0.7rem;
 `;
 
-export const StyledBuyButton = styled(Button)`
-  font-size: 1.18rem;
-  font-weight: 400;
-  width: 17rem;
-  height: 4.8rem;
-  border-radius: 0.45455rem;
+export const DeliveryTitle = styled.div`
+  border-bottom: 0.5px solid grey;
+  padding: 1rem 0 1rem 0;
+`;
+
+export const DeliveryTableDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  //padding: 0.5rem;
+  //height: 4rem;
+  border-bottom: 1px solid #ebebeb;
+  padding: 1.3rem 0.5rem 1.4rem;
+`;
+
+export const DeliveryInnerLeft = styled.div`
+  flex: 1.5;
+  font-size: 1.1rem;
+  font-weight: 300;
 
   ${media.mobile} {
-    width: 40%;
+    flex: 3;
   }
+`;
+
+export const DeliveryInnerRight = styled.div`
+  flex: 8.5;
+  font-size: 1.1rem;
+  font-weight: 300;
+
+  ${media.mobile} {
+    flex: 7;
+  }
+`;
+
+export const OrderTableDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  //padding: 0.5rem;
+  height: 4rem;
+  border-bottom: 1px solid #ebebeb;
+  padding: 1rem 0.5rem 1.1rem;
+`;
+
+export const OrderInnerLeft = styled.div`
+  font-size: 1.1rem;
+  font-weight: 300;
+  padding-right: 0.3rem;
+`;
+
+export const OrderInnerRight = styled.div`
+  font-size: 1.1rem;
+  font-weight: 300;
 `;
