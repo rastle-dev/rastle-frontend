@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
 import useOrderHistory from "@/hooks/mypage/orderList/useOrderHistory";
 import useDialog from "@/hooks/useDialog";
-import { useRouter } from "next/dist/client/router";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import Pagination from "react-js-pagination";
 import EventHistory from "@/components/Event/EventHistory";
-import { router } from "next/client";
+import { useRouter } from "next/dist/client/router";
 
 export default function OrderHistory() {
   const router = useRouter();

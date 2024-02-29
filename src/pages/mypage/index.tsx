@@ -1,4 +1,3 @@
-import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import OrderHistory from "@/components/Mypage/OrderHistory";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
@@ -8,6 +7,7 @@ import DefaultAddress from "@/components/Mypage/DefaultAddress";
 import Cart from "@/components/Mypage/Cart";
 import Coupon from "@/components/Mypage/Coupon";
 import * as S from "../../styles/mypage/index.styles";
+import { useRouter } from "next/router";
 
 export default function Mypage() {
   const router = useRouter();

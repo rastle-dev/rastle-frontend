@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 // import media from "@/styles/media";
-import COLORS from "../../../constants/color";
 import media from "@/styles/media";
+import COLORS from "../../../constants/color";
 
 const Wrapper = styled.div``;
 const Label = styled.div<{ invalid?: boolean }>`
@@ -10,10 +10,10 @@ const Label = styled.div<{ invalid?: boolean }>`
   color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
   padding: 0 0 0.1rem 0.2rem;
 
-  // ${media.mobile} {
-  //   font-size: 1.3rem;
-  //   font-weight: 500;
-  // }
+  ${media.mobile} {
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
 `;
 
 const InputWrapper = styled.input<{
