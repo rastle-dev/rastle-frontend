@@ -51,6 +51,15 @@ export const loadMe = async () => {
   return data;
 };
 
+export const loadOrderDetail = async (
+  orderNumber: string | string[] | undefined,
+) => {
+  const { data } = await authorizationClient.get(
+    `${API.ORDERS}/${orderNumber}`,
+  );
+  return data;
+};
+
 export const changePassword = async (newPassword: { newPassword: string }) => {
   const { data } = await authorizationClient.put(
     API.CHANGEPASSWORD,

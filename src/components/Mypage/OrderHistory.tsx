@@ -9,6 +9,7 @@ import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import Pagination from "react-js-pagination";
 import EventHistory from "@/components/Event/EventHistory";
+import { router } from "next/client";
 
 export default function OrderHistory() {
   const router = useRouter();
@@ -28,6 +29,8 @@ export default function OrderHistory() {
     }
   }, [timedOut]);
   if (orderLoading && !timedOut) return <LoadingBar type={6} />;
+
+  console.log(orderListData);
 
   return (
     <S.Wrap isLoading={orderLoading}>
@@ -62,8 +65,26 @@ export default function OrderHistory() {
                   <S.ProductInfo>
                     <S.OrderDateNum>
                       <div>{item.orderInfo.orderDate.split("T")[0]}</div>
-                      <S.OrderDetail>주문상세조회 {">"}</S.OrderDetail>
-                      <S.OrderNum>[{item.orderInfo.orderNumber}]</S.OrderNum>
+                      <S.OrderDetail
+                        onClick={() => {
+                          router.push({
+                            pathname: PATH.ORDERDETAIL,
+                            query: { orderId: item.orderInfo.orderId },
+                          });
+                        }}
+                      >
+                        주문상세조회 {">"}
+                      </S.OrderDetail>
+                      <S.OrderNum
+                        onClick={() => {
+                          router.push({
+                            pathname: PATH.ORDERDETAIL,
+                            query: { orderId: item.orderInfo.orderId },
+                          });
+                        }}
+                      >
+                        [{item.orderInfo.orderNumber}]
+                      </S.OrderNum>
                     </S.OrderDateNum>
                     <S.Box>
                       {item.productOrderInfos.map((product: any) => (

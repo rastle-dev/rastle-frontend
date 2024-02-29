@@ -18,6 +18,7 @@ export default function Signup() {
     togglePrivate,
     privateChecked,
     inputData,
+    handleLinkClick,
   } = useSignup();
 
   return (
@@ -35,7 +36,6 @@ export default function Signup() {
       <S.Title>회원가입</S.Title>
       {inputData.map((data) => (
         <div key={data.label}>
-          {/* eslint-disable-next-line no-nested-ternary */}
           {data.isCertification ? (
             data.label === "이메일주소" ? (
               <S.InputWithButtonDiv>
@@ -96,7 +96,7 @@ export default function Signup() {
           onChange={togglePrivate}
         />
         <h3>개인정보 수집 및 이용 동의 (필수)</h3>
-        <LazyLink href={PATH.AGREEMENT}>
+        <LazyLink href={PATH.AGREEMENT} onClick={handleLinkClick}>
           <h3>자세히</h3>
         </LazyLink>
       </S.CheckBoxWithText>

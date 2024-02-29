@@ -6,6 +6,8 @@ import {
   authCheckEmailDuplicate,
   authSignUp,
 } from "@/api/auth";
+import { router } from "next/client";
+import PATH from "@/constants/path";
 
 type InputProps = {
   label: string;
@@ -39,9 +41,7 @@ export default function useSignup() {
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [codeMessage, setCodeMessage] = useState("");
   const [privateChecked, setPrivateChecked] = useState(false);
-  // yslim162@naver.com
 
-  // Function to reset emailMessage
   const resetEmailMessage = () => {
     if (duplicateCheck) {
       setEmailMessage(""); // Reset the message
@@ -49,13 +49,11 @@ export default function useSignup() {
     }
   };
 
-  // Attach the resetEmailMessage function to the onChangeEmail handler
   const onChangeEmailHandler = (newEmail: string) => {
-    onChangeEmail(newEmail); // Assuming onChangeEmail is provided by useInput
-    resetEmailMessage(); // Reset emailMessage
+    onChangeEmail(newEmail);
+    resetEmailMessage();
   };
 
-  /** TODO:) 백엔드 data 수정하면 고쳐야함 */
   const checkEmailDuplicated = async () => {
     const data = await authCheckEmailDuplicate(email);
     if (data.data) {
@@ -72,7 +70,6 @@ export default function useSignup() {
       setShowText(true);
       const data = await authSendEmail({ email });
       if (data) {
-        console.log(data);
         setDuplicateCheck(false);
       }
     } else {
@@ -114,6 +111,24 @@ export default function useSignup() {
   };
 
   const inputData: InputProps[] = [
+    {
+      label: "이름",
+      placeholder: "이름을 적어주세요.",
+      onChange: onChangeUserName,
+    },
+    {
+      label: "휴대폰 번호",
+      placeholder: "예) 01012345678",
+      onChange: onChangePhoneNumber,
+      inValid:
+        phoneNumber.length > 0 &&
+        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber),
+      message:
+        phoneNumber.length > 0 &&
+        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber)
+          ? "유효하지 않은 전화번호입니다"
+          : "",
+    },
     {
       label: "이메일주소",
       placeholder: "예) rastle@rastle.com",
@@ -167,25 +182,11 @@ export default function useSignup() {
           : "",
       inValid: password !== passwordCheck && passwordCheck.length > 0,
     },
-    {
-      label: "이름",
-      placeholder: "예) 홍레슬",
-      onChange: onChangeUserName,
-    },
-    {
-      label: "휴대폰 번호",
-      placeholder: "예) 01012345678",
-      onChange: onChangePhoneNumber,
-      inValid:
-        phoneNumber.length > 0 &&
-        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber),
-      message:
-        phoneNumber.length > 0 &&
-        !/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber)
-          ? "유효하지 않은 전화번호입니다"
-          : "",
-    },
   ];
+
+  const handleLinkClick = () => {
+    router.push(PATH.AGREEMENT, undefined, { shallow: true });
+  };
 
   return {
     username,
@@ -200,5 +201,6 @@ export default function useSignup() {
     inputData,
     onChangePasswordCheck,
     onChangePassword,
+    handleLinkClick,
   };
 }
