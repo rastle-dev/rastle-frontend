@@ -35,7 +35,7 @@ export default function OrderHistory() {
     <S.Wrap isLoading={orderLoading}>
       {isDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             localStorage.clear();
             closeDialog();
             router.push(PATH.LOGIN);

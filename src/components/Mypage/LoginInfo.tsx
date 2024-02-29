@@ -91,7 +91,7 @@ export default function LoginInfo() {
     <div>
       {isDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             localStorage.clear();
             closeDialog();
             router.push(PATH.LOGIN);

@@ -54,7 +54,7 @@ export default function Event() {
       )}
       {isEventDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             // localStorage.clear();
             setIsEventDialogOpen(false);
             // router.push(PATH.LOGIN);

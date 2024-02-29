@@ -44,7 +44,7 @@ export default function DefaultAddress() {
     <div>
       {isDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             localStorage.clear();
             closeDialog();
             router.push(PATH.LOGIN);
