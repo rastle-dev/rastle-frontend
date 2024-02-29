@@ -53,7 +53,7 @@ export default function Cart() {
     <S.Wrap isLoading={isLoading}>
       {isDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             localStorage.clear();
             closeDialog();
             router.push(PATH.LOGIN);

@@ -63,13 +63,13 @@ export default function Product() {
       </Head>
       {isDialogOpen && (
         <Dialog
-          onClickBasketButton={() => {
+          onClickRefuseButton={() => {
             router.push({
               pathname: PATH.MYPAGE,
               query: { tab: "장바구니" },
             });
           }}
-          onClickShopButton={() => {
+          onClickConfirmButton={() => {
             closeDialog();
           }}
           visible
