@@ -14,6 +14,7 @@ const PATH = {
   AGREEMENT: "/shopinfo/agreement",
   PRIVACY: "/shopinfo/privacy",
   GUIDE: "/shopinfo/guide",
+  ORDERDETAIL: "/orderDetail",
 } as const;
 
 export default PATH;

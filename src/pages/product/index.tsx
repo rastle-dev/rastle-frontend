@@ -52,6 +52,8 @@ export default function Product() {
     };
   }, []);
 
+  console.log(detailData);
+
   return (
     <S.Wrapper>
       <Head>

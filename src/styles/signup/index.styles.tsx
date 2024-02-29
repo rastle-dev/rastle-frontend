@@ -19,13 +19,14 @@ export const Wrapper = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
-  font-size: 3.4375rem;
-  font-weight: 500;
+  font-size: 3.2rem;
+  font-weight: 400;
   line-height: normal;
   padding-bottom: 3.5rem;
   margin: 0;
   @media (max-width: 769px) {
-    font-size: 3rem;
+    font-size: 2rem;
+    padding-bottom: 2rem;
   }
 `;
 

@@ -8,6 +8,7 @@ import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
 import useOrder from "../../hooks/useOrder";
+import { DiscountPrice } from "@/styles/order/index.styles";
 
 type ProductItem = {
   productName: string;
@@ -97,6 +98,12 @@ export default function Order() {
                         {item.count}개 /{" "}
                         {`${item.productPrice.toLocaleString()}원`}
                       </S.NumPrice>
+                      {/* <S.DiscountPrice> */}
+                      {/*   {item.count}개 /{" "} */}
+                      {/*   {`${item.productPrice.toLocaleString()}원`} */}
+                      {/*   <span>10% </span> */}
+                      {/*   {item.discountPrice ? item.discountedPrice : ""}원 원 */}
+                      {/* </S.DiscountPrice> */}
                       <S.SizeColor>
                         {item.size} / {item.color}
                       </S.SizeColor>
@@ -114,6 +121,12 @@ export default function Order() {
                     <S.NumPrice>
                       {item.count}개 / {`${item.price.toLocaleString()}원`}
                     </S.NumPrice>
+                    {/* <S.DiscountPrice> */}
+                    {/*   {item.count}개 /{" "} */}
+                    {/*   {`${item.price.toLocaleString()}원`} */}
+                    {/*   <span>10% </span> */}
+                    {/*   {item.discountPrice ? item.discountedPrice : ""}원 원 */}
+                    {/* </S.DiscountPrice> */}
                     <S.SizeColor>
                       {item.size} / {item.color}
                     </S.SizeColor>
