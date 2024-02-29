@@ -6,7 +6,8 @@ import {
   authCheckEmailDuplicate,
   authSignUp,
 } from "@/api/auth";
-import { router } from "next/client";
+import { useRouter } from "next/dist/client/router";
+
 import PATH from "@/constants/path";
 
 type InputProps = {
@@ -28,6 +29,7 @@ type InputProps = {
 };
 
 export default function useSignup() {
+  const router = useRouter();
   const [username, onChangeUserName] = useInput("");
   const [email, onChangeEmail] = useInput("");
   const [code, onChangeCode] = useInput("");

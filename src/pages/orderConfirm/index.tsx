@@ -2,9 +2,10 @@ import React from "react";
 import * as S from "@/styles/orderconfirm/index.styles";
 import useOrderConfirm from "@/hooks/useOrderConfirm";
 import PATH from "@/constants/path";
-import { router } from "next/client";
+import { useRouter } from "next/router";
 
-export default function Order() {
+export default function OrderConfirm() {
+  const router = useRouter();
   const { ProductList, OrdererInfo, parsedOrderInfo } = useOrderConfirm();
   return (
     <S.Temp>
