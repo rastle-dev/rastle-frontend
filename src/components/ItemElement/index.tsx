@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
-import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import ItemElementProps from "@/interface/itemElement";
 import Image from "next/image";
 
@@ -104,21 +103,13 @@ function ItemElement({
     }
   };
 
-  let discountPercent;
-  let discountedPrice;
-
-  if (discountPrice !== undefined) {
-    const result = calculateDiscountPercentAndPrice(price, discountPrice);
-    discountPercent = result.discountPercent;
-    discountedPrice = result.discountedPrice;
-  }
   return (
     <ItemWrapper>
       <StyledImage
         src={thumbnailSrc}
         alt={name}
-        width={100}
-        height={100}
+        width={500}
+        height={500}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleTap}
