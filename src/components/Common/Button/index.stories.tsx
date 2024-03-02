@@ -21,5 +21,6 @@ export function ControlTest(args: any) {
   return <Button {...args} />;
 }
 ControlTest.args = {
-  label: "size",
+  title: "control-test",
+  width: "8rem",
 };
