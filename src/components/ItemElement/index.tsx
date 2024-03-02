@@ -64,7 +64,6 @@ function ItemElement({
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
-  const events = isEvent;
   const [thumbnailSrc, setThumbnailSrc] = useState(mainThumbnail);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -82,7 +81,7 @@ function ItemElement({
     const pathname = isEvent ? PATH.EVENT : PATH.PRODUCT;
     router.push({
       pathname,
-      query: { productId, events },
+      query: { productId },
     });
   };
 
