@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/dist/client/router";
 import QUERYKEYS from "@/constants/querykey";
-import { createOrder } from "@/api/shop";
+import { createOrder, loadProductDetail } from "@/api/shop";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
 import { toast } from "react-toastify";
 import {
   CartProduct,
   Color,
-  ProductDetailData,
   SelectedProduct,
   Size,
 } from "@/interface/product/detailProduct";
@@ -18,14 +17,16 @@ export default function useProduct() {
   const router = useRouter();
   const { productId } = router.query;
   const numericProductId = Number(productId);
-  const queryClient = useQueryClient();
 
-  const detailData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_PRODUCT_DETAIL,
-    numericProductId,
-  ]) as { data: ProductDetailData };
-  console.log("data", detailData);
-
+  const { data: detailData } = useQuery(
+    [QUERYKEYS.LOAD_PRODUCT_DETAIL, numericProductId],
+    () => loadProductDetail(numericProductId),
+    {
+      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
+      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+    },
+  );
+  // console.log("data2", detailData);
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(

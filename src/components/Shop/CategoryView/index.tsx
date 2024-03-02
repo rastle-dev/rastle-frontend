@@ -24,6 +24,7 @@ export default function CategoryView({
             key={item.id}
             mainThumbnail={item.mainThumbnail}
             subThumbnail={item.subThumbnail}
+            productName={item.productName}
             name={item.name}
             price={item.price}
             discountPrice={item.discountPrice}
@@ -45,7 +46,8 @@ export default function CategoryView({
             key={item.productId}
             mainThumbnail={item.mainThumbnail}
             subThumbnail={item.subThumbnail}
-            name={item.name}
+            name={item.productName}
+            productName={item.productName}
             price={item.price}
             discountPrice={0}
             id={item.productId}
@@ -70,7 +72,6 @@ export default function CategoryView({
       </S.ProductList>
     );
   }
-  console.log("active2", activeCategory);
 
   return (
     <S.ProductList>
@@ -95,6 +96,7 @@ export default function CategoryView({
           mainThumbnail={item.mainThumbnail}
           subThumbnail={item.subThumbnail}
           name={item.name}
+          productName={item.productName}
           price={item.price}
           discountPrice={item.discountPrice}
           id={item.id}

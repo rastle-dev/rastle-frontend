@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import media from "@/styles/media";
+import Image from "next/image";
 
 // 슬라이드 데이터
 
@@ -54,7 +55,7 @@ const SwiperSlide = styled.div`
     width: 33%;
   }
 `;
-const MarketIMG = styled.img`
+const MarketIMG = styled(Image)`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77;
@@ -71,7 +72,12 @@ function SwiperComponent({ imgUrls }: SwiperComponentProps) {
       <SwiperWrapper>
         {slides.slice(0, -1)?.map((slide: any, index: number) => (
           <SwiperSlide key={slide}>
-            <MarketIMG src={slide} alt={`마켓제품 ${index + 1}`} />
+            <MarketIMG
+              src={slide}
+              alt={`마켓제품 ${index + 1}`}
+              width={500}
+              height={500}
+            />
           </SwiperSlide>
         ))}
       </SwiperWrapper>

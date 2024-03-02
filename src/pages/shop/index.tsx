@@ -9,8 +9,8 @@ import { useRouter } from "next/dist/client/router";
 import Category from "@/interface/category";
 import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
-import Index from "@/components/Shop/CategoryView/Cody";
 import Head from "next/head";
+import Cody from "@/components/Shop/CategoryView/Cody";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -105,7 +105,7 @@ export default function Shop() {
       </S.Header>
       <S.Line />
       {activeCategory === "코디상품" ? (
-        <Index />
+        <Cody />
       ) : (
         <CategoryView
           activeCategory={activeCategory}

@@ -21,6 +21,7 @@ function ProductLayer({ productData }: { productData: ProductData }) {
             subThumbnail={item.subThumbnail}
             name={item.name}
             price={item.price}
+            productName={item.productName}
             discountPrice={item.discountPrice}
             id={item.id}
             categoryId={item.categoryId}
