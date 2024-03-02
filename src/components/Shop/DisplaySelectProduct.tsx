@@ -19,6 +19,7 @@ export default function DisplaySelectProduct({ id }: Id) {
           mainThumbnail={item.mainThumbnail}
           subThumbnail={item.subThumbnail}
           name={item.name}
+          productName={item.productName}
           price={item.price}
           discountPrice={item.discountPrice}
           id={item.id}
