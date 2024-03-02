@@ -14,6 +14,7 @@ const StyledImage = styled(Image)`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77; /* width의 1.25배에 해당하는 비율로 height 설정 */
+  cursor: pointer;
 `;
 
 const ItemName = styled.div`
@@ -21,6 +22,7 @@ const ItemName = styled.div`
   padding-top: 1rem;
   font-weight: 400;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Event = styled.div`
@@ -115,7 +117,7 @@ function ItemElement({
         onTouchStart={handleTap}
         onClick={isMobile ? () => {} : handleClick}
       />
-      <ItemName>{name}</ItemName>
+      <ItemName onClick={isMobile ? () => {} : handleClick}>{name}</ItemName>
       {discountPrice !== undefined ? (
         <PriceDiv>
           <DiscountPrice>{price.toLocaleString()}원</DiscountPrice>
