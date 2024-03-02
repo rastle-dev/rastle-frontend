@@ -37,4 +37,9 @@ export function ControlTest(args: any) {
   return <Dialog {...args} />;
 }
 
-ControlTest.args = {};
+ControlTest.args = {
+  title: "다이얼로그 설명을 작성하세요!",
+  refuse: "취소 버튼",
+  confirm: "승인 버튼",
+  visible: true,
+};

@@ -9,18 +9,18 @@ export default {
 };
 
 export function Default() {
-  return <Button title="로그인" type="default" />;
+  return <Button title="로그인" type="default" width="10rem" />;
 }
 export function Shop() {
-  return <Button title="구매하기" type="shop" />;
+  return <Button title="구매하기" type="shop" width="10rem" />;
 }
 export function Size() {
-  return <Button title="M" type="size" />;
+  return <Button title="M" type="size" width="8rem" />;
 }
 export function ControlTest(args: any) {
   return <Button {...args} />;
 }
 ControlTest.args = {
-  productName: "기본",
-  label: "size",
+  title: "control-test",
+  width: "8rem",
 };
