@@ -35,10 +35,11 @@
 //     }
 //   }
 // }
+import API from "../../src/api/config";
 
 Cypress.Commands.add("login", () => {
   cy.request({
-    url: `https://api.recordyslow.com/auth/login`,
+    url: `${API.LOGIN}`,
     method: "POST",
     body: {
       email: `${Cypress.env("CYPRESS_TEST_EMAIL")}`,
