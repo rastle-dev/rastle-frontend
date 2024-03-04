@@ -20,10 +20,20 @@ jobs:
       - name: Install project dependencies
         run: yarn
 
-      - name: Recordy Slow Cypress
-        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY  }}
+      - name: Create envfile
+        run: |
+          echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" > .env
+          echo "HTTPS=false" >> .env      
 
-      - name: Cypress run
+      - name: Create Cypress envfile
+        run: |
+          echo '{
+            "CYPRESS_API_HOST": ${{ secrets.CYPRESS_API_HOST }},
+            "CYPRESS_TEST_EMAIL": ${{ secrets.CYPRESS_TEST_EMAIL }},
+            "CYPRESS_TEST_PASSWORD": ${{ secrets.CYPRESS_TEST_PASSWORD }}
+          }' > cypress.env.json
+
+      - name: Run app
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
         uses: cypress-io/github-action@v6
         with:
@@ -45,3 +55,8 @@ jobs:
           CYPRESS_API_HOST: ${{ secrets.CYPRESS_API_HOST }}
           CYPRESS_TEST_EMAIL: ${{ secrets.CYPRESS_TEST_EMAIL }}
           CYPRESS_TEST_PASSWORD: ${{ secrets.CYPRESS_TEST_PASSWORD }}
+
+      - name: Run cypress
+        run: |
+          export CYPRESS_PROJECT_ID=${{ secrets.CYPRESS_PROJECT_ID }}
+          yarn cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
