@@ -28,7 +28,6 @@ jobs:
       - name: Create Cypress envfile
         run: |
           echo '{
-            "CYPRESS_API_HOST": ${{ secrets.CYPRESS_API_HOST }},
             "CYPRESS_TEST_EMAIL": ${{ secrets.CYPRESS_TEST_EMAIL }},
             "CYPRESS_TEST_PASSWORD": ${{ secrets.CYPRESS_TEST_PASSWORD }}
           }' > cypress.env.json
@@ -42,7 +41,7 @@ jobs:
           start: yarn dev
           wait-on: 'http://localhost:3000' # Waits for above
           # Records to Cypress Cloud
-          # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
+          # https://docs.cypress.io/guides/cloud/projects#Sㅉet-up-a-project-to-record
           record: true
           parallel: true # Runs test in parallel using settings above
         env:
