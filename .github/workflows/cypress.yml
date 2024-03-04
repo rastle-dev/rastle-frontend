@@ -14,11 +14,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies and start server
-        run: |
-          yarn install
-          yarn dev
-          sleep 20
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Install project dependencies
+        run: yarn
 
       - name: Recordy Slow Cypress
         run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY  }}
