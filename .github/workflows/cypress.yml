@@ -14,9 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install dependencies and start server
+        run: |
+          yarn install
+          yarn dev
+          sleep 20
+
       - name: Recordy Slow Cypress
-        with:
-        start: yarn install | yarn dev | npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY  }}
+        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY  }}
 
       - name: Cypress run
         # Uses the official Cypress GitHub action https://github.com/cypress-io/github-action
