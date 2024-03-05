@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "types": ["@types/react-js-pagination", "cypress", "cypress-react-selector"],
+    "types": ["@types/react-js-pagination", "cypress"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
