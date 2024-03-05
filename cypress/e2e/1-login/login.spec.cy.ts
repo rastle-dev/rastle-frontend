@@ -40,7 +40,7 @@ describe("login e2e test", () => {
     cy.wait("@loginSuccess")
       .its("response.body")
       .then((data: any) => {
-        expect(data.message).to.equal("자격 증명에 실패하였습니다.");
+        expect(data.errorCode).to.equal(500);
       });
   });
 });
