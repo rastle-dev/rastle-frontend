@@ -1,4 +1,4 @@
-name: recordy slow E2E test
+name: Cypress E2E test
 
 on: [push]
 
@@ -41,7 +41,9 @@ jobs:
           }' > cypress.env.json
 
       - name: Run app
-        run: yarn dev & yarn wait-on http://localhost:3000
+        with:
+          start: yarn dev
+          wait-on: 'http://localhost:3000'
 
       - name: Run cypress
         run: |
