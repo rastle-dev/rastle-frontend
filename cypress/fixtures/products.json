@@ -1,0 +1,179 @@
+{
+  "pageProps": {
+    "dehydratedState": {
+      "mutations": [],
+      "queries": [
+        {
+          "state": {
+            "data": {
+              "data": {
+                "content": [
+                  {
+                    "id": 14,
+                    "name": "와이드 로우 핀턱 팬츠 연그레이",
+                    "price": 1000,
+                    "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MT_1.jpg",
+                    "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_ST_1.jpg",
+                    "discountPrice": 1000,
+                    "displayOrder": 100,
+                    "visible": false,
+                    "categoryId": 21,
+                    "bundleId": 17,
+                    "eventId": null,
+                    "eventApplyCount": 0
+                  },
+                  {
+                    "id": 15,
+                    "name": "와이드 로우 핀턱 팬츠 베이지",
+                    "price": 48900,
+                    "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/2_MT_1.jpg",
+                    "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/2_ST_1.jpg",
+                    "discountPrice": 45900,
+                    "displayOrder": 200,
+                    "visible": false,
+                    "categoryId": 21,
+                    "bundleId": 18,
+                    "eventId": null,
+                    "eventApplyCount": 0
+                  }
+                ],
+                "pageable": {
+                  "sort": {
+                    "empty": true,
+                    "sorted": false,
+                    "unsorted": true
+                  },
+                  "offset": 0,
+                  "pageSize": 2,
+                  "pageNumber": 0,
+                  "paged": true,
+                  "unpaged": false
+                },
+                "totalElements": 5,
+                "totalPages": 3,
+                "last": false,
+                "size": 2,
+                "number": 0,
+                "sort": {
+                  "empty": true,
+                  "sorted": false,
+                  "unsorted": true
+                },
+                "numberOfElements": 2,
+                "first": true,
+                "empty": false
+              }
+            },
+            "dataUpdateCount": 1,
+            "dataUpdatedAt": 1709716669237,
+            "error": null,
+            "errorUpdateCount": 0,
+            "errorUpdatedAt": 0,
+            "fetchFailureCount": 0,
+            "fetchFailureReason": null,
+            "fetchMeta": null,
+            "isInvalidated": false,
+            "status": "success",
+            "fetchStatus": "idle"
+          },
+          "queryKey": [
+            "loadMarketProductPaging"
+          ],
+          "queryHash": "[\"loadMarketProductPaging\"]"
+        },
+        {
+          "state": {
+            "data": {
+              "data": [
+                {
+                  "eventId": 24,
+                  "eventName": "2차 이벤트",
+                  "startDate": "2024-02-01T12:00:00",
+                  "endDate": "2024-02-20T12:00:00",
+                  "eventImageUrls": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_6480.jpeg,",
+                  "eventDescription": "라퍼지 스토어 아우터 이벤트",
+                  "eventVisible": true,
+                  "productId": 23,
+                  "productName": "연그레이 팬츠",
+                  "price": 45000,
+                  "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_1.jpg",
+                  "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MI_2.jpg",
+                  "discountPrice": 0,
+                  "displayOrder": 1000,
+                  "productVisible": false
+                },
+                {
+                  "eventId": 25,
+                  "eventName": "1차 이벤트",
+                  "startDate": "2024-01-28T12:00:00",
+                  "endDate": "2024-01-30T12:00:00",
+                  "eventImageUrls": null,
+                  "eventDescription": "1차 이벤트",
+                  "eventVisible": true,
+                  "productId": 25,
+                  "productName": "피쉬테일파카",
+                  "price": 140000,
+                  "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/12312341.jpg",
+                  "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_8075.JPG",
+                  "discountPrice": 0,
+                  "displayOrder": 1000,
+                  "productVisible": false
+                },
+                {
+                  "eventId": 24,
+                  "eventName": "2차 이벤트",
+                  "startDate": "2024-02-01T12:00:00",
+                  "endDate": "2024-02-20T12:00:00",
+                  "eventImageUrls": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_6480.jpeg,",
+                  "eventDescription": "라퍼지 스토어 아우터 이벤트",
+                  "eventVisible": true,
+                  "productId": 24,
+                  "productName": "라퍼지스토어 코트",
+                  "price": 1400000,
+                  "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_4989.JPG",
+                  "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_5012.JPG",
+                  "discountPrice": 0,
+                  "displayOrder": 300,
+                  "productVisible": false
+                },
+                {
+                  "eventId": 25,
+                  "eventName": "1차 이벤트",
+                  "startDate": "2024-01-28T12:00:00",
+                  "endDate": "2024-01-30T12:00:00",
+                  "eventImageUrls": null,
+                  "eventDescription": "1차 이벤트",
+                  "eventVisible": true,
+                  "productId": 21,
+                  "productName": "이벤트 상품2",
+                  "price": 59000,
+                  "mainThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA2024-01-26%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE11.10.43.png",
+                  "subThumbnail": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/IMG_4911.JPG",
+                  "discountPrice": 0,
+                  "displayOrder": 200,
+                  "productVisible": false
+                }
+              ]
+            },
+            "dataUpdateCount": 1,
+            "dataUpdatedAt": 1709716669267,
+            "error": null,
+            "errorUpdateCount": 0,
+            "errorUpdatedAt": 0,
+            "fetchFailureCount": 0,
+            "fetchFailureReason": null,
+            "fetchMeta": null,
+            "isInvalidated": false,
+            "status": "success",
+            "fetchStatus": "idle"
+          },
+          "queryKey": [
+            "loadEventProductPaging"
+          ],
+          "queryHash": "[\"loadEventProductPaging\"]"
+        }
+      ]
+    }
+  },
+  "__N_SSG": true
+}
