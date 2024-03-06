@@ -38,20 +38,20 @@
 import API from "../../src/api/config";
 
 Cypress.Commands.add("login", () => {
-  cy.request({
-    url: `${API.LOGIN}`,
+  cy.visit("http://localhost:3000/login");
+  cy.intercept({
     method: "POST",
-    body: {
-      email: `${Cypress.env("CYPRESS_TEST_EMAIL")}`,
-      password: `${Cypress.env("CYPRESS_TEST_PASSWORD")}`,
-    },
-  })
-    .its("headers")
-    .then((response) => {
-      localStorage.setItem(
-        "accessToken",
-        // @ts-expect-error 이 부분은 의도적으로 에러를 억제하기 위해 사용되었습니다.
-        `${response.authorization.replace("Bearer ", "")}`,
-      );
-    });
+    url: `${API.LOGIN}`,
+  });
+  cy.intercept("GET", "/_next/data/development/index.json", {
+    fixture: "products.json",
+  });
+  cy.contains("이메일 주소")
+    .parent()
+    .type(`${Cypress.env("CYPRESS_TEST_EMAIL")}`);
+  cy.contains("비밀번호")
+    .parent()
+    .type(`${Cypress.env("CYPRESS_TEST_PASSWORD")}`);
+  cy.contains("로그인").click();
+  cy.contains("하루 동안 보지 않기").click();
 });
