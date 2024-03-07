@@ -42,7 +42,7 @@ describe("purchase e2e test", () => {
     // });
   });
 
-  it("장바구니에 있는 상품 전체 구매하기 사전 검증 성공 확인 및 pg사 호출 테스트", () => {
+  it("장바구니에 있는 상품 전체 구매하기 사전 검증 성공 확인 및 pg사 결제창 호출 테스트", () => {
     cy.intercept(
       {
         method: "GET",
@@ -72,7 +72,7 @@ describe("purchase e2e test", () => {
       expect(interception?.response?.statusCode).to.equal(200);
     });
   });
-  it("상품 상세페이지에서 바로 구매하기 사전 검증 성공 확인 및 pg사 호출 테스트", () => {
+  it("상품 상세페이지에서 바로 구매하기 사전 검증 성공 확인 및 pg사 결제창 호출 테스트", () => {
     cy.intercept("GET", "/_next/data/development/product.json?productId=14", {
       fixture: "productDetail.json",
     });
