@@ -1,0 +1,42 @@
+{
+  "data": {
+    "content": [
+      {
+        "cartProductId": 1,
+        "productName": "와이드 로우 핀턱 팬츠 연그레이",
+        "productPrice": 1000,
+        "discountPrice": 800,
+        "color": "연그레이",
+        "size": "M",
+        "count": 1,
+        "mainThumbnailImage": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MT_1.jpg",
+        "productId": 1
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "empty": true,
+        "sorted": false,
+        "unsorted": true
+      },
+      "offset": 0,
+      "pageSize": 20,
+      "pageNumber": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalElements": 1,
+    "totalPages": 1,
+    "last": true,
+    "size": 20,
+    "number": 0,
+    "sort": {
+      "empty": true,
+      "sorted": false,
+      "unsorted": true
+    },
+    "numberOfElements": 1,
+    "first": true,
+    "empty": false
+  }
+}
