@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "types": ["@types/react-js-pagination"],
+    "types": ["@types/react-js-pagination", "cypress"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,6 +19,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx","**/*.json"],
   "exclude": ["node_modules"]
 }

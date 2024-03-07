@@ -11,6 +11,7 @@ interface ColorButtonProps {
   color: string | { [key: string]: string };
   /** 버튼의 type : 클릭 | 클릭X */
   clicked?: boolean;
+  dataCy?: string;
 }
 
 const Wrapper = styled.div<{
@@ -46,9 +47,10 @@ export default function ColorButton({
   color = "블랙",
   onClick,
   clicked = false,
+  dataCy = "",
 }: ColorButtonProps) {
   return (
-    <Wrapper clicked={clicked} size={size} onClick={onClick}>
+    <Wrapper clicked={clicked} size={size} onClick={onClick} data-cy={dataCy}>
       <Inner color={color} />
     </Wrapper>
   );

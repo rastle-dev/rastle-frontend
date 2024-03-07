@@ -11,6 +11,7 @@ type ButtonProps = {
   className?: string;
   width?: string;
   /** 버튼 활성화 (onClick)을 감지하기 위한 props */
+  dataCy?: string;
 };
 
 const Wrapper = styled.button<{
@@ -69,6 +70,7 @@ export default function Button({
   onClick,
   className,
   width,
+  dataCy = "",
 }: ButtonProps) {
   return (
     <Wrapper
@@ -78,6 +80,7 @@ export default function Button({
       disabled={disabled}
       width={width!}
       isActive
+      data-cy={dataCy}
     >
       {title}
     </Wrapper>
