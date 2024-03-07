@@ -411,9 +411,11 @@ export default function useOrder() {
     }
     if (isDefaultAddress) {
       mutateUpdateAddressProduct.mutate({
+        rrecipientName: receiver,
         zipCode: postalAddress.zonecode,
         roadAddress: postalAddress.address,
         detailAddress: detailPostal,
+        recipientPhoneNumber: phoneNumber,
       });
       mutateUpdatePhoneNumber.mutate({ newPhoneNumber: phoneNumber });
     }
@@ -462,7 +464,7 @@ export default function useOrder() {
         name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
       values = {
-        pg: "nice",
+        pg: "nice_v2",
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
@@ -485,7 +487,7 @@ export default function useOrder() {
         name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
       }
       values = {
-        pg: "nice",
+        pg: "nice_v2",
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
