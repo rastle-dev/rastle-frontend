@@ -192,6 +192,7 @@ export default function useCart() {
       }
     }
   };
+
   const onClickWholeOrderButton = async () => {
     const orderProducts = cartProduct?.data?.content?.map(
       (product: ProductItem) => ({
@@ -207,6 +208,7 @@ export default function useCart() {
       (product: ProductItem) => product.cartProductId,
     );
     const wholeOrderList = whole.join(",");
+    console.log(orderProducts);
     try {
       const data = await createOrder({
         orderProducts,
@@ -232,15 +234,21 @@ export default function useCart() {
       console.log(err);
     }
   };
+
+  console.log(selectedItems);
   const onClickSelectedOrderButton = async (item: ProductItem) => {
-    const orderProducts = selectedItems.map((product: ProductItem) => ({
-      productId: product.productId,
-      name: product.productName,
-      color: product.color,
-      size: product.size,
-      count: product.count,
-      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
-    }));
+    setSelectedItems([...selectedItems, item]);
+
+    const orderProducts = [
+      {
+        productId: item.productId,
+        name: item.productName,
+        color: item.color,
+        size: item.size,
+        count: item.count,
+        totalPrice: item.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+      },
+    ];
 
     try {
       const data = await createOrder({
@@ -296,5 +304,6 @@ export default function useCart() {
     isCartDataLoading,
     setLoadingProps,
     loadingProps,
+    isLoading,
   };
 }

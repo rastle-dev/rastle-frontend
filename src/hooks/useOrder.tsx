@@ -373,7 +373,8 @@ export default function useOrder() {
     console.log(response);
 
     if (!success) {
-      alert(`결제에 실패하였습니다. 에러 내용: ${errorMsg}`);
+      alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
+      router.replace(`/shop`);
       return;
     }
 
