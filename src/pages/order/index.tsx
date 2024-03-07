@@ -222,7 +222,8 @@ export default function Order() {
                   color={COLORS.BLACK}
                 />
                 <S.CouponToggleText>
-                  사용가능한 쿠폰이 1장 있어요.
+                  사용가능한 쿠폰이 {couponData?.data.couponInfos.length}장
+                  있어요.
                 </S.CouponToggleText>
               </S.CouponToggleInner1>
               <Icon
