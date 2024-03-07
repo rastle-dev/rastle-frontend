@@ -302,7 +302,7 @@ export interface RequestPayResponse extends RequestPayAdditionalResponse {
    * - success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음
    */
 
-  errorMsg?: string;
+  error_msg?: string;
   /**
    * ### 포트원 고유 결제번호
    * - success가 false이고 사전 validation에 실패한 경우, imp_uid는 null일 수 있음

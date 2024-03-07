@@ -273,7 +273,7 @@ export default function useCart() {
     onClickWholeOrderButton,
     onClickOrderButton,
     setIsDataLoading,
-    isLoading,
+    isCouponLoading: isLoading,
     deleteButtonDisabled,
     handleProductCheckboxChange,
     handleHeaderCheckboxChange,

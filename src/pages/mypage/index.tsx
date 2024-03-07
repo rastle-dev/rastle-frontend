@@ -6,8 +6,8 @@ import LoginInfo from "@/components/Mypage/LoginInfo";
 import DefaultAddress from "@/components/Mypage/DefaultAddress";
 import Cart from "@/components/Mypage/Cart";
 import Coupon from "@/components/Mypage/Coupon";
-import * as S from "../../styles/mypage/index.styles";
 import { useRouter } from "next/router";
+import * as S from "../../styles/mypage/index.styles";
 
 export default function Mypage() {
   const router = useRouter();

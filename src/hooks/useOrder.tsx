@@ -12,12 +12,12 @@ import {
   updateDefaultAddress,
   updatePhoneNumber,
 } from "@/api/cart";
-import { toast } from "react-toastify";
+import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
   address: string | undefined | null;
-  zonecode: number | undefined | null;
+  zonecode: string | number | undefined | null;
 };
 type CommonInputField = {
   label: string;
@@ -37,7 +37,9 @@ export default function useOrder() {
   const [receiver, onChangeReceiver, setReceiver] = useInput("");
   const [detailPostal, onChangeDetailPostal, setDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
+  const [deliveryMsg, onChangeDeliveryMsg] = useInput("");
   const [isDefaultAddress, setIsDefaultAddress] = useState(true);
+  const { couponData } = useCoupon();
 
   const handleCheckboxChange = () => {
     setIsDefaultAddress(!isDefaultAddress);
@@ -56,6 +58,7 @@ export default function useOrder() {
   }, [isSuccess, myInfo]);
 
   console.log(myInfo);
+  console.log(couponData);
   const OrdererInfo = [
     { meta: "이름", data: myInfo?.data.userName },
     { meta: "연락처", data: myInfo?.data.phoneNumber },
@@ -83,7 +86,8 @@ export default function useOrder() {
   }
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
   // TODO: 쿠폰가격 변경
-  const couponPrice = 3000;
+  const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
+  console.log(selectedCoupon);
 
   const toggleCoupon = (couponId: number) => {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
@@ -162,7 +166,7 @@ export default function useOrder() {
     },
     {
       meta: "쿠폰할인",
-      data: selectedCoupon ? "-3000원" : "-0원",
+      data: selectedCoupon ? `-${couponPrice}원` : "-0원",
     },
     // Add other items in PriceInfo array as needed
   ];
@@ -223,8 +227,10 @@ export default function useOrder() {
   console.log(defaultAddress);
 
   type PgType = "kakaopay" | "card" | "vbank"; // 원하는 PG 사를 나열합니다.
+  type PgMethod = "kakaopay" | "nice_v2"; // 원하는 PG 사를 나열합니다.
 
   const [pgData, setPgData] = useState<PgType | undefined>();
+  const [pgMethod, setPgMethod] = useState<PgMethod | undefined>();
 
   const handleDeliveryButtonClick = (index: any) => {
     setClickedDeliveryButtonIndex(index);
@@ -234,10 +240,13 @@ export default function useOrder() {
     setClickedPaymentButtonIndex(index);
     if (index === 0) {
       setPgData("kakaopay");
+      setPgMethod("kakaopay");
     } else if (index === 1) {
       setPgData("card");
+      setPgMethod("nice_v2");
     } else if (index === 2) {
       setPgData("vbank");
+      setPgMethod("nice_v2");
     }
   };
   const handlePostal = {
@@ -254,7 +263,7 @@ export default function useOrder() {
       setOpenPostcode(false);
     },
   };
-  const [DeliveryButtons, setDeliveryButtons] = useState([
+  const [DeliveryButtons] = useState([
     { id: 1, default: "기본 배송지" },
     { id: 2, default: "신규 배송지" },
   ]);
@@ -285,18 +294,26 @@ export default function useOrder() {
   useEffect(() => {
     console.log(postalAddress);
     if (clickedDeliveryButtonIndex === 1) {
-      setAddress((prevAddress) => ({
-        address: undefined,
-        zonecode: undefined,
+      setAddress(() => ({
+        address: "",
+        zonecode: "",
       }));
-      setDetailPostal(undefined);
+      setDetailPostal("");
+      setReceiver("");
+      setPhoneNumber("");
+      console.log(receiver);
     } else if (clickedDeliveryButtonIndex === 0) {
+      if (isSuccess && myInfo?.data) {
+        setReceiver(myInfo.data.userName);
+        setPhoneNumber(myInfo.data.phoneNumber);
+      }
       if (defaultAddress) {
         setAddress((prevAddress) => ({
           ...prevAddress,
           address: defaultAddress.data.roadAddress,
           zonecode: defaultAddress.data.zipCode,
         }));
+        setDetailPostal(defaultAddress.data.detailAddress);
       }
     }
   }, [clickedDeliveryButtonIndex]);
@@ -335,6 +352,19 @@ export default function useOrder() {
   ];
   console.log(deliveryInputs);
   const DefaultAddressInputs = [...commonInputFields];
+  const currentDate = new Date();
+
+  const nextDay = new Date(currentDate);
+  nextDay.setDate(currentDate.getDate() + 1);
+
+  // Format the date as YYYY-MM-DD
+  const formattedNextDay = `${nextDay.getFullYear()}-${(nextDay.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${nextDay.getDate().toString().padStart(2, "0")}`;
+
+  const vbankDue = formattedNextDay;
+
+  console.log(vbankDue);
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
@@ -386,12 +416,10 @@ export default function useOrder() {
 
   async function handlePaymentSubmit() {
     const { orderNumber } = router.query;
-    // const { productOrderNumbers } = router.query;
 
     if (typeof selectedProducts === "string") {
       console.log("selectedProducts", JSON.parse(selectedProducts));
     }
-    // const directProducts: string = String(selectedProducts);
 
     let selectedItems;
     let parsedSelectedProducts;
@@ -412,7 +440,7 @@ export default function useOrder() {
 
     if (isDefaultAddress) {
       mutateUpdateAddressProduct.mutate({
-        rrecipientName: receiver,
+        recipientName: receiver,
         zipCode: postalAddress.zonecode,
         roadAddress: postalAddress.address,
         detailAddress: detailPostal,
@@ -465,17 +493,18 @@ export default function useOrder() {
         name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
       values = {
-        pg: "nice_v2",
+        pg: pgMethod,
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
-        custom_data: { couponId: selectedCoupon, deliveryPrice },
+        custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         buyer_tel: phoneNumber,
         buyer_addr: `${postalAddress.address} ${detailPostal}`,
         buyer_postcode: postalAddress.zonecode,
+        vbank_due: vbankDue,
         m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     } else {
@@ -488,24 +517,24 @@ export default function useOrder() {
         name = `${selectedItems[0].productName} 외 ${additionalItems} 건`;
       }
       values = {
-        pg: "nice_v2",
+        pg: pgMethod,
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
         amount: totalPriceFinal,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
-        custom_data: { couponId: selectedCoupon, deliveryPrice },
+        custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
         buyer_tel: phoneNumber,
         buyer_addr: `${postalAddress.address} ${detailPostal}`,
         buyer_postcode: postalAddress.zonecode,
+        vbank_due: vbankDue,
         m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     }
 
     console.log(values);
     // //사전검증
-    alert("사전검증 실행");
     try {
       const paymentData = await paymentPrepare({
         merchant_uid: orderNumber,
@@ -514,7 +543,6 @@ export default function useOrder() {
       });
 
       if (paymentData) {
-        alert("사전검증 성공, 결제창 띄움");
         const { IMP } = window;
         IMP?.init("imp47805780"); // 가맹점 식별코드
 
@@ -562,5 +590,10 @@ export default function useOrder() {
     isCouponVisible,
     handleCheckboxChange,
     isDefaultAddress,
+    receiver,
+    deliveryMsg,
+    onChangeDeliveryMsg,
+    couponData,
+    isCouponLoading: isLoading,
   };
 }

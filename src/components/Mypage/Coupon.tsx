@@ -10,21 +10,21 @@ import useDialog from "@/hooks/useDialog";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 
 export default function Coupon() {
-  const { menuList, couponData, isLoading } = useCoupon();
+  const { menuList, couponData, isCouponLoading } = useCoupon();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
-  const { timedOut } = useLoadingWithTimeout(isLoading);
+  const { timedOut } = useLoadingWithTimeout(isCouponLoading);
 
   const router = useRouter();
   useEffect(() => {
-    if (isLoading && timedOut) {
+    if (isCouponLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
 
-  if (isLoading && !timedOut) return <LoadingBar type={6} />;
+  if (isCouponLoading && !timedOut) return <LoadingBar type={6} />;
 
   return (
-    <S.Wrap isLoading={isLoading}>
+    <S.Wrap isLoading={isCouponLoading}>
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
@@ -45,7 +45,7 @@ export default function Coupon() {
       ) : (
         <>
           <S.TabMenu>
-            {isLoading && <LoadingBar type={6} />}
+            {isCouponLoading && <LoadingBar type={6} />}
             <p>사용 가능 쿠폰 {couponData?.data.couponInfos.length}장</p>
           </S.TabMenu>
           <S.Table>

@@ -46,9 +46,11 @@ export default function Order() {
     isCouponVisible,
     isDefaultAddress,
     handleCheckboxChange,
+    deliveryMsg,
+    onChangeDeliveryMsg,
   } = useOrder();
 
-  const { couponData, isLoading } = useCoupon();
+  const { couponData, isCouponLoading } = useCoupon();
 
   let parsedProducts;
   if (selectedProducts) {
@@ -201,7 +203,7 @@ export default function Order() {
           </S.SettingDefaultAddress>
           <S.OrderCommentWrapper>
             <h3>배송 시 요청 사항</h3>
-            <Input />
+            <Input value={deliveryMsg} onChange={onChangeDeliveryMsg} />
             <p>
               제주 및 도서 산간 지역의 배송은 추가 배송비가 발생할 수 있습니다.
             </p>
@@ -222,7 +224,8 @@ export default function Order() {
                   color={COLORS.BLACK}
                 />
                 <S.CouponToggleText>
-                  사용가능한 쿠폰이 1장 있어요.
+                  사용가능한 쿠폰이 {couponData?.data.couponInfos.length}장
+                  있어요.
                 </S.CouponToggleText>
               </S.CouponToggleInner1>
               <Icon
@@ -239,7 +242,7 @@ export default function Order() {
                 ) : (
                   <>
                     <S.TabMenu>
-                      {isLoading && <LoadingBar type={6} />}
+                      {isCouponLoading && <LoadingBar type={6} />}
                     </S.TabMenu>
                     <S.Table>
                       <S.TableContent>

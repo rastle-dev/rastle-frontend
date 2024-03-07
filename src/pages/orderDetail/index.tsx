@@ -35,6 +35,8 @@ export default function OrderDetail() {
     { label: "쿠폰할인금액", value: -3000 },
   ];
 
+  console.log(orderDetail);
+
   const deliveryInfoList = [
     { label: "수취인", value: orderDetail?.data.receiverInfo.receiverName },
     { label: "주소", value: orderDetail?.data.receiverInfo.address },

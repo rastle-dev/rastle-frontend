@@ -9,5 +9,5 @@ export default function useCoupon() {
     [QUERYKEYS.LOAD_COUPON],
     loadCoupon,
   );
-  return { menuList, couponData, isLoading };
+  return { menuList, couponData, isCouponLoading: isLoading };
 }

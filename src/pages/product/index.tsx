@@ -63,6 +63,10 @@ export default function Product() {
       </Head>
       {isDialogOpen && (
         <Dialog
+          title="해당 장바구니에 상품이 담겼습니다 🛒"
+          confirm="쇼핑 계속하기"
+          refuse="장바구니로 이동하기"
+          size={45}
           onClickRefuseButton={() => {
             router.push({
               pathname: PATH.MYPAGE,
