@@ -112,6 +112,7 @@ export default function MainHeader() {
                 router.push(PATH.LOGIN);
               }
             }}
+            dataCy="person-button"
           />
         </S.PersonDiv>
       </S.InnerNav>
