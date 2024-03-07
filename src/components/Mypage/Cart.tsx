@@ -185,6 +185,7 @@ export default function Cart() {
                             }
                           }}
                           disabled={deleteButtonDisabled}
+                          dataCy="mobile-delete-button"
                         />
                       </S.SelectTab>
                     </S.ProductInfo>
