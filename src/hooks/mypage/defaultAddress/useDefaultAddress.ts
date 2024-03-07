@@ -106,7 +106,7 @@ export default function useDefaultAddress() {
   return {
     mutateUpdateAddressProduct,
     defaultAddressData,
-    isCouponLoading: isLoading,
+    isLoading,
     openPostcode,
     DefaultAddressInputs,
     OrderInputs,

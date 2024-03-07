@@ -76,9 +76,6 @@ export default function Product() {
           onClickConfirmButton={() => {
             closeDialog();
           }}
-          title="해당 장바구니에 상품이 담겼습니다 🛒"
-          refuse="장바구니로 이동하기"
-          confirm="쇼핑 계속하기"
           visible
         />
       )}
