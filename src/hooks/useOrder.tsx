@@ -411,7 +411,7 @@ export default function useOrder() {
     }
     if (isDefaultAddress) {
       mutateUpdateAddressProduct.mutate({
-        rrecipientName: receiver,
+        recipientName: receiver,
         zipCode: postalAddress.zonecode,
         roadAddress: postalAddress.address,
         detailAddress: detailPostal,
