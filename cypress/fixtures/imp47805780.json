@@ -1,0 +1,27 @@
+{
+  "code": 0,
+  "msg": null,
+  "data": [
+    {
+      "store_id": "store-16ddfc27-993f-4a60-9c98-f71a72894358",
+      "pg_provider": null,
+      "pg_id": null,
+      "sandbox": true,
+      "type": "payment"
+    },
+    {
+      "store_id": "store-16ddfc27-993f-4a60-9c98-f71a72894358",
+      "pg_provider": "nice_v2",
+      "pg_id": "IM0016506m",
+      "sandbox": false,
+      "type": "payment"
+    },
+    {
+      "store_id": "store-16ddfc27-993f-4a60-9c98-f71a72894358",
+      "pg_provider": "kakaopay",
+      "pg_id": "CANDK6VP97",
+      "sandbox": false,
+      "type": "payment"
+    }
+  ]
+}

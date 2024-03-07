@@ -37,7 +37,7 @@ export default function useOrder() {
   const [receiver, onChangeReceiver, setReceiver] = useInput("");
   const [detailPostal, onChangeDetailPostal, setDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
-  const [isDefaultAddress, setIsDefaultAddress] = useState(true);
+  const [isDefaultAddress, setIsDefaultAddress] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsDefaultAddress(!isDefaultAddress);
@@ -409,10 +409,9 @@ export default function useOrder() {
       alert("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
       return;
     }
-
     if (isDefaultAddress) {
       mutateUpdateAddressProduct.mutate({
-        rrecipientName: receiver,
+        recipientName: receiver,
         zipCode: postalAddress.zonecode,
         roadAddress: postalAddress.address,
         detailAddress: detailPostal,

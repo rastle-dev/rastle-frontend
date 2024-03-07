@@ -14,6 +14,7 @@ interface IconButtonProps {
   color?: string;
   /** border 조정 */
   border?: number;
+  dataCy?: string;
 }
 const Wrapper = styled.button`
   padding: 0;
@@ -35,6 +36,7 @@ function IconButton({
   color,
   border = 0.1,
   onClick,
+  dataCy = "",
 }: IconButtonProps) {
   return (
     <Wrapper onClick={onClick}>
@@ -42,6 +44,7 @@ function IconButton({
         className={Icons[iconName]}
         style={{ fontSize: iconSize, color }}
         border={border}
+        data-cy={dataCy}
       />
     </Wrapper>
   );

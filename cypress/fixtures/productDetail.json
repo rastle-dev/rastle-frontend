@@ -1,0 +1,115 @@
+{
+    "pageProps": {
+      "dehydratedState": {
+        "mutations": [
+        ],
+        "queries": [
+          {
+            "state": {
+              "data": {
+                "data": {
+                  "id": 1,
+                  "name": "와이드 로우 핀턱 팬츠 연그레이",
+                  "price": 1000,
+                  "mainThumbnailImage": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MT_1.jpg",
+                  "subThumbnailImage": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_ST_1.jpg",
+                  "discountPrice": 800,
+                  "displayOrder": 100,
+                  "visible": false,
+                  "categoryId": 21,
+                  "bundleId": 17,
+                  "eventId": null,
+                  "mainImage": {
+                    "imageUrls": [
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MI_1.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MI_2.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MI_3.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_M1_4.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MI_5.jpg"
+                    ]
+                  },
+                  "detailImage": {
+                    "imageUrls": [
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_25.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_26.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_27.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_28.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_29.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_30.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_31.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_32.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_33.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_34.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_37.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_38.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_39.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_40.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_41.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_42.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_43.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_44.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_45.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_46.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_47.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_48.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_49.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_50.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_51.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_52.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_53.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_54.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_55.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_56.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_57.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_58.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_59.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_60.jpg",
+                      "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_DI_61.jpg"
+                    ]},
+                  "productColor": {
+                    "productColors": [
+                      {
+                        "color": "연그레이",
+                        "sizes": [
+                          {
+                            "size": "M",
+                            "count": 1000
+                          }
+                        ]
+                      },
+                      {
+                        "color": "연그레이",
+                        "sizes": [
+                          {
+                            "size": "L",
+                            "count": 1000
+                          }
+                        ]
+                      }
+                    ]},
+                  "eventApplyCount": 0
+                }
+              },
+              "dataUpdateCount": 1,
+              "dataUpdatedAt": 1709790449411,
+              "error": null,
+              "errorUpdateCount": 0,
+              "errorUpdatedAt": 0,
+              "fetchFailureCount": 0,
+              "fetchFailureReason": null,
+              "fetchMeta": null,
+              "isInvalidated": false,
+              "status": "success",
+              "fetchStatus": "idle"
+            },
+            "queryKey": [
+              "loadProductDetail",
+              14
+            ],
+            "queryHash": "[\"loadProductDetail\",14]"
+          }
+        ]
+      }
+    },
+    "__N_SSP": true
+}

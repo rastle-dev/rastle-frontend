@@ -3,7 +3,7 @@ import { useRouter } from "next/dist/client/router";
 
 export default function useMypage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<string>("주문 내역");
+  const [activeTab, setActiveTab] = useState<string>("로그인 정보");
   const [tabList, setTabList] = useState<string[]>([]);
   const shoppingTabs = [
     { label: "주문 내역", category: "쇼핑 정보" },

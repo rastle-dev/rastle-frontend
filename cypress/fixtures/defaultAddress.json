@@ -1,0 +1,9 @@
+{
+  "data": {
+    "recipientName": null,
+    "zipCode": "00000",
+    "roadAddress": "서울 00구 00로 000",
+    "detailAddress": "000동 0000호",
+    "recipientPhoneNumber": null
+  }
+}
