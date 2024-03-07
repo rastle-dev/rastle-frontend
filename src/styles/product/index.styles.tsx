@@ -2,6 +2,7 @@ import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
 import media from "@/styles/media";
+import Image from "next/image";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -305,7 +306,7 @@ export const ProductDetailList = styled.div`
   }
 `;
 
-export const ProductDetail = styled.img`
+export const ProductDetail = styled(Image)`
   width: 100%;
 `;
 

@@ -9,7 +9,8 @@
     "export": "next export",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=chpt_9ec78983a0a31e3"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^14.0.4",
@@ -20,6 +21,7 @@
     "axios": "^1.5.0",
     "babel-plugin-styled-components": "^2.1.4",
     "bootstrap-icons": "^1.10.5",
+    "cypress": "^13.6.6",
     "dayjs": "^1.11.10",
     "eslint": "^8.51.0",
     "eslint-config-next": "13.4.12",
@@ -62,6 +64,7 @@
     "@types/webpack-env": "^1.18.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
+    "chromatic": "^11.0.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.8.0",

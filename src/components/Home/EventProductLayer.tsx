@@ -19,7 +19,8 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
             key={item.id}
             mainThumbnail={item.mainThumbnail}
             subThumbnail={item.subThumbnail}
-            name={item.name}
+            name={item.productName}
+            productName={item.productName}
             price={item.price}
             discountPrice={item.discountPrice}
             id={item.id}

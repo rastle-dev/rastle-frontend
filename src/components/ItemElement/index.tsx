@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
-import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import ItemElementProps from "@/interface/itemElement";
 import Image from "next/image";
 
@@ -15,6 +14,7 @@ const StyledImage = styled(Image)`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77; /* width의 1.25배에 해당하는 비율로 height 설정 */
+  cursor: pointer;
 `;
 
 const ItemName = styled.div`
@@ -22,6 +22,7 @@ const ItemName = styled.div`
   padding-top: 1rem;
   font-weight: 400;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Event = styled.div`
@@ -64,50 +65,59 @@ function ItemElement({
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
-  const events = isEvent;
+  const [thumbnailSrc, setThumbnailSrc] = useState(mainThumbnail);
+  const [isMobile, setIsMobile] = useState(false);
 
-  let discountPercent;
-  let discountedPrice;
+  const handleMouseEnter = () => {
+    if (typeof subThumbnail === "string") {
+      setThumbnailSrc(subThumbnail);
+    }
+  };
 
-  if (discountPrice !== undefined) {
-    const result = calculateDiscountPercentAndPrice(price, discountPrice);
-    discountPercent = result.discountPercent;
-    discountedPrice = result.discountedPrice;
-  }
+  const handleMouseLeave = () => {
+    setThumbnailSrc(mainThumbnail);
+  };
+
+  const handleClick = () => {
+    const pathname = isEvent ? PATH.EVENT : PATH.PRODUCT;
+    router.push({
+      pathname,
+      query: { productId },
+    });
+  };
+
+  const [tapCount, setTapCount] = useState(0);
+  useEffect(() => {
+    const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
+    setIsMobile(isMobileDevice);
+  }, []);
+
+  const handleTap = () => {
+    setTapCount(tapCount + 1);
+
+    if (tapCount === 0) {
+      if (typeof subThumbnail === "string") {
+        setThumbnailSrc(subThumbnail);
+      }
+    } else if (tapCount === 1) {
+      // 두 번째 탭부터 페이지 이동
+      handleClick();
+    }
+  };
+
   return (
     <ItemWrapper>
       <StyledImage
-        src={mainThumbnail}
+        src={thumbnailSrc}
         alt={name}
-        width={100}
-        height={100}
-        // blurDataURL={mainThumbnail}
-        // placeholder="blur"
-        onMouseEnter={(e) => {
-          const target = e.currentTarget as HTMLImageElement;
-          if (typeof subThumbnail === "string") {
-            target.src = subThumbnail;
-          }
-        }}
-        onMouseLeave={(e) => {
-          const target = e.currentTarget as HTMLImageElement;
-          target.src = mainThumbnail;
-        }}
-        onClick={() => {
-          if (isEvent) {
-            router.push({
-              pathname: PATH.EVENT, // 이동할 페이지 경로
-              query: { productId, events }, // 전달할 데이터 (id)
-            });
-          } else {
-            router.push({
-              pathname: PATH.PRODUCT, // 이동할 페이지 경로
-              query: { productId, events }, // 전달할 데이터 (id)
-            });
-          }
-        }}
+        width={500}
+        height={500}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTap}
+        onClick={isMobile ? () => {} : handleClick}
       />
-      <ItemName>{name}</ItemName>
+      <ItemName onClick={isMobile ? () => {} : handleClick}>{name}</ItemName>
       {discountPrice !== undefined ? (
         <PriceDiv>
           <DiscountPrice>{price.toLocaleString()}원</DiscountPrice>

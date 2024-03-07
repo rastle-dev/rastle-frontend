@@ -9,6 +9,7 @@ import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
 import media from "@/styles/media";
+import Image from "next/image";
 
 SwiperCore.use([Navigation, Pagination]);
 
@@ -48,7 +49,7 @@ const StyledSwiper = styled(Swiper)`
 \` ;
 `;
 
-const StyledImage = styled.img`
+const StyledImage = styled(Image)`
   max-width: 100%; // 이미지의 최대 너비를 100%로 설정하여 부모 컨테이너에 맞게 조절
   height: auto; // 이미지의 높이를 자동으로 조절하여 비율을 유지
 `;
@@ -113,7 +114,13 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
     >
       {images?.map((image) => (
         <SwiperSlide key={image}>
-          <StyledImage src={image} alt={alt} />
+          <StyledImage
+            src={image}
+            alt={alt}
+            layout="responsive"
+            width={100}
+            height={100}
+          />
         </SwiperSlide>
       ))}
 

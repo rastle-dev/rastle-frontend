@@ -6,6 +6,7 @@ export default interface ItemElementProps {
   displayOrder?: 100;
   id?: number;
   productId?: number;
+  productName: string;
   mainThumbnail: string;
   subThumbnail?: string;
   name: string;

@@ -72,6 +72,9 @@ export default function Product() {
           onClickConfirmButton={() => {
             closeDialog();
           }}
+          title="해당 장바구니에 상품이 담겼습니다 🛒"
+          refuse="장바구니로 이동하기"
+          confirm="쇼핑 계속하기"
           visible
         />
       )}
@@ -96,6 +99,7 @@ export default function Product() {
                 clicked={color === selectedProduct.color}
                 color={COLORS[color as keyof typeof COLORS]}
                 onClick={() => handleColorClick(color as keyof typeof COLORS)} // 클릭 핸들러 연결
+                dataCy="color-button"
               />
             ))}
           </S.ColorList>
@@ -108,6 +112,7 @@ export default function Product() {
                 type="size"
                 onClick={() => handleSizeClick(size)}
                 isActive={selectedProduct.size === size}
+                dataCy="size-button"
               />
             ))}
           </S.SizeButtonList>
@@ -201,7 +206,13 @@ export default function Product() {
       </S.TopLayer>
       <S.ProductDetailList>
         {detailData?.data.detailImage.imageUrls?.map((img: string) => (
-          <S.ProductDetail src={img} />
+          <S.ProductDetail
+            src={img}
+            alt={detailData?.data.name}
+            layout="responsive"
+            width={100}
+            height={100}
+          />
         ))}
       </S.ProductDetailList>
       <S.ScrollWrapper className={showScrollButton ? "show" : ""}>

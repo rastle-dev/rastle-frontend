@@ -15,7 +15,7 @@ export function BlackButton() {
 }
 
 export function BlackButtonClicked() {
-  return <ColorButton color={COLORS.블랙} />;
+  return <ColorButton color={COLORS.블랙} clicked />;
 }
 
 export function BlueButton() {
@@ -23,7 +23,7 @@ export function BlueButton() {
 }
 
 export function BlueButtonClicked() {
-  return <ColorButton color={COLORS.블루} />;
+  return <ColorButton color={COLORS.블루} clicked />;
 }
 
 export function ControlTest(args: any) {
@@ -31,5 +31,5 @@ export function ControlTest(args: any) {
 }
 
 ControlTest.args = {
-  iconName: "cart",
+  clicked: false,
 };
