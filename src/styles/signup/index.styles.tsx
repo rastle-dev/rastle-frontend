@@ -34,6 +34,7 @@ export const InputWithButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
   padding-top: 2.19rem;
+  width: 100%;
 `;
 
 export const DefaultInputDiv = styled.div`
@@ -127,5 +128,21 @@ export const CodeContainer = styled.div`
   &.show-text {
     opacity: 1;
     animation: ${fadeInDown} 0.7s forwards;
+  }
+`;
+
+export const ViewMoreButton = styled(Button)`
+  padding-left: 1rem;
+  font-size: 1rem;
+  border: none;
+  font-weight: 500;
+  text-decoration: underline;
+
+  &:hover {
+    border: none;
+    font-weight: 600;
+  }
+  &:focus {
+    border: none;
   }
 `;

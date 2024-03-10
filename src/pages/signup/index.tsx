@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "@/components/Common/Input";
 import * as S from "@/styles/signup/index.styles";
 import useSignup from "@/hooks/useSignup";
 import LazyLink from "@/components/LazyLink";
 import PATH from "@/constants/path";
 import Head from "next/head";
+import Modal from "@/components/Common/Modal";
+import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
+import EnterViewMoreModal from "@/components/Signup/EnterViewMoreModal";
+import { ViewMoreButton } from "@/styles/signup/index.styles";
 
 export default function Signup() {
   const {
@@ -19,6 +23,8 @@ export default function Signup() {
     privateChecked,
     inputData,
     handleLinkClick,
+    isViewMoreModalOpen,
+    setIsViewMoreModalOpen,
   } = useSignup();
 
   return (
@@ -33,48 +39,59 @@ export default function Signup() {
       <Head>
         <title>회원가입 - RECORDY SLOW</title>
       </Head>
+      {isViewMoreModalOpen && (
+        <Modal
+          closeModal={() => {
+            setIsViewMoreModalOpen(false);
+            // openDialog();
+          }}
+          width={60}
+        >
+          <EnterViewMoreModal />
+        </Modal>
+      )}
       <S.Title>회원가입</S.Title>
       {inputData.map((data) => (
         <div key={data.label}>
-          {data.isCertification ? (
-            data.label === "이메일주소" ? (
-              <S.InputWithButtonDiv>
-                <Input
-                  placeholder={data.placeholder}
-                  label={data.label}
-                  onChange={data.onChange}
-                  message={data.message}
-                  invalid={data.inValid}
+          {data.isCertification && data.label === "이메일주소" && (
+            <S.InputWithButtonDiv>
+              <Input
+                placeholder={data.placeholder}
+                label={data.label}
+                onChange={data.onChange}
+                message={data.message}
+                invalid={data.inValid}
+              />
+              <S.ButtonWrapper>
+                <S.StyledButton
+                  title={data.isCertification.title}
+                  onClick={data.isCertification.onClick}
+                  disabled={data.isCertification.disabled}
                 />
-                <S.ButtonWrapper>
-                  <S.StyledButton
-                    title={data.isCertification.title}
-                    onClick={data.isCertification.onClick}
-                    disabled={data.isCertification.disabled}
-                  />
-                </S.ButtonWrapper>
-              </S.InputWithButtonDiv>
-            ) : (
-              showText && (
-                <S.CodeContainer className="show-text">
-                  <Input
-                    placeholder={data.placeholder}
-                    label={data.label}
-                    onChange={data.onChange}
-                    message={data.message}
-                    invalid={data.inValid}
-                  />
-                  <S.ButtonTimerWrapper>
-                    <S.StyledButton
-                      title={data.isCertification.title}
-                      onClick={data.isCertification.onClick}
-                      disabled={data.isCertification.disabled}
-                    />
-                  </S.ButtonTimerWrapper>
-                </S.CodeContainer>
-              )
-            )
-          ) : (
+              </S.ButtonWrapper>
+            </S.InputWithButtonDiv>
+          )}
+
+          {data.isCertification && data.label !== "이메일주소" && showText && (
+            <S.CodeContainer className="show-text">
+              <Input
+                placeholder={data.placeholder}
+                label={data.label}
+                onChange={data.onChange}
+                message={data.message}
+                invalid={data.inValid}
+              />
+              <S.ButtonTimerWrapper>
+                <S.StyledButton
+                  title={data.isCertification.title}
+                  onClick={data.isCertification.onClick}
+                  disabled={data.isCertification.disabled}
+                />
+              </S.ButtonTimerWrapper>
+            </S.CodeContainer>
+          )}
+
+          {!data.isCertification && (
             <S.DefaultInputDiv>
               <Input
                 type={data.type}
@@ -96,9 +113,7 @@ export default function Signup() {
           onChange={togglePrivate}
         />
         <h3>개인정보 수집 및 이용 동의 (필수)</h3>
-        <LazyLink href={PATH.AGREEMENT} onClick={handleLinkClick}>
-          <h3>자세히</h3>
-        </LazyLink>
+        <ViewMoreButton title="내용 보기" onClick={handleLinkClick} />
       </S.CheckBoxWithText>
       <S.SignupButtonDiv>
         <S.SignupButton

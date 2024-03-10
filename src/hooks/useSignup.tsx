@@ -43,6 +43,7 @@ export default function useSignup() {
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [codeMessage, setCodeMessage] = useState("");
   const [privateChecked, setPrivateChecked] = useState(false);
+  const [isViewMoreModalOpen, setIsViewMoreModalOpen] = useState(false);
 
   const resetEmailMessage = () => {
     if (duplicateCheck) {
@@ -187,7 +188,8 @@ export default function useSignup() {
   ];
 
   const handleLinkClick = () => {
-    router.push(PATH.AGREEMENT, undefined, { shallow: true });
+    setIsViewMoreModalOpen(true);
+    // router.push(PATH.AGREEMENT, undefined, { shallow: true });
   };
 
   return {
@@ -204,5 +206,7 @@ export default function useSignup() {
     onChangePasswordCheck,
     onChangePassword,
     handleLinkClick,
+    isViewMoreModalOpen,
+    setIsViewMoreModalOpen,
   };
 }

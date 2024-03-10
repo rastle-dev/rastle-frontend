@@ -21,7 +21,7 @@ import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();
-  const { mutateChangePassword, deleteUser, logout } = useLoginInfo();
+  const { mutateChangePassword, logout } = useLoginInfo();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { data, isLoading } = useQuery({
     queryKey: [QUERYKEYS.LOAD_ME],

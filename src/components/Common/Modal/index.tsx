@@ -36,6 +36,11 @@ const ModalBox = styled.div<{ width: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    //width: 100%;
+    max-width: 90%;
+  }
 `;
 
 export default function Modal({
