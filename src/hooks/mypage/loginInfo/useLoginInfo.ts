@@ -6,6 +6,8 @@ import { authLogout, changePassword, deletMe } from "@/api/auth";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
+import { useRecoilState } from "recoil";
+import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 
 export default function useLoginInfo() {
   const router = useRouter();

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { StyledInput } from "@/styles/login/index.styles";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
 import QUERYKEYS from "@/constants/querykey";
-import { loadMe } from "@/api/auth";
+import { authLogout, loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 import LoadingBar from "@/components/LoadingBar";
 import Dialog from "@/components/Common/Dialog";
@@ -12,6 +12,11 @@ import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/loginInfo/index.styles";
 import useDialog from "@/hooks/useDialog";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import Modal from "@/components/Common/Modal";
+import EnterEventModal from "@/components/Event/EnterEventModal";
+import { useRecoilState } from "recoil";
+import { eventModalState } from "@/stores/atom/recoilState";
+import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
 
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
@@ -22,6 +27,7 @@ export default function LoginInfo() {
     queryKey: [QUERYKEYS.LOAD_ME],
     queryFn: loadMe,
   });
+  const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
   const router = useRouter();
 
   const [isSocial, setIsSocial] = useState(false);
@@ -87,8 +93,23 @@ export default function LoginInfo() {
     },
   ];
 
+  const deleteUserButton = () => {
+    setIsDeleteUserModalOpen(true);
+  };
+
   return (
     <div>
+      {isDeleteUserModalOpen && (
+        <Modal
+          closeModal={() => {
+            setIsDeleteUserModalOpen(false);
+            // openDialog();
+          }}
+          width={60}
+        >
+          <EnterDeleteUserModal />
+        </Modal>
+      )}
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
@@ -146,7 +167,7 @@ export default function LoginInfo() {
       ))}
       <S.DeleteButtonWrapper>
         <S.MobileLogoutButton title="로그아웃" onClick={logout} />
-        <S.DeleteButton title="탈퇴하기" onClick={deleteUser} />
+        <S.DeleteButton title="탈퇴하기" onClick={deleteUserButton} />
       </S.DeleteButtonWrapper>
     </div>
   );

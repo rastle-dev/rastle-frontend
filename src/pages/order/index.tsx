@@ -8,7 +8,6 @@ import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
 import useOrder from "../../hooks/useOrder";
-import { DiscountPrice } from "@/styles/order/index.styles";
 
 type ProductItem = {
   productName: string;
