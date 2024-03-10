@@ -1,0 +1,17 @@
+{
+  "data": {
+    "orderDetailId": 1,
+    "orderNumber": "17097382350326",
+    "orderProducts": [
+      {
+        "productId": 1,
+        "name": "와이드 로우 핀턱 팬츠 연그레이",
+        "color": "연그레이",
+        "size": "M",
+        "count": 1,
+        "totalPrice": 1000,
+        "productOrderNumber": "170974028603370321"
+      }
+    ]
+  }
+}

@@ -159,6 +159,7 @@ export default function Cart() {
                               console.error(error);
                             }
                           }}
+                          // dataCy="purchase-button"
                         />
                       </S.MobileTextInfo>
                       <S.SelectTab>
@@ -171,6 +172,7 @@ export default function Cart() {
                               console.error(error);
                             }
                           }}
+                          dataCy="purchase-button"
                         />
                         <S.DeleteButton
                           title="X"
@@ -183,6 +185,7 @@ export default function Cart() {
                             }
                           }}
                           disabled={deleteButtonDisabled}
+                          dataCy="mobile-delete-button"
                         />
                       </S.SelectTab>
                     </S.ProductInfo>

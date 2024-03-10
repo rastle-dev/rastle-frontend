@@ -1,0 +1,9 @@
+{
+  "data": {
+    "email": "test@email.com",
+    "userName": "테스트",
+    "phoneNumber": "01012341234",
+    "userLoginType": "EMAIL",
+    "authority": "ROLE_USER"
+  }
+}
