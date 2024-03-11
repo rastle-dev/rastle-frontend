@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Input from "@/components/Common/Input";
 import Button from "@/components/Common/Button";
+import media from "@/styles/media";
 
 interface ButtonProps {
   inValid: boolean;
@@ -91,7 +92,7 @@ export const DeleteButton = styled(Button)`
   height: 3rem;
   padding: 0.62rem;
   font-size: 1rem;
-  @media (max-width: 1007px) {
+  ${media.mobile} {
     width: 8rem;
     font-size: 1.4rem;
   }

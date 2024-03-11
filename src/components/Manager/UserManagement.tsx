@@ -104,6 +104,7 @@ export default function UserManagement() {
     setUserData(data?.data.content);
     refetch();
   }, [curPage, data]);
+  console.log(userData);
   // 열(컬럼) 정보 배열
   const columnHeaders = [
     "이메일 주소", // email
@@ -198,7 +199,15 @@ export default function UserManagement() {
             <TableRow key={user.createdDate}>
               {columnHeaders.map((header) => (
                 <TableCell key={header}>
-                  {user[columnFieldMap[header]]}
+                  {header === "상품 구매 목록" &&
+                  Array.isArray(user.allOrderDetails)
+                    ? user.allOrderDetails.map((order: any) => (
+                        <div key={order.orderId}>
+                          Order ID: {order.orderId}, Products:{" "}
+                          {JSON.stringify(order.orderProducts)}
+                        </div>
+                      ))
+                    : user[columnFieldMap[header]]}
                 </TableCell>
               ))}
             </TableRow>

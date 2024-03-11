@@ -9,6 +9,8 @@ import {
 import { useRouter } from "next/dist/client/router";
 
 import PATH from "@/constants/path";
+import toastMsg from "@/components/Toast";
+import errorMsg from "@/components/Toast/error";
 
 type InputProps = {
   label: string;
@@ -104,8 +106,10 @@ export default function useSignup() {
     const data = await authSignUp({ email, password, username, phoneNumber });
     if (data.data) {
       console.log(data);
+      toastMsg("회원가입이 완료되었습니다 !");
+      router.push(PATH.LOGIN);
     } else {
-      console.log(data);
+      errorMsg("입력한 항목이 맞는지 확인해주세요.");
     }
   };
 

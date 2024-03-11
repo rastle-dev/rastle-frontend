@@ -11,7 +11,11 @@ import React, { useEffect, useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { loadEventProduct, loadProductDetail } from "@/api/shop";
+import {
+  loadEventProduct,
+  loadEventProductPaging,
+  loadProductDetail,
+} from "@/api/shop";
 
 export default function useUpdateEventProduct() {
   const [name, onChangeName, setName] = useInput("");
@@ -65,8 +69,8 @@ export default function useUpdateEventProduct() {
   }
 
   const { data: eventProductListData } = useQuery(
-    [QUERYKEYS.LOAD_EVENTPRODUCT],
-    loadEventProduct,
+    [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
+    () => loadEventProductPaging({ page: 0, size: 4 }),
   );
 
   const { data: productData, refetch: refetchProductData } = useQuery(
