@@ -46,7 +46,7 @@ export const TableHeader = styled.div`
   border-bottom: 1px solid;
   display: grid;
   align-items: center;
-  grid-template-columns: 20.5rem 24rem 11.3rem 12.5rem 7rem;
+  grid-template-columns: 16rem 24rem 11.3rem 12.5rem 7rem;
   font-size: 1.2rem;
   padding-left: 4.56rem;
   @media (max-width: 769px) {
