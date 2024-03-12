@@ -16,14 +16,14 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
       <S.ItemContainer>
         {eventData?.data.map((item: ItemElementProps) => (
           <ItemElement
-            key={item.id}
+            key={item.productId}
             mainThumbnail={item.mainThumbnail}
             subThumbnail={item.subThumbnail}
             name={item.productName}
             productName={item.productName}
             price={item.price}
             discountPrice={item.discountPrice}
-            id={item.id}
+            id={item.productId}
             categoryId={item.categoryId}
             isEvent={!!item.eventId}
           />
