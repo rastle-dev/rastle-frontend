@@ -89,31 +89,44 @@ export default function Event() {
               (소셜로그인시, 마이페이지에서 전화번호를 새로 등록할 수 있어요!)
             </p>
           </S.Script>
-          <S.StyledEventButton
-            onClick={() => {
-              if (localStorage.getItem("accessToken")) {
+          {localStorage.getItem("accessToken") ? (
+            <S.StyledEventButton
+              onClick={() => {
                 setIsEventModalOpen(true);
-              } else {
+              }}
+              title={
+                eventHistoryData?.data.content.filter(
+                  (v: any) => v.id === detailData?.data.id,
+                ).length !== 0
+                  ? "응모하기"
+                  : "이미 응모하신 상품이에요."
+              }
+              type="shop"
+              disabled={
+                dayjs().isBefore(detailData?.data.eventStartDate) ||
+                dayjs().isAfter(detailData?.data.eventEndDate) ||
+                eventHistoryData?.data.content.filter(
+                  (v: any) => v.id === detailData?.data.id,
+                ).length
+              }
+            />
+          ) : (
+            <S.StyledEventButton
+              onClick={() => {
                 toastMsg("로그인페이지로 이동합니다.");
                 router.push(PATH.LOGIN);
+              }}
+              title="응모하기"
+              type="shop"
+              disabled={
+                dayjs().isBefore(detailData?.data.eventStartDate) ||
+                dayjs().isAfter(detailData?.data.eventEndDate) ||
+                eventHistoryData?.data.content.filter(
+                  (v: any) => v.id === detailData?.data.id,
+                ).length
               }
-            }}
-            title={
-              eventHistoryData?.data.content.filter(
-                (v: any) => v.id === detailData?.data.id,
-              ).length !== 0
-                ? "응모하기"
-                : "응모하기"
-            }
-            type="shop"
-            disabled={
-              dayjs().isBefore(detailData?.data.eventStartDate) ||
-              dayjs().isAfter(detailData?.data.eventEndDate) ||
-              eventHistoryData?.data.content.filter(
-                (v: any) => v.id === detailData?.data.id,
-              ).length
-            }
-          />
+            />
+          )}
           <CountDownTimer
             endDate={detailData?.data.eventEndDate}
             startDate={detailData?.data.eventStartDate}
