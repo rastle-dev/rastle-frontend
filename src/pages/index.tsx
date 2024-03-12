@@ -33,6 +33,9 @@ export async function getStaticProps() {
 /** 홈화면의 첫 화면 : 전체 화면의 이미지와 버튼 */
 const SignupPopup = dynamic(
   () => import("@/components/Home/SignupPopup/index"),
+  {
+    ssr: false,
+  },
 );
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
