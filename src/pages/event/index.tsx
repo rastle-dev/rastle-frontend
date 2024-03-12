@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import COLORS from "@/constants/color";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
@@ -16,6 +16,9 @@ import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadEventHistory } from "@/api/cart";
 
 export default function Event() {
   const router = useRouter();
@@ -35,7 +38,20 @@ export default function Event() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const { eventHistoryData } = useEventHistory();
+  const { eventHistorySize } = useEventHistory();
+  const { data: eventHistoryData } = useQuery(
+    [QUERYKEYS.LOAD_EVENT_HISTORY],
+    () => loadEventHistory({ page: 0, size: eventHistorySize }),
+  );
+
+  const [token, setToken] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("accessToken")) {
+        setToken(true);
+      }
+    }
+  }, []);
   return (
     <S.Wrapper>
       {isEventModalOpen && (
@@ -45,7 +61,10 @@ export default function Event() {
             // openDialog();
           }}
         >
-          <EnterEventModal eventProductId={detailData?.data.id} />
+          <EnterEventModal
+            eventProductId={detailData?.data.id}
+            productName={detailData?.data.name}
+          />
         </Modal>
       )}
       {isEventDialogOpen && (
@@ -89,15 +108,15 @@ export default function Event() {
               (소셜로그인시, 마이페이지에서 전화번호를 새로 등록할 수 있어요!)
             </p>
           </S.Script>
-          {localStorage.getItem("accessToken") ? (
+          {token ? (
             <S.StyledEventButton
               onClick={() => {
                 setIsEventModalOpen(true);
               }}
               title={
                 eventHistoryData?.data.content.filter(
-                  (v: any) => v.id === detailData?.data.id,
-                ).length !== 0
+                  (v: any) => v.eventProductId === detailData?.data.id,
+                ).length === 0
                   ? "응모하기"
                   : "이미 응모하신 상품이에요."
               }
@@ -106,8 +125,8 @@ export default function Event() {
                 dayjs().isBefore(detailData?.data.eventStartDate) ||
                 dayjs().isAfter(detailData?.data.eventEndDate) ||
                 eventHistoryData?.data.content.filter(
-                  (v: any) => v.id === detailData?.data.id,
-                ).length
+                  (v: any) => v.eventProductId === detailData?.data.id,
+                ).length === 1
               }
             />
           ) : (

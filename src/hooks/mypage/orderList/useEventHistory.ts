@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useEventHistory() {
   const eventMenuList = [
@@ -23,6 +23,7 @@ export default function useEventHistory() {
   const onChangeEventPage = (page: number) => {
     setEventCurPage(page);
   };
+  const eventHistorySize = eventHistoryData?.data.totalElements;
 
   return {
     eventMenuList,
@@ -31,5 +32,6 @@ export default function useEventHistory() {
     onChangeEventPage,
     eventLoading,
     EVENT_ITEM_SIZE,
+    eventHistorySize,
   };
 }

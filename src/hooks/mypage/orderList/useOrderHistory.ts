@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadOrderList } from "@/api/cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useOrderHistory() {
   const menuList = [
@@ -20,9 +20,6 @@ export default function useOrderHistory() {
       keepPreviousData: true,
     },
   );
-  // useEffect(() => {
-  //   orderDataRefetch();
-  // }, [orderCurPage]);
   const onChangeOrderPage = (page: number) => {
     setOrderCurPage(page);
   };
