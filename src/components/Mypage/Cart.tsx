@@ -7,10 +7,13 @@ import useCart from "@/hooks/mypage/cart/useCart";
 import { ProductItem } from "@/interface/cartProductItem";
 import { useRouter } from "next/dist/client/router";
 import useDialog from "@/hooks/useDialog";
-import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import dynamic from "next/dynamic";
 
+const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
+  ssr: false,
+});
 export default function Cart() {
   const {
     deleteCart,

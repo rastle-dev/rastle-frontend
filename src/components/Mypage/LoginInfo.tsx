@@ -3,21 +3,21 @@ import { useQuery } from "@tanstack/react-query";
 import { StyledInput } from "@/styles/login/index.styles";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
 import QUERYKEYS from "@/constants/querykey";
-import { authLogout, loadMe } from "@/api/auth";
+import { loadMe } from "@/api/auth";
 import useSignup from "@/hooks/useSignup";
 import LoadingBar from "@/components/LoadingBar";
-import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/loginInfo/index.styles";
 import useDialog from "@/hooks/useDialog";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import Modal from "@/components/Common/Modal";
-import EnterEventModal from "@/components/Event/EnterEventModal";
-import { useRecoilState } from "recoil";
-import { eventModalState } from "@/stores/atom/recoilState";
 import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
+import dynamic from "next/dynamic";
 
+const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
+  ssr: false,
+});
 export default function LoginInfo() {
   const { passwordCheck, onChangePasswordCheck, password, onChangePassword } =
     useSignup();

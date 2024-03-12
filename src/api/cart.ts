@@ -56,6 +56,12 @@ export const updatePhoneNumber = async (phonenumber: object) => {
 };
 
 export const loadEventHistory = async (bundleData: any) => {
+  const token = localStorage.getItem("accessToken");
+  // 토큰값이 존재하지 않으면 요청을 보내지 않고 종료
+  if (!token) {
+    console.log("토큰이 존재하지 않습니다.");
+    return null; // 또는 다른 적절한 값을 반환
+  }
   const { page, size } = bundleData;
   const { data } = await authorizationClient.get(
     `${API.APPLY_EVENT}?page=${page}&size=${size}`,

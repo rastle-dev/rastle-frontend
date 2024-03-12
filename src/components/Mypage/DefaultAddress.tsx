@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import LoadingBar from "@/components/LoadingBar";
-import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import * as S from "@/styles/mypage/defaultAddress/index.styles";
@@ -8,7 +7,11 @@ import DaumPostcode from "react-daum-postcode";
 import useDefaultAddress from "@/hooks/mypage/defaultAddress/useDefaultAddress";
 import useDialog from "@/hooks/useDialog";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import dynamic from "next/dynamic";
 
+const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
+  ssr: false,
+});
 export default function DefaultAddress() {
   const {
     mutateUpdateAddressProduct,

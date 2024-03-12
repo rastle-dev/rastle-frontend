@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import * as S from "@/styles/mypage/coupon/index.styles";
 import LoadingBar from "@/components/LoadingBar";
-import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import { useRouter } from "next/dist/client/router";
 import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useDialog from "@/hooks/useDialog";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import dynamic from "next/dynamic";
+
+const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
+  ssr: false,
+});
 
 export default function Coupon() {
   const { menuList, couponData, isCouponLoading } = useCoupon();
@@ -16,13 +20,12 @@ export default function Coupon() {
 
   const router = useRouter();
   useEffect(() => {
-    if (isCouponLoading && timedOut) {
+    if (!isCouponLoading || timedOut) {
       openDialog();
     }
   }, [timedOut]);
 
   if (isCouponLoading && !timedOut) return <LoadingBar type={6} />;
-
   return (
     <S.Wrap isLoading={isCouponLoading}>
       {isDialogOpen && (

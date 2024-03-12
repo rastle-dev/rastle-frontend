@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadOrderList } from "@/api/cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useOrderHistory() {
   const menuList = [
@@ -13,20 +13,13 @@ export default function useOrderHistory() {
   ];
   const [orderCurPage, setOrderCurPage] = useState(1);
   const ORDER_ITEM_SIZE = 3;
-  const {
-    data: orderListData,
-    isLoading: orderLoading,
-    refetch: orderDataRefetch,
-  } = useQuery(
-    [QUERYKEYS.LOAD_ORDER_LIST],
+  const { data: orderListData, isLoading: orderLoading } = useQuery(
+    [QUERYKEYS.LOAD_ORDER_LIST, orderCurPage],
     () => loadOrderList({ page: orderCurPage - 1, size: ORDER_ITEM_SIZE }),
     {
       keepPreviousData: true,
     },
   );
-  useEffect(() => {
-    orderDataRefetch();
-  }, [orderCurPage]);
   const onChangeOrderPage = (page: number) => {
     setOrderCurPage(page);
   };
