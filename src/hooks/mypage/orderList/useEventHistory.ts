@@ -13,20 +13,13 @@ export default function useEventHistory() {
   ];
   const [eventCurPage, setEventCurPage] = useState(1);
   const EVENT_ITEM_SIZE = 3;
-  const {
-    data: eventHistoryData,
-    isLoading: eventLoading,
-    refetch: eventHistoryDataRefetch,
-  } = useQuery(
-    [QUERYKEYS.LOAD_EVENT_HISTORY],
+  const { data: eventHistoryData, isLoading: eventLoading } = useQuery(
+    [QUERYKEYS.LOAD_EVENT_HISTORY, eventCurPage],
     () => loadEventHistory({ page: eventCurPage - 1, size: EVENT_ITEM_SIZE }),
     {
       keepPreviousData: true,
     },
   );
-  useEffect(() => {
-    eventHistoryDataRefetch();
-  }, [eventCurPage]);
   const onChangeEventPage = (page: number) => {
     setEventCurPage(page);
   };
