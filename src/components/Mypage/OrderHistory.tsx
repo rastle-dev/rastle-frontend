@@ -3,13 +3,16 @@ import * as S from "@/styles/mypage/orderList/index.styles";
 import useOrderHistory from "@/hooks/mypage/orderList/useOrderHistory";
 import useDialog from "@/hooks/useDialog";
 import LoadingBar from "@/components/LoadingBar";
-import Dialog from "@/components/Common/Dialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import Pagination from "react-js-pagination";
 import EventHistory from "@/components/Event/EventHistory";
 import { useRouter } from "next/dist/client/router";
+import dynamic from "next/dynamic";
 
+const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
+  ssr: false,
+});
 export default function OrderHistory() {
   const router = useRouter();
   const {
