@@ -69,8 +69,10 @@ const EnterButton = styled(Button)`
 
 export default function EnterEventModal({
   eventProductId,
+  productName,
 }: {
   eventProductId: number;
+  productName: string;
 }) {
   const [, setIsEventModalOpen] = useRecoilState(eventModalState);
   const [, setIsEventDialogOpen] = useRecoilState(eventDialogState);
@@ -117,7 +119,7 @@ export default function EnterEventModal({
   return (
     <Wrapper>
       <h2>응모하기</h2>
-      <p>제품명: 틴 워시드 버뮤다 데님 팬츠 블랙 컬러</p>
+      <p>제품명: {productName}</p>
       {inputFields.map((field) => (
         <InputBox key={field.id}>
           <Label>{field.label}</Label>
