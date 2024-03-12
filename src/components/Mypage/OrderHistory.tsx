@@ -29,8 +29,6 @@ export default function OrderHistory() {
   }, [timedOut]);
   if (orderLoading && !timedOut) return <LoadingBar type={6} />;
 
-  console.log(orderListData);
-
   return (
     <S.Wrap isLoading={orderLoading}>
       {isDialogOpen && (

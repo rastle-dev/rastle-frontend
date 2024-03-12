@@ -50,11 +50,8 @@ export default function Mypage() {
   // URL 파라미터를 확인하여 활성 탭을 설정
   useEffect(() => {
     const { tab } = router.query;
-    console.log("렌더링 확인", tab);
-
     const storedTab = sessionStorage.getItem("tab");
     const initialTab = tab || storedTab;
-    console.log("tab들", storedTab, initialTab);
     tabList?.forEach((item: any) => {
       if (tab && item === initialTab) {
         setActiveTab(item);
