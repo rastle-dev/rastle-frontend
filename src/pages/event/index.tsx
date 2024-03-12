@@ -16,10 +16,6 @@ import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
-import { GetServerSideProps } from "next";
-import commonServerSideProps from "@/components/Product/commonServerSideProps";
-
-export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
 export default function Event() {
   const router = useRouter();
@@ -105,9 +101,9 @@ export default function Event() {
             title={
               eventHistoryData?.data.content.filter(
                 (v: any) => v.id === detailData?.data.id,
-              ).length === 0
+              ).length !== 0
                 ? "응모하기"
-                : "이미 응모하신 상품이에요!"
+                : "응모하기"
             }
             type="shop"
             disabled={
