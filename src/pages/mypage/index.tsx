@@ -7,6 +7,7 @@ import DefaultAddress from "@/components/Mypage/DefaultAddress";
 import Cart from "@/components/Mypage/Cart";
 import Coupon from "@/components/Mypage/Coupon";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import * as S from "../../styles/mypage/index.styles";
 
 export default function Mypage() {
@@ -69,6 +70,9 @@ export default function Mypage() {
 
   return (
     <S.Container>
+      <Head>
+        <title>마이페이지 | RECORDY SLOW</title>
+      </Head>
       <S.Header>
         <h1>MYPAGE</h1>
       </S.Header>
