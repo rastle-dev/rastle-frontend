@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import COLORS from "@/constants/color";
 import IconButton from "@/components/Common/IconButton";
 import * as S from "@/components/Home/SignupPopup/index.styles";
