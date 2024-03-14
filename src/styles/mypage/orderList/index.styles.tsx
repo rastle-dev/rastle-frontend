@@ -8,6 +8,7 @@ export const Wrap = styled.div<{ isLoading?: boolean }>`
 export const OrderDateNum = styled.div`
   font-size: 1.3rem;
   text-align: center;
+  width: 13.2rem;
   div {
     font-weight: 300;
     padding-left: 1rem;
@@ -37,6 +38,7 @@ export const OrderDetail = styled.div`
   @media (min-width: 769px) {
     display: none;
   }
+  cursor: pointer;
 `;
 export const Table = styled.div`
   width: 100%;
@@ -167,7 +169,7 @@ export const Count = styled.div`
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  grid-template-columns: 22.3rem 9rem 17rem;
+  grid-template-columns: 18.2rem 7.7rem 18rem;
   align-items: center;
   @media (max-width: 769px) {
     align-items: unset;
@@ -250,8 +252,11 @@ export const LoadDeliveryButton = styled(Button)`
   border-radius: 0;
   font-size: 1.3rem;
   font-weight: 300;
-  border: 0.5px solid;
+  border: 1px solid ${COLORS.GREY[400]};
   padding: 0.5rem 1rem 0.5rem 1rem;
+  &:hover {
+    font-weight: 500;
+  }
 `;
 export const PagingWrapper = styled.div`
   padding-top: 10rem;
