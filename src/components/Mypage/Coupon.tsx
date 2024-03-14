@@ -20,7 +20,7 @@ export default function Coupon() {
 
   const router = useRouter();
   useEffect(() => {
-    if (!isCouponLoading || timedOut) {
+    if (isCouponLoading && timedOut) {
       openDialog();
     }
   }, [timedOut]);
