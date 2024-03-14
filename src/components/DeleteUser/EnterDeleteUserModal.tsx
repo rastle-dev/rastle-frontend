@@ -51,17 +51,11 @@ const ConfirmCheckBox = styled.div<ConfirmCheckBoxProps>`
 const EnterButton = styled(Button)`
   border-radius: 0.625rem;
   height: 3.3rem;
-  margin: 0;
   padding: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   float: right; /* 오른쪽으로 이동 */
   margin-right: 8rem;
-
   font-weight: 500;
-
-  &:hover {
-    font-weight: 600;
-  }
   &:focus {
     border: none;
   }
