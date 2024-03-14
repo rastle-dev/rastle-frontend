@@ -33,6 +33,7 @@ authorizationClient.interceptors.request.use((config) => {
     return Object.assign(config, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
       },
     });
   }
