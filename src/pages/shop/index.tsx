@@ -15,16 +15,30 @@ import Cody from "@/components/Shop/CategoryView/Cody";
 export async function getStaticProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
-  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING], () =>
-    loadMarketProductPaging({ page: 0, size: 100 }),
+  await queryClient.prefetchQuery(
+    [QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP],
+    () => loadMarketProductPaging({ page: 0, size: 100 }),
+    {
+      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
+      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+    },
   );
 
-  await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
-    loadEventProductPaging({ page: 0, size: 100 }),
+  await queryClient.prefetchQuery(
+    [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING_SHOP],
+    () => loadEventProductPaging({ page: 0, size: 100 }),
+    {
+      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
+      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+    },
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
+    {
+      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
+      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+    },
   );
   return {
     props: {
