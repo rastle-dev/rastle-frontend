@@ -17,6 +17,7 @@ const ICONS: IconProps = {
   ticket: "bi bi-ticket-perforated",
   checkCircle: "bi bi-check-circle",
   checkCircleFill: "bi bi-check-circle-fill",
+  check: "bi bi-check-lg",
 };
 
 export default ICONS;
