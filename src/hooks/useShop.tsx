@@ -83,6 +83,10 @@ export default function useShop() {
       fetchNextPage();
     }
   };
+
+  const handleFilterClick = (menu: FilterButtonType) => {
+    setSelectedFilter(menu);
+  };
   return {
     useLoadSelectBundle,
     infiniteData,
