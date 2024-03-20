@@ -19,6 +19,8 @@ const TabContainer = styled.div`
     flex-wrap: nowrap; /* 가로로 스크롤 가능하도록 설정 */
     justify-content: flex-start;
     gap: 3rem;
+    width: 100%;
+    //border: 1px solid red;
   }
   width: 100%;
 `;
