@@ -7,6 +7,7 @@ import DefaultAddress from "@/components/Mypage/DefaultAddress";
 import Cart from "@/components/Mypage/Cart";
 import Coupon from "@/components/Mypage/Coupon";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import * as S from "../../styles/mypage/index.styles";
 
 export default function Mypage() {
@@ -50,11 +51,8 @@ export default function Mypage() {
   // URL 파라미터를 확인하여 활성 탭을 설정
   useEffect(() => {
     const { tab } = router.query;
-    console.log("렌더링 확인", tab);
-
     const storedTab = sessionStorage.getItem("tab");
     const initialTab = tab || storedTab;
-    console.log("tab들", storedTab, initialTab);
     tabList?.forEach((item: any) => {
       if (tab && item === initialTab) {
         setActiveTab(item);
@@ -72,6 +70,9 @@ export default function Mypage() {
 
   return (
     <S.Container>
+      <Head>
+        <title>마이페이지 | RECORDY SLOW</title>
+      </Head>
       <S.Header>
         <h1>MYPAGE</h1>
       </S.Header>

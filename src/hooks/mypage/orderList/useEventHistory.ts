@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function useEventHistory() {
   const eventMenuList = [
@@ -13,23 +13,17 @@ export default function useEventHistory() {
   ];
   const [eventCurPage, setEventCurPage] = useState(1);
   const EVENT_ITEM_SIZE = 3;
-  const {
-    data: eventHistoryData,
-    isLoading: eventLoading,
-    refetch: eventHistoryDataRefetch,
-  } = useQuery(
-    [QUERYKEYS.LOAD_EVENT_HISTORY],
+  const { data: eventHistoryData, isLoading: eventLoading } = useQuery(
+    [QUERYKEYS.LOAD_EVENT_HISTORY, eventCurPage],
     () => loadEventHistory({ page: eventCurPage - 1, size: EVENT_ITEM_SIZE }),
     {
       keepPreviousData: true,
     },
   );
-  useEffect(() => {
-    eventHistoryDataRefetch();
-  }, [eventCurPage]);
   const onChangeEventPage = (page: number) => {
     setEventCurPage(page);
   };
+  const eventHistorySize = eventHistoryData?.data.totalElements;
 
   return {
     eventMenuList,
@@ -38,5 +32,6 @@ export default function useEventHistory() {
     onChangeEventPage,
     eventLoading,
     EVENT_ITEM_SIZE,
+    eventHistorySize,
   };
 }
