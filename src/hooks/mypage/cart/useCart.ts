@@ -192,7 +192,6 @@ export default function useCart() {
       }
     }
   };
-
   const onClickWholeOrderButton = async () => {
     const orderProducts = cartProduct?.data?.content?.map(
       (product: ProductItem) => ({
