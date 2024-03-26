@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
 import Pagination from "react-js-pagination";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
+
+import Modal from "@/components/Common/Modal";
+import EnterUpdateEventModal from "@/components/Event/EnterUpdateEventModal";
 
 export default function EventHistory() {
   const {
@@ -9,12 +12,45 @@ export default function EventHistory() {
     eventCurPage,
     eventHistoryData,
     onChangeEventPage,
-    eventLoading,
     EVENT_ITEM_SIZE,
   } = useEventHistory();
 
+  interface EventData {
+    eventProductId?: number;
+    eventProductName?: string;
+    eventPhoneNumber?: number;
+    instagramId?: string;
+  }
+
+  const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
+  const [eventData, setEventData] = useState<EventData>();
+
+  const openEventDetailModal = (item: EventData) => {
+    setEventData(item);
+    setIsDeleteUserModalOpen(true);
+  };
+
+  console.log(eventHistoryData);
+
   return (
     <S.Wrap>
+      {isDeleteUserModalOpen && (
+        <Modal
+          closeModal={() => {
+            setIsDeleteUserModalOpen(false);
+            // openDialog();
+          }}
+          width={60}
+        >
+          <EnterUpdateEventModal
+            eventProductId={eventData?.eventProductId}
+            productName={eventData?.eventProductName}
+            eventPhoneNumber={eventData?.eventPhoneNumber}
+            eventInstagramId={eventData?.instagramId}
+          />
+        </Modal>
+      )}
+
       <h2>응모내역</h2>
       {eventHistoryData?.data.content.length === 0 ? (
         <S.NODATA>아직 응모하신 상품이 없어요! 😋</S.NODATA>
@@ -32,7 +68,21 @@ export default function EventHistory() {
                   <S.ProductInfo>
                     <S.OrderDateNum>
                       <div>{item.eventApplyDate.split("T")[0]}</div>
-                      <S.OrderDetail>응모상세조회 {">"}</S.OrderDetail>
+                      <S.OrderDetail
+                        onClick={() => {
+                          openEventDetailModal(item);
+                        }}
+                      >
+                        <div>응모상세조회</div>
+                        <span>{">"}</span>
+                      </S.OrderDetail>
+                      <S.OrderNum
+                        onClick={() => {
+                          openEventDetailModal(item);
+                        }}
+                      >
+                        [응모상세조회]
+                      </S.OrderNum>
                     </S.OrderDateNum>
                     <S.Box>
                       <S.ProductBox>
