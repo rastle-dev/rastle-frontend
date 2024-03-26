@@ -155,9 +155,9 @@ export default function useUpdateProduct() {
       });
     });
 
-    if (discountState === false) {
-      setDiscountPrice(undefined);
-    }
+    // if (discountState === false) {
+    //   setDiscountPrice(undefined);
+    // }
 
     try {
       if (name && price && categoryId && displayOrder) {
@@ -511,7 +511,13 @@ export default function useUpdateProduct() {
 
   const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDiscountState(e.target.checked);
+    if (discountState) {
+      setDiscountPrice(price);
+    } else {
+      setDiscountPrice("");
+    }
   };
+  console.log(price);
   const loadImages = () => {
     if (productData) {
       setshowImageUpload(true);

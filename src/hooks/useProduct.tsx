@@ -200,6 +200,7 @@ export default function useProduct() {
       0,
     );
   }
+
   useEffect(() => {
     const newCartProducts: CartProduct[] = selectedProducts.map((product) => ({
       productId: numericProductId,

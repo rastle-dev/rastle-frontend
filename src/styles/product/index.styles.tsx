@@ -62,7 +62,7 @@ export const ProductContent = styled.div`
 export const Title = styled.h1`
   font-size: 2.18rem;
   font-weight: 400;
-  padding-bottom: 2rem;
+  padding-bottom: 1.8rem;
   margin-top: 0;
   ${media.mobile} {
     padding-bottom: 1.5rem;
@@ -72,12 +72,17 @@ export const Title = styled.h1`
 export const Price = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
-  padding-bottom: 2.27rem;
+  padding-bottom: 0.5rem;
 
   ${media.mobile} {
     border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
     width: 100%;
     padding: 0;
+  }
+
+  h4 {
+    padding: 0;
+    margin-top: 0;
   }
 `;
 
@@ -98,6 +103,7 @@ export const DiscountPrice = styled.div`
   span {
     color: ${COLORS.레드};
     font-size: 1.8rem;
+    margin-right: 0.5rem;
   }
 
   ${media.mobile} {
