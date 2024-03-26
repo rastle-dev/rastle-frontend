@@ -384,7 +384,8 @@ export const NODATA = styled.div`
   font-weight: 400;
   color: ${COLORS.GREY[500]};
   font-size: 1.5rem;
-  height: 30rem;
+  //height: rem;
+  margin-bottom: 3rem;
 `;
 export const ProductInfo = styled.div`
   p {
