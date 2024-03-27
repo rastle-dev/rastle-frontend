@@ -16,7 +16,9 @@ export default function useScroll() {
   };
   const handleScroll = () => {
     // 20px이상 위치했을 때 버튼 보임
-    setShowScrollButton(window.scrollY > 20);
+    const isBottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight;
+    setShowScrollButton(window.scrollY > 20 && !isBottom);
   };
   return {
     showScrollButton,
