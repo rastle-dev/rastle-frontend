@@ -53,7 +53,9 @@ export default function useLogin() {
       const token = response.authorization.replace("Bearer ", "");
       localStorage.setItem("accessToken", token);
       console.log(response);
-      router.push(PATH.HOME);
+      const returnUrl = localStorage.getItem("returnUrl") || "/";
+      console.log("return", returnUrl);
+      router.push(returnUrl);
     },
     onError: ({
       response: {
