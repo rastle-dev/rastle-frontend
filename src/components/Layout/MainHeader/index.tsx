@@ -10,7 +10,7 @@ import * as S from "./index.styles";
 
 const navList = [
   { name: "SHOP", href: "/shop" },
-  { name: "코디보기", href: "/style" },
+  { name: "코디보기", href: "/cody" },
   { name: "공지사항", href: "/community" },
   { name: "ABOUT", href: "/shopinfo/guide" },
 ];

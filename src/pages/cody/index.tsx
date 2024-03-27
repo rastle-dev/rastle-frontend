@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import * as S from "@/styles/shop/index.styles";
-import SwiperComponent from "@/components/Shop/CategoryView/Cody/codySwiper";
+import * as S from "@/styles/cody/index.styles";
 import DisplaySelectProduct from "@/components/Shop/DisplaySelectProduct";
 import {
   LoadingSpinner,
@@ -11,6 +10,7 @@ import Head from "next/head";
 
 export default function Cody() {
   const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
+  console.log(infiniteData);
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
     window.addEventListener("scroll", infiniteHandleScroll);
@@ -19,20 +19,28 @@ export default function Cody() {
     };
   }, [infiniteHandleScroll]);
   return (
-    <>
+    <S.Wrapper>
       <Head>
-        <title>코디 상품 | RECORDY SLOW</title>
+        <title>코디 보기 | RECORDY SLOW</title>
+        <meta name="description" content="제품을 활용한 코디 모음집" />
       </Head>
       <S.SetBox>
         {infiniteData?.pages.flatMap((page: any, idx: number) =>
           page.data.content.map((item: any) => (
             <S.CurrentMarketWrapper key={item.id}>
               <S.FirstMarketDescription>
-                RECORDY {idx + 1}: {item.name}
+                RECORDY {idx + 1}
+                <p>{item.name}</p>
               </S.FirstMarketDescription>
-              <SwiperComponent imgUrls={item.imageUrls} />
+              <S.MarketIMG
+                src={item.imageUrls.slice(0, -1)}
+                alt="ak"
+                width={500}
+                height={500}
+              />
               <h2>제품 정보</h2>
               {item.id && <DisplaySelectProduct id={item.id} />}
+              <S.Line />
             </S.CurrentMarketWrapper>
           )),
         )}
@@ -42,6 +50,6 @@ export default function Cody() {
           <LoadingSpinner />
         </LoadingSpinnerWrapper>
       )}
-    </>
+    </S.Wrapper>
   );
 }
