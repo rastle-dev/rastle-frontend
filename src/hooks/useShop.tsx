@@ -10,21 +10,32 @@ import Category from "@/interface/category";
 import { useRouter } from "next/dist/client/router";
 import ItemElementProps from "@/interface/itemElement";
 
+type FilterButtonType = "NEW" | "BEST";
+
 export default function useShop() {
+  const filterButtons: FilterButtonType[] = ["NEW", "BEST"];
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [activeCategoryId, setActiveCategoryId] = useState<Category>();
   const [categoryList, setCategoryList] = useState<string[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<FilterButtonType>("NEW"); // 클릭된 버튼의 인덱스를 저장할 상태
   const queryClient = useQueryClient();
   const router = useRouter();
   const productData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_PRODUCT_PAGING,
+    QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP,
+  ]) as {
+    data: {
+      content: Array<ItemElementProps>;
+    };
+  };
+  const bestProductData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP,
   ]) as {
     data: {
       content: Array<ItemElementProps>;
     };
   };
   const eventData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
+    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING_SHOP,
   ]) as {
     data: Array<ItemElementProps>;
   };
@@ -79,6 +90,10 @@ export default function useShop() {
       fetchNextPage();
     }
   };
+
+  const handleFilterClick = (menu: FilterButtonType) => {
+    setSelectedFilter(menu);
+  };
   return {
     useLoadSelectBundle,
     infiniteData,
@@ -94,5 +109,9 @@ export default function useShop() {
     setActiveCategoryId,
     categoryData,
     setActiveCategory,
+    selectedFilter,
+    handleFilterClick,
+    filterButtons,
+    bestProductData,
   };
 }

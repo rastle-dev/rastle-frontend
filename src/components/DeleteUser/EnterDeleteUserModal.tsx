@@ -7,7 +7,6 @@ import React, { useState } from "react";
 
 import Icon from "@/components/Common/Icon";
 import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
-import media from "@/styles/media";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,18 +17,10 @@ const Wrapper = styled.div`
     font-size: 2rem;
     padding-bottom: 2rem;
     color: ${COLORS.블루};
-
-    ${media.mobile} {
-      font-size: 1.7rem;
-    }
   }
   p {
     font-weight: 300;
     font-size: 1.2rem;
-
-    ${media.mobile} {
-      font-size: 1.2rem;
-    }
   }
   h4 {
     font-size: 1.2rem;
@@ -43,10 +34,6 @@ const BottomWrapper = styled.div`
   margin-top: 5rem;
   justify-content: space-between;
   align-items: center;
-
-  ${media.mobile} {
-    margin-top: 3rem;
-  }
 `;
 
 interface ConfirmCheckBoxProps {
@@ -63,22 +50,12 @@ const ConfirmCheckBox = styled.div<ConfirmCheckBoxProps>`
 
 const EnterButton = styled(Button)`
   border-radius: 0.625rem;
-  //height: 3.3rem;
-  margin: 0;
+  height: 3.3rem;
   padding: 1rem;
   font-size: 1.3rem;
   float: right; /* 오른쪽으로 이동 */
-  margin-right: 3rem;
-
+  margin-right: 8rem;
   font-weight: 500;
-
-  ${media.mobile} {
-    margin-right: 3rem;
-  }
-
-  &:hover {
-    font-weight: 600;
-  }
   &:focus {
     border: none;
   }

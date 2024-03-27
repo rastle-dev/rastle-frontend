@@ -5,6 +5,8 @@ import ItemElement from "@/components/ItemElement";
 import useShop from "@/hooks/useShop";
 import Category from "@/interface/category";
 import Head from "next/head";
+import Icon from "@/components/Common/Icon";
+import COLORS from "@/constants/color";
 
 interface CategoryViewProps {
   activeCategory: string;
@@ -14,16 +16,42 @@ export default function CategoryView({
   activeCategory,
   activeCategoryId,
 }: CategoryViewProps) {
-  const { productData, eventData } = useShop();
+  const {
+    productData,
+    eventData,
+    selectedFilter,
+    handleFilterClick,
+    filterButtons,
+    bestProductData,
+  } = useShop();
+
   if (activeCategory === "전체") {
     return (
-      <S.ProductList>
-        {productData?.data.content.map((item: ItemElementProps) => {
-          // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
-          const finalDiscountPrice =
-            item.price === item.discountPrice ? undefined : item.discountPrice;
-
-          return (
+      <>
+        <S.FilterBox>
+          {filterButtons.map((menu) => (
+            <S.FilterButton
+              key={menu}
+              onClick={() => handleFilterClick(menu)} // 클릭 이벤트 핸들러를 추가
+              isSelected={selectedFilter === menu} // 선택된 버튼인지 여부에 따라 스타일을 변경하기 위한 속성 추가
+            >
+              {selectedFilter === menu && (
+                <Icon
+                  iconName="check"
+                  iconSize="1.5rem"
+                  border={0.07}
+                  color={selectedFilter ? COLORS.BLACK : COLORS.GREY[400]}
+                />
+              )}
+              <p>{menu}</p>
+            </S.FilterButton>
+          ))}
+        </S.FilterBox>
+        <S.ProductList>
+          {(
+            (selectedFilter === "BEST" ? bestProductData : productData)?.data
+              .content || []
+          ).map((item: ItemElementProps) => (
             <ItemElement
               key={item.id}
               mainThumbnail={item.mainThumbnail}
@@ -31,28 +59,24 @@ export default function CategoryView({
               productName={item.productName}
               name={item.name}
               price={item.price}
-              discountPrice={finalDiscountPrice}
+              discountPrice={item.discountPrice}
               id={item.id}
               isEvent={!!item.eventId}
             />
-          );
-        })}
-      </S.ProductList>
+          ))}
+        </S.ProductList>
+      </>
     );
   }
-
   if (activeCategory === "이벤트") {
     return (
-      <S.ProductList>
-        <Head>
-          <title>{activeCategory} | RECORDY SLOW</title>
-        </Head>
-        {eventData?.data.map((item: ItemElementProps) => {
-          // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
-          const finalDiscountPrice =
-            item.price === item.discountPrice ? undefined : item.discountPrice;
-
-          return (
+      <>
+        <S.Blank />
+        <S.ProductList>
+          <Head>
+            <title>{activeCategory} | RECORDY SLOW</title>
+          </Head>
+          {eventData?.data.map((item: ItemElementProps) => (
             <ItemElement
               key={item.productId}
               mainThumbnail={item.mainThumbnail}
@@ -60,16 +84,19 @@ export default function CategoryView({
               name={item.productName}
               productName={item.productName}
               price={item.price}
-              discountPrice={finalDiscountPrice}
+              discountPrice={0}
               id={item.productId}
               isEvent={!!item.eventId}
             />
-          );
-        })}
-      </S.ProductList>
+          ))}
+        </S.ProductList>
+      </>
     );
   }
-  const filteredProducts = productData?.data.content.filter(
+  const filteredProducts = (
+    (selectedFilter === "BEST" ? bestProductData : productData)?.data.content ||
+    []
+  ).filter(
     (item: ItemElementProps) => item.categoryId === activeCategoryId?.id,
   );
   if (filteredProducts?.length === 0) {
@@ -86,7 +113,7 @@ export default function CategoryView({
   }
 
   return (
-    <S.ProductList>
+    <>
       <Head>
         <title>{activeCategory} | RECORDY SLOW</title>
         <meta
@@ -102,12 +129,27 @@ export default function CategoryView({
             .join(",")}
         />
       </Head>
-      {filteredProducts?.map((item: ItemElementProps) => {
-        // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
-        const finalDiscountPrice =
-          item.price === item.discountPrice ? undefined : item.discountPrice;
-
-        return (
+      <S.FilterBox>
+        {filterButtons.map((menu) => (
+          <S.FilterButton
+            key={menu}
+            onClick={() => handleFilterClick(menu)}
+            isSelected={selectedFilter === menu}
+          >
+            {selectedFilter === menu && (
+              <Icon
+                iconName="check"
+                iconSize="1.5rem"
+                border={0.07}
+                color={selectedFilter ? COLORS.BLACK : COLORS.GREY[400]}
+              />
+            )}
+            <p>{menu}</p>
+          </S.FilterButton>
+        ))}
+      </S.FilterBox>
+      <S.ProductList>
+        {filteredProducts?.map((item: ItemElementProps) => (
           <ItemElement
             key={item.id}
             mainThumbnail={item.mainThumbnail}
@@ -115,12 +157,12 @@ export default function CategoryView({
             name={item.name}
             productName={item.productName}
             price={item.price}
-            discountPrice={finalDiscountPrice}
+            discountPrice={item.discountPrice}
             id={item.id}
             isEvent={!!item.eventId}
           />
-        );
-      })}
-    </S.ProductList>
+        ))}
+      </S.ProductList>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/Common/ColorButton";
 import COLORS from "@/constants/color";
@@ -44,6 +44,8 @@ export default function Product() {
     cartProducts,
     onClickOrderButton,
   } = useProduct();
+
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
   useEffect(() => {
     handleScroll();
@@ -182,20 +184,40 @@ export default function Product() {
             {calculateTotalCount(selectedProducts)}개)
           </S.TotalPrice>
           <S.Pay>
+            {isLoginModalVisible && (
+              <Dialog
+                title="로그인 후에 이용 가능한 기능이에요!"
+                confirm="쇼핑 계속하기"
+                refuse="로그인 하러가기"
+                size={45}
+                onClickRefuseButton={() => {
+                  setLoginModalVisible(false); // 모달 창 닫기
+                  const returnUrl = `${router.pathname}?${router.asPath.split("?")[1]}`;
+                  localStorage.setItem("returnUrl", returnUrl);
+                  router.push({ pathname: PATH.LOGIN });
+                }}
+                onClickConfirmButton={() => {
+                  setLoginModalVisible(false); // 모달 창 닫기
+                }}
+                visible
+              />
+            )}
+
             <S.StyledBuyButton
               onClick={async () => {
                 if (selectedProducts.length === 0) {
                   toast.dismiss();
                   toastMsg("구매하실 제품을 선택해주세요!");
-                } else {
+                } else if (localStorage.getItem("accessToken")) {
                   try {
                     await onClickOrderButton();
                   } catch (error) {
                     // onClickOrderButton이 프로미스를 reject할 경우의 처리
                     console.error(error);
-
                     // 추가적인 에러 처리 또는 사용자에게 알림을 보여줄 수 있습니다.
                   }
+                } else {
+                  setLoginModalVisible(true); // 로그인 모달 창 띄우기
                 }
               }}
               title="구매하기"
@@ -211,7 +233,7 @@ export default function Product() {
                     openDialog();
                   }
                 } else {
-                  router.push(PATH.LOGIN);
+                  setLoginModalVisible(true); // 로그인 모달 창 띄우기
                 }
               }}
               title="장바구니에 담기"

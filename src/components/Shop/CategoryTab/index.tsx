@@ -10,7 +10,7 @@ interface ProductCategoryTabsProps {
 
 const TabContainer = styled.div`
   display: flex;
-  gap: 6rem;
+  gap: 5rem;
   -webkit-overflow-scrolling: touch;
 
   @media (max-width: 768px) {
@@ -19,6 +19,8 @@ const TabContainer = styled.div`
     flex-wrap: nowrap; /* 가로로 스크롤 가능하도록 설정 */
     justify-content: flex-start;
     gap: 3rem;
+    width: 100%;
+    //border: 1px solid red;
   }
   width: 100%;
 `;
@@ -27,9 +29,9 @@ const TabItem = styled.div<{ active: boolean }>`
   display: flex;
   color: ${(props) => (props.active ? COLORS.블루 : COLORS.블랙)};
   border-bottom: ${(props) =>
-    props.active ? `1px solid ${COLORS.블랙}` : "none"};
+    props.active ? `1px solid ${COLORS.BLUE}` : "none"};
   cursor: pointer;
-  padding-bottom: 3.375rem;
+  padding-bottom: 1.5rem;
   font-weight: 200;
   font-size: 1.3rem;
   @media (max-width: 768px) {
