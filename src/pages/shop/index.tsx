@@ -3,7 +3,11 @@ import { dehydrate, QueryClient } from "@tanstack/react-query";
 import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import * as S from "@/styles/shop/index.styles";
 import QUERYKEYS from "@/constants/querykey";
-import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
+import {
+  loadEventProductPaging,
+  loadMarketBestProduct,
+  loadMarketProductPaging,
+} from "@/api/shop";
 import { adminGetCategory } from "@/api/admin";
 import { useRouter } from "next/dist/client/router";
 import Category from "@/interface/category";
@@ -18,6 +22,14 @@ export async function getStaticProps() {
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP],
     () => loadMarketProductPaging({ page: 0, size: 100 }),
+    {
+      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
+      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+    },
+  );
+  await queryClient.prefetchQuery(
+    [QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP],
+    () => loadMarketBestProduct({ page: 0, size: 100 }),
     {
       staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
       cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
