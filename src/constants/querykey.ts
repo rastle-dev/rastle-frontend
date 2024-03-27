@@ -5,6 +5,7 @@ const QUERYKEYS = {
   LOAD_PRODUCT: "loadMarketProduct",
   LOAD_PRODUCT_PAGING: "loadMarketProductPaging",
   LOAD_PRODUCT_PAGING_SHOP: "loadMarketProductPaging",
+  LOAD_BEST_PRODUCT_PAGING_SHOP: "loadMarketBestProduct",
   LOAD_EVENTPRODUCT: "loadEventProduct",
   LOAD_EVENTPRODUCT_PAGING: "loadEventProductPaging",
   LOAD_EVENTPRODUCT_PAGING_SHOP: "loadEventProductPaging",

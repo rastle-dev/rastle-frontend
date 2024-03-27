@@ -22,6 +22,7 @@ export default function CategoryView({
     selectedFilter,
     handleFilterClick,
     filterButtons,
+    bestProductData,
   } = useShop();
 
   if (activeCategory === "전체") {
@@ -47,7 +48,10 @@ export default function CategoryView({
           ))}
         </S.FilterBox>
         <S.ProductList>
-          {productData?.data.content.map((item: ItemElementProps) => (
+          {(
+            (selectedFilter === "BEST" ? bestProductData : productData)?.data
+              .content || []
+          ).map((item: ItemElementProps) => (
             <ItemElement
               key={item.id}
               mainThumbnail={item.mainThumbnail}
@@ -89,7 +93,10 @@ export default function CategoryView({
       </>
     );
   }
-  const filteredProducts = productData?.data.content.filter(
+  const filteredProducts = (
+    (selectedFilter === "BEST" ? bestProductData : productData)?.data.content ||
+    []
+  ).filter(
     (item: ItemElementProps) => item.categoryId === activeCategoryId?.id,
   );
   if (filteredProducts?.length === 0) {
