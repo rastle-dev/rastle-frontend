@@ -14,7 +14,6 @@ import Category from "@/interface/category";
 import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
 import Head from "next/head";
-import Cody from "@/components/Shop/CategoryView/Cody";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -121,7 +120,6 @@ export default function Shop() {
           categories={
             categoryData?.data && [
               "전체",
-              "코디상품",
               ...categoryData.data.map((v: Category) => v.name),
             ]
           }
@@ -130,14 +128,10 @@ export default function Shop() {
         />
       </S.Header>
       <S.Line />
-      {activeCategory === "코디상품" ? (
-        <Cody />
-      ) : (
-        <CategoryView
-          activeCategory={activeCategory}
-          activeCategoryId={activeCategoryId}
-        />
-      )}
+      <CategoryView
+        activeCategory={activeCategory}
+        activeCategoryId={activeCategoryId}
+      />
     </S.Container>
   );
 }
