@@ -10,10 +10,10 @@ import Category from "@/interface/category";
 import { useRouter } from "next/dist/client/router";
 import ItemElementProps from "@/interface/itemElement";
 
-type FilterButtonType = "NEW" | "BEST" | "누적 판매순";
+type FilterButtonType = "NEW" | "BEST";
 
 export default function useShop() {
-  const filterButtons: FilterButtonType[] = ["NEW", "BEST", "누적 판매순"];
+  const filterButtons: FilterButtonType[] = ["NEW", "BEST"];
   const [activeCategory, setActiveCategory] = useState<string>("전체");
   const [activeCategoryId, setActiveCategoryId] = useState<Category>();
   const [categoryList, setCategoryList] = useState<string[]>([]);
@@ -21,14 +21,21 @@ export default function useShop() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const productData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_PRODUCT_PAGING,
+    QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP,
+  ]) as {
+    data: {
+      content: Array<ItemElementProps>;
+    };
+  };
+  const bestProductData = queryClient.getQueryData([
+    QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP,
   ]) as {
     data: {
       content: Array<ItemElementProps>;
     };
   };
   const eventData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
+    QUERYKEYS.LOAD_EVENTPRODUCT_PAGING_SHOP,
   ]) as {
     data: Array<ItemElementProps>;
   };
@@ -105,5 +112,6 @@ export default function useShop() {
     selectedFilter,
     handleFilterClick,
     filterButtons,
+    bestProductData,
   };
 }
