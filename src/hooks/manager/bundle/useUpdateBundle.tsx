@@ -125,6 +125,8 @@ export default function useUpdateBundle() {
 
       if (shouldCreate) {
         // 서버로 FormData를 포함한 POST 요청 보내기
+        console.log(bundleId);
+        console.log(formData);
         const data = await adminUpdateBundleImages(bundleId, formData);
         console.log(data);
         alert("세트 이미지 수정을 성공했습니다");

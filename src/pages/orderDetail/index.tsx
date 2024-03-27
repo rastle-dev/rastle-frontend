@@ -60,15 +60,15 @@ export default function OrderDetail() {
 
   return (
     <S.Temp>
-      <style>
-        {`
-          @media (min-width: 1px) and (max-width: 767px) {
-            html{
-              font-size: 11px;
-            }정
-          }
-        `}
-      </style>
+      {/* <style> */}
+      {/*   {` */}
+      {/*     @media (min-width: 1px) and (max-width: 767px) { */}
+      {/*       html{ */}
+      {/*         font-size: 11px; */}
+      {/*       } */}
+      {/*     } */}
+      {/*   `} */}
+      {/* </style> */}
       <S.Container>
         <S.MainTitle>주문 상세조회</S.MainTitle>
         <S.InfoWrapper>

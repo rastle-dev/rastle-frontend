@@ -64,6 +64,19 @@ export const Text2 = styled.span`
   padding-top: 0.5rem;
   font-size: 2rem;
   font-weight: 400;
+  padding-bottom: 1rem;
+`;
+
+export const Text3 = styled.span`
+  padding-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  a {
+    color: #02c75a;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
 `;
 
 export const TextInstagram = styled.span`

@@ -8,7 +8,10 @@ import Head from "next/head";
 import Modal from "@/components/Common/Modal";
 import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
 import EnterViewMoreModal from "@/components/Signup/EnterViewMoreModal";
-import { ViewMoreButton } from "@/styles/signup/index.styles";
+import {
+  StyledButtonInput,
+  ViewMoreButton,
+} from "@/styles/signup/index.styles";
 
 export default function Signup() {
   const {
@@ -29,13 +32,13 @@ export default function Signup() {
 
   return (
     <S.Wrapper>
-      <style>
-        {`
-            html{
-              font-size: 12px;
-            }
-        `}
-      </style>
+      {/* <style> */}
+      {/*   {` */}
+      {/*       html{ */}
+      {/*         font-size: 11px; */}
+      {/*       } */}
+      {/*   `} */}
+      {/* </style> */}
       <Head>
         <title>회원가입 - RECORDY SLOW</title>
       </Head>
@@ -55,7 +58,7 @@ export default function Signup() {
         <div key={data.label}>
           {data.isCertification && data.label === "이메일주소" && (
             <S.InputWithButtonDiv>
-              <Input
+              <S.StyledButtonInput
                 placeholder={data.placeholder}
                 label={data.label}
                 onChange={data.onChange}
@@ -74,7 +77,7 @@ export default function Signup() {
 
           {data.isCertification && data.label !== "이메일주소" && showText && (
             <S.CodeContainer className="show-text">
-              <Input
+              <S.StyledButtonInput
                 placeholder={data.placeholder}
                 label={data.label}
                 onChange={data.onChange}
@@ -93,7 +96,7 @@ export default function Signup() {
 
           {!data.isCertification && (
             <S.DefaultInputDiv>
-              <Input
+              <S.StyledInput
                 type={data.type}
                 placeholder={data.placeholder}
                 label={data.label}

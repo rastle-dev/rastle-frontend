@@ -155,9 +155,9 @@ export default function useUpdateProduct() {
       });
     });
 
-    if (discountState === false) {
-      setDiscountPrice(undefined);
-    }
+    // if (discountState === false) {
+    //   setDiscountPrice(undefined);
+    // }
 
     try {
       if (name && price && categoryId && displayOrder) {
@@ -166,7 +166,7 @@ export default function useUpdateProduct() {
           price,
           discountPrice,
           eventCategory: false,
-          ...(bundleCategory ? { bundleId } : {}),
+          ...(bundleCategory ? { bundleId } : { bundleId: null }),
           categoryId,
           productColor: { productColors },
           displayOrder,
@@ -188,6 +188,7 @@ export default function useUpdateProduct() {
   const handleBundleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBundleCategory(e.target.checked);
   };
+  console.log(bundleCategory);
 
   const handleBundleIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setBundleId(e.target.value);
@@ -511,7 +512,13 @@ export default function useUpdateProduct() {
 
   const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDiscountState(e.target.checked);
+    if (discountState) {
+      setDiscountPrice(price);
+    } else {
+      setDiscountPrice("");
+    }
   };
+  console.log(price);
   const loadImages = () => {
     if (productData) {
       setshowImageUpload(true);

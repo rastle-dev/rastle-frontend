@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
+import media from "@/styles/media";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
@@ -35,11 +36,25 @@ export const OrderNum = styled.div`
 `;
 export const OrderDetail = styled.div`
   padding-right: 1rem;
-  @media (min-width: 769px) {
-    display: none;
+  cursor: pointer;
+
+  span {
+    @media (min-width: 769px) {
+      display: none;
+    }
+  }
+  div {
+    @media (min-width: 769px) {
+      display: none;
+    }
+
+    ${media.mobile} {
+      display: inline-block;
+    }
   }
   cursor: pointer;
 `;
+
 export const Table = styled.div`
   width: 100%;
 `;

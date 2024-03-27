@@ -19,6 +19,7 @@ const QUERYKEYS = {
   LOAD_SELECT_BUNDLE: "loadSelectBundle",
   LOAD_ME: "loadMe",
   ADMIN_LOAD_USERINFO: "adminGetUserInfo",
+  ADMIN_LOAD_ORDERINFO: "adminGetOrderInfo",
   LOAD_PRODUCT_IMAGE: "loadProductImage",
   LOAD_PRODUCT_DETAIL: "loadProductDetail",
   LOAD_PRODUCT_COLOR: "loadProductColor",

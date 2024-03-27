@@ -26,7 +26,7 @@ const StyledSwiper = styled(Swiper)`
     height: auto;
     padding-bottom: 3.72rem;
 
-    .swiper-button-prev,
+    .swip er-button-prev,
     .swiper-button-next {
       display: none; // 화살표 숨기기
     }
@@ -43,8 +43,16 @@ const StyledSwiper = styled(Swiper)`
     .swiper-pagination-bullet {
       margin: 0 0.25rem;
       padding: 0 0.5rem; ;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .swiper-pagination-bullet-active{
+      width : 10px;
+      height: 10px;
     }
   }
+  
 
 \` ;
 `;
@@ -98,7 +106,7 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
 
   return (
     <StyledSwiper
-      onInit={handleSwiperInit} // Swiper 초기화 시 호출되는 콜백 함수
+      onInit={handleSwiperInit}
       navigation={{
         prevEl: ".swiper-button-prev",
         nextEl: ".swiper-button-next",

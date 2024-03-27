@@ -17,6 +17,7 @@ import useScroll from "@/hooks/useScroll";
 import { GetServerSideProps } from "next";
 import commonServerSideProps from "@/components/Product/commonServerSideProps";
 import Head from "next/head";
+import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 
 export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
@@ -43,6 +44,7 @@ export default function Product() {
     cartProducts,
     onClickOrderButton,
   } = useProduct();
+
   const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
   useEffect(() => {
@@ -53,6 +55,15 @@ export default function Product() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  console.log(detailData);
+
+  const { discountPercent } = calculateDiscountPercentAndPrice(
+    detailData?.data.price,
+    detailData?.data.discountPrice,
+  );
+
+  console.log(discountPercent);
 
   return (
     <S.Wrapper>
@@ -88,11 +99,17 @@ export default function Product() {
         </S.ImageLayer>
         <S.ProductContent>
           <S.Title>{detailData?.data.name}</S.Title>
-          <S.DiscountPrice>
-            <h4>{detailData?.data.price.toLocaleString()}원</h4>
-            <span>10% </span>
-            {detailData?.data.discountPrice.toLocaleString()}원
-          </S.DiscountPrice>
+          {detailData?.data.price === detailData?.data.discountPrice ? (
+            <S.Price>
+              <h4>{detailData?.data.price.toLocaleString()}원</h4>
+            </S.Price>
+          ) : (
+            <S.DiscountPrice>
+              <h4>{detailData?.data.price.toLocaleString()}원</h4>
+              <span>{discountPercent}%</span>
+              {detailData?.data.discountPrice.toLocaleString()}원
+            </S.DiscountPrice>
+          )}
           <S.ColorText>색상</S.ColorText>
           <S.ColorList>
             {uniqueColors.map((color) => (
