@@ -10,6 +10,7 @@ import Head from "next/head";
 
 export default function Cody() {
   const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
+  console.log(infiniteData);
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
     window.addEventListener("scroll", infiniteHandleScroll);
@@ -20,7 +21,8 @@ export default function Cody() {
   return (
     <S.Wrapper>
       <Head>
-        <title>코디 상품 | RECORDY SLOW</title>
+        <title>코디 보기 | RECORDY SLOW</title>
+        <meta name="description" content="제품을 활용한 코디 모음집" />
       </Head>
       <S.SetBox>
         {infiniteData?.pages.flatMap((page: any, idx: number) =>
