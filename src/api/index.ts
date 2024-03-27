@@ -27,15 +27,24 @@ const unAuthorizationClient = axios.create({
 // API 요청이 전송되기 전에 실행되며, 요청 구성(config)을 조작하여 헤더에 인증 정보를 추가하는 역할 수행
 // 즉 모든 API 요청이 전송되기 전에 헤더에 인증 정보를 추가하는 역할 수행
 // 헤더에 accessToken을 담음
+// @ts-ignore
 authorizationClient.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
-    return Object.assign(config, {
+    // 만약 config.data가 FormData 객체라면 multipart/form-data로 Content-Type 설정
+    const contentType =
+      config.data instanceof FormData
+        ? "multipart/form-data"
+        : "application/json";
+
+    return {
+      ...config,
       headers: {
+        ...config.headers,
         Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
+        "Content-Type": contentType,
       },
-    });
+    };
   }
   return config;
 });

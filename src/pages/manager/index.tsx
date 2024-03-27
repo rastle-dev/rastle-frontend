@@ -20,7 +20,8 @@ import { adminCheckAuthority, adminGetBundle } from "@/api/admin";
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
   width: 88%;
-  overflow: hidden;
+  //overflow: hidden;
+  overflow-x: auto; /* 수평 스크롤을 추가합니다. */
 
   ${media.mobile} {
     width: 92%;

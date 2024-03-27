@@ -166,7 +166,7 @@ export default function useUpdateProduct() {
           price,
           discountPrice,
           eventCategory: false,
-          ...(bundleCategory ? { bundleId } : {}),
+          ...(bundleCategory ? { bundleId } : { bundleId: null }),
           categoryId,
           productColor: { productColors },
           displayOrder,
@@ -188,6 +188,7 @@ export default function useUpdateProduct() {
   const handleBundleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBundleCategory(e.target.checked);
   };
+  console.log(bundleCategory);
 
   const handleBundleIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setBundleId(e.target.value);

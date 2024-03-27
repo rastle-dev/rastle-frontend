@@ -147,12 +147,18 @@ export const adminUpdateMainThumbnailImage = async (
   const headers = {
     "Content-Type": "multipart/form-data",
   };
-  const { data } = await authorizationClient.put(
-    `${API.CREATEPRODUCT}/${productId}${API.MAINTHUMBNAIL}`,
-    imageData,
-    { headers },
-  );
-  return data;
+  try {
+    const { data } = await authorizationClient.put(
+      `${API.CREATEPRODUCT}/${productId}${API.MAINTHUMBNAIL}`,
+      imageData,
+      { headers },
+    );
+    return data;
+  } catch (error) {
+    // 에러 처리 로직 추가
+    console.error("Error occurred while uploading image:", error);
+    throw error;
+  }
 };
 
 export const adminAddSubThumbnailImage = async (
@@ -313,6 +319,14 @@ export const adminUpdateEventImages = async (
 export const adminDeleteEvent = async (eventId: number | undefined) => {
   const { data } = await authorizationClient.delete(
     `${API.CREATEEVENT}/${eventId}`,
+  );
+  return data;
+};
+
+export const adminGetOrderInfo = async (orderData: any) => {
+  const { orderStatus, receiverName, page, size } = orderData;
+  const { data } = await authorizationClient.get(
+    `${API.ORDERS}?page=${page}&size=${size}`,
   );
   return data;
 };

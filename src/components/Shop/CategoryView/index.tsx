@@ -26,6 +26,11 @@ export default function CategoryView({
   } = useShop();
 
   if (activeCategory === "전체") {
+    // 선택된 필터 버튼에 따라 데이터를 필터링
+    const filteredProducts =
+      (selectedFilter === "BEST" ? bestProductData : productData)?.data
+        .content || [];
+
     return (
       <>
         <S.FilterBox>
@@ -48,35 +53,44 @@ export default function CategoryView({
           ))}
         </S.FilterBox>
         <S.ProductList>
-          {(
-            (selectedFilter === "BEST" ? bestProductData : productData)?.data
-              .content || []
-          ).map((item: ItemElementProps) => (
-            <ItemElement
-              key={item.id}
-              mainThumbnail={item.mainThumbnail}
-              subThumbnail={item.subThumbnail}
-              productName={item.productName}
-              name={item.name}
-              price={item.price}
-              discountPrice={item.discountPrice}
-              id={item.id}
-              isEvent={!!item.eventId}
-            />
-          ))}
+          {filteredProducts.map((item: ItemElementProps) => {
+            // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
+            const finalDiscountPrice =
+              item.price === item.discountPrice
+                ? undefined
+                : item.discountPrice;
+
+            return (
+              <ItemElement
+                key={item.id}
+                mainThumbnail={item.mainThumbnail}
+                subThumbnail={item.subThumbnail}
+                productName={item.productName}
+                name={item.name}
+                price={item.price}
+                discountPrice={finalDiscountPrice}
+                id={item.id}
+                isEvent={!!item.eventId}
+              />
+            );
+          })}
         </S.ProductList>
       </>
     );
   }
+
   if (activeCategory === "이벤트") {
     return (
-      <>
-        <S.Blank />
-        <S.ProductList>
-          <Head>
-            <title>{activeCategory} | RECORDY SLOW</title>
-          </Head>
-          {eventData?.data.map((item: ItemElementProps) => (
+      <S.ProductList>
+        <Head>
+          <title>{activeCategory} | RECORDY SLOW</title>
+        </Head>
+        {eventData?.data.map((item: ItemElementProps) => {
+          // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
+          const finalDiscountPrice =
+            item.price === item.discountPrice ? undefined : item.discountPrice;
+
+          return (
             <ItemElement
               key={item.productId}
               mainThumbnail={item.mainThumbnail}
@@ -84,22 +98,24 @@ export default function CategoryView({
               name={item.productName}
               productName={item.productName}
               price={item.price}
-              discountPrice={0}
+              discountPrice={finalDiscountPrice}
               id={item.productId}
               isEvent={!!item.eventId}
             />
-          ))}
-        </S.ProductList>
-      </>
+          );
+        })}
+      </S.ProductList>
     );
   }
+
   const filteredProducts = (
     (selectedFilter === "BEST" ? bestProductData : productData)?.data.content ||
     []
   ).filter(
     (item: ItemElementProps) => item.categoryId === activeCategoryId?.id,
   );
-  if (filteredProducts?.length === 0) {
+
+  if (filteredProducts.length === 0) {
     return (
       <S.ProductList>
         <Head>
@@ -149,19 +165,25 @@ export default function CategoryView({
         ))}
       </S.FilterBox>
       <S.ProductList>
-        {filteredProducts?.map((item: ItemElementProps) => (
-          <ItemElement
-            key={item.id}
-            mainThumbnail={item.mainThumbnail}
-            subThumbnail={item.subThumbnail}
-            name={item.name}
-            productName={item.productName}
-            price={item.price}
-            discountPrice={item.discountPrice}
-            id={item.id}
-            isEvent={!!item.eventId}
-          />
-        ))}
+        {filteredProducts.map((item: ItemElementProps) => {
+          // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
+          const finalDiscountPrice =
+            item.price === item.discountPrice ? undefined : item.discountPrice;
+
+          return (
+            <ItemElement
+              key={item.id}
+              mainThumbnail={item.mainThumbnail}
+              subThumbnail={item.subThumbnail}
+              name={item.name}
+              productName={item.productName}
+              price={item.price}
+              discountPrice={finalDiscountPrice}
+              id={item.id}
+              isEvent={!!item.eventId}
+            />
+          );
+        })}
       </S.ProductList>
     </>
   );

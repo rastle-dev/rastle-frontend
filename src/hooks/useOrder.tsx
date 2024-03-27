@@ -372,13 +372,13 @@ export default function useOrder() {
 
     console.log(response);
 
-    if (!success) {
+    if (!response.imp_uid) {
       alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
       router.replace(`/shop`);
       return;
     }
 
-    if (success) {
+    if (response.imp_uid) {
       // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
       alert("결제 callback 성공, 사후검증 실행");
 
