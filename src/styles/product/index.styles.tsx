@@ -78,6 +78,7 @@ export const Price = styled.div`
     border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
     width: 100%;
     padding: 0;
+    margin-bottom: 2rem;
   }
 
   h4 {

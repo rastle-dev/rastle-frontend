@@ -26,7 +26,7 @@ const StyledSwiper = styled(Swiper)`
     height: auto;
     padding-bottom: 3.72rem;
 
-    .swip er-button-prev,
+    .swiper-button-prev,
     .swiper-button-next {
       display: none; // 화살표 숨기기
     }
@@ -46,11 +46,6 @@ const StyledSwiper = styled(Swiper)`
       width: 1rem;
       height: 1rem;
     }
-
-    .swiper-pagination-bullet-active{
-      width : 10px;
-      height: 10px;
-    }
   }
   
 
@@ -60,6 +55,7 @@ const StyledSwiper = styled(Swiper)`
 const StyledImage = styled(Image)`
   max-width: 100%; // 이미지의 최대 너비를 100%로 설정하여 부모 컨테이너에 맞게 조절
   height: auto; // 이미지의 높이를 자동으로 조절하여 비율을 유지
+  aspect-ratio: 0.77;
 `;
 
 const CustomArrow = styled.div`
