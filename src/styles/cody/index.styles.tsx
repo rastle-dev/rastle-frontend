@@ -9,28 +9,6 @@ export const Wrapper = styled.div`
   align-items: center;
   padding-top: 8rem;
 `;
-// export const Container = styled.div`
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   flex-direction: column;
-//   margin-top: 5.5rem;
-//   padding-top: 2rem;
-//   border: 1px solid blue;
-// `;
-
-export const Header = styled.div`
-  width: 88%;
-  background-color: ${COLORS.화이트};
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 200;
-    padding: 4rem 0 5rem 0;
-  }
-  @media (max-width: 500px) {
-    width: 92%;
-  }
-`;
 export const SetBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,7 +31,7 @@ export const Line = styled.div`
 `;
 
 export const CurrentMarketWrapper = styled.div`
-  width: 50%;
+  width: 50rem;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -94,30 +72,30 @@ export const FirstMarketDescription = styled.div`
   font-size: 2rem;
 `;
 
-export const ProductList = styled.div`
-  display: grid;
-  width: 88%;
-  grid-template-columns: repeat(4, 1fr);
-  ${media.xsmall} {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 2.5rem;
-    width: 95%;
-  }
-  ${media.small} {
-    grid-template-columns: repeat(auto-fill, minmax(30%, auto));
-    row-gap: 2.5rem;
-    width: 90%;
-  }
-
-  //padding-top: 4.8rem;
-  column-gap: 1%;
-  row-gap: 8rem;
-`;
-export const Price = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
-  padding-top: 1rem;
-`;
+// export const ProductList = styled.div`
+//   display: grid;
+//   width: 88%;
+//   grid-template-columns: repeat(4, 1fr);
+//   ${media.xsmall} {
+//     grid-template-columns: repeat(2, 1fr);
+//     row-gap: 2.5rem;
+//     width: 95%;
+//   }
+//   ${media.small} {
+//     grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+//     row-gap: 2.5rem;
+//     width: 90%;
+//   }
+//
+//   //padding-top: 4.8rem;
+//   column-gap: 1%;
+//   row-gap: 8rem;
+// `;
+// export const Price = styled.div`
+//   font-size: 1.5rem;
+//   font-weight: 600;
+//   padding-top: 1rem;
+// `;
 
 export const MarketIMG = styled(Image)`
   width: 88%;
@@ -129,4 +107,25 @@ export const MarketIMG = styled(Image)`
   ${media.small} {
     width: 90%;
   }
+`;
+
+export const ProductList = styled.div`
+  display: grid;
+  width: 88%;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(2, 1fr);
+  ${media.xsmall} {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 95%;
+  }
+  ${media.small} {
+    //grid-template-columns: repeat(auto-fill, minmax(30%, auto));
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 90%;
+  }
+  column-gap: 1%;
+  row-gap: 2rem;
 `;

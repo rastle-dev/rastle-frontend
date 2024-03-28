@@ -10,12 +10,6 @@ export const Container = styled.div`
   margin-top: 5.5rem;
   padding-top: 2rem;
 `;
-export const Default = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
 
 export const Header = styled.div`
   width: 88%;
@@ -33,43 +27,6 @@ export const Line = styled.div`
   border-bottom: 0.5px solid;
   color: ${COLORS.GREY[200]};
   width: 100%;
-`;
-export const SetBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 7rem;
-`;
-
-export const CurrentMarketWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  h2 {
-    width: 88%;
-    font-size: 2rem;
-    font-weight: 300;
-    padding-top: 3rem;
-    margin: 0;
-    ${media.xsmall} {
-      width: 95%;
-    }
-    ${media.small} {
-      width: 90%;
-    }
-  }
-`;
-export const FirstMarketDescription = styled.div`
-  padding-top: 5rem;
-  width: 88%;
-  font-weight: 400;
-  ${media.xsmall} {
-    width: 95%;
-  }
-  ${media.small} {
-    width: 90%;
-  }
-  font-size: 2rem;
 `;
 
 export const ProductList = styled.div`
@@ -90,16 +47,6 @@ export const ProductList = styled.div`
   //padding-top: 4.8rem;
   column-gap: 1%;
   row-gap: 8rem;
-`;
-export const BundleProductList = styled.div`
-  border: 1px solid red;
-`;
-export const Product = styled.div`
-  background-color: transparent;
-  width: 100%;
-`;
-export const Img = styled.img`
-  width: 100%;
 `;
 export const Price = styled.div`
   font-size: 1.5rem;
