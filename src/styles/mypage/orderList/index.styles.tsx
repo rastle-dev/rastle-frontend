@@ -37,7 +37,9 @@ export const OrderNum = styled.div`
 export const OrderDetail = styled.div`
   padding-right: 1rem;
   cursor: pointer;
-
+  @media (min-width: 769px) {
+    display: none;
+  }
   span {
     @media (min-width: 769px) {
       display: none;
