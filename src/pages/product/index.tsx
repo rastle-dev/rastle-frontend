@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import ColorButton from "@/components/Common/ColorButton";
 import COLORS from "@/constants/color";
-import Icon from "@/components/Common/Icon";
 import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
@@ -18,6 +17,7 @@ import { GetServerSideProps } from "next";
 import commonServerSideProps from "@/components/Product/commonServerSideProps";
 import Head from "next/head";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
+import CountTable from "@/components/Product/CountTable";
 
 export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
@@ -138,43 +138,13 @@ export default function Product() {
             <>
               <S.ProductCountText>수량</S.ProductCountText>
               {selectedProducts.map((product) => (
-                <React.Fragment key={`${product.size}-${product.color}`}>
-                  <S.ProductCountInfo>
-                    <S.ProductCountLeftInfo>
-                      <S.ProductCountTitle>{product.title}</S.ProductCountTitle>
-                      <S.ProductCountColor>
-                        {product.color} /{" "}
-                      </S.ProductCountColor>
-                      <S.ProudctCountSize>{product.size}</S.ProudctCountSize>
-                    </S.ProductCountLeftInfo>
-                    <S.ProductCountRightInfo>
-                      <S.ProductCountButton
-                        type="number"
-                        min={1}
-                        value={product.count}
-                        onChange={(event) => inputChangeHandler(event)}
-                      />
-                      <S.NumberInputContainer>
-                        <S.CountUpButton
-                          src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
-                          onClick={() => handleIncrement(product.key)}
-                        />
-                        <S.CountDownButton
-                          src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
-                          onClick={() => handleDecrement(product.key)}
-                        />
-                      </S.NumberInputContainer>
-                      <S.ProductCountDelete>
-                        <Icon
-                          iconSize="1.2rem"
-                          iconName="delete"
-                          color={COLORS.GREY.상세페이지}
-                          onClick={() => handleDelete(product.key)}
-                        />
-                      </S.ProductCountDelete>
-                    </S.ProductCountRightInfo>
-                  </S.ProductCountInfo>
-                </React.Fragment>
+                <CountTable
+                  product={product}
+                  inputChangeHandler={inputChangeHandler}
+                  handleIncrement={handleIncrement}
+                  handleDecrement={handleDecrement}
+                  handleDelete={handleDelete}
+                />
               ))}
             </>
           )}
