@@ -56,14 +56,14 @@ export default function Product() {
     };
   }, []);
 
-  console.log(detailData);
+  // console.log(detailData);
 
   const { discountPercent } = calculateDiscountPercentAndPrice(
     detailData?.data.price,
     detailData?.data.discountPrice,
   );
 
-  console.log(discountPercent);
+  console.log(selectedProduct);
 
   return (
     <S.Wrapper>
@@ -140,6 +140,7 @@ export default function Product() {
               {selectedProducts.map((product) => (
                 <CountTable
                   product={product}
+                  key={product.key}
                   inputChangeHandler={inputChangeHandler}
                   handleIncrement={handleIncrement}
                   handleDecrement={handleDecrement}
