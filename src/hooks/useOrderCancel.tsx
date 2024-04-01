@@ -1,15 +1,31 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadOrderDetail } from "@/api/auth";
 import { useRouter } from "next/dist/client/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedItem } from "@/interface/Cancel/SelectedItem";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
+import { requestUserOrderCancel } from "@/api/cart";
+import useInput from "@/hooks/useInput";
+import toastMsg from "@/components/Toast";
+import PATH from "@/constants/path";
 
+interface CancelInfo {
+  orderNumber: number;
+  productOrderCancelRequests: ProductOrderCancelRequest[];
+  reason: "string";
+}
+interface ProductOrderCancelRequest {
+  productOrderNumber: number;
+  cancelAmount: number;
+}
 export default function useOrderCancel() {
   const router = useRouter();
   const { orderId } = router.query;
+  const queryClient = useQueryClient();
+  const [reason, onChangeReason] = useInput("");
+  const [cancelCount, setCancelCount] = useState(0);
 
   const { data: orderDetail } = useQuery(
     [QUERYKEYS.LOAD_ORDER_DETAIL],
@@ -115,6 +131,50 @@ export default function useOrderCancel() {
       });
     });
   };
+
+  const mutateRequestUserCancel = useMutation(
+    ["requestUserOrderCancel"],
+    requestUserOrderCancel,
+    {
+      onSuccess: async () => {
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_ORDER_LIST]);
+        toastMsg("취소 신청이 완료되었습니다!");
+        router.push({
+          pathname: PATH.MYPAGE,
+          query: { tab: "주문내역" },
+        });
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
+  console.log("cancel", selectedCancelItems);
+  // const [productOrderCancelRequests, setProductOrderCancelRequests] =
+  //   useState<ProductOrderCancelRequest[]>();
+  const [cancelInfo, setCancelInfo] = useState<CancelInfo>({
+    orderNumber: orderDetail?.data.orderNumber,
+    productOrderCancelRequests: [],
+    reason,
+  });
+  useEffect(() => {
+    setCancelInfo((info) => ({ ...info, reason }));
+  }, [reason]);
+  useEffect(() => {
+    const productOrderCancelRequests = selectedCancelItems.map((item) => ({
+      productOrderNumber: item.productOrderNumber,
+      cancelAmount: item.count,
+    }));
+    setCancelCount(productOrderCancelRequests.length);
+    setCancelInfo((info) => ({
+      ...info,
+      productOrderCancelRequests,
+    }));
+  }, [selectedCancelItems]);
   return {
     handleProductCheckboxChange,
     selectedItems,
@@ -126,5 +186,11 @@ export default function useOrderCancel() {
     handleIncrement,
     handleDecrement,
     handleDelete,
+    mutateRequestUserCancel,
+    onChangeReason,
+    reason,
+    cancelInfo,
+    cancelCount,
+    setCancelInfo,
   };
 }

@@ -5,6 +5,8 @@ import styled from "styled-components";
 import CountTable from "@/components/Product/CountTable";
 import { SelectedItem } from "@/interface/Cancel/SelectedItem";
 import useOrderCancel from "@/hooks/useOrderCancel";
+import errorMsg from "@/components/Toast/error";
+import { toast } from "react-toastify";
 
 interface CheckBoxProps {
   isChecked?: boolean;
@@ -28,6 +30,12 @@ export default function OrderCancel() {
     handleIncrement,
     handleDecrement,
     handleDelete,
+    mutateRequestUserCancel,
+    onChangeReason,
+    reason,
+    cancelInfo,
+    cancelCount,
+    setCancelInfo,
   } = useOrderCancel();
 
   useEffect(() => {
@@ -43,6 +51,10 @@ export default function OrderCancel() {
           return { ...selectedItem, prevCount: selectedItem.count };
         });
       });
+      setCancelInfo((info) => ({
+        ...info,
+        orderNumber: orderDetail?.data.orderNumber,
+      }));
     }
   }, [orderDetail]);
   return (
@@ -124,9 +136,27 @@ export default function OrderCancel() {
         </S.InfoWrapper>
         <S.CancelInfoWrapper>
           <S.Title2>취소 사유</S.Title2>
-          <S.CancelReasonInput placeholder="사유를 입력해주세요. ex> 상품 불량" />
+          <S.CancelReasonInput
+            placeholder="사유를 입력해주세요. ex> 상품 불량"
+            maxLength={40}
+            onChange={onChangeReason}
+            value={reason}
+          />
         </S.CancelInfoWrapper>
-        <S.FinalCancelButton onClick={() => {}} title="취소 신청" />
+        <S.FinalCancelButton
+          onClick={() => {
+            if (reason === "") {
+              toast.dismiss();
+              errorMsg("취소 사유를 적어주세요!");
+            } else if (cancelCount === 0) {
+              toast.dismiss();
+              errorMsg("상품을 한 개 이상 선택해주세요!");
+            } else {
+              mutateRequestUserCancel.mutate(cancelInfo);
+            }
+          }}
+          title="취소 신청"
+        />
       </S.Container>
     </S.Temp>
   );
