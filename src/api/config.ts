@@ -39,6 +39,7 @@ const LOAD_ADDRESS = "/getMemberRecipientInfo";
 const UPDATE_ADDRESS = "/updateMemberRecipientInfo";
 const APPLY = "/apply";
 const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";
+const CANCEL = "/cancel";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -94,5 +95,6 @@ const API = {
   APPLY_EVENT: `${EVENT}${APPLY}`,
   APPLY: `${APPLY}`,
   UPDATE_PHONENUMBER: `${MEMBER}${UPDATE_PHONENUMBER}`,
+  USER_ORDER_CANCEL: `${ORDERS}${CANCEL}`,
 };
 export default API;

@@ -5,6 +5,8 @@ import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
 
 import Modal from "@/components/Common/Modal";
 import EnterUpdateEventModal from "@/components/Event/EnterUpdateEventModal";
+import { useRecoilState } from "recoil";
+import { eventModalState } from "@/stores/atom/recoilState";
 
 export default function EventHistory() {
   const {
@@ -21,23 +23,23 @@ export default function EventHistory() {
     eventPhoneNumber?: number;
     instagramId?: string;
   }
-
-  const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] =
+    useRecoilState(eventModalState);
   const [eventData, setEventData] = useState<EventData>();
 
   const openEventDetailModal = (item: EventData) => {
     setEventData(item);
-    setIsDeleteUserModalOpen(true);
+    setIsEventModalOpen(true);
   };
 
   console.log(eventHistoryData);
 
   return (
     <S.Wrap>
-      {isDeleteUserModalOpen && (
+      {isEventModalOpen && (
         <Modal
           closeModal={() => {
-            setIsDeleteUserModalOpen(false);
+            setIsEventModalOpen(false);
             // openDialog();
           }}
           width={60}

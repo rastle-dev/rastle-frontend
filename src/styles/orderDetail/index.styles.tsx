@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
 import media from "@/styles/media";
+import Button from "@/components/Common/Button";
+import Input from "@/components/Common/Input";
+import IconButton from "@/components/Common/IconButton";
 
 export const Temp = styled.div`
   margin-top: 5.5rem;
@@ -45,6 +48,9 @@ export const Title = styled.div`
   padding: 1rem 0 1rem 0;
   margin-bottom: 1.5rem;
 `;
+export const Title2 = styled.div`
+  padding: 1rem 0 1rem 0;
+`;
 
 export const PriceTitle = styled.div`
   border-bottom: 0.5px solid grey;
@@ -55,6 +61,8 @@ export const InfoWrapper = styled.div`
   width: 81%;
   padding-top: 1rem;
   display: flex;
+  padding-bottom: 1rem;
+  border-bottom: 0.5px solid grey;
   flex-direction: column;
   ${media.mobile} {
     width: 92%;
@@ -122,13 +130,14 @@ export const Product = styled.div`
   display: flex;
   gap: 3.27rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #ebebeb;
+  align-items: center;
 `;
 export const Thumbnail = styled.img`
   width: 7.7rem;
   height: auto;
   aspect-ratio: 0.77;
   border-radius: 0.45455rem;
+  cursor: pointer;
 `;
 export const Info = styled.div`
   display: flex;
@@ -136,6 +145,7 @@ export const Info = styled.div`
   justify-content: space-evenly;
   gap: 1.2rem;
   width: 100%;
+  cursor: pointer;
 `;
 export const ProductName = styled.div`
   font-size: 1.333rem;
@@ -217,19 +227,82 @@ export const DeliveryInnerRight = styled.div`
 export const OrderTableDiv = styled.div`
   display: flex;
   flex-direction: row;
+  position: relative;
   //padding: 0.5rem;
-  height: 4rem;
-  border-bottom: 1px solid #ebebeb;
+  //height: 4rem;
+  //border-bottom: 1px solid #ebebeb;
   padding: 1rem 0.5rem 1.1rem;
 `;
 
 export const OrderInnerLeft = styled.div`
-  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding-right: 0.3rem;
+  }
+`;
+export const CancelButton = styled(Button)`
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 0.5rem;
+
+  border-radius: 0;
+  font-size: 1rem;
   font-weight: 300;
-  padding-right: 0.3rem;
+  border: 1px solid ${COLORS.GREY[400]};
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  &:hover {
+    font-weight: 500;
+  }
 `;
 
 export const OrderInnerRight = styled.div`
   font-size: 1.1rem;
   font-weight: 300;
+  padding-left: 1rem;
+`;
+
+export const CancelReasonInput = styled(Input)`
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 1rem;
+`;
+
+export const CancelInfoWrapper = styled.div`
+  width: 81%;
+  padding-top: 1rem;
+  ${media.mobile} {
+    width: 92%;
+  }
+  h2 {
+    font-size: 1.3rem;
+    margin: 0;
+    padding-bottom: 1.65rem;
+  }
+`;
+export const CheckIcon = styled(IconButton)``;
+
+export const ClickedContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+export const ClickedBox = styled.div`
+  gap: 4rem;
+  display: flex;
+`;
+export const FinalCancelButton = styled(Button)`
+  width: 81%;
+  margin-top: 16rem;
+  ${media.mobile} {
+    width: 92%;
+  }
+  border-radius: 5px;
+  padding: 1rem;
+  font-size: 1.3rem;
+  background-color: black;
+  color: white;
 `;

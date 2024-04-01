@@ -73,6 +73,7 @@ type InputProps = {
   checked?: boolean;
   invalid?: boolean;
   disabled?: boolean;
+  maxLength?: number;
 };
 
 export default function Input({
@@ -89,6 +90,7 @@ export default function Input({
   checked,
   invalid = false,
   disabled = false,
+  maxLength,
 }: InputProps) {
   const isCheckbox = type === "checkbox";
   let inputWidth = "100%"; // 기본값 설정
@@ -109,6 +111,7 @@ export default function Input({
         checked={checked}
         invalid={invalid}
         disabled={disabled}
+        maxLength={maxLength}
       />
       {message.length > 0 && <Message invalid={invalid}> {message}</Message>}
     </Wrapper>

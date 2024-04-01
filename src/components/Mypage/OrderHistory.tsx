@@ -101,7 +101,7 @@ export default function OrderHistory() {
                               <S.Count>{product.count}개</S.Count>
                               <S.Price>
                                 <S.DiscountedPrice>
-                                  {product?.totalPrice.toLocaleString()}원
+                                  {product?.totalPrice?.toLocaleString()}원
                                 </S.DiscountedPrice>
                               </S.Price>
                             </S.MobileTextInfo>

@@ -27,7 +27,7 @@ const unAuthorizationClient = axios.create({
 // API 요청이 전송되기 전에 실행되며, 요청 구성(config)을 조작하여 헤더에 인증 정보를 추가하는 역할 수행
 // 즉 모든 API 요청이 전송되기 전에 헤더에 인증 정보를 추가하는 역할 수행
 // 헤더에 accessToken을 담음
-// @ts-ignore
+// @ts-expect-error 이 부분은 의도적으로 에러를 억제하기 위해 사용되었습니다.
 authorizationClient.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
