@@ -116,9 +116,10 @@ export default function useProduct() {
     }));
   };
 
-  const handleIncrement = (key: string | undefined) => {
+  const handleIncrement = (key: string | undefined | number) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.map((product) => {
+        console.log("key", key, product.key);
         if (product.key === key) {
           return {
             ...product,
@@ -131,7 +132,7 @@ export default function useProduct() {
   };
 
   // TODO:의성) 1 미만일때 alert 창 띄우기
-  const handleDecrement = (key: string | undefined) => {
+  const handleDecrement = (key: string | undefined | number) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.map((product) => {
         if (product.key === key && product.count > 1) {
@@ -181,7 +182,7 @@ export default function useProduct() {
     }
   };
 
-  const handleDelete = (key: string | undefined) => {
+  const handleDelete = (key: string | undefined | number) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.filter((product) => product.key !== key);
     });
