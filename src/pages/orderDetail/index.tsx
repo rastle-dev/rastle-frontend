@@ -5,19 +5,21 @@ import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadOrderDetail } from "@/api/auth";
 import LoadingBar from "@/components/LoadingBar";
+import PATH from "@/constants/path";
 
 export default function OrderDetail() {
   const router = useRouter();
   const { orderId } = router.query;
 
   const { data: orderDetail } = useQuery(
-    [QUERYKEYS.LOAD_PRODUCT_DETAIL],
+    [QUERYKEYS.LOAD_ORDER_DETAIL],
     () => loadOrderDetail(orderId),
     {
       enabled: Boolean(orderId), // orderID가 있을 때만 쿼리 실행
       cacheTime: 60000, // 캐시 유지 시간 (예: 60초)
     },
   );
+  console.log("order", orderDetail);
 
   // 주문처리상태 타입 정의
   type DeliveryStatus = "NOT_STARTED" | "DELIVERING" | "DELIVERED";
@@ -26,6 +28,7 @@ export default function OrderDetail() {
     NOT_STARTED: "배송준비중",
     DELIVERING: "배송중",
     DELIVERED: "배송완료",
+    PAID: "결제완료",
   } as const;
 
   const paymentInfoList = [
@@ -34,8 +37,6 @@ export default function OrderDetail() {
     { label: "배송비", value: orderDetail?.data.deliveryPrice },
     { label: "쿠폰할인금액", value: -3000 },
   ];
-
-  console.log(orderDetail);
 
   const deliveryInfoList = [
     { label: "수취인", value: orderDetail?.data.receiverInfo.receiverName },
@@ -55,8 +56,6 @@ export default function OrderDetail() {
   if (orderDetail === undefined) {
     return <LoadingBar type={6} />;
   }
-
-  console.log(orderDetail);
 
   return (
     <S.Temp>
@@ -88,21 +87,47 @@ export default function OrderDetail() {
             </S.Product>
           ))}
           <S.OrderTableDiv>
-            <S.OrderInnerLeft>주문일자 : </S.OrderInnerLeft>
+            <S.OrderInnerLeft>
+              <p>주문일자 : </p>
+            </S.OrderInnerLeft>
             <S.OrderInnerRight>
               {orderDetail?.data.orderDate.split("T")[0]}
             </S.OrderInnerRight>
           </S.OrderTableDiv>
           <S.OrderTableDiv>
-            <S.OrderInnerLeft>주문처리상태 : </S.OrderInnerLeft>
+            <S.OrderInnerLeft>
+              <p>주문처리상태 : </p>
+            </S.OrderInnerLeft>
             <S.OrderInnerRight>
-              {" "}
               {
                 deliveryStatusText[
-                  orderDetail?.data.deliveryStatus as DeliveryStatus
+                  orderDetail?.data.orderStatus as DeliveryStatus
                 ]
               }
             </S.OrderInnerRight>
+            {orderDetail?.data.orderStatus === "PAID" ? (
+              <S.CancelButton
+                onClick={() => {
+                  router.push({
+                    pathname: PATH.ORDERCANCEL,
+                    query: { orderId },
+                  });
+                }}
+                title="취소 요청"
+              />
+            ) : (
+              orderDetail?.data.orderStatus === "DELIVERED" && (
+                <S.CancelButton
+                  onClick={() => {
+                    router.push({
+                      pathname: PATH.ORDERCANCEL,
+                      query: { orderId },
+                    });
+                  }}
+                  title="반품 요청"
+                />
+              )
+            )}
           </S.OrderTableDiv>
         </S.InfoWrapper>
         <S.InfoWrapper>
