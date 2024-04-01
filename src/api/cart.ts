@@ -68,3 +68,10 @@ export const loadEventHistory = async (bundleData: any) => {
   );
   return data;
 };
+export const requestUserOrderCancel = async (cancelProductData: any) => {
+  const { data } = await authorizationClient.post(
+    API.USER_ORDER_CANCEL,
+    cancelProductData,
+  );
+  return data;
+};

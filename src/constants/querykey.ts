@@ -31,6 +31,7 @@ const QUERYKEYS = {
   UPDATE_DEFAULT_PHONENUMBER: "updateDefaultPhoneNumber",
   LOAD_EVENT_HISTORY: "loadEventHistory",
   LOAD_ORDER_DETAIL: "loadOrderDetail",
+  REQUEST_USER_CANCEL: "requestUserOrderCancel",
 } as const;
 
 export default QUERYKEYS;
