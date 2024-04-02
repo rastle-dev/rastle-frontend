@@ -72,3 +72,16 @@ export const deleteMe = async () => {
   const { data } = await authorizationClient.delete(API.MEMBER);
   return data;
 };
+
+export const authInitializePW = async (emailData: string) => {
+  const { data } = await unAuthorizationClient.post(
+    API.INITIALIZE_PASSWORD,
+    { email: emailData }, // 데이터를 객체 형식으로 보냄
+    {
+      headers: {
+        "Content-Type": "application/json", // Content-Type을 application/json으로 설정
+      },
+    },
+  );
+  return data;
+};
