@@ -6,7 +6,7 @@ import { authLogin, authSocialReissue } from "@/api/auth";
 import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
 import { useRecoilState } from "recoil";
-import React from "react";
+import React, { useState } from "react";
 import { tokenState } from "@/stores/atom/recoilState";
 
 export default function useLogin() {
@@ -14,6 +14,10 @@ export default function useLogin() {
   const [password, onChangePassword] = useInput("");
   const [email, onChangeEmail] = useInput("");
   const [accessToken, setToken] = useRecoilState(tokenState);
+  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
+  const passwordMailInitializeButton = () => {
+    setPasswordModalOpen(true);
+  };
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
   };
@@ -26,6 +30,7 @@ export default function useLogin() {
     {
       productName: "비밀번호 찾기",
       width: "12.3rem",
+      onClick: () => passwordMailInitializeButton(),
     },
     {
       productName: "비회원 주문 조회",
@@ -97,5 +102,7 @@ export default function useLogin() {
     bottomButtons,
     loginFormInputs,
     handleSubmit,
+    passwordModalOpen,
+    setPasswordModalOpen,
   };
 }
