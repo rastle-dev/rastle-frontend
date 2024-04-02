@@ -1,17 +1,10 @@
-import React, { useState } from "react";
-import Input from "@/components/Common/Input";
+import React from "react";
 import * as S from "@/styles/signup/index.styles";
 import useSignup from "@/hooks/useSignup";
-import LazyLink from "@/components/LazyLink";
-import PATH from "@/constants/path";
 import Head from "next/head";
 import Modal from "@/components/Common/Modal";
-import EnterDeleteUserModal from "@/components/DeleteUser/EnterDeleteUserModal";
 import EnterViewMoreModal from "@/components/Signup/EnterViewMoreModal";
-import {
-  StyledButtonInput,
-  ViewMoreButton,
-} from "@/styles/signup/index.styles";
+import { ViewMoreButton } from "@/styles/signup/index.styles";
 
 export default function Signup() {
   const {
@@ -64,6 +57,7 @@ export default function Signup() {
                 onChange={data.onChange}
                 message={data.message}
                 invalid={data.inValid}
+                autoComplete="off"
               />
               <S.ButtonWrapper>
                 <S.StyledButton
