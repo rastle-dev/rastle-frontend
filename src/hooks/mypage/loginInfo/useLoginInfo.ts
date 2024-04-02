@@ -2,12 +2,10 @@ import { useRouter } from "next/dist/client/router";
 import { toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import useInput from "@/hooks/useInput";
-import { authLogout, changePassword, deletMe } from "@/api/auth";
+import { authLogout, changePassword, deleteMe } from "@/api/auth";
 import PATH from "@/constants/path";
 import toastMsg from "@/components/Toast";
 import errorMsg from "@/components/Toast/error";
-import { useRecoilState } from "recoil";
-import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 
 export default function useLoginInfo() {
   const router = useRouter();
@@ -39,7 +37,7 @@ export default function useLoginInfo() {
   });
   const deleteUser = async () => {
     try {
-      await deletMe();
+      await deleteMe();
       toastMsg("회원 탈퇴가 완료되었습니다.");
       localStorage.clear();
       router.push(PATH.HOME).then(() => router.reload());
