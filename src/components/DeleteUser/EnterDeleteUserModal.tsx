@@ -50,11 +50,10 @@ const ConfirmCheckBox = styled.div<ConfirmCheckBoxProps>`
 
 const EnterButton = styled(Button)`
   border-radius: 0.625rem;
-  height: 3.3rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: 1.3rem;
   float: right; /* 오른쪽으로 이동 */
-  margin-right: 8rem;
+  margin-right: 4rem;
   font-weight: 500;
   &:focus {
     border: none;
@@ -93,9 +92,9 @@ export default function EnterDeleteUserModal() {
           ) : (
             <Icon
               iconSize="1.5rem"
-              border={0.1}
+              border={0.5}
               iconName="checkCircle"
-              color={COLORS.BLACK}
+              color={COLORS.GREY[400]}
             />
           )}
           <span>

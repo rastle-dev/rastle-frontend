@@ -40,6 +40,7 @@ const UPDATE_ADDRESS = "/updateMemberRecipientInfo";
 const APPLY = "/apply";
 const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";
 const CANCEL = "/cancel";
+const RESET = "resetPassword";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -61,7 +62,7 @@ const API = {
   MAINTHUMBNAIL: `${MAINTHUMBNAIL}`,
   SUBTHUMBNAIL: `${SUBTHUMBNAIL}`,
   MAINIMAGES: `${MAINIMAGES}`,
-  DETAILIMAGES: `${DETAILIMAGES}`,
+  DETAILIMAGEEMAILCERTIFICATES: `${DETAILIMAGES}`,
   BUNDLE_PRODUCT: `${PRODUCT}${BUNDLE}`,
   PRODUCT: `${PRODUCT}`,
   PRODUCTS: `${PRODUCTS}`,
@@ -96,5 +97,6 @@ const API = {
   APPLY: `${APPLY}`,
   UPDATE_PHONENUMBER: `${MEMBER}${UPDATE_PHONENUMBER}`,
   USER_ORDER_CANCEL: `${ORDERS}${CANCEL}`,
+  INITIALIZE_PASSWORD: `${AUTH}${RESET}`,
 };
 export default API;

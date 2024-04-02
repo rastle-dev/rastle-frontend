@@ -5,6 +5,8 @@ import useLogin from "@/hooks/useLogin";
 import * as S from "@/styles/login/index.styles";
 import errorMsg from "@/components/Toast/error";
 import Head from "next/head";
+import Modal from "@/components/Common/Modal";
+import PWInitializeModal from "@/components/Login/PWInitializeModal";
 
 export default function Login() {
   const {
@@ -14,12 +16,24 @@ export default function Login() {
     bottomButtons,
     loginFormInputs,
     handleSubmit,
+    passwordModalOpen,
+    setPasswordModalOpen,
   } = useLogin();
   return (
     <form onSubmit={handleSubmit}>
       <Head>
         <title>로그인 - RECORDY SLOW</title>
       </Head>
+      {passwordModalOpen && (
+        <Modal
+          closeModal={() => {
+            setPasswordModalOpen(false);
+          }}
+          width={50}
+        >
+          <PWInitializeModal />
+        </Modal>
+      )}
       <S.Container>
         <S.Header>
           <h1>R E C O R D Y&nbsp;&nbsp; S L O W</h1>
