@@ -113,7 +113,8 @@ export default function LoginInfo() {
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            localStorage.clear();
+            // localStorage.clear();
+            localStorage.removeItem("accessToken");
             closeDialog();
             router.push(PATH.LOGIN);
           }}

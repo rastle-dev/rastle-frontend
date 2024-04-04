@@ -14,7 +14,8 @@ export default function useLoginInfo() {
   const logout = async () => {
     try {
       await authLogout();
-      localStorage.clear();
+      // localStorage.clear();
+      localStorage.removeItem("accessToken");
       router.push(PATH.HOME).then(() => router.reload());
     } catch (err) {
       console.log(err);
@@ -39,7 +40,7 @@ export default function useLoginInfo() {
     try {
       await deleteMe();
       toastMsg("회원 탈퇴가 완료되었습니다.");
-      localStorage.clear();
+      localStorage.removeItem("accessToken");
       router.push(PATH.HOME).then(() => router.reload());
     } catch (err) {
       console.log(err);

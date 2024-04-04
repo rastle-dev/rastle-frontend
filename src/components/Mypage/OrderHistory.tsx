@@ -37,7 +37,7 @@ export default function OrderHistory() {
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            localStorage.clear();
+            localStorage.removeItem("accessToken");
             closeDialog();
             router.push(PATH.LOGIN);
           }}

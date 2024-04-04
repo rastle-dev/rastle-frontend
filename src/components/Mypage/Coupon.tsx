@@ -31,7 +31,8 @@ export default function Coupon() {
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            localStorage.clear();
+            // localStorage.clear();
+            localStorage.removeItem("accessToken");
             closeDialog();
             router.push(PATH.LOGIN);
           }}
