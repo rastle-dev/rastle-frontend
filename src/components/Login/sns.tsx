@@ -10,7 +10,7 @@ export default function SNSLogin() {
       <S.NAVERLogo
         onClick={() => {
           window.location.href = currentURL.includes("localhost:3000")
-            ? API.LOCAL_NAVER_AUTH_URL
+            ? API.NAVER_AUTH_URL
             : API.NAVER_AUTH_URL;
         }}
       >
@@ -20,7 +20,7 @@ export default function SNSLogin() {
       <S.KAKAOLogo
         onClick={() => {
           window.location.href = currentURL.includes("localhost:3000")
-            ? API.LOCAL_KAKAO_AUTH_URL
+            ? API.KAKAO_AUTH_URL
             : API.KAKAO_AUTH_URL;
         }}
       >
