@@ -8,7 +8,6 @@ import Document, {
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import Script from "next/script";
-import LazyHydrate from "react-lazy-hydration";
 import React from "react";
 
 class MyDocument extends Document {
@@ -42,6 +41,10 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <Script
+            strategy="lazyOnload"
+            src="https://www.googletagmanager.com/gtm.js?id=GTM-P298GLMG"
+          />
           {/* 다른 head 요소들을 여기에 추가할 수 있습니다. */}
           <meta
             name="google-site-verification"
@@ -53,8 +56,16 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-P298GLMG"
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+              title="Google Tag Manager"
+            />
+          </noscript>
           <Main />
-          {/*<LazyHydrate whenVisible>*/}
           <NextScript />
         </body>
       </Html>
