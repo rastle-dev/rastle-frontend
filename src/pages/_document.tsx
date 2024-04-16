@@ -41,9 +41,19 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <Script
-            strategy="lazyOnload"
-            src="https://www.googletagmanager.com/gtm.js?id=GTM-P298GLMG"
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-QX0MPZXGYP"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-QX0MPZXGYP');
+              `,
+            }}
           />
           {/* 다른 head 요소들을 여기에 추가할 수 있습니다. */}
           <meta
@@ -56,15 +66,6 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
-          <noscript>
-            <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-P298GLMG"
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-              title="Google Tag Manager"
-            />
-          </noscript>
           <Main />
           <NextScript />
         </body>
