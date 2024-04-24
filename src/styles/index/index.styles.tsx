@@ -115,12 +115,52 @@ export const ProductTitle = styled.div`
     font-weight: 700;
   }
 `;
+export const BestProductTitle = styled.div`
+  font-size: 2.5rem;
+  padding: 9.63rem 0 0.75rem 0;
+  font-weight: 400;
 
+  span {
+    color: ${COLORS.레드};
+    font-weight: 700;
+  }
+`;
+export const ProductDesc = styled.div`
+  font-size: 1.2rem;
+  padding: 0 0 6.75rem 0;
+  font-weight: 300;
+
+  span {
+    color: ${COLORS.레드};
+    font-weight: 700;
+  }
+`;
 export const ItemContainer = styled.div`
   display: grid;
   //flex-direction: row;
   width: 88%;
   grid-template-columns: repeat(4, 1fr);
+  ${media.small} {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 95%;
+  }
+
+  ${media.xsmall} {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.5rem;
+    width: 95%;
+  }
+
+  padding-bottom: 4.8rem;
+  column-gap: 1%;
+  row-gap: 8rem;
+`;
+export const BestItemContainer = styled.div`
+  display: grid;
+  //flex-direction: row;
+  width: 98%;
+  grid-template-columns: repeat(5, 1fr);
   ${media.small} {
     grid-template-columns: repeat(2, 1fr);
     row-gap: 2.5rem;
@@ -154,8 +194,8 @@ export const ViewMore = styled.div`
     }
   }
 `;
-export const StyledBorderLine = styled.div`
-  margin-top: 2rem;
-  border: 0.3px solid ${COLORS.GREY["300"]};
-  width: 100%;
-`;
+// export const StyledBorderLine = styled.div`
+//   margin-top: 2rem;
+//   border: 0.3px solid ${COLORS.GREY["300"]};
+//   width: 100%;
+// `;
