@@ -34,7 +34,6 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
           더 많은 이벤트 상품 보러가기
         </LazyLink>
       </S.ViewMore>
-      <S.StyledBorderLine />
     </S.ProductWrapper>
   );
 }
