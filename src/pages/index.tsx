@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import * as S from "@/styles/index/index.styles";
 import { dehydrate, QueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { loadEventProductPaging, loadMarketProductPaging } from "@/api/shop";
+import {
+  loadEventProductPaging,
+  loadMarketBestProduct,
+  loadMarketProductPaging,
+} from "@/api/shop";
 import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/dist/client/router";
 import TopLayer from "@/components/Home/TopLayer";
@@ -11,6 +15,7 @@ import EventProductLayer from "@/components/Home/EventProductLayer";
 import useHome from "@/hooks/useHome";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import BestProductLayer from "@/components/Home/BestProductLayer";
 
 export async function getStaticProps() {
   const queryClient = new QueryClient();
@@ -20,6 +25,10 @@ export async function getStaticProps() {
   );
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
     loadEventProductPaging({ page: 0, size: 4 }),
+  );
+  await queryClient.prefetchQuery(
+    [QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP],
+    () => loadMarketBestProduct({ page: 0, size: 5 }),
   );
 
   return {
@@ -39,7 +48,7 @@ const SignupPopup = dynamic(
 );
 export default function Home() {
   const { mutateSocialLogin } = useLogin();
-  const { productData, eventData } = useHome();
+  const { productData, eventData, bestProductData } = useHome();
   const router = useRouter();
   const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
 
@@ -80,6 +89,7 @@ export default function Home() {
       </Head>
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
+      <BestProductLayer productData={bestProductData} />
       <ProductLayer productData={productData} />
       <EventProductLayer eventData={eventData} />
     </S.StyledHome>
