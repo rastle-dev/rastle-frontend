@@ -186,7 +186,7 @@ export const Count = styled.div`
 `;
 export const MobileTextInfo = styled.div`
   display: grid;
-  grid-template-columns: 18.2rem 7.7rem 18rem;
+  grid-template-columns: 18.2rem 7.7rem 17.5rem;
   align-items: center;
   @media (max-width: 769px) {
     align-items: unset;
@@ -261,6 +261,15 @@ export const MobileDeliveryStatus = styled.div`
 `;
 
 export const DeskTopDeliveryStatus = styled.div`
+  @media (max-width: 769px) {
+    display: none;
+  }
+  cursor: pointer;
+  display: flex;
+  padding-left: 2rem;
+  text-decoration: underline;
+`;
+export const DeskTopEventStatus = styled.div`
   @media (max-width: 769px) {
     display: none;
   }

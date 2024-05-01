@@ -60,82 +60,86 @@ export default function OrderCancel() {
   return (
     <S.Temp>
       <S.Container>
-        <S.MainTitle>주문 취소 신청</S.MainTitle>
+        <S.MainTitle>주문 취소 및 반품 신청</S.MainTitle>
         <S.InfoWrapper>
           <S.Title>주문 상품</S.Title>
-          {selectedItems.map((item: SelectedItem) => (
-            <S.Product key={item.productId}>
-              <CheckBox
-                onClick={() => {
-                  handleProductCheckboxChange(item);
-                }}
-                isChecked={selectedCancelItems.some((selected) => {
-                  const { count, ...rest } = selected;
-                  const { count: itemCount, ...restItem } = item;
-                  return JSON.stringify(rest) === JSON.stringify(restItem);
-                })}
-              >
-                {selectedCancelItems.some((selected) => {
-                  const { count, ...rest } = selected;
-                  const { count: itemCount, ...restItem } = item;
-                  return JSON.stringify(rest) === JSON.stringify(restItem);
-                }) ? (
-                  <S.CheckIcon
-                    iconSize="1.5rem"
-                    border={0.1}
-                    iconName="checkCircleFill"
-                    color={COLORS.BLACK}
-                  />
-                ) : (
-                  <S.CheckIcon
-                    iconSize="1.5rem"
-                    border={0.1}
-                    iconName="checkCircle"
-                    color={COLORS.BLACK}
-                  />
-                )}
-              </CheckBox>
-              <S.ClickedContent>
-                <S.ClickedBox
-                  onClick={() => {
-                    handleProductCheckboxChange(item);
-                  }}
-                >
-                  <S.Thumbnail
-                    src={item.thumbnailUrl}
-                    alt={item.thumbnailUrl}
-                  />
-                  <S.Info>
-                    <S.ProductName>{item.name}</S.ProductName>
-                    <S.NumPrice>
-                      {item.prevCount}개 / {item.totalPrice}원
-                    </S.NumPrice>
-                    <S.SizeColor>
-                      {item.size} / {item.color}
-                    </S.SizeColor>
-                  </S.Info>
-                </S.ClickedBox>
-                {selectedCancelItems.some((selected) => {
-                  const { count, ...rest } = selected;
-                  const { count: itemCount, ...restItem } = item;
-                  return JSON.stringify(rest) === JSON.stringify(restItem);
-                }) && (
-                  <CountTable
-                    product={item}
-                    inputChangeHandler={(event) =>
-                      inputChangeHandler(event, item.productOrderNumber)
-                    }
-                    handleIncrement={handleIncrement}
-                    handleDecrement={handleDecrement}
-                    handleDelete={handleDelete}
-                  />
-                )}
-              </S.ClickedContent>
-            </S.Product>
-          ))}
+          {selectedItems.map(
+            (item: SelectedItem) =>
+              item.status !== "CANCEL" &&
+              item.status !== "CANCEL_REQUESTED" && (
+                <S.Product key={item.productId}>
+                  <CheckBox
+                    onClick={() => {
+                      handleProductCheckboxChange(item);
+                    }}
+                    isChecked={selectedCancelItems.some((selected) => {
+                      const { count, ...rest } = selected;
+                      const { count: itemCount, ...restItem } = item;
+                      return JSON.stringify(rest) === JSON.stringify(restItem);
+                    })}
+                  >
+                    {selectedCancelItems.some((selected) => {
+                      const { count, ...rest } = selected;
+                      const { count: itemCount, ...restItem } = item;
+                      return JSON.stringify(rest) === JSON.stringify(restItem);
+                    }) ? (
+                      <S.CheckIcon
+                        iconSize="1.5rem"
+                        border={0.1}
+                        iconName="checkCircleFill"
+                        color={COLORS.BLACK}
+                      />
+                    ) : (
+                      <S.CheckIcon
+                        iconSize="1.5rem"
+                        border={0.1}
+                        iconName="checkCircle"
+                        color={COLORS.BLACK}
+                      />
+                    )}
+                  </CheckBox>
+                  <S.ClickedContent>
+                    <S.ClickedBox
+                      onClick={() => {
+                        handleProductCheckboxChange(item);
+                      }}
+                    >
+                      <S.Thumbnail
+                        src={item.thumbnailUrl}
+                        alt={item.thumbnailUrl}
+                      />
+                      <S.Info>
+                        <S.ProductName>{item.name}</S.ProductName>
+                        <S.NumPrice>
+                          {item.prevCount}개 / {item.totalPrice}원
+                        </S.NumPrice>
+                        <S.SizeColor>
+                          {item.size} / {item.color}
+                        </S.SizeColor>
+                      </S.Info>
+                    </S.ClickedBox>
+                    {selectedCancelItems.some((selected) => {
+                      const { count, ...rest } = selected;
+                      const { count: itemCount, ...restItem } = item;
+                      return JSON.stringify(rest) === JSON.stringify(restItem);
+                    }) && (
+                      <CountTable
+                        product={item}
+                        inputChangeHandler={(event) =>
+                          inputChangeHandler(event, item.productOrderNumber)
+                        }
+                        handleIncrement={handleIncrement}
+                        handleDecrement={handleDecrement}
+                        handleDelete={handleDelete}
+                      />
+                    )}
+                  </S.ClickedContent>
+                </S.Product>
+              ),
+          )}
         </S.InfoWrapper>
         <S.CancelInfoWrapper>
-          <S.Title2>취소 사유</S.Title2>
+          <S.Title2>취소 및 반품 신청</S.Title2>
           <S.CancelReasonInput
             placeholder="사유를 입력해주세요. ex> 상품 불량"
             maxLength={40}
@@ -155,7 +159,7 @@ export default function OrderCancel() {
               mutateRequestUserCancel.mutate(cancelInfo);
             }
           }}
-          title="취소 신청"
+          title="취소 및 반품 신청"
         />
       </S.Container>
     </S.Temp>

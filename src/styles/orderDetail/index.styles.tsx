@@ -129,7 +129,7 @@ export const InnerPriceRight = styled.div`
 export const Product = styled.div`
   display: flex;
   gap: 3.27rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
   align-items: center;
 `;
 export const Thumbnail = styled.img`
@@ -150,6 +150,16 @@ export const Info = styled.div`
 export const ProductName = styled.div`
   font-size: 1.333rem;
   font-weight: 400;
+`;
+export const OrderInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding-right: 0.3rem;
+  }
 `;
 export const NumPrice = styled.div`
   font-size: 1.333rem;
@@ -244,6 +254,7 @@ export const OrderInnerLeft = styled.div`
     padding-right: 0.3rem;
   }
 `;
+
 export const CancelButton = styled(Button)`
   position: absolute;
   right: 0;

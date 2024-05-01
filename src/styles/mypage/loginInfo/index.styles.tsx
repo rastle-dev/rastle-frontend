@@ -21,6 +21,10 @@ export const Wrapper = styled.div<{ isLoading?: boolean }>`
 export const Box = styled.div<ButtonProps>`
   display: flex;
   flex-direction: row;
+  ${media.mobile} {
+    width: 44rem;
+    font-size: 1.4rem;
+  }
   align-items: ${({ inValid }) => (inValid ? "center" : "flex-end")};
 `;
 export const PasswordInput = styled(Input)`
