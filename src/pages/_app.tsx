@@ -13,6 +13,8 @@ import "../styles/font.css";
 import StyledContainer from "@/components/Toast/container";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import IsOnline from "@/components/Home/IsOnline";
 
 const GlobalStyle = createGlobalStyle`
 html,
@@ -71,6 +73,21 @@ font-family: "EscoreDream", sans-serif ;
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [isOnline, setIsOnline] = useState(true);
+
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener("online", updateOnlineStatus);
+    window.addEventListener("offline", updateOnlineStatus);
+
+    return () => {
+      window.removeEventListener("online", updateOnlineStatus);
+      window.removeEventListener("offline", updateOnlineStatus);
+    };
+  }, []);
   const getLayout = (Comp: React.ComponentType<any>) => {
     // DefaultLayout을 띄울 page 이름을 해당 컴포넌트에 선언하면 됩니다.
     // 선언 방식 : LoginPage.displayName = "Login";
@@ -113,7 +130,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <RecoilRoot>
           <Hydrate state={pageProps.dehydratedState}>
             <GlobalStyle />
-            {Layout}
+            {isOnline && (
+              <>
+                {Layout}
+                <ReactQueryDevtools initialIsOpen={false} />
+              </>
+            )}
+            {!isOnline && <IsOnline />}
           </Hydrate>
         </RecoilRoot>
         <ReactQueryDevtools initialIsOpen={false} />
