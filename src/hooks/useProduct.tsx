@@ -41,11 +41,12 @@ export default function useProduct() {
       ),
     ),
   ];
+  console.log(detailData);
 
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
     title: detailData?.data.name,
-    price: detailData?.data.price,
+    price: detailData?.data.discountPrice,
     color: null,
     size: null,
     count: 0, // 기본 수량
@@ -83,7 +84,7 @@ export default function useProduct() {
 
       const newProduct: SelectedProduct = {
         title: detailData?.data.name,
-        price: detailData?.data.price,
+        price: detailData?.data.discountPrice,
         color: selectedProduct.color,
         size,
         count: 1, // 사이즈를 고르면 count가 1 증가함
@@ -193,6 +194,8 @@ export default function useProduct() {
       0,
     );
   }
+
+  console.log(selectedProduct);
 
   function calculateTotalCount(products: SelectedProduct[]) {
     return products.reduce(
