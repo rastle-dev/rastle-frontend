@@ -3,9 +3,17 @@ import styled from "styled-components";
 import Pagination from "react-js-pagination";
 import useUserInfo from "@/hooks/manager/user/useUserInfo";
 import useOrderInfo from "@/hooks/manager/order/useOrderInfo";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import {
+  adminGetOrderInfo,
+  adminGetUserInfo,
+  adminUpdateTrackingNumber,
+} from "@/api/admin";
 
 const Wrapper = styled.div`
   width: 100%;
+  font-size: 0.8rem;
 `;
 const Title = styled.div`
   margin: 0;
@@ -28,7 +36,7 @@ const TableHeadCell = styled.th`
   padding: 10px;
   text-align: left;
   border: 1px solid #ddd;
-  min-width: 150px; /* 최소 너비를 설정하여 내용이 너무 짤리지 않도록 합니다. */
+  //min-width: 150px; /* 최소 너비를 설정하여 내용이 너무 짤리지 않도록 합니다. */
 `;
 
 const TableRow = styled.tr`
@@ -62,7 +70,7 @@ export const PageNumberContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
+    font-size: 0.5rem;
   }
   ul.pagination li:first-child {
     border-radius: 5px 0 0 5px;
@@ -76,7 +84,7 @@ export const PageNumberContainer = styled.div`
   ul.pagination li a {
     text-decoration: none;
     color: #337ab7;
-    font-size: 1rem;
+    font-size: 0.5rem;
   }
   ul.pagination li.active a {
     color: white;
@@ -89,37 +97,46 @@ export const PageNumberContainer = styled.div`
     color: blue;
   }
 `;
+const CheckboxCell = styled.td`
+  padding: 10px;
+  border: 1px solid #ddd;
+`;
 
 export default function OrderManagement() {
-  // const { data } = useQuery([QUERYKEYS.ADMIN_LOAD_USERINFO], adminGetUserInfo);
-  const {
-    ITEM_SIZE,
-    curPage,
-    onChangePage,
-    searchType,
-    setSearchType,
-    searchValue,
-    setSearchValue,
-    useLoadOrderInfo,
-  } = useOrderInfo();
-  const { data, refetch } = useLoadOrderInfo({
-    page: curPage - 1,
-    size: ITEM_SIZE,
-  });
+  const queryFn = () =>
+    adminGetOrderInfo({
+      page: 0,
+      size: 50,
+    });
+
+  const { data } = useQuery([QUERYKEYS.ADMIN_LOAD_ORDERINFO], queryFn);
+  console.log(data);
+  const { searchType, setSearchType, searchValue, setSearchValue } =
+    useOrderInfo();
 
   console.log(data);
-  const [userData, setUserData] = useState(data?.data.content);
-  useEffect(() => {
-    setUserData(data?.data.content);
-    refetch();
-  }, [curPage, data]);
-  console.log(userData);
+  const [orderData, setOrderData] = useState(data?.data.content);
+  interface TrackingData {
+    trackingNumber: string | undefined;
+    productOrderNumber: number | undefined;
+  }
+
+  const [trackingNumberData, setTrackingNumberData] = useState<TrackingData>({
+    trackingNumber: undefined,
+    productOrderNumber: undefined,
+  });
+  // useEffect(() => {
+  //   setUserData(data?.data.content);
+  //   refetch();
+  // }, [curPage, data]);
+  console.log(orderData);
   // 열(컬럼) 정보 배열
   const columnHeaders = [
     "결제 상태", // orderStatus
     "결제 일시", // paidAt
     "주문 번호", // orderNumber
     "상품 주문 번호", // productOrderNumber
+    "송장 번호", // trackingNumber
     "상품명", // productName
     "옵션", // option
     "수량", // count
@@ -130,7 +147,6 @@ export default function OrderManagement() {
     "수령인 우편번호", // receiverPostCode
     "배송 서비스", // deliveryService
     "배송 메시지", // deliveryMsg
-    "송장 번호", // trackingNumber
     "결제 ID", // impId
     "상품 가격", // productPrice
     "상품 주문 총액", // productOrderTotalPrice
@@ -169,7 +185,7 @@ export default function OrderManagement() {
     "쿠폰 할인액": "couponAmount",
   };
 
-  console.log("API) useLoadUserInfo : 전체 userData : ", userData);
+  console.log("API) useLoadUserInfo : 전체 userData : ", orderData);
   let filteredUsers;
   const handleSearch = () => {
     // 검색 결과 데이터 생성
@@ -194,15 +210,70 @@ export default function OrderManagement() {
       }
       return true; // 기본적으로 모든 사용자를 보여줍니다.
     });
-    setUserData(filteredUsers);
+    setOrderData(filteredUsers);
   };
   const handleReset = () => {
     // 검색 결과를 초기화하고 모든 사용자 데이터로 복원
-    setUserData(data?.data.content);
+    setOrderData(data?.data.content);
     setSearchValue("");
     setSearchType("이메일 주소");
   };
 
+  const renderOrderDetails = (user: any, header: any) => {
+    if (Array.isArray(user.allOrderDetails)) {
+      return user.allOrderDetails.map((order: any) => (
+        <div key={order.orderId}>
+          Order ID: {order.orderId}, Products:{" "}
+          {JSON.stringify(order.orderProducts)}
+        </div>
+      ));
+    }
+    return user[columnFieldMap[header]];
+  };
+
+  const [selectedRow, setSelectedRow] = useState<number | null>(null); // 선택된 행의 인덱스를 저장하는 상태
+
+  // 선택된 행의 체크 여부를 토글하는 함수
+  const toggleSelectedRow = (index: number) => {
+    setTrackingNumberData({
+      trackingNumber: undefined,
+      productOrderNumber: undefined,
+    });
+    if (selectedRow === index) {
+      // 이미 선택된 행을 다시 클릭한 경우, 선택 해제
+      setSelectedRow(null);
+    } else {
+      // 새로운 행을 선택한 경우
+      setSelectedRow(index);
+    }
+  };
+
+  const handleTrackingNumberChange = (
+    newTrackingNumber: string,
+    productOrderNumber: number,
+  ) => {
+    if (selectedRow !== null) {
+      setTrackingNumberData({
+        trackingNumber: newTrackingNumber,
+        productOrderNumber,
+      });
+    }
+  };
+  console.log(trackingNumberData);
+
+  const handleTrackingNumberUpdate = async () => {
+    if (selectedRow !== null && trackingNumberData) {
+      try {
+        await adminUpdateTrackingNumber({
+          trackingNumber: trackingNumberData.trackingNumber,
+          productOrderNumber: trackingNumberData.productOrderNumber,
+        });
+        console.log("송장 번호가 성공적으로 업데이트되었습니다.");
+      } catch (error) {
+        console.error("송장 번호 업데이트 중 오류가 발생했습니다:", error);
+      }
+    }
+  };
   return (
     <Wrapper>
       <div>
@@ -249,29 +320,46 @@ export default function OrderManagement() {
           <button type="button" onClick={handleReset}>
             초기화
           </button>
+
+          <button type="button" onClick={handleTrackingNumberUpdate}>
+            송장 입력하기
+          </button>
         </div>
         <Table>
           <TableHead>
             <tr>
+              <TableHeadCell></TableHeadCell> {/* 체크박스 컬럼 */}
               {columnHeaders.map((header) => (
                 <TableHeadCell key={header}>{header}</TableHeadCell>
               ))}
             </tr>
           </TableHead>
           <tbody>
-            {userData?.map((user: any) => (
+            {orderData?.map((user: any, index: number) => (
               <TableRow key={user.createdDate}>
+                <CheckboxCell key="checkbox">
+                  <input
+                    type="checkbox"
+                    checked={selectedRow === index}
+                    onChange={() => toggleSelectedRow(index)} // 선택된 행의 체크 여부 토글
+                  />
+                </CheckboxCell>
                 {columnHeaders.map((header) => (
                   <TableCell key={header}>
-                    {header === "상품 구매 목록" &&
-                    Array.isArray(user.allOrderDetails)
-                      ? user.allOrderDetails.map((order: any) => (
-                          <div key={order.orderId}>
-                            Order ID: {order.orderId}, Products:{" "}
-                            {JSON.stringify(order.orderProducts)}
-                          </div>
-                        ))
-                      : user[columnFieldMap[header]]}
+                    {header === "송장 번호" && selectedRow === index ? (
+                      <input
+                        type="text"
+                        value={user[columnFieldMap[header]]}
+                        onChange={(e) => {
+                          handleTrackingNumberChange(
+                            e.target.value,
+                            user.productOrderNumber,
+                          ); // 송장 번호 변경 함수 호출
+                        }}
+                      />
+                    ) : (
+                      renderOrderDetails(user, header)
+                    )}
                   </TableCell>
                 ))}
               </TableRow>

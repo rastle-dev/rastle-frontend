@@ -324,9 +324,25 @@ export const adminDeleteEvent = async (eventId: number | undefined) => {
 };
 
 export const adminGetOrderInfo = async (orderData: any) => {
-  const { orderStatus, receiverName, page, size } = orderData;
+  const { page, size } = orderData;
   const { data } = await authorizationClient.get(
-    `${API.ORDERS}?page=${page}&size=${size}`,
+    `${API.ORDERSINFO}?page=${page}&size=${size}`,
+  );
+  return data;
+};
+
+interface TrackingData {
+  trackingNumber: string | undefined;
+  productOrderNumber: number | undefined;
+}
+
+export const adminUpdateTrackingNumber = async (
+  trackingNumberData: TrackingData,
+) => {
+  const { trackingNumber, productOrderNumber } = trackingNumberData;
+  const { data } = await authorizationClient.patch(
+    `${API.UPDATE_TRACKINGNUMBER}/${productOrderNumber}/trackingNumber`,
+    { trackingNumber },
   );
   return data;
 };
