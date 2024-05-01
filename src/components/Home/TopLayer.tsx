@@ -1,9 +1,11 @@
 import * as S from "@/styles/index/index.styles";
 import React from "react";
+import PATH from "@/constants/path";
+import { useRouter } from "next/dist/client/router";
 import homeDesktopImage from "../../../public/image/homeDesktop2.jpg";
-import COLORS from "@/constants/color";
 
 function TopLayer() {
+  const router = useRouter();
   return (
     <S.ImageWrapper>
       <S.DesktopImage
@@ -29,7 +31,13 @@ function TopLayer() {
           를 이용해주시면 감사하겠습니다 :)
         </S.Text3>
 
-        <S.StyledButton title="view more" width="10rem" />
+        <S.StyledButton
+          title="view more"
+          width="10rem"
+          onClick={() => {
+            router.push(PATH.SHOP);
+          }}
+        />
       </S.TextWrapper>
     </S.ImageWrapper>
   );

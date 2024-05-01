@@ -82,7 +82,7 @@ export const Text3 = styled.span`
 export const TextInstagram = styled.span`
   font-size: 1.375rem;
   font-weight: 600;
-  padding: 0.5rem 0rem 0rem 0rem;
+  padding: 0.5rem 0 0 0;
 `;
 
 export const StyledButton = styled(Button)`
@@ -94,6 +94,14 @@ export const StyledButton = styled(Button)`
   color: white;
   border-radius: 3px;
   border: none;
+  &:focus {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  &:hover {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.15);
+  }
 `;
 
 /** ShopLayer 컴포넌트 스타일링 */
