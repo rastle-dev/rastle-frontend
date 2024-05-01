@@ -22,13 +22,21 @@ export default function OrderDetail() {
   console.log("order", orderDetail);
 
   // 주문처리상태 타입 정의
-  type DeliveryStatus = "NOT_STARTED" | "DELIVERING" | "DELIVERED";
+  type DeliveryStatus =
+    | "NOT_STARTED"
+    | "DELIVERY_STARTED"
+    | "DELIVERED"
+    | "PAID"
+    | "CANCEL"
+    | "CANCEL_REQUESTED";
 
   const deliveryStatusText = {
     NOT_STARTED: "배송준비중",
-    DELIVERING: "배송중",
+    DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     PAID: "결제완료",
+    CANCEL: "취소완료",
+    CANCEL_REQUESTED: "취소요청",
   } as const;
 
   const paymentInfoList = [
@@ -83,6 +91,9 @@ export default function OrderDetail() {
                 <S.SizeColor>
                   {item.size} / {item.color}
                 </S.SizeColor>
+                <S.OrderInner>
+                  <p>{deliveryStatusText[item?.status as DeliveryStatus]}</p>
+                </S.OrderInner>
               </S.Info>
             </S.Product>
           ))}

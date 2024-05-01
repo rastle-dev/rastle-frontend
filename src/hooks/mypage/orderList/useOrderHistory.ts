@@ -23,6 +23,15 @@ export default function useOrderHistory() {
   const onChangeOrderPage = (page: number) => {
     setOrderCurPage(page);
   };
+  const deliveryStatusText = {
+    NOT_STARTED: "배송준비중",
+    DELIVERY_STARTED: "배송중",
+    DELIVERED: "배송완료",
+    PAID: "결제완료",
+    CANCEL: "취소완료",
+    CANCEL_REQUESTED: "취소요청",
+  } as const;
+
   return {
     menuList,
     orderLoading,
@@ -30,5 +39,6 @@ export default function useOrderHistory() {
     orderCurPage,
     onChangeOrderPage,
     ORDER_ITEM_SIZE,
+    deliveryStatusText,
   };
 }
