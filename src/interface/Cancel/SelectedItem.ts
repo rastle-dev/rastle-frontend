@@ -9,4 +9,5 @@ export interface SelectedItem {
   size: string;
   thumbnailUrl: string;
   totalPrice: number;
+  status: string;
 }
