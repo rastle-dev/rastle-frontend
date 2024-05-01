@@ -264,6 +264,14 @@ export const DeskTopDeliveryStatus = styled.div`
   @media (max-width: 769px) {
     display: none;
   }
+  cursor: pointer;
+  padding-left: 2rem;
+  text-decoration: underline;
+`;
+export const DeskTopEventStatus = styled.div`
+  @media (max-width: 769px) {
+    display: none;
+  }
 `;
 export const LoadDeliveryButton = styled(Button)`
   border-radius: 0;

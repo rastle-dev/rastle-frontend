@@ -102,9 +102,9 @@ export default function EventHistory() {
                           </S.MobileTextInfo>
                         </S.UpperBox>
                         <S.EventBottomBox>
-                          <S.DeskTopDeliveryStatus>
+                          <S.DeskTopEventStatus>
                             <div>응모완료</div>
-                          </S.DeskTopDeliveryStatus>
+                          </S.DeskTopEventStatus>
                         </S.EventBottomBox>
                       </S.ProductBox>
                     </S.Box>
