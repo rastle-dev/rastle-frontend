@@ -354,7 +354,7 @@ export const Script = styled.div`
   }
 `;
 
-export const Timer = styled.div`
+export const TimerProductPage = styled.div`
   margin-top: 1rem;
   font-size: 1.35rem;
   font-weight: 400;
