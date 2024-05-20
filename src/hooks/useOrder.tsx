@@ -368,11 +368,7 @@ export default function useOrder() {
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
-    const { success, errorMsg } = response;
-
-    console.log(response);
-
-    if (!response.imp_uid) {
+    if (response.error_msg) {
       alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
       router.replace(`/shop`);
       return;
@@ -410,7 +406,6 @@ export default function useOrder() {
         alert("사후 검증에 실패했습니다");
       }
     } else {
-      alert(errorMsg);
       alert("결제 실패");
     }
   }
