@@ -41,7 +41,6 @@ export default function useProduct() {
       ),
     ),
   ];
-  console.log(detailData);
 
   // TODO: 의성) title, price에 api에서 받아온 실제 제품의 정보 기입
   const [selectedProduct, setSelectedProduct] = useState<SelectedProduct>({
@@ -195,8 +194,6 @@ export default function useProduct() {
       0,
     );
   }
-
-  console.log(selectedProduct);
 
   function calculateTotalCount(products: SelectedProduct[]) {
     return products.reduce(
