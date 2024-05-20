@@ -105,6 +105,8 @@ export default function CategoryView({
                 discountPrice={finalDiscountPrice}
                 id={item.productId}
                 isEvent={!!item.eventId}
+                startDate={item.startDate}
+                endDate={item.endDate}
               />
             );
           })}

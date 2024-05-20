@@ -5,9 +5,32 @@ import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 import ItemElementProps from "@/interface/itemElement";
 import Image from "next/image";
+import CountDownTimer from "@/components/Event/CountDownTimer";
 
 const ItemWrapper = styled.div`
   width: 100%;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: inline-block;
+`;
+
+const EventInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7); /* 반투명 빨간 배경 */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 1;
+  margin-bottom: 0.45rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledImage = styled(Image)`
@@ -62,6 +85,8 @@ function ItemElement({
   id,
   isEvent,
   discountPrice,
+  startDate,
+  endDate,
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
@@ -107,16 +132,23 @@ function ItemElement({
 
   return (
     <ItemWrapper>
-      <StyledImage
-        src={thumbnailSrc}
-        alt={name}
-        width={500}
-        height={500}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTap}
-        onClick={isMobile ? () => {} : handleClick}
-      />
+      <ImageContainer>
+        {isEvent && (
+          <EventInfo>
+            <CountDownTimer endDate={endDate} startDate={startDate} />
+          </EventInfo>
+        )}
+        <StyledImage
+          src={thumbnailSrc}
+          alt={name}
+          width={500}
+          height={500}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTap}
+          onClick={isMobile ? () => {} : handleClick}
+        />
+      </ImageContainer>
       <ItemName onClick={isMobile ? () => {} : handleClick}>{name}</ItemName>
       {discountPrice !== undefined ? (
         <PriceDiv>
