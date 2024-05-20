@@ -18,6 +18,7 @@ type ProductItem = {
   size: string;
   color: string;
   mainThumbnailImage: string;
+  discountPrice: string;
 };
 export default function Order() {
   const {
@@ -78,12 +79,12 @@ export default function Order() {
           <h2>제품 정보</h2>
           {cartProduct &&
           cartProduct?.data.content.filter((v: any) =>
-            orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+            orderProducts?.split(",").map(Number)?.includes(v.cartProductId),
           ).length !== 0
             ? cartProduct?.data.content
                 .filter((v: any) =>
                   orderProducts
-                    .split(",")
+                    ?.split(",")
                     .map(Number)
                     ?.includes(v.cartProductId),
                 )
@@ -97,7 +98,7 @@ export default function Order() {
                       <S.ProductName>{item.productName}</S.ProductName>
                       <S.NumPrice>
                         {item.count}개 /{" "}
-                        {`${item.productPrice.toLocaleString()}원`}
+                        {`${item.discountPrice.toLocaleString()}원`}
                       </S.NumPrice>
                       {/* <S.DiscountPrice> */}
                       {/*   {item.count}개 /{" "} */}
@@ -120,7 +121,7 @@ export default function Order() {
                   <S.Info>
                     <S.ProductName>{item.title}</S.ProductName>
                     <S.NumPrice>
-                      {item.count}개 / {`${item.price.toLocaleString()}원`}
+                      {item.count}개 / {`${item?.price.toLocaleString()}원`}
                     </S.NumPrice>
                     {/* <S.DiscountPrice> */}
                     {/*   {item.count}개 /{" "} */}
@@ -301,7 +302,11 @@ export default function Order() {
             </S.PaymentInfoBox>
             <S.Total>
               <S.TotalInfo>결제 금액</S.TotalInfo>
-              <S.TotalPrice>{totalPriceFinal}원</S.TotalPrice>
+              <S.TotalPrice>
+                {totalPriceSum !== 0
+                  ? `${totalPriceSum + 3000}원`
+                  : `${totalPriceSumDirect + 3000}원`}
+              </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
           <h2>결제 방법</h2>

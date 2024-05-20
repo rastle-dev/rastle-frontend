@@ -63,6 +63,9 @@ export default function useOrderConfirm() {
     },
   ];
 
+  console.log(parsedOrderInfo);
+  console.log(OrdererInfo);
+
   return {
     ProductList,
     OrdererInfo,

@@ -70,7 +70,7 @@ export default function useUpdateEventProduct() {
 
   const { data: eventProductListData } = useQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
-    () => loadEventProductPaging({ page: 0, size: 4 }),
+    () => loadEventProductPaging({ page: 0, size: 10 }),
   );
 
   const { data: productData, refetch: refetchProductData } = useQuery(

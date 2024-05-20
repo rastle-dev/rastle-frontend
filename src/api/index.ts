@@ -9,7 +9,7 @@ axios.defaults.withCredentials = true;
 // 사용자가 인증되지 않은 상태로 간주되면, 로컬 스토리지를 비우고 메인 화면으로 리디렉션하는 역할 수행
 const handleUnauthorized = () => {
   localStorage.clear();
-  window.location.href = PATH.LOGIN;
+  // window.location.href = PATH.LOGIN;
 };
 
 // axios.create()함수를 사용하여 새로운 Axios 인스턴스를 생성
