@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { Timer } from "@/styles/product/index.styles";
 
 interface CountdownTimerProps {
   startDate: string | undefined;
@@ -35,9 +34,9 @@ export default function CountdownTimer({
 
   if (remainingTime === -1) {
     return (
-      <Timer>
+      <div>
         <p>이벤트 시작 전입니다.</p>
-      </Timer>
+      </div>
     );
   }
 
@@ -47,12 +46,12 @@ export default function CountdownTimer({
   const seconds = remainingTime % 60;
 
   return (
-    <Timer>
+    <div>
       {remainingTime > 0 ? (
         <p>{`${days}일 ${hours}시간 ${minutes}분 ${seconds}초 남음`}</p>
       ) : (
         <p>이벤트가 종료되었습니다.</p>
       )}
-    </Timer>
+    </div>
   );
 }
