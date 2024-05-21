@@ -197,17 +197,10 @@ export default function Cart() {
               </S.TableContent>
             </S.Table>
             <S.DeliveryCharge>
-              {totalPrice >= 80000 ? (
-                <>
-                  <h4>배송비</h4>
-                  <h4>무료</h4>
-                </>
-              ) : (
-                <>
-                  <p>기본</p>
-                  <h3>3000원</h3>
-                </>
-              )}
+              <>
+                <p>기본</p>
+                <h3>3000원</h3>
+              </>
             </S.DeliveryCharge>
           </S.CartBox>
 
@@ -223,20 +216,11 @@ export default function Cart() {
                 <div>{totalPrice?.toLocaleString()}원</div>
                 <p>+ 배송비</p>
                 <div>
-                  {totalPrice >= 80000 ? (
-                    <div>0원(무료)</div>
-                  ) : (
-                    <div>3,000원</div>
-                  )}
+                  <div>3,000원</div>
                 </div>
                 <p>= 합계</p>
-                <div>
-                  {totalPrice >= 80000 ? (
-                    <div>{totalPriceSum.toLocaleString()}원</div>
-                  ) : (
-                    <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
-                  )}
-                </div>
+
+                <div>{(totalPriceSum + 3000).toLocaleString()}원</div>
               </>
             )}
           </S.TotalPrice>

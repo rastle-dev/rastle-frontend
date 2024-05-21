@@ -50,6 +50,8 @@ export default function useCart() {
       ?.map((v: ProductItem) => v.discountPrice * v.count)
       ?.reduce((a: number, c: number) => a + c, 0) || 0;
 
+  console.log(totalPrice);
+
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -148,7 +150,7 @@ export default function useCart() {
   };
   const totalPriceSum =
     cartProduct?.data?.content?.reduce(
-      (sum: number, item: ProductItem) => sum + item.productPrice * item.count,
+      (sum: number, item: ProductItem) => sum + item.discountPrice * item.count,
       0,
     ) ?? 0;
 
@@ -159,7 +161,7 @@ export default function useCart() {
       color: product.color,
       size: product.size,
       count: product.count,
-      totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+      totalPrice: product.discountPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
     }));
     if (orderProducts.length === 0) {
       toast.dismiss();
@@ -200,7 +202,7 @@ export default function useCart() {
         color: product.color,
         size: product.size,
         count: product.count,
-        totalPrice: product.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+        totalPrice: product.discountPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
       }),
     );
     const whole = cartProduct?.data?.content?.map(
@@ -245,7 +247,7 @@ export default function useCart() {
         color: item.color,
         size: item.size,
         count: item.count,
-        totalPrice: item.productPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+        totalPrice: item.discountPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
       },
     ];
 

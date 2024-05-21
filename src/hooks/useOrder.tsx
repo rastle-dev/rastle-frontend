@@ -72,10 +72,14 @@ export default function useOrder() {
   if (cartProduct !== undefined) {
     totalPriceSum = cartProduct?.data.content
       .filter((v: any) =>
-        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+        orderProducts?.split(",").map(Number)?.includes(v.cartProductId),
       )
-      .reduce((sum: any, item: any) => sum + item.productPrice * item.count, 0);
+      .reduce(
+        (sum: any, item: any) => sum + item.discountPrice * item.count,
+        0,
+      );
   }
+  console.log(totalPriceSum);
 
   let totalPriceSumDirect = 0;
   if (typeof selectedProducts === "string") {
@@ -84,10 +88,15 @@ export default function useOrder() {
       0,
     );
   }
+  console.log("화깅ㄴ하ㅣㄱ" + "");
+  console.log(totalPriceSum);
+
+  console.log(totalPriceSumDirect);
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
   // TODO: 쿠폰가격 변경
   const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
   console.log(selectedCoupon);
+  console.log(couponPrice);
 
   const toggleCoupon = (couponId: number) => {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
@@ -111,25 +120,18 @@ export default function useOrder() {
   const [deliveryPrice, setDeliveryPrice] = useState<number>(3000);
 
   useEffect(() => {
-    console.log(totalPriceFinal);
-
-    let calculatedTotalPrice;
+    let calculatedTotalPrice = 0;
+    console.log(totalPriceSum);
+    console.log(totalPriceSumDirect);
 
     if (totalPriceSum !== 0) {
-      if (totalPriceSum >= 80000) {
-        calculatedTotalPrice = totalPriceSum;
-        setDeliveryPrice(0); // No delivery charge
-      } else {
-        calculatedTotalPrice = totalPriceSum + deliveryPrice;
-      }
-    } else if (totalPriceSumDirect >= 80000) {
-      calculatedTotalPrice = totalPriceSumDirect;
-      setDeliveryPrice(0); // No delivery charge
+      calculatedTotalPrice = totalPriceSum + deliveryPrice;
     } else {
       calculatedTotalPrice = totalPriceSumDirect + deliveryPrice;
     }
 
     // Apply coupon discount if selectedCoupon is not null
+    console.log(couponPrice);
     const discountedTotalPrice = selectedCoupon
       ? calculatedTotalPrice - couponPrice
       : calculatedTotalPrice;
@@ -137,7 +139,8 @@ export default function useOrder() {
     console.log(discountedTotalPrice);
 
     // Set the final total price
-    setTotalPriceFinal(discountedTotalPrice);
+    // setTotalPriceFinal(discountedTotalPrice);
+    setTotalPriceFinal(calculatedTotalPrice);
   }, [
     totalPriceSum,
     totalPriceSumDirect,
@@ -159,10 +162,7 @@ export default function useOrder() {
     },
     {
       meta: "배송비",
-      data:
-        totalPriceSum !== 0
-          ? `+ ${totalPriceSum >= 80000 ? 0 : 3000}원`
-          : `+ ${totalPriceSumDirect >= 80000 ? 0 : 3000}원`,
+      data: "3000원",
     },
     {
       meta: "쿠폰할인",
@@ -368,11 +368,7 @@ export default function useOrder() {
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
-    const { success, errorMsg } = response;
-
-    console.log(response);
-
-    if (!response.imp_uid) {
+    if (response.error_msg) {
       alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
       router.replace(`/shop`);
       return;
@@ -410,7 +406,6 @@ export default function useOrder() {
         alert("사후 검증에 실패했습니다");
       }
     } else {
-      alert(errorMsg);
       alert("결제 실패");
     }
   }
@@ -453,14 +448,14 @@ export default function useOrder() {
     if (
       cartProduct &&
       cartProduct?.data.content.filter((v: any) =>
-        orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+        orderProducts?.split(",").map(Number)?.includes(v.cartProductId),
       ).length !== 0
     ) {
       directPurchase = false; // 장바구니에서 선택, 직접 구매한 제품이 아님
       // If the condition is true
       selectedItems = cartProduct?.data.content
         .filter((v: any) =>
-          orderProducts.split(",").map(Number)?.includes(v.cartProductId),
+          orderProducts?.split(",").map(Number)?.includes(v.cartProductId),
         )
         // eslint-disable-next-line array-callback-return
         .map((item: any) => {
