@@ -3,6 +3,7 @@ import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
 import media from "@/styles/media";
 import Image from "next/image";
+import IconButton from "@/components/Common/IconButton";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
@@ -126,7 +127,7 @@ export const TextDetail = styled.div`
 `;
 
 export const ColorText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 400;
   padding-bottom: 0.64rem;
 `;
@@ -139,7 +140,7 @@ export const ColorList = styled.div`
 `;
 
 export const SizeText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 400;
   padding-bottom: 1.18rem;
 `;
@@ -172,7 +173,7 @@ export const SizeButton = styled(Button)<{ isActive?: boolean }>`
 `;
 
 export const ProductCountText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 400;
   padding-bottom: 1.18rem;
   border-bottom: 1px solid ${COLORS.블랙};
@@ -205,13 +206,36 @@ export const ProductCountRightInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${media.mobile} {
+    gap: 2rem;
+  }
 `;
+export const MobileProductCountButton = styled.input.attrs({
+  type: "number",
+})`
+  width: 4rem;
+  height: 3.2rem;
+  text-align: center; /* 텍스트를 수평으로 가운데 정렬합니다. */
+  line-height: 3.2rem; /* 텍스트의 세로 가운데 정렬을 위해 높이와 일치시킵니다. */
+  font-size: 1.5rem;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  border: none;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    appearance: none;
+  }
+  pointer-events: none;
+`;
+
 export const ProductCountButton = styled.input.attrs({
   type: "number",
 })`
   width: 4.18rem;
   height: auto;
-
+  @media (max-width: 769px) {
+    display: none;
+  }
   /* 기본적으로 화살표 버튼 보이도록 설정 */
   -moz-appearance: textfield; /* Firefox */
   appearance: textfield; /* Safari and Chrome */
@@ -223,9 +247,6 @@ export const ProductCountButton = styled.input.attrs({
     appearance: none; /* 시도해보세요 */
   }
   
-  
-  
-
 \` ;
 `;
 
@@ -235,9 +256,18 @@ export const NumberInputContainer = styled.div`
   align-items: flex-start;
   height: auto;
   margin-right: 1rem;
+  ${media.mobile} {
+    flex-direction: row;
+    //gap: 1rem;
+  }
 `;
 
 export const CountUpButton = styled.img`
+  border: none;
+  background: none;
+  cursor: pointer;
+`;
+export const MobileCountUpIcon = styled(IconButton)`
   border: none;
   background: none;
   cursor: pointer;
@@ -247,8 +277,18 @@ export const CountDownButton = styled.img`
   border: none;
   background: none;
   cursor: pointer;
+  ${media.mobile} {
+    width: 5rem;
+  }
 `;
-
+export const MobileCountDownIcon = styled(IconButton)`
+  border: none;
+  background: none;
+  cursor: pointer;
+  ${media.mobile} {
+    width: 5rem;
+  }
+`;
 export const Count = styled.span`
   font-size: 1.5rem;
   margin: 0 0.5rem;

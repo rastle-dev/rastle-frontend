@@ -4,6 +4,7 @@ import Icon from "@/components/Common/Icon";
 import COLORS from "@/constants/color";
 import { SelectedProduct } from "@/interface/product/detailProduct";
 import { SelectedItem } from "@/interface/Cancel/SelectedItem";
+import MobileCountTable from "@/components/Product/MobileCountTable";
 
 interface CountTableProps {
   product: SelectedProduct | SelectedItem;
@@ -24,6 +25,8 @@ export default function CountTable({
   handleDelete,
 }: CountTableProps) {
   console.log("product", product.count);
+  const isMobile = window.innerWidth <= 768; // 모바일 여부를 판단하는 부분입니다.
+  console.log("isM", isMobile);
   return (
     <React.Fragment key={`${product.size}-${product.color}`}>
       <S.ProductCountInfo>
@@ -46,35 +49,45 @@ export default function CountTable({
               )
             }
           />
-          <S.NumberInputContainer>
-            <S.CountUpButton
-              src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
-              onClick={() => {
-                let keyToPass;
-                if ("key" in product) {
-                  keyToPass = product.key;
-                } else if ("productOrderNumber" in product) {
-                  keyToPass = product.productOrderNumber;
-                }
-                handleIncrement(keyToPass);
-              }}
+          {isMobile ? (
+            <MobileCountTable
+              product={product}
+              inputChangeHandler={inputChangeHandler}
+              handleIncrement={handleIncrement}
+              handleDecrement={handleDecrement}
             />
-            <S.CountDownButton
-              src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
-              onClick={() => {
-                let keyToPass;
-                if ("key" in product) {
-                  keyToPass = product.key;
-                } else if ("productOrderNumber" in product) {
-                  keyToPass = product.productOrderNumber;
-                }
-                handleDecrement(keyToPass);
-              }}
-            />
-          </S.NumberInputContainer>
+          ) : (
+            <S.NumberInputContainer>
+              <S.CountUpButton
+                src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_up.gif"
+                onClick={() => {
+                  let keyToPass;
+                  if ("key" in product) {
+                    keyToPass = product.key;
+                  } else if ("productOrderNumber" in product) {
+                    keyToPass = product.productOrderNumber;
+                  }
+                  handleIncrement(keyToPass);
+                }}
+              />
+              <S.CountDownButton
+                src="https://img.echosting.cafe24.com/design/skin/default/product/btn_count_down.gif"
+                onClick={() => {
+                  let keyToPass;
+                  if ("key" in product) {
+                    keyToPass = product.key;
+                  } else if ("productOrderNumber" in product) {
+                    keyToPass = product.productOrderNumber;
+                  }
+                  handleDecrement(keyToPass);
+                }}
+              />
+            </S.NumberInputContainer>
+          )}
           <S.ProductCountDelete>
             <Icon
-              iconSize="1.2rem"
+              iconSize="1.5rem"
+              mobileIconSize="3rem"
               iconName="delete"
               color={COLORS.GREY.상세페이지}
               onClick={() => {

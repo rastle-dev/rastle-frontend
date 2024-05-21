@@ -7,21 +7,34 @@ interface IconProps {
   /** 아이콘 이름 */
   iconName: string;
   iconSize?: string;
+  mobileIconSize?: string;
   color?: string;
   border?: number;
   opacity?: number;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const StyledIcon = styled.i<{ border?: number }>`
+const StyledIcon = styled.i<{
+  border?: number;
+  iconSize?: string;
+  mobileIconSize?: string;
+}>`
   ${({ border }) => `
-   -webkit-text-stroke: ${border}px;
-`}
+    -webkit-text-stroke: ${border}px;
+  `}
+
+  font-size: ${(props) => props.iconSize};
+
+  @media (max-width: 768px) {
+    font-size: ${(props) =>
+      props.mobileIconSize || props.iconSize}; /* 모바일일 경우의 폰트 크기 */
+  }
 `;
 
 function Icon({
   iconName,
   iconSize = "1.5rem",
+  mobileIconSize = "3rem",
   color,
   border = 0.1,
   opacity,
@@ -30,7 +43,9 @@ function Icon({
   return (
     <StyledIcon
       className={Icons[iconName]}
-      style={{ fontSize: iconSize, color, opacity }}
+      iconSize={iconSize}
+      style={{ color, opacity }}
+      mobileIconSize={mobileIconSize}
       border={border}
       onClick={onClick}
     />

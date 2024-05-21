@@ -114,6 +114,7 @@ export default function Product() {
           <S.ColorList>
             {uniqueColors.map((color) => (
               <ColorButton
+                size={3}
                 clicked={color === selectedProduct.color}
                 color={COLORS[color as keyof typeof COLORS]}
                 onClick={() => handleColorClick(color as keyof typeof COLORS)} // 클릭 핸들러 연결
