@@ -114,6 +114,7 @@ export default function Product() {
           <S.ColorList>
             {uniqueColors.map((color) => (
               <ColorButton
+                size={3}
                 clicked={color === selectedProduct.color}
                 color={COLORS[color as keyof typeof COLORS]}
                 onClick={() => handleColorClick(color as keyof typeof COLORS)} // 클릭 핸들러 연결
@@ -159,8 +160,8 @@ export default function Product() {
               <Dialog
                 title="로그인 후에 이용 가능한 기능이에요!"
                 confirm="쇼핑 계속하기"
-                refuse="로그인 하러가기"
-                size={45}
+                refuse="로그인 하기"
+                size={44}
                 onClickRefuseButton={() => {
                   setLoginModalVisible(false); // 모달 창 닫기
                   const returnUrl = `${router.pathname}?${router.asPath.split("?")[1]}`;

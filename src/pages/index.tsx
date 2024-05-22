@@ -28,7 +28,7 @@ export async function getStaticProps() {
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP],
-    () => loadMarketBestProduct({ page: 0, size: 5 }),
+    () => loadMarketBestProduct({ page: 0, size: 6 }),
   );
 
   return {
@@ -51,7 +51,7 @@ export default function Home() {
   const { productData, eventData, bestProductData } = useHome();
   const router = useRouter();
   const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
-
+  console.log("d", bestProductData);
   useEffect(() => {
     const currentPath = router.asPath;
     if (currentPath === "/?social=true") {
@@ -90,8 +90,8 @@ export default function Home() {
       {isSignupPopupVisible && <SignupPopup onClose={handleSignupClose} />}
       <TopLayer />
       <BestProductLayer productData={bestProductData} />
-      <ProductLayer productData={productData} />
       <EventProductLayer eventData={eventData} />
+      <ProductLayer productData={productData} />
     </S.StyledHome>
   );
 }

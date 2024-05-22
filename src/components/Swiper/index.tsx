@@ -24,8 +24,6 @@ const StyledSwiper = styled(Swiper)`
   ${media.mobile} {
     width: 100%;
     height: auto;
-    padding-bottom: 3.72rem;
-
     .swiper-button-prev,
     .swiper-button-next {
       display: none; // 화살표 숨기기

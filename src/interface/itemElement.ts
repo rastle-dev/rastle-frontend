@@ -13,4 +13,7 @@ export default interface ItemElementProps {
   price: number;
   isEvent?: boolean;
   eventId?: number | undefined;
+  startDate?: string | undefined;
+  endDate?: string | undefined;
+  onTimeUpdate?: (time: number | undefined) => void; // onTimeUpdate 추가
 }

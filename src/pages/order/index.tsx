@@ -36,7 +36,6 @@ export default function Order() {
     totalPriceSum,
     orderProducts,
     totalPriceSumDirect,
-    totalPriceFinal,
     PriceInfo,
     selectedProducts,
     cartProduct,
@@ -123,12 +122,6 @@ export default function Order() {
                     <S.NumPrice>
                       {item.count}개 / {`${item?.price.toLocaleString()}원`}
                     </S.NumPrice>
-                    {/* <S.DiscountPrice> */}
-                    {/*   {item.count}개 /{" "} */}
-                    {/*   {`${item.price.toLocaleString()}원`} */}
-                    {/*   <span>10% </span> */}
-                    {/*   {item.discountPrice ? item.discountedPrice : ""}원 원 */}
-                    {/* </S.DiscountPrice> */}
                     <S.SizeColor>
                       {item.size} / {item.color}
                     </S.SizeColor>
@@ -203,7 +196,10 @@ export default function Order() {
           </S.SettingDefaultAddress>
           <S.OrderCommentWrapper>
             <h3>배송 시 요청 사항</h3>
-            <Input value={deliveryMsg} onChange={onChangeDeliveryMsg} />
+            <S.RequestInput
+              value={deliveryMsg}
+              onChange={onChangeDeliveryMsg}
+            />
             <p>
               제주 및 도서 산간 지역의 배송은 추가 배송비가 발생할 수 있습니다.
             </p>

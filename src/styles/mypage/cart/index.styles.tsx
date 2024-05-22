@@ -87,13 +87,13 @@ export const ProductInfo = styled.div`
 `;
 export const Img = styled.img`
   width: 7.5rem;
-  height: 8.2rem;
+  height: auto;
+  aspect-ratio: 0.77;
   margin-right: 1rem;
   margin-left: 0.8rem;
   @media (max-width: 769px) {
-    width: 11.5rem;
+    width: 9.5rem;
     border-radius: 3px;
-    height: 12.5rem;
     padding: 0;
     margin: 0 1rem 0 0;
   }

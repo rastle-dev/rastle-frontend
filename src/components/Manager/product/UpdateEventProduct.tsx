@@ -322,7 +322,7 @@ export default function UpdateEventProduct() {
           value={eventId}
           onChange={(e) => handleBundleIdChange(e)}
         >
-          {eventData?.data.content.map((event: Event) => (
+          {eventData?.data?.content.map((event: Event) => (
             <option key={event.id} value={event.id}>
               {event.name}
             </option>

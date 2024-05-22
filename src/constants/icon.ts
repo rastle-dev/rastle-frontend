@@ -18,6 +18,8 @@ const ICONS: IconProps = {
   checkCircle: "bi bi-check-circle",
   checkCircleFill: "bi bi-check-circle-fill",
   check: "bi bi-check-lg",
+  circlePlus: "bi bi-plus-circle",
+  circleMinus: "bi bi-dash-circle",
 };
 
 export default ICONS;

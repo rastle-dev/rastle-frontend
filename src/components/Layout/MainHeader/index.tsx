@@ -15,6 +15,14 @@ const navList = [
   { name: "ABOUT", href: "/shopinfo/guide" },
 ];
 
+const mobileNavList = [
+  { name: "HOME", href: "/" },
+  { name: "SHOP", href: "/shop" },
+  { name: "코디보기", href: "/cody" },
+  { name: "공지사항", href: "/community" },
+  { name: "ABOUT", href: "/shopinfo/guide" },
+];
+
 export default function MainHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -52,7 +60,7 @@ export default function MainHeader() {
           <>
             <S.MenuBackground />
             <S.MenuList open={menuOpen} ref={menuRef}>
-              {navList.map(({ name, href }) => (
+              {mobileNavList.map(({ name, href }) => (
                 <S.MenuItem key={name} onClick={toggleMenu}>
                   <LazyLink href={href}>{name}</LazyLink>
                 </S.MenuItem>

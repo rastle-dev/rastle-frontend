@@ -14,7 +14,7 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
         회원가입하고 <span>EVENT</span> 참여 !!
       </S.ProductTitle>
       <S.ItemContainer>
-        {eventData?.data.map((item: ItemElementProps) => (
+        {eventData?.data?.map((item: ItemElementProps) => (
           <ItemElement
             key={item.productId}
             mainThumbnail={item.mainThumbnail}
@@ -30,8 +30,8 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
         ))}
       </S.ItemContainer>
       <S.ViewMore>
-        <LazyLink href="/shop" title="레코디슬로우 전체 상품 페이지">
-          더 많은 이벤트 상품 보러가기
+        <LazyLink href="/shop?tab=이벤트" title="레코디슬로우 전체 상품 페이지">
+          {">"} 이벤트 상품 더보기
         </LazyLink>
       </S.ViewMore>
     </S.ProductWrapper>
