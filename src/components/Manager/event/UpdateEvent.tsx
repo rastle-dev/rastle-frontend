@@ -149,7 +149,7 @@ export default function UpdateEvent() {
       <Title>이벤트 수정</Title>
       <BundleSubtitle>수정할 이벤트를 선택하세요</BundleSubtitle>
       <BundleList>
-        {eventData?.data.content.map((event: Event) => (
+        {eventData?.data?.content.map((event: Event) => (
           <BundleLi key={event.id} onClick={() => handleEventClick(event)}>
             {event.name}
           </BundleLi>

@@ -87,7 +87,7 @@ export default function CategoryView({
           <Head>
             <title>{activeCategory} | RECORDY SLOW</title>
           </Head>
-          {eventData?.data.map((item: ItemElementProps) => {
+          {eventData?.data?.map((item: ItemElementProps) => {
             // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
             const finalDiscountPrice =
               item.price === item.discountPrice

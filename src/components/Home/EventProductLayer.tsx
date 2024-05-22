@@ -14,7 +14,7 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
         회원가입하고 <span>EVENT</span> 참여 !!
       </S.ProductTitle>
       <S.ItemContainer>
-        {eventData?.data.map((item: ItemElementProps) => (
+        {eventData?.data?.map((item: ItemElementProps) => (
           <ItemElement
             key={item.productId}
             mainThumbnail={item.mainThumbnail}
