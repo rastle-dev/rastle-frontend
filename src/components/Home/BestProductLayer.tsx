@@ -26,7 +26,7 @@ function BestProductLayer({ productData }: { productData: ProductData }) {
       <S.BestProductTitle>BEST</S.BestProductTitle>
       <S.ProductDesc>한달동안 가장 많은 사랑을 받은 제품 입니다.</S.ProductDesc>
       <S.BestItemContainer>
-        {productData?.data.content
+        {productData?.data?.content
           .slice(0, isMobile ? 6 : 5)
           .map((item: ItemElementProps) => {
             // 만약 price와 discountPrice가 같으면 discountPrice 필드를 없애고, 그렇지 않으면 그대로 유지
