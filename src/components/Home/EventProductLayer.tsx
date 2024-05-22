@@ -30,8 +30,8 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
         ))}
       </S.ItemContainer>
       <S.ViewMore>
-        <LazyLink href="/shop" title="레코디슬로우 전체 상품 페이지">
-          더 많은 이벤트 상품 보러가기
+        <LazyLink href="/shop?tab=이벤트" title="레코디슬로우 전체 상품 페이지">
+          {">"} 이벤트 상품 더보기
         </LazyLink>
       </S.ViewMore>
     </S.ProductWrapper>

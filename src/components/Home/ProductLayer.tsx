@@ -37,7 +37,7 @@ function ProductLayer({ productData }: { productData: ProductData }) {
       </S.ItemContainer>
       <S.ViewMore>
         <LazyLink href="/shop" title="레코디슬로우 전체 상품 페이지">
-          더 많은 상품 보러가기
+          {">"} 상품 더보기
         </LazyLink>
       </S.ViewMore>
     </S.ProductWrapper>
