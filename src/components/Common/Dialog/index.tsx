@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 interface DialogProps {
@@ -78,7 +77,6 @@ const ButtonWrapper = styled.div`
 const StyledConfirmButton = styled.div<{
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }>`
-  //margin-right: 1.54rem;
   font-size: 1rem;
   font-style: normal;
   line-height: normal;
@@ -88,7 +86,7 @@ const StyledConfirmButton = styled.div<{
   &:hover {
     font-weight: 500;
   }
-  ${media.mobile} {
+  @media screen and (min-width: 0px) and (max-width: 769px) {
     font-size: 1.3rem;
     background-color: ${COLORS.GREY[200]};
     padding: 1.7rem 2.5rem;
@@ -104,14 +102,13 @@ const StyledRefuseButton = styled.div<{
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  //margin-right: 4.5rem;
   cursor: pointer;
   color: ${COLORS.BLACK};
 
   &:hover {
     font-weight: 500;
   }
-  ${media.mobile} {
+  @media screen and (min-width: 0px) and (max-width: 769px) {
     font-size: 1.3rem;
     background-color: ${COLORS.BLACK};
     color: white;
