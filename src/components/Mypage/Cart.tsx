@@ -38,7 +38,6 @@ export default function Cart() {
   } = useCart();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { timedOut } = useLoadingWithTimeout(isLoading, isCartDataLoading);
-  console.log("selectedItems", selectedItems);
   const router = useRouter();
   useEffect(() => {
     if ((isCartDataLoading || isLoading) && timedOut) {

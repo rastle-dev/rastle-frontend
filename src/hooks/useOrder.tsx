@@ -33,7 +33,6 @@ type CommonInputField = {
 
 export default function useOrder() {
   const router = useRouter();
-  console.log(router.query);
   const [receiver, onChangeReceiver, setReceiver] = useInput("");
   const [detailPostal, onChangeDetailPostal, setDetailPostal] = useInput("");
   const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
@@ -48,7 +47,6 @@ export default function useOrder() {
 
   const { data: myInfo, isSuccess } = useQuery([QUERYKEYS.LOAD_ME], loadMe);
   const { cartProduct } = useCart();
-  console.log(cartProduct);
   useEffect(() => {
     // isSuccess가 true이고 myInfo.data가 존재할 때에만 setReceiver 호출
     if (isSuccess && myInfo?.data) {
@@ -56,9 +54,6 @@ export default function useOrder() {
       setPhoneNumber(myInfo.data.phoneNumber);
     }
   }, [isSuccess, myInfo]);
-
-  console.log(myInfo);
-  console.log(couponData);
   const OrdererInfo = [
     { meta: "이름", data: myInfo?.data.userName },
     { meta: "연락처", data: myInfo?.data.phoneNumber },
@@ -66,7 +61,6 @@ export default function useOrder() {
   ];
   const { orderList } = router.query;
   const { selectedProducts } = router.query;
-  console.log(router.query);
   const orderProducts: string = String(orderList);
   let totalPriceSum = 0;
   if (cartProduct !== undefined) {
@@ -79,8 +73,6 @@ export default function useOrder() {
         0,
       );
   }
-  console.log(totalPriceSum);
-
   let totalPriceSumDirect = 0;
   if (typeof selectedProducts === "string") {
     totalPriceSumDirect = JSON.parse(selectedProducts).reduce(
@@ -88,15 +80,9 @@ export default function useOrder() {
       0,
     );
   }
-  console.log("화깅ㄴ하ㅣㄱ" + "");
-  console.log(totalPriceSum);
-
-  console.log(totalPriceSumDirect);
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
   // TODO: 쿠폰가격 변경
   const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
-  console.log(selectedCoupon);
-  console.log(couponPrice);
 
   const toggleCoupon = (couponId: number) => {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
@@ -113,33 +99,17 @@ export default function useOrder() {
     setIsCouponVisible(!isCouponVisible);
   };
 
-  console.log(selectedCoupon);
-
-  console.log(totalPriceSum);
   const [totalPriceFinal, setTotalPriceFinal] = useState<number>(0);
-  const [deliveryPrice, setDeliveryPrice] = useState<number>(3000);
+  const [deliveryPrice] = useState<number>(3000);
 
   useEffect(() => {
     let calculatedTotalPrice = 0;
-    console.log(totalPriceSum);
-    console.log(totalPriceSumDirect);
 
     if (totalPriceSum !== 0) {
       calculatedTotalPrice = totalPriceSum + deliveryPrice;
     } else {
       calculatedTotalPrice = totalPriceSumDirect + deliveryPrice;
     }
-
-    // Apply coupon discount if selectedCoupon is not null
-    console.log(couponPrice);
-    const discountedTotalPrice = selectedCoupon
-      ? calculatedTotalPrice - couponPrice
-      : calculatedTotalPrice;
-
-    console.log(discountedTotalPrice);
-
-    // Set the final total price
-    // setTotalPriceFinal(discountedTotalPrice);
     setTotalPriceFinal(calculatedTotalPrice);
   }, [
     totalPriceSum,
@@ -148,11 +118,6 @@ export default function useOrder() {
     selectedCoupon,
     couponPrice,
   ]);
-
-  console.log("----------");
-  console.log(totalPriceSum);
-  console.log(totalPriceSumDirect);
-  console.log(totalPriceFinal);
 
   const PriceInfo = [
     {
@@ -224,8 +189,6 @@ export default function useOrder() {
     loadDefaultAddress,
   );
 
-  console.log(defaultAddress);
-
   type PgType = "kakaopay" | "card" | "vbank"; // 원하는 PG 사를 나열합니다.
   type PgMethod = "kakaopay" | "nice_v2"; // 원하는 PG 사를 나열합니다.
 
@@ -292,7 +255,6 @@ export default function useOrder() {
   }, [defaultAddress, isLoading]);
 
   useEffect(() => {
-    console.log(postalAddress);
     if (clickedDeliveryButtonIndex === 1) {
       setAddress(() => ({
         address: "",
@@ -324,7 +286,6 @@ export default function useOrder() {
     { id: 2, clicked: false, default: "무통장입금" },
   ];
 
-  console.log(myInfo);
   const commonInputFields: CommonInputField[] = [
     {
       label: "우편번호",
@@ -350,7 +311,6 @@ export default function useOrder() {
     },
     ...commonInputFields,
   ];
-  console.log(deliveryInputs);
   const DefaultAddressInputs = [...commonInputFields];
   const currentDate = new Date();
 
@@ -363,8 +323,6 @@ export default function useOrder() {
     .padStart(2, "0")}-${nextDay.getDate().toString().padStart(2, "0")}`;
 
   const vbankDue = formattedNextDay;
-
-  console.log(vbankDue);
 
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {

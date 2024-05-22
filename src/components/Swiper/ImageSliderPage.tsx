@@ -20,15 +20,4 @@ const ImageSliderPage: React.FC<ImageSliderPageProps> = function ({
   );
 };
 
-export async function getStaticProps() {
-  // 이미지 데이터를 외부 소스에서 가져오는 비동기 로직을 여기에 작성,
-  const images: string[] = ["image1.jpg", "image2.jpg", "image3.jpg"]; // 예시 데이터
-
-  return {
-    props: {
-      images,
-    },
-  };
-}
-
 export default ImageSliderPage;
