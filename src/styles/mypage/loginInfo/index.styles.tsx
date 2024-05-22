@@ -64,7 +64,7 @@ export const MobileLogoutButton = styled(Button)`
   height: 3rem;
   padding: 0.62rem;
   color: red;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1.4rem;
 
   @media (min-width: 1007px) {
@@ -92,10 +92,10 @@ export const DeleteButtonWrapper = styled.div`
 export const DeleteButton = styled(Button)`
   border: none;
   border-radius: 0;
-  width: 6rem;
+  width: 8rem;
   height: 3rem;
   padding: 0.62rem;
-  font-size: 1rem;
+  font-size: 1.3rem;
   ${media.mobile} {
     width: 8rem;
     font-size: 1.4rem;

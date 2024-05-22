@@ -166,7 +166,6 @@ export const ItemContainer = styled.div`
 `;
 export const BestItemContainer = styled.div`
   display: grid;
-  //flex-direction: row;
   width: 98%;
   grid-template-columns: repeat(5, 1fr);
   ${media.small} {

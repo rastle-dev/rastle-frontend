@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "@/styles/product/index.styles";
 import Icon from "@/components/Common/Icon";
 import COLORS from "@/constants/color";
@@ -25,8 +25,18 @@ export default function CountTable({
   handleDelete,
 }: CountTableProps) {
   console.log("product", product.count);
-  const isMobile = window.innerWidth <= 768; // 모바일 여부를 판단하는 부분입니다.
-  console.log("isM", isMobile);
+
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
+  }, []);
   return (
     <React.Fragment key={`${product.size}-${product.color}`}>
       <S.ProductCountInfo>

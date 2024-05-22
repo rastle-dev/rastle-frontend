@@ -45,6 +45,9 @@ const InputWrapper = styled.input<{
 
 const Message = styled.p<{ invalid?: boolean }>`
   font-size: 0.7rem;
+  @media screen and (min-width: 0px) and (max-width: 769px) {
+    font-size: 1rem;
+  }
   margin-bottom: 0;
   color: ${(props) => (props.invalid ? COLORS.RED : COLORS.블랙)};
 `;

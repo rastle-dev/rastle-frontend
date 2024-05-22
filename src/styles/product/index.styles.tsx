@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
   position: relative;
 
   ${media.mobile} {
+    padding-top: 7rem; /* header때문에 추가 */
     width: 92%;
   }
 `;
@@ -36,14 +37,12 @@ export const ImageLayer = styled.div`
   width: 50%;
   height: auto;
   padding-right: 5.3rem;
-  //padding-left: 5.3rem;
   border-right: 1px solid ${COLORS.GREY["300"]};
-
   ${media.mobile} {
     padding-right: 0;
     width: 100%;
     height: auto;
-    padding-bottom: 3.72rem;
+    padding-bottom: 1rem;
     border: none;
   }
 `;
@@ -66,7 +65,7 @@ export const Title = styled.h1`
   padding-bottom: 1.8rem;
   margin-top: 0;
   ${media.mobile} {
-    padding-bottom: 1.5rem;
+    padding: 0;
   }
 `;
 
@@ -74,7 +73,6 @@ export const Price = styled.div`
   font-size: 1.8rem;
   font-weight: 500;
   padding-bottom: 0.5rem;
-
   ${media.mobile} {
     border-bottom: 0.5px ${COLORS.GREY.상세페이지} solid;
     width: 100%;
@@ -117,15 +115,6 @@ export const DiscountPrice = styled.div`
   }
 `;
 
-export const TextDetail = styled.div`
-  margin-bottom: 1rem;
-  div {
-    font-size: 1.2rem;
-    padding: 0.3rem;
-    font-weight: 400;
-  }
-`;
-
 export const ColorText = styled.div`
   font-size: 1.5rem;
   font-weight: 400;
@@ -149,6 +138,9 @@ export const SizeButtonList = styled.div`
   flex-direction: row;
   gap: 0.91rem;
   padding-bottom: 2.27rem;
+  ${media.mobile} {
+    padding-bottom: 1.27rem;
+  }
 `;
 
 export const SizeButton = styled(Button)<{ isActive?: boolean }>`
@@ -186,6 +178,9 @@ export const ProductCountInfo = styled.div`
   border-bottom: 1px solid ${COLORS.블랙};
   padding-bottom: 0.82rem;
   padding-top: 0.82rem;
+  ${media.mobile} {
+    gap: 8rem;
+  }
 `;
 export const ProductCountLeftInfo = styled.div``;
 export const ProductCountTitle = styled.div`
@@ -258,7 +253,6 @@ export const NumberInputContainer = styled.div`
   margin-right: 1rem;
   ${media.mobile} {
     flex-direction: row;
-    //gap: 1rem;
   }
 `;
 
@@ -363,8 +357,12 @@ export const ScrollWrapper = styled.div`
   bottom: 20px;
   right: 20px;
   border: none;
+  ${media.mobile} {
+    padding: 0;
+  }
   border-radius: 5px;
   padding: 10px 20px;
+
   cursor: pointer;
   transition: opacity 0.3s ease;
   &.show {

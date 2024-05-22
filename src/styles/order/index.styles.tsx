@@ -64,7 +64,7 @@ export const Product = styled.div`
   padding-bottom: 2.65rem;
 `;
 export const Thumbnail = styled.img`
-  width: 7.7rem;
+  width: 10rem;
   height: auto;
   aspect-ratio: 0.77;
   border-radius: 0.45455rem;
@@ -77,25 +77,26 @@ export const Info = styled.div`
   width: 100%;
 `;
 export const ProductName = styled.div`
-  font-size: 1.333rem;
+  //font-size: 1.333rem;
+  font-size: 1.5rem;
   font-weight: 400;
 `;
 export const NumPrice = styled.div`
-  font-size: 1.333rem;
+  font-size: 1.5rem;
   font-weight: 200;
 `;
 
-export const DiscountPrice = styled.div`
-  font-size: 1.333rem;
-  font-weight: 200;
-
-  span {
-    color: ${COLORS.레드};
-    font-size: 1.333rem;
-  }
-`;
+// export const DiscountPrice = styled.div`
+//   font-size: 1.333rem;
+//   font-weight: 200;
+//
+//   span {
+//     color: ${COLORS.레드};
+//     font-size: 1.333rem;
+//   }
+// `;
 export const SizeColor = styled.div`
-  font-size: 1.333rem;
+  font-size: 1.5rem;
   font-weight: 400;
 `;
 
@@ -122,10 +123,16 @@ export const Meta = styled.div`
   ${media.xsmall} {
     width: 5rem;
   }
+  ${media.mobile} {
+    font-size: 1.3rem;
+  }
 `;
 export const Data = styled.div`
   font-weight: 400;
   font-size: 1.1rem;
+  ${media.mobile} {
+    font-size: 1.3rem;
+  }
 `;
 export const AddressSettingBox = styled.div`
   display: flex;
@@ -134,11 +141,15 @@ export const AddressSettingBox = styled.div`
     margin: 0;
     padding-top: 0.03rem;
     font-size: 1.16rem;
+    ${media.mobile} {
+      font-size: 1.5rem;
+    }
   }
   gap: 1.27rem;
 `;
 export const AddressButton = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.82rem;
   cursor: pointer;
 `;
@@ -168,6 +179,9 @@ export const DeliveryBox = styled.div`
 export const DeliveryInput = styled(Input)`
   font-size: 1.333rem;
   width: 100%;
+  ${media.mobile} {
+    font-size: 1.5rem;
+  }
 `;
 export const Postal = styled.div`
   display: flex;
@@ -202,6 +216,9 @@ export const SettingDefaultAddress = styled.div`
     padding: 0;
     font-size: 1rem;
     font-weight: 200;
+    ${media.mobile} {
+      font-size: 1.1rem;
+    }
   }
   input {
     width: 1rem;
@@ -231,6 +248,11 @@ export const OrderCommentWrapper = styled.div`
   }
 `;
 
+export const RequestInput = styled(Input)`
+  ${media.mobile} {
+    font-size: 1.5rem;
+  }
+`;
 export const PaymentInfoWrapper = styled.div`
   border-top: 2px solid;
   border-bottom: 2px solid;
@@ -301,10 +323,16 @@ export const PaymentInfoBox = styled.div`
 export const PriceCategory = styled.div`
   font-size: 1rem;
   font-weight: 400;
+  ${media.mobile} {
+    font-size: 1.333rem;
+  }
 `;
 export const Price = styled.div`
   font-size: 1rem;
   font-weight: 200;
+  ${media.mobile} {
+    font-size: 1.333rem;
+  }
 `;
 export const Total = styled.div`
   display: flex;
@@ -316,7 +344,7 @@ export const TotalInfo = styled.div`
   font-weight: 500;
 `;
 export const TotalPrice = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: ${COLORS.BLUE};
 `;
@@ -335,8 +363,15 @@ export const PaymentOptions = styled.div`
 `;
 export const PaymentOptionsButton = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 0.82rem;
   cursor: pointer;
+  p {
+    ${media.mobile} {
+      font-size: 1.5rem;
+    }
+  }
 `;
 export const PaymentOptionsCheckbox = styled.div`
   width: 1.3rem;
