@@ -13,11 +13,7 @@ import React, { useEffect, useState } from "react";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import {
-  loadMarketProduct,
-  loadProductDetail,
-  loadProductImage,
-} from "@/api/shop";
+import { loadMarketProduct, loadProductDetail } from "@/api/shop";
 
 export default function useUpdateProduct() {
   const [name, onChangeName, setName] = useInput("");
@@ -104,7 +100,7 @@ export default function useUpdateProduct() {
       const uniqueColors: string[] = [];
       const uniqueSizes: string[] = [];
 
-      productData?.data.productColor.productColors.forEach((item: any) => {
+      productData?.data?.productColor.productColors.forEach((item: any) => {
         if (!uniqueColors.includes(item.color)) {
           uniqueColors.push(item.color);
         }
