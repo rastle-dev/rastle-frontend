@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import media from "@/styles/media";
 import COLORS from "../../../constants/color";
 
 interface DialogProps {
@@ -45,7 +46,7 @@ const WhiteBox = styled.div<{
 `}
 
   box-sizing: border-box;
-  border-radius: 1rem;
+  border-radius: 17px;
   background: white;
   box-shadow: 0 4px 8px 8px rgba(0, 0, 0, 0.05);
   padding: 3rem 3rem 3rem 4.5rem;
@@ -70,21 +71,28 @@ const WhiteBox = styled.div<{
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
   margin-top: 3.8rem;
 `;
 
 const StyledConfirmButton = styled.div<{
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }>`
-  margin-right: 1.54rem;
-  color: #000;
+  //margin-right: 1.54rem;
   font-size: 1rem;
   font-style: normal;
-  font-weight: 330;
   line-height: normal;
   cursor: pointer;
+  font-weight: 300;
 
   &:hover {
+    font-weight: 500;
+  }
+  ${media.mobile} {
+    font-size: 1.3rem;
+    background-color: ${COLORS.GREY[200]};
+    padding: 1.7rem 2.5rem;
+    border-radius: 7px;
     font-weight: 500;
   }
 `;
@@ -92,17 +100,23 @@ const StyledConfirmButton = styled.div<{
 const StyledRefuseButton = styled.div<{
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
 }>`
-  color: #000;
   font-size: 1rem;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  margin-right: 4.5rem;
-
+  //margin-right: 4.5rem;
   cursor: pointer;
+  color: ${COLORS.BLACK};
 
   &:hover {
     font-weight: 500;
+  }
+  ${media.mobile} {
+    font-size: 1.3rem;
+    background-color: ${COLORS.BLACK};
+    color: white;
+    padding: 1.7rem 2.5rem;
+    border-radius: 7px;
   }
 `;
 
