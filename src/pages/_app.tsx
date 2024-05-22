@@ -4,7 +4,6 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RecoilRoot } from "recoil";
 import { createGlobalStyle } from "styled-components";
 import DefaultLayout from "@/components/Layout/DefaultLayout";
@@ -130,16 +129,10 @@ export default function App({ Component, pageProps }: AppProps) {
         <RecoilRoot>
           <Hydrate state={pageProps.dehydratedState}>
             <GlobalStyle />
-            {isOnline && (
-              <>
-                {Layout}
-                <ReactQueryDevtools initialIsOpen={false} />
-              </>
-            )}
+            {isOnline && Layout}
             {!isOnline && <IsOnline />}
           </Hydrate>
         </RecoilRoot>
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ErrorBoundary>
   );
