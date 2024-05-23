@@ -121,8 +121,7 @@ export default function LoginInfo() {
           visible
           title="세션이 만료되어 로그아웃합니다."
           refuse="확인"
-          confirm=""
-          size={34}
+          size={42}
         />
       )}
       <h2>로그인 정보</h2>

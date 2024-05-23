@@ -74,8 +74,7 @@ export default function OrderHistory() {
           visible
           title="세션이 만료되어 로그아웃합니다."
           refuse="확인"
-          confirm=""
-          size={40}
+          size={42}
         />
       )}
       <h2>주문내역</h2>

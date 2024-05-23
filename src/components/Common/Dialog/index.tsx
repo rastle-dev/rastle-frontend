@@ -76,6 +76,7 @@ const ButtonWrapper = styled.div`
 
 const StyledConfirmButton = styled.div<{
   onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void;
+  confirm?: string;
 }>`
   font-size: 1rem;
   font-style: normal;
@@ -88,7 +89,8 @@ const StyledConfirmButton = styled.div<{
   }
   @media screen and (min-width: 0px) and (max-width: 769px) {
     font-size: 1.3rem;
-    background-color: ${COLORS.GREY[200]};
+    background-color: ${(props) =>
+      props.confirm ? COLORS.GREY[200] : "white"};
     padding: 1.7rem 2.5rem;
     border-radius: 7px;
     font-weight: 500;
@@ -119,7 +121,7 @@ const StyledRefuseButton = styled.div<{
 
 export default function Dialog({
   title = "다이얼로그의 설명을 작성하세요!",
-  confirm = "승인버튼",
+  confirm,
   refuse = "취소버튼",
   onClickConfirmButton,
   size = 45,
