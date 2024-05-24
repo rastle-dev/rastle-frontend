@@ -9,15 +9,6 @@ export default function OrderConfirm() {
   const { ProductList, OrdererInfo, parsedOrderInfo } = useOrderConfirm();
   return (
     <S.Temp>
-      <style>
-        {`
-          @media (min-width: 1px) and (max-width: 767px) {
-            html{
-              font-size: 11px;
-            }
-          }
-        `}
-      </style>
       <S.Container>
         <S.Header>
           <h1>주문이 완료되었습니다! 😄</h1>

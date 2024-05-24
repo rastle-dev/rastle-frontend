@@ -375,9 +375,6 @@ export default function useOrder() {
     }
 
     if (response.imp_uid) {
-      // TODO: api 현재 401 unauthorized가 뜨면서 실패, 성공됐다고 가정하고 짜겠음
-      alert("결제 callback 성공, 사후검증 실행");
-
       try {
         const paymentData = await paymentConfirm({
           imp_uid: response.imp_uid,
@@ -388,7 +385,6 @@ export default function useOrder() {
 
         if (paymentData.data.verified) {
           console.log(paymentData);
-          alert("사후 검증에 성공했습니다.");
           try {
             await router.push({
               pathname: PATH.ORDERCONFIRM,
@@ -397,16 +393,14 @@ export default function useOrder() {
                 orderInfo: JSON.stringify(response),
               },
             });
-          } catch (error) {
-            console.error("Router push error:", error);
-          }
+          } catch (error) {}
         }
       } catch (err) {
         console.error(err);
-        alert("사후 검증에 실패했습니다");
+        alert("결제에 실패했습니다.");
       }
     } else {
-      alert("결제 실패");
+      alert("결제에 실패했습니다.");
     }
   }
 
@@ -431,6 +425,11 @@ export default function useOrder() {
       !detailPostal
     ) {
       alert("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
+      return;
+    }
+
+    if (!pgMethod) {
+      alert("결제 방식을 선택해주세요.");
       return;
     }
 
@@ -552,7 +551,7 @@ export default function useOrder() {
     } catch (error) {
       // Handle the error
       console.log(error);
-      alert("사전검증 실패(error)");
+      alert(error);
     }
 
     // if (!window.IMP) return;

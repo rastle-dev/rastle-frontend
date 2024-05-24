@@ -17,7 +17,7 @@ export const Container = styled.div`
   flex-direction: column;
   background-color: white;
   width: 79%;
-  ${media.xsmall} {
+  ${media.mobile} {
     width: 100%;
   }
   margin-bottom: 15rem;
