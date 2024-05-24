@@ -5,16 +5,45 @@ import COLORS from "@/constants/color";
 import PATH from "@/constants/path";
 import ItemElementProps from "@/interface/itemElement";
 import Image from "next/image";
+import CountDownTimer from "@/components/Event/CountDownTimer";
 
 const ItemWrapper = styled.div`
   width: 100%;
 `;
 
-const StyledImage = styled(Image)`
+const ImageContainer = styled.div`
+  position: relative;
+  width: 100%;
+  display: inline-block;
+`;
+
+const EventInfo = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7); /* 반투명 빨간 배경 */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 1;
+  margin-bottom: 0.45rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledImage = styled(Image)<{ remainingTime: number | undefined }>`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77; /* width의 1.25배에 해당하는 비율로 height 설정 */
   cursor: pointer;
+  filter: ${({ remainingTime }) => {
+    if (remainingTime === 0) {
+      return "brightness(0.5)";
+    }
+    return "brightness(1)";
+  }};
 `;
 
 const ItemName = styled.div`
@@ -54,6 +83,7 @@ const DiscountedPrice = styled.span`
 const PriceDiv = styled.div`
   padding-top: 1rem;
 `;
+
 function ItemElement({
   mainThumbnail,
   subThumbnail,
@@ -62,6 +92,8 @@ function ItemElement({
   id,
   isEvent,
   discountPrice,
+  startDate,
+  endDate,
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
@@ -86,10 +118,36 @@ function ItemElement({
     });
   };
 
+  const [remainingTime, setRemainingTime] = useState<number | undefined>(
+    undefined,
+  );
+
+  const handleTimeUpdate = (time: number | undefined) => {
+    setRemainingTime(time);
+  };
+
+  useEffect(() => {
+    // 페이지 로드 시 초기값을 설정하기 위해 타이머 업데이트
+    const now = new Date().getTime();
+    const eventEndDate = endDate ? new Date(endDate).getTime() : now + 1000;
+    const timeLeft = eventEndDate - now;
+    if (timeLeft > 0) {
+      setRemainingTime(Math.floor(timeLeft / 1000)); // 초 단위로 설정
+    } else {
+      setRemainingTime(0); // 이벤트 종료 시 밝기 0.5로 설정
+    }
+  }, [endDate]);
+
   const [tapCount, setTapCount] = useState(0);
   useEffect(() => {
-    const isMobileDevice = /Mobi|Android/i.test(navigator.userAgent);
-    setIsMobile(isMobileDevice);
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 767);
+    };
+    checkIsMobile();
+    window.addEventListener("resize", checkIsMobile);
+    return () => {
+      window.removeEventListener("resize", checkIsMobile);
+    };
   }, []);
 
   const handleTap = () => {
@@ -107,17 +165,29 @@ function ItemElement({
 
   return (
     <ItemWrapper>
-      <StyledImage
-        src={thumbnailSrc}
-        alt={name}
-        width={500}
-        height={500}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTap}
-        onClick={isMobile ? () => {} : handleClick}
-      />
-      <ItemName onClick={isMobile ? () => {} : handleClick}>{name}</ItemName>
+      <ImageContainer>
+        {isEvent && (
+          <EventInfo>
+            <CountDownTimer
+              endDate={endDate}
+              startDate={startDate}
+              onTimeUpdate={handleTimeUpdate}
+            />
+          </EventInfo>
+        )}
+        <StyledImage
+          src={thumbnailSrc}
+          alt={name}
+          width={500}
+          height={500}
+          onClick={handleClick}
+          onMouseEnter={isMobile ? undefined : handleMouseEnter}
+          onMouseLeave={isMobile ? undefined : handleMouseLeave}
+          onTouchStart={isMobile ? undefined : handleTap}
+          remainingTime={remainingTime}
+        />
+      </ImageContainer>
+      <ItemName onClick={handleClick}>{name}</ItemName>
       {discountPrice !== undefined ? (
         <PriceDiv>
           <DiscountPrice>{price.toLocaleString()}원</DiscountPrice>

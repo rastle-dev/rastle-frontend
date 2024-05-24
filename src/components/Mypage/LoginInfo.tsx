@@ -167,8 +167,8 @@ export default function LoginInfo() {
         </S.Wrapper>
       ))}
       <S.DeleteButtonWrapper>
-        <S.MobileLogoutButton title="로그아웃" onClick={logout} />
         <S.DeleteButton title="탈퇴하기" onClick={deleteUserButton} />
+        <S.MobileLogoutButton title="로그아웃" onClick={logout} />
       </S.DeleteButtonWrapper>
     </div>
   );

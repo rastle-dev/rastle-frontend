@@ -146,10 +146,12 @@ export default function Event() {
               }
             />
           )}
-          <CountDownTimer
-            endDate={detailData?.data.eventEndDate}
-            startDate={detailData?.data.eventStartDate}
-          />
+          <S.TimerProductPage>
+            <CountDownTimer
+              endDate={detailData?.data.eventEndDate}
+              startDate={detailData?.data.eventStartDate}
+            />
+          </S.TimerProductPage>
         </S.ProductContent>
       </S.TopLayer>
       <S.ProductDetailList>
