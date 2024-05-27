@@ -120,7 +120,7 @@ export default function Order() {
                   <S.Info>
                     <S.ProductName>{item.title}</S.ProductName>
                     <S.NumPrice>
-                      {item.count}개 / {`${item?.price.toLocaleString()}원`}
+                      {item.count}개 / {`${item?.price?.toLocaleString()}원`}
                     </S.NumPrice>
                     <S.SizeColor>
                       {item.size} / {item.color}
