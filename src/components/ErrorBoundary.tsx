@@ -72,12 +72,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   //   this.setState({ hasError: false });
   // };
 
-  handleGoBackClick = (): void => {
-    // Go back in the browser history when "Go back" button is clicked
-    window.history.back();
-    console.log(this.state); // 예시로 this를 사용하도록 추가
-  };
-
   handleGoHomeClick = (): void => {
     // Navigate to the home page when "Go home" button is clicked
     // 예를 들어, '/'로 이동하도록 지정
@@ -108,12 +102,6 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             네트워크 문제일 수 있습니다.관리자에게 요청하여 빠른 시 안에
             해결하겠습니다.
           </h3>
-          <StyledButton
-            type="default"
-            width="16rem"
-            title="뒤로가기"
-            onClick={this.handleGoBackClick}
-          />
           <StyledButton
             type="default"
             width="16rem"
