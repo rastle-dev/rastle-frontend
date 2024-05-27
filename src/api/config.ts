@@ -41,6 +41,7 @@ const APPLY = "/apply";
 const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";
 const CANCEL = "/cancel";
 const RESET = "resetPassword";
+const MERCHANTID = "merchantId";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -100,5 +101,6 @@ const API = {
   UPDATE_PHONENUMBER: `${MEMBER}${UPDATE_PHONENUMBER}`,
   USER_ORDER_CANCEL: `${ORDERS}${CANCEL}`,
   INITIALIZE_PASSWORD: `${AUTH}${RESET}`,
+  MERCHANTID: `${ORDERS}/${MERCHANTID}`,
 };
 export default API;

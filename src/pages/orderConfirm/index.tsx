@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 export default function OrderConfirm() {
   const router = useRouter();
-  const { ProductList, OrdererInfo, parsedOrderInfo } = useOrderConfirm();
+  const { ProductList, OrdererInfo, receiverData } = useOrderConfirm();
   return (
     <S.Temp>
       <S.Container>
@@ -44,10 +44,7 @@ export default function OrderConfirm() {
           <S.Total>
             <S.TotalInfo>결제 금액</S.TotalInfo>
             <S.TotalPrice>
-              {parsedOrderInfo.paid_amount
-                ? `${parsedOrderInfo.paid_amount}`
-                : `${parsedOrderInfo.amount}`}
-              원
+              {receiverData?.data.paymentAmount.toLocaleString()}원
             </S.TotalPrice>
           </S.Total>
           <S.ButtonDiv>

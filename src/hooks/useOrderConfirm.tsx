@@ -37,10 +37,15 @@ export default function useOrderConfirm() {
   }
 
   let ProductList: ProductItem[];
-  console.log(parsedSelectedProducts);
-  console.log(parsedOrderInfo);
 
-  //장바구니 동선
+  const { data: receiverData } = useQuery(
+    [QUERYKEYS.LOAD_RECEIVERINFO_MERCHANTID],
+    () => loadReceiverInfo(parsedOrderInfo.merchant_uid),
+    {
+      enabled: Boolean(parsedOrderInfo.merchant_uid), // orderID가 있을 때만 쿼리 실행
+    },
+  );
+  // 장바구니 동선
   if (
     parsedSelectedProducts.length === 0 ||
     !parsedSelectedProducts[0]?.cartProductId
@@ -65,11 +70,11 @@ export default function useOrderConfirm() {
   }
 
   const OrdererInfo = [
-    { meta: "받는사람", data: parsedOrderInfo.buyer_name },
-    { meta: "연락처", data: parsedOrderInfo.buyer_tel },
+    { meta: "받는사람", data: receiverData?.data.receiverInfo.receiverName },
+    { meta: "연락처", data: receiverData?.data.receiverInfo.tel },
     {
       meta: "받는주소",
-      data: `(${parsedOrderInfo.buyer_postcode}) ${parsedOrderInfo.buyer_addr}`,
+      data: `(${receiverData?.data.receiverInfo.postcode}) ${receiverData?.data.receiverInfo.address}`,
     },
     {
       meta: "배송요청사항",
@@ -77,12 +82,10 @@ export default function useOrderConfirm() {
     },
   ];
 
-  console.log(parsedOrderInfo);
-  console.log(OrdererInfo);
-
   return {
     ProductList,
     OrdererInfo,
     parsedOrderInfo,
+    receiverData,
   };
 }

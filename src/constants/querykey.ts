@@ -32,6 +32,7 @@ const QUERYKEYS = {
   LOAD_EVENT_HISTORY: "loadEventHistory",
   LOAD_ORDER_DETAIL: "loadOrderDetail",
   REQUEST_USER_CANCEL: "requestUserOrderCancel",
+  LOAD_RECEIVERINFO_MERCHANTID: "loadReceiverInfo",
 } as const;
 
 export default QUERYKEYS;

@@ -108,3 +108,9 @@ export const paymentPrepare = async (paymentData: object) => {
   );
   return data;
 };
+export const loadReceiverInfo = async (merchantId: string) => {
+  const { data } = await authorizationClient.get(
+    `${API.MERCHANTID}/${merchantId}`,
+  );
+  return data;
+};
