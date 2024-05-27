@@ -119,7 +119,7 @@ export default function OrderHistory() {
                       {item.productOrderInfos.map((product: any) => (
                         <S.ProductBox>
                           <S.UpperBox>
-                            <S.Img src={product.thumbNailUrl} />
+                            <S.Img src={product.thumbnailUrl} />
                             <S.MobileTextInfo>
                               <S.TextInfo>
                                 <h4>{product.name}</h4>
