@@ -13,6 +13,7 @@ import {
   updatePhoneNumber,
 } from "@/api/cart";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
+import errorMsg from "@/components/Toast/error";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
@@ -327,7 +328,10 @@ export default function useOrder() {
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
     if (response.error_msg) {
-      alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
+      alert(
+        `결제에 실패하였습니다. 결제를 다시 시도해주세요. ${response.error_msg}`,
+      );
+      console.log("response.error_msg", response.error_msg);
       router.replace(`/shop`);
       return;
     }
@@ -382,12 +386,12 @@ export default function useOrder() {
       !postalAddress.address ||
       !detailPostal
     ) {
-      alert("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
+      errorMsg("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
       return;
     }
 
     if (!pgMethod) {
-      alert("결제 방식을 선택해주세요.");
+      errorMsg("결제 방식을 선택해주세요.");
       return;
     }
 
