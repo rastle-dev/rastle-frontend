@@ -84,14 +84,16 @@ export default function EnterDeleteUserModal() {
         >
           {isConfirmChecked ? (
             <Icon
-              iconSize="1.5rem"
+              iconSize="1.6rem"
+              mobileIconSize="1.6rem"
               border={0.1}
               iconName="checkCircleFill"
               color={COLORS.BLACK}
             />
           ) : (
             <Icon
-              iconSize="1.5rem"
+              iconSize="1.6rem"
+              mobileIconSize="1.6rem"
               border={0.5}
               iconName="checkCircle"
               color={COLORS.GREY[400]}
