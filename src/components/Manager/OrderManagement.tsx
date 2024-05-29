@@ -128,10 +128,6 @@ export default function OrderManagement() {
     trackingNumber: undefined,
     productOrderNumber: undefined,
   });
-  // useEffect(() => {
-  //   setUserData(data?.data.content);
-  //   refetch();
-  // }, [curPage, data]);
   console.log(orderData);
   // 열(컬럼) 정보 배열
   const columnHeaders = [
@@ -406,8 +402,6 @@ export default function OrderManagement() {
                       <button
                         type="button"
                         onClick={() => {
-                          console.log("imp", user.impId);
-                          console.log("pon", user.productOrderNumber);
                           setCancelImpId(user.impId);
                           setProductOrderNumber(user.productOrderNumber);
                           openDialog();
