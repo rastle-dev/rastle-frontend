@@ -61,7 +61,12 @@ export default function useOrderCancel() {
     } else {
       setSelectedCancelItems([
         ...selectedCancelItems,
-        { ...item, count: item.prevCount },
+        {
+          ...item,
+          count:
+            item.prevCount -
+            ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)),
+        },
       ]);
     }
   };
@@ -81,13 +86,23 @@ export default function useOrderCancel() {
   const handleIncrement = (key: string | undefined | number) => {
     setSelectedCancelItems((prevItems) => {
       return prevItems.map((item) => {
-        if (item.productOrderNumber === key && item.count < item.prevCount) {
+        if (
+          item.productOrderNumber === key &&
+          item.count <
+            item.prevCount -
+              ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0))
+        ) {
           return {
             ...item,
             count: item.count + 1,
           };
         }
-        if (item.productOrderNumber === key && item.count >= item.prevCount) {
+        if (
+          item.productOrderNumber === key &&
+          item.count >=
+            item.prevCount -
+              ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0))
+        ) {
           toast.dismiss();
           errorMsg("최대 수량입니다!");
         }

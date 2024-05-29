@@ -65,8 +65,7 @@ export default function OrderCancel() {
           <S.Title>주문 상품</S.Title>
           {selectedItems.map(
             (item: SelectedItem) =>
-              item.status !== "CANCEL" &&
-              item.status !== "CANCEL_REQUESTED" && (
+              item.status !== "CANCELED" && (
                 <S.Product key={item.productId}>
                   <CheckBox
                     onClick={() => {
@@ -111,7 +110,10 @@ export default function OrderCancel() {
                       <S.Info>
                         <S.ProductName>{item.name}</S.ProductName>
                         <S.NumPrice>
-                          {item.prevCount}개 / {item.totalPrice}원
+                          {item.prevCount -
+                            ((item.cancelRequestAmount ?? 0) +
+                              (item.cancelAmount ?? 0))}
+                          개
                         </S.NumPrice>
                         <S.SizeColor>
                           {item.size} / {item.color}
