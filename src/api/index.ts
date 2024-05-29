@@ -9,6 +9,7 @@ axios.defaults.withCredentials = true;
 // 사용자가 인증되지 않은 상태로 간주되면, 로컬 스토리지를 비우고 메인 화면으로 리디렉션하는 역할 수행
 const handleUnauthorized = () => {
   localStorage.clear();
+  console.log("테스트 상황");
   // window.location.href = PATH.LOGIN;
 };
 
@@ -117,7 +118,7 @@ async function resetTokenAndReattemptRequest(error: any) {
     // 엑세스 토큰을 재발급하고 난 후 이전에 실패한 원래 요청을 재시도
     return await retryOriginalRequest;
   } catch (refreshError) {
-    toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
+    toastMsg("(테스트)로그인 정보가 없어 메인 화면으로 이동합니다.");
     handleUnauthorized();
     return Promise.reject(refreshError);
   }
@@ -135,6 +136,7 @@ authorizationClient.interceptors.response.use(
     console.log("에러를 잡아줘", error.response.data.errorCode);
     if (error.response.data.errorCode === 403) {
       // 403 인증에러, 사용자가 개인정보 브라우저에서 강제 종료 후 api 요청할 경우
+      // 엑세스 토큰이 없는데 요청을 보낸 경우
       console.log("403error");
       toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
       handleUnauthorized();
