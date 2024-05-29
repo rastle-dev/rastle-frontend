@@ -27,21 +27,28 @@ export default function OrderDetail() {
     | "DELIVERY_STARTED"
     | "DELIVERED"
     | "PAID"
-    | "CANCEL"
-    | "CANCEL_REQUESTED";
+    | "CANCELLED"
+    | "CANCEL_REQUESTED"
+    | "PARTIALLY_CANCELLED";
 
   const deliveryStatusText = {
     NOT_STARTED: "배송준비중",
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     PAID: "결제완료",
-    CANCEL: "취소완료",
+    CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
+    PARTIALLY_CANCELLED: "부분취소완료",
   } as const;
 
   const paymentInfoList = [
     { label: "총 결제금액", value: orderDetail?.data.paymentAmount },
-    { label: "상품구매금액", value: orderDetail?.data.paymentAmount },
+    {
+      label: "상품구매금액",
+      value:
+        (orderDetail?.data?.paymentAmount ?? 0) -
+        (orderDetail?.data?.deliveryPrice ?? 0),
+    },
     { label: "배송비", value: orderDetail?.data.deliveryPrice },
     { label: "쿠폰할인금액", value: -3000 },
   ];
@@ -55,10 +62,16 @@ export default function OrderDetail() {
   ];
 
   const refundInfoList = [
-    { label: "환불일자", value: "-" },
-    { label: "환불금액", value: "-" },
-    { label: "환불수단", value: "-" },
-    { label: "쿠폰 복원 내역", value: "-" },
+    { label: "환불일자", value: orderDetail?.data.refundInfo.cancelTime },
+    { label: "환불금액", value: orderDetail?.data.refundInfo.cancelAmount },
+    {
+      label: "환불수단",
+      value: orderDetail?.data.refundInfo.paymentMethod,
+    },
+    {
+      label: "쿠폰 복원 내역",
+      value: orderDetail?.data.refundInfo.couponInfo,
+    },
   ];
 
   if (orderDetail === undefined) {
@@ -107,7 +120,9 @@ export default function OrderDetail() {
                 ]
               }
             </S.OrderInnerRight>
-            {orderDetail?.data.orderStatus === "PAID" ? (
+            {["PAID", "CANCEL_REQUESTED", "PARTIALLY_CANCELLED"].includes(
+              orderDetail?.data.orderStatus,
+            ) ? (
               <S.CancelButton
                 onClick={() => {
                   router.push({

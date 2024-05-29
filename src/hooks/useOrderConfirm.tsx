@@ -23,7 +23,7 @@ type ParsedOrderInfo = {
 export default function useOrderConfirm() {
   const router = useRouter();
 
-  const { selectedProducts, orderInfo } = router.query;
+  const { selectedProducts, orderInfo, errorMsg } = router.query;
   let parsedSelectedProducts: ProductItem[] = [];
   let parsedOrderInfo: ParsedOrderInfo = {
     imp_uid: "",
@@ -87,5 +87,6 @@ export default function useOrderConfirm() {
     OrdererInfo,
     parsedOrderInfo,
     receiverData,
+    errorMsg,
   };
 }

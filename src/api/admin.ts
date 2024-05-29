@@ -346,3 +346,15 @@ export const adminUpdateTrackingNumber = async (
   );
   return data;
 };
+
+interface CancelData {
+  impId: string | undefined;
+  productOrderNumber: number | undefined;
+}
+export const adminCancelOrder = async (cancelData: CancelData) => {
+  const { data } = await authorizationClient.post(
+    `${API.ADMIN_CANCEL_ORDER}`,
+    cancelData,
+  );
+  return data;
+};
