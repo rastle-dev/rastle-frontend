@@ -12,6 +12,13 @@ describe("cart e2e test", () => {
       );
       cy.intercept(
         {
+          method: "GET",
+          url: "/_next/data/development/product.json?productId=14",
+        },
+        { fixture: "productDetail.json" },
+      ).as("productDetail");
+      cy.intercept(
+        {
           method: "POST",
           url: `${API.CART}`,
         },
