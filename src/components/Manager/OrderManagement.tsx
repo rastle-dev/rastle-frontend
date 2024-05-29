@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Pagination from "react-js-pagination";
-import useUserInfo from "@/hooks/manager/user/useUserInfo";
 import useOrderInfo from "@/hooks/manager/order/useOrderInfo";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import {
+  adminCancelOrder,
   adminGetOrderInfo,
-  adminGetUserInfo,
   adminUpdateTrackingNumber,
 } from "@/api/admin";
+import useDialog from "@/hooks/useDialog";
+import Dialog from "@/components/Common/Dialog";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -108,6 +108,7 @@ export default function OrderManagement() {
       page: 0,
       size: 50,
     });
+  const { openDialog, closeDialog, isDialogOpen } = useDialog();
 
   const { data } = useQuery([QUERYKEYS.ADMIN_LOAD_ORDERINFO], queryFn);
   console.log(data);
@@ -116,6 +117,8 @@ export default function OrderManagement() {
 
   console.log(data);
   const [orderData, setOrderData] = useState(data?.data.content);
+  const [cancelImpid, setCancelImpId] = useState<string>();
+  const [cancelProductOrderNumber, setProductOrderNumber] = useState<number>();
   interface TrackingData {
     trackingNumber: string | undefined;
     productOrderNumber: number | undefined;
@@ -140,6 +143,8 @@ export default function OrderManagement() {
     "상품명", // productName
     "옵션", // option
     "수량", // count
+    "취소요청수량", // cancelRequestAmount
+    "취소확정수량", // cancelAmount
     "수령인 이름", // receiverName
     "수령인 전화번호", // receiverTel
     "수령인 이메일", // receiverEmail
@@ -166,6 +171,8 @@ export default function OrderManagement() {
     상품명: "productName",
     옵션: "option",
     수량: "count",
+    취소요청수량: "cancelRequestAmount",
+    취소확정수량: "cancelAmount",
     "수령인 이름": "receiverName",
     "수령인 전화번호": "receiverTel",
     "수령인 이메일": "receiverEmail",
@@ -260,6 +267,7 @@ export default function OrderManagement() {
     }
   };
   console.log(trackingNumberData);
+  const queryClient = new QueryClient();
 
   const handleTrackingNumberUpdate = async () => {
     if (selectedRow !== null && trackingNumberData) {
@@ -274,8 +282,44 @@ export default function OrderManagement() {
       }
     }
   };
+
+  const mutateAdminCancelOrder = useMutation(
+    ["adminCancelOrder"],
+    adminCancelOrder,
+    {
+      onSuccess: async () => {
+        queryClient.invalidateQueries([QUERYKEYS.ADMIN_LOAD_ORDERINFO]);
+        closeDialog();
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
   return (
     <Wrapper>
+      {isDialogOpen && (
+        <Dialog
+          onClickRefuseButton={() => {
+            mutateAdminCancelOrder.mutate({
+              impId: cancelImpid,
+              productOrderNumber: cancelProductOrderNumber,
+            });
+          }}
+          onClickConfirmButton={() => {
+            closeDialog();
+          }}
+          visible
+          title="주문 취소를 수락하시겠습니까?"
+          refuse="확인"
+          confirm="취소"
+          size={42}
+        />
+      )}
       <div>
         <Title>회원 관리</Title>
         <p>총 회원수: {data?.data.totalElements}</p>
@@ -346,6 +390,7 @@ export default function OrderManagement() {
                 </CheckboxCell>
                 {columnHeaders.map((header) => (
                   <TableCell key={header}>
+                    {/* eslint-disable-next-line no-nested-ternary */}
                     {header === "송장 번호" && selectedRow === index ? (
                       <input
                         type="text"
@@ -357,6 +402,19 @@ export default function OrderManagement() {
                           ); // 송장 번호 변경 함수 호출
                         }}
                       />
+                    ) : header === "결제 상태" && selectedRow === index ? (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          console.log("imp", user.impId);
+                          console.log("pon", user.productOrderNumber);
+                          setCancelImpId(user.impId);
+                          setProductOrderNumber(user.productOrderNumber);
+                          openDialog();
+                        }}
+                      >
+                        {user[columnFieldMap[header]]}
+                      </button>
                     ) : (
                       renderOrderDetails(user, header)
                     )}
