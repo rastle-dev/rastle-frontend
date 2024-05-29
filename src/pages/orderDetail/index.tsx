@@ -6,6 +6,14 @@ import QUERYKEYS from "@/constants/querykey";
 import { loadOrderDetail } from "@/api/auth";
 import LoadingBar from "@/components/LoadingBar";
 import PATH from "@/constants/path";
+import errorMsg from "@/components/Toast/error";
+
+interface ProductOrderInfoItem {
+  cancelAmount: number;
+  cancelRequestAmount: number;
+  count: number;
+  // 다른 속성들...
+}
 
 export default function OrderDetail() {
   const router = useRouter();
@@ -19,8 +27,12 @@ export default function OrderDetail() {
       cacheTime: 60000, // 캐시 유지 시간 (예: 60초)
     },
   );
-  console.log("order", orderDetail);
-
+  const total = orderDetail?.data.productOrderInfos.reduce(
+    (a: number, c: ProductOrderInfoItem) => {
+      return a + c.count - c.cancelAmount - c.cancelRequestAmount;
+    },
+    0,
+  );
   // 주문처리상태 타입 정의
   type DeliveryStatus =
     | "NOT_STARTED"
@@ -50,7 +62,7 @@ export default function OrderDetail() {
         (orderDetail?.data?.deliveryPrice ?? 0),
     },
     { label: "배송비", value: orderDetail?.data.deliveryPrice },
-    { label: "쿠폰할인금액", value: -3000 },
+    { label: "쿠폰할인금액", value: orderDetail?.data.couponAmount },
   ];
 
   const deliveryInfoList = [
@@ -125,10 +137,14 @@ export default function OrderDetail() {
             ) ? (
               <S.CancelButton
                 onClick={() => {
-                  router.push({
-                    pathname: PATH.ORDERCANCEL,
-                    query: { orderId },
-                  });
+                  if (total) {
+                    router.push({
+                      pathname: PATH.ORDERCANCEL,
+                      query: { orderId },
+                    });
+                  } else {
+                    errorMsg("취소 가능한 상품이 없습니다!");
+                  }
                 }}
                 title="취소 요청"
               />

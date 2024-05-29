@@ -65,7 +65,10 @@ export default function OrderCancel() {
           <S.Title>주문 상품</S.Title>
           {selectedItems.map(
             (item: SelectedItem) =>
-              item.status !== "CANCELED" && (
+              item.status !== "CANCELED" &&
+              item.prevCount -
+                ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)) >
+                0 && (
                 <S.Product key={item.productId}>
                   <CheckBox
                     onClick={() => {
