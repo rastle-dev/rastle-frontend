@@ -7,6 +7,9 @@ import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadCartProduct } from "@/api/cart";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -38,7 +41,6 @@ export default function Order() {
     totalPriceSumDirect,
     PriceInfo,
     selectedProducts,
-    cartProduct,
     toggleCoupon,
     selectedCoupon,
     handleCouponToggle,
@@ -50,7 +52,10 @@ export default function Order() {
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
-
+  const { data: cartProduct } = useQuery(
+    [QUERYKEYS.LOAD_CART],
+    loadCartProduct,
+  );
   let parsedProducts;
   if (selectedProducts) {
     parsedProducts = JSON.parse(selectedProducts as string);
