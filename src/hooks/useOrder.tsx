@@ -81,16 +81,16 @@ export default function useOrder() {
       0,
     );
   }
-  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+  const [selectedCoupon, setSelectedCoupon] = useState<number>(0);
   // TODO: 쿠폰가격 변경
   const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
 
   const toggleCoupon = (couponId: number) => {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
     if (selectedCoupon === couponId) {
-      setSelectedCoupon(null); // 선택 취소
+      setSelectedCoupon(0); // 선택 취소
     } else {
-      setSelectedCoupon(couponId); // 다른 쿠폰 선택
+      setSelectedCoupon(couponPrice);
     }
   };
 
