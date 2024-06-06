@@ -27,14 +27,14 @@ export const loadMarketProduct = async () => {
 export const loadMarketProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=true&sort=id,DESC`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
 export const loadMarketBestProduct = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=true&sort=soldCount,DESC&sort=id,DESC`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC&sort=id,DESC`,
   );
   return data;
 };
@@ -75,7 +75,7 @@ export const loadEventProduct = async () => {
 export const loadEventProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}${API.EVENT}?visible=TRUE&page=${page}&size=${size}&sort=id,DESC`,
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
