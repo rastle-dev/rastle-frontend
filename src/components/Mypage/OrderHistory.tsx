@@ -19,7 +19,7 @@ type DeliveryStatus =
   | "DELIVERY_STARTED"
   | "DELIVERED"
   | "PAID"
-  | "CANCEL"
+  | "CANCELLED"
   | "CANCEL_REQUESTED";
 export default function OrderHistory() {
   const router = useRouter();
@@ -53,7 +53,7 @@ export default function OrderHistory() {
         "_blank",
         `width=${width}, height=${height}, left=${left}, top=${top}`,
       );
-    } else if (status === "CANCEL") {
+    } else if (status === "CANCELLED") {
       toastMsg("주문 취소된 상품이에요!");
     } else if (status === "CANCEL_REQUESTED") {
       toastMsg("주문 취소 요청된 상품이에요!");
