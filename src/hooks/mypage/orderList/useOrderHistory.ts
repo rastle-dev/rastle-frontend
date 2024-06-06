@@ -30,6 +30,7 @@ export default function useOrderHistory() {
     PAID: "결제완료",
     CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
+    PARTIALLY_CANCELLED: "부분취소완료",
   } as const;
 
   return {

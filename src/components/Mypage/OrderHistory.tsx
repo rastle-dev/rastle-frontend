@@ -20,7 +20,8 @@ type DeliveryStatus =
   | "DELIVERED"
   | "PAID"
   | "CANCELLED"
-  | "CANCEL_REQUESTED";
+  | "CANCEL_REQUESTED"
+  | "PARTIALLY_CANCELLED";
 export default function OrderHistory() {
   const router = useRouter();
   const {
