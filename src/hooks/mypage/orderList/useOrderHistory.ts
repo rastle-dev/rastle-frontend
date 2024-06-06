@@ -28,7 +28,7 @@ export default function useOrderHistory() {
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     PAID: "결제완료",
-    CANCEL: "취소완료",
+    CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
   } as const;
 
