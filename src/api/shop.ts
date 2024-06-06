@@ -84,6 +84,13 @@ export const createOrder = async (orderData: object) => {
   const { data } = await authorizationClient.post(`${API.ORDERS}`, orderData);
   return data;
 };
+export const createCartOrder = async (cartProductIds: object) => {
+  const { data } = await authorizationClient.post(
+    `${API.ORDERS}${API.CART}`,
+    cartProductIds,
+  );
+  return data;
+};
 
 export const paymentConfirm = async (paymentData: object) => {
   const { data } = await authorizationClient.post(
