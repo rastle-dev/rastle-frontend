@@ -124,15 +124,17 @@ export default function useOrder() {
     {
       meta: "상품 금액",
       data:
-        totalPriceSum !== 0 ? `${totalPriceSum}원` : `${totalPriceSumDirect}원`,
+        totalPriceSum !== 0
+          ? `${totalPriceSum.toLocaleString()}원`
+          : `${totalPriceSumDirect.toLocaleString()}원`,
     },
     {
       meta: "배송비",
-      data: "3000원",
+      data: "3,000원",
     },
     {
       meta: "쿠폰할인",
-      data: selectedCoupon ? `-${couponPrice}원` : "-0원",
+      data: selectedCoupon ? `-${couponPrice}원` : "0원",
     },
     // Add other items in PriceInfo array as needed
   ];
@@ -355,7 +357,9 @@ export default function useOrder() {
                 orderInfo: JSON.stringify(response),
               },
             });
-          } catch (error) {}
+          } catch (error) {
+            /* empty */
+          }
         }
       } catch (err) {
         console.error(err);
@@ -540,7 +544,6 @@ export default function useOrder() {
     totalPriceFinal,
     PriceInfo,
     selectedProducts,
-    cartProduct,
     toggleCoupon,
     selectedCoupon,
     DefaultAddressInputs,
@@ -553,5 +556,6 @@ export default function useOrder() {
     onChangeDeliveryMsg,
     couponData,
     isCouponLoading: isLoading,
+    couponPrice,
   };
 }
