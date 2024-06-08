@@ -49,6 +49,7 @@ export default function Order() {
     handleCheckboxChange,
     deliveryMsg,
     onChangeDeliveryMsg,
+    selectedCouponPrice,
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
@@ -305,8 +306,8 @@ export default function Order() {
               <S.TotalInfo>결제 금액</S.TotalInfo>
               <S.TotalPrice>
                 {totalPriceSum !== 0
-                  ? `${(totalPriceSum + 3000 - selectedCoupon).toLocaleString()}원`
-                  : `${(totalPriceSumDirect + 3000 - selectedCoupon).toLocaleString()}원`}
+                  ? `${(totalPriceSum + 3000 - selectedCouponPrice).toLocaleString()}원`
+                  : `${(totalPriceSumDirect + 3000 - selectedCouponPrice).toLocaleString()}원`}
               </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
