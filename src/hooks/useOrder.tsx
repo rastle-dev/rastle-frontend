@@ -81,16 +81,20 @@ export default function useOrder() {
       0,
     );
   }
-  const [selectedCoupon, setSelectedCoupon] = useState<number>(0);
+  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+  const [selectedCouponPrice, setSelectedCouponPrice] = useState<number>(0);
+
   // TODO: 쿠폰가격 변경
   const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
 
   const toggleCoupon = (couponId: number) => {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
     if (selectedCoupon === couponId) {
-      setSelectedCoupon(0); // 선택 취소
+      setSelectedCoupon(null); // 선택 취소
+      setSelectedCouponPrice(0);
     } else {
-      setSelectedCoupon(couponPrice);
+      setSelectedCoupon(couponId);
+      setSelectedCouponPrice(3000);
     }
   };
 
@@ -453,13 +457,19 @@ export default function useOrder() {
         const additionalItems = parsedSelectedProducts.length - 1;
         name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
+      console.log(
+        "구매하기 동선",
+        totalPriceFinal - selectedCouponPrice,
+        selectedCoupon,
+      );
+
       values = {
         pg: pgMethod,
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
         custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
-        amount: totalPriceFinal,
+        amount: totalPriceFinal - selectedCouponPrice,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         buyer_tel: phoneNumber,
@@ -469,7 +479,7 @@ export default function useOrder() {
         m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     } else {
-      console.log("장바구니 동선");
+      console.log("장바구니 동선", totalPriceFinal - selectedCouponPrice);
       let name;
       if (selectedItems.length === 1) {
         name = selectedItems[0].productName;
@@ -482,7 +492,7 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
-        amount: totalPriceFinal,
+        amount: totalPriceFinal - selectedCouponPrice,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
@@ -557,5 +567,6 @@ export default function useOrder() {
     couponData,
     isCouponLoading: isLoading,
     couponPrice,
+    selectedCouponPrice,
   };
 }
