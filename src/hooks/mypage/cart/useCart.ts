@@ -28,6 +28,7 @@ export default function useCart() {
   const queryClient = useQueryClient();
   const [timedOut, setTimedOut] = useState(false);
   const [loadingProps, setLoadingProps] = useState(false);
+  const [triggerOrder, setTriggerOrder] = useState(false);
   useEffect(() => {
     const currentPath = router.asPath;
     if (typeof window !== "undefined") {
@@ -129,6 +130,7 @@ export default function useCart() {
       setDeleteProducts([...deleteProducts, item.cartProductId]);
       setCartOrderProducts([...cartOrderProducts, item.cartProductId]);
     }
+    setTriggerOrder(true);
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
@@ -310,5 +312,7 @@ export default function useCart() {
     setLoadingProps,
     loadingProps,
     isLoading,
+    setTriggerOrder,
+    triggerOrder,
   };
 }

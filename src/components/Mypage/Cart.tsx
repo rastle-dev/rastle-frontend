@@ -25,7 +25,6 @@ export default function Cart() {
     setCartOrderProducts,
     handleHeaderCheckboxChange,
     handleProductCheckboxChange,
-    onClickSelectedOrderButton,
     totalPriceSum,
     onClickWholeOrderButton,
     onClickOrderButton,
@@ -35,6 +34,8 @@ export default function Cart() {
     cartProduct,
     totalPrice,
     isCartDataLoading,
+    triggerOrder,
+    setTriggerOrder,
   } = useCart();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { timedOut } = useLoadingWithTimeout(isLoading, isCartDataLoading);
@@ -44,6 +45,12 @@ export default function Cart() {
       openDialog();
     }
   }, [timedOut]);
+  useEffect(() => {
+    if (triggerOrder) {
+      onClickOrderButton();
+      setTriggerOrder(false); // Reset trigger after execution
+    }
+  }, [triggerOrder]);
 
   if ((isCartDataLoading || isLoading) && !timedOut)
     return (
@@ -156,7 +163,7 @@ export default function Cart() {
                           title="주문하기"
                           onClick={async () => {
                             try {
-                              await onClickSelectedOrderButton(item);
+                              await onClickOrderButton();
                             } catch (error) {
                               console.error(error);
                             }
@@ -167,8 +174,9 @@ export default function Cart() {
                         <S.SelectButton
                           title="주문하기"
                           onClick={async () => {
+                            handleProductCheckboxChange(item);
                             try {
-                              await onClickSelectedOrderButton(item);
+                              if (triggerOrder) await onClickOrderButton();
                             } catch (error) {
                               console.error(error);
                             }
