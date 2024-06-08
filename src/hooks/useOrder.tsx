@@ -561,6 +561,7 @@ export default function useOrder() {
     isCouponVisible,
     handleCheckboxChange,
     isDefaultAddress,
+    setIsDefaultAddress,
     receiver,
     deliveryMsg,
     onChangeDeliveryMsg,

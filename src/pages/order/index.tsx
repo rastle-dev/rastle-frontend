@@ -50,6 +50,7 @@ export default function Order() {
     deliveryMsg,
     onChangeDeliveryMsg,
     selectedCouponPrice,
+    setIsDefaultAddress,
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
@@ -105,12 +106,6 @@ export default function Order() {
                         {item.count}개 /{" "}
                         {`${item.discountPrice.toLocaleString()}원`}
                       </S.NumPrice>
-                      {/* <S.DiscountPrice> */}
-                      {/*   {item.count}개 /{" "} */}
-                      {/*   {`${item.productPrice.toLocaleString()}원`} */}
-                      {/*   <span>10% </span> */}
-                      {/*   {item.discountPrice ? item.discountedPrice : ""}원 원 */}
-                      {/* </S.DiscountPrice> */}
                       <S.SizeColor>
                         {item.size} / {item.color}
                       </S.SizeColor>
@@ -192,7 +187,11 @@ export default function Order() {
               )}
             </S.DeliveryBox>
           ))}
-          <S.SettingDefaultAddress>
+          <S.SettingDefaultAddress
+            onClick={() => {
+              setIsDefaultAddress(!isDefaultAddress);
+            }}
+          >
             <Input
               type="checkbox"
               checked={isDefaultAddress}
