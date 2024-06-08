@@ -82,7 +82,9 @@ export default function OrderDetail() {
     },
     {
       label: "쿠폰 복원 내역",
-      value: orderDetail?.data.refundInfo.couponInfo,
+      value: orderDetail?.data.refundInfo.couponInfo
+        ? `${orderDetail?.data.refundInfo.couponInfo.discount.toLocaleString()}원`
+        : "",
     },
   ];
 
