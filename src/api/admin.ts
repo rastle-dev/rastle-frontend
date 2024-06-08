@@ -346,6 +346,14 @@ export const adminUpdateTrackingNumber = async (
   );
   return data;
 };
+export const adminDeleteTrackingNumber = async (
+  productOrderNumber: number | undefined,
+) => {
+  const { data } = await authorizationClient.delete(
+    `${API.DELETE_TRACKINGNUMBER}/${productOrderNumber}/trackingNumber`,
+  );
+  return data;
+};
 
 interface CancelData {
   impId: string | undefined;
