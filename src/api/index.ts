@@ -8,8 +8,8 @@ axios.defaults.withCredentials = true;
 
 // 사용자가 인증되지 않은 상태로 간주되면, 로컬 스토리지를 비우고 메인 화면으로 리디렉션하는 역할 수행
 const handleUnauthorized = () => {
-  localStorage.clear();
-  console.log("테스트 상황");
+  // localStorage.clear();
+  console.log("handleUnauthorized");
   // window.location.href = PATH.LOGIN;
 };
 
