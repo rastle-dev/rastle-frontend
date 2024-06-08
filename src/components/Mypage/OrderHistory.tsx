@@ -193,6 +193,7 @@ export default function OrderHistory() {
             pageRangeDisplayed={2}
             onChange={onChangeOrderPage}
             prevPageText="<"
+            hideFirstLastPages
             nextPageText=">"
           />
         </S.PagingWrapper>
