@@ -4,11 +4,16 @@ import useOrderConfirm from "@/hooks/useOrderConfirm";
 import PATH from "@/constants/path";
 import { useRouter } from "next/router";
 import OrderFail from "@/components/Order/OrderFail";
+import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
+import LoadingBar from "@/components/LoadingBar";
 
 export default function OrderConfirm() {
   const router = useRouter();
   const { ProductList, OrdererInfo, receiverData, errorMsg } =
     useOrderConfirm();
+  const { timedOut } = useLoadingWithTimeout();
+  if (!receiverData && !timedOut) return <LoadingBar type={6} />;
+
   return (
     <S.Temp>
       {errorMsg ? (
