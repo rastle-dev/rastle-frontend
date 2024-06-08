@@ -94,7 +94,7 @@ export default function OrderHistory() {
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>
-                      <div>{item.orderInfo.orderDate.split("T")[0]}</div>
+                      <div>{item.orderInfo.orderDate?.split("T")[0]}</div>
                       <S.OrderDetail
                         onClick={() => {
                           router.push({
