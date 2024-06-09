@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import * as S from "@/styles/mypage/orderList/index.styles";
 import Pagination from "react-js-pagination";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
-
+import { useRouter } from "next/dist/client/router";
 import Modal from "@/components/Common/Modal";
 import EnterUpdateEventModal from "@/components/Event/EnterUpdateEventModal";
 import { useRecoilState } from "recoil";
 import { eventModalState } from "@/stores/atom/recoilState";
+import PATH from "@/constants/path";
 
 export default function EventHistory() {
   const {
@@ -23,6 +24,7 @@ export default function EventHistory() {
     eventPhoneNumber?: number;
     instagramId?: string;
   }
+  const router = useRouter();
   const [isEventModalOpen, setIsEventModalOpen] =
     useRecoilState(eventModalState);
   const [eventData, setEventData] = useState<EventData>();
@@ -89,9 +91,26 @@ export default function EventHistory() {
                     <S.Box>
                       <S.ProductBox>
                         <S.UpperBox>
-                          <S.Img src={item.eventProductMainThumbnailImage} />
+                          <S.Img
+                            src={item.eventProductMainThumbnailImage}
+                            onClick={() => {
+                              const { eventProductId } = item;
+                              router.push({
+                                pathname: PATH.EVENT,
+                                query: { productId: eventProductId },
+                              });
+                            }}
+                          />
                           <S.MobileTextInfo>
-                            <S.TextInfo>
+                            <S.TextInfo
+                              onClick={() => {
+                                const { eventProductId } = item;
+                                router.push({
+                                  pathname: PATH.EVENT,
+                                  query: { productId: eventProductId },
+                                });
+                              }}
+                            >
                               <h4>{item.eventProductName}</h4>
                               <h4>L/인디고</h4>
                             </S.TextInfo>
