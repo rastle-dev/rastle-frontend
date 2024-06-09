@@ -162,8 +162,9 @@ export default function Cart() {
                         <S.MobileSelectButton
                           title="주문하기"
                           onClick={async () => {
+                            handleProductCheckboxChange(item);
                             try {
-                              await onClickOrderButton();
+                              if (triggerOrder) await onClickOrderButton();
                             } catch (error) {
                               console.error(error);
                             }
