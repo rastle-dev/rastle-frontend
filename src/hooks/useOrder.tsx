@@ -354,7 +354,7 @@ export default function useOrder() {
         if (paymentData.data.verified) {
           console.log(paymentData);
           try {
-            await router.push({
+            await router.replace({
               pathname: PATH.ORDERCONFIRM,
               query: {
                 selectedProducts,

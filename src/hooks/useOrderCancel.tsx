@@ -154,7 +154,7 @@ export default function useOrderCancel() {
       onSuccess: async () => {
         queryClient.invalidateQueries([QUERYKEYS.LOAD_ORDER_LIST]);
         toastMsg("취소 신청이 완료되었습니다!");
-        router.push({
+        router.replace({
           pathname: PATH.MYPAGE,
           query: { tab: "주문내역" },
         });
