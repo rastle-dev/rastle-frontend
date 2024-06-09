@@ -145,11 +145,15 @@ export const Info = styled.div`
   justify-content: space-evenly;
   gap: 1.2rem;
   width: 100%;
-  cursor: pointer;
 `;
 export const ProductName = styled.div`
-  font-size: 1.333rem;
-  font-weight: 400;
+  p {
+    font-size: 1.333rem;
+    font-weight: 400;
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+  }
 `;
 export const OrderInner = styled.div`
   display: flex;

@@ -100,9 +100,29 @@ export default function OrderDetail() {
           <S.Title>주문 상품</S.Title>
           {orderDetail?.data.productOrderInfos.map((item: any) => (
             <S.Product>
-              <S.Thumbnail src={item.thumbnailUrl} alt={item.thumbnailUrl} />
+              <S.Thumbnail
+                onClick={() => {
+                  const { productId } = item;
+                  router.push({
+                    pathname: PATH.PRODUCT,
+                    query: { productId },
+                  });
+                }}
+                src={item.thumbnailUrl}
+                alt={item.thumbnailUrl}
+              />
               <S.Info>
-                <S.ProductName>{item.name}</S.ProductName>
+                <S.ProductName
+                  onClick={() => {
+                    const { productId } = item;
+                    router.push({
+                      pathname: PATH.PRODUCT,
+                      query: { productId },
+                    });
+                  }}
+                >
+                  <p>{item.name}</p>
+                </S.ProductName>
                 <S.NumPrice>
                   {item.count}개 / {item.totalPrice}원
                 </S.NumPrice>

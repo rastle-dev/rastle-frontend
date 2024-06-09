@@ -134,9 +134,26 @@ export default function Cart() {
                         checked={selectedItems.includes(item)}
                         onChange={() => handleProductCheckboxChange(item)}
                       />
-                      <S.Img src={item.mainThumbnailImage} />
+                      <S.Img
+                        onClick={() => {
+                          const { productId } = item;
+                          router.push({
+                            pathname: PATH.PRODUCT,
+                            query: { productId },
+                          });
+                        }}
+                        src={item.mainThumbnailImage}
+                      />
                       <S.MobileTextInfo>
-                        <S.TextInfo>
+                        <S.TextInfo
+                          onClick={() => {
+                            const { productId } = item;
+                            router.push({
+                              pathname: PATH.PRODUCT,
+                              query: { productId },
+                            });
+                          }}
+                        >
                           <h4>{item.productName}</h4>
                           <h4>
                             {item.size}/{item.color}

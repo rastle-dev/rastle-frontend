@@ -122,9 +122,26 @@ export default function OrderHistory() {
                       {item.productOrderInfos.map((product: any) => (
                         <S.ProductBox>
                           <S.UpperBox>
-                            <S.Img src={product.thumbnailUrl} />
+                            <S.Img
+                              src={product.thumbnailUrl}
+                              onClick={() => {
+                                const { productId } = product;
+                                router.push({
+                                  pathname: PATH.PRODUCT,
+                                  query: { productId },
+                                });
+                              }}
+                            />
                             <S.MobileTextInfo>
-                              <S.TextInfo>
+                              <S.TextInfo
+                                onClick={() => {
+                                  const { productId } = product;
+                                  router.push({
+                                    pathname: PATH.PRODUCT,
+                                    query: { productId },
+                                  });
+                                }}
+                              >
                                 <h4>{product.name}</h4>
                                 <h4>
                                   {product.size}/{product.color}
