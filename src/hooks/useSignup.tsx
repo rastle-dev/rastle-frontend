@@ -120,7 +120,7 @@ export default function useSignup() {
   const inputData: InputProps[] = [
     {
       label: "이름",
-      placeholder: "이름을 적어주세요.",
+      placeholder: "예) 홍레슬",
       onChange: onChangeUserName,
     },
     {
@@ -150,7 +150,8 @@ export default function useSignup() {
         title: emailButton,
         disabled: (email.length > 0 && !isValidEmail(email)) || codeMatch,
         onClick: () => {
-          sendEmailCode();
+          if (email.length === 0) errorMsg("이메일을 먼저 입력해주세요!");
+          else sendEmailCode();
         },
       },
     },
