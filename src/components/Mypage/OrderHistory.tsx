@@ -58,6 +58,8 @@ export default function OrderHistory() {
       toastMsg("주문 취소된 상품이에요!");
     } else if (status === "CANCEL_REQUESTED") {
       toastMsg("주문 취소 요청된 상품이에요!");
+    } else if (status === "DELIVERY_READY") {
+      toastMsg("배송을 준비중이에요!");
     } else {
       toastMsg("상품을 준비중이에요!");
     }
