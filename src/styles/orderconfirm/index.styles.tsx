@@ -153,12 +153,12 @@ export const StyledBuyButton = styled(Button)`
 export const Price = styled.div`
   font-size: 1.4rem;
   padding-top: 1rem;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 export const DiscountPrice = styled.span`
   font-size: 1.3rem;
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: line-through;
   color: ${COLORS.GREY.상세페이지};
   padding-right: 0.5rem;
@@ -166,7 +166,7 @@ export const DiscountPrice = styled.span`
 
 export const DiscountedPrice = styled.span`
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 400;
 `;
 
 export const PriceDiv = styled.div`
