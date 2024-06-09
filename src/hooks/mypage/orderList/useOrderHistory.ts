@@ -24,7 +24,6 @@ export default function useOrderHistory() {
     setOrderCurPage(page);
   };
   const deliveryStatusText = {
-    NOT_STARTED: "상품준비중",
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     PAID: "결제완료",

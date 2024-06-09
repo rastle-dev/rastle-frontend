@@ -35,7 +35,6 @@ export default function OrderDetail() {
   );
   // 주문처리상태 타입 정의
   type DeliveryStatus =
-    | "NOT_STARTED"
     | "DELIVERY_STARTED"
     | "DELIVERY_READY"
     | "DELIVERED"
@@ -45,7 +44,6 @@ export default function OrderDetail() {
     | "PARTIALLY_CANCELLED";
 
   const deliveryStatusText = {
-    NOT_STARTED: "상품준비중",
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     DELIVERY_READY: "배송준비중",

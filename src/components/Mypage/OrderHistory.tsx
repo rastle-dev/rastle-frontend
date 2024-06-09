@@ -15,7 +15,6 @@ const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
   ssr: false,
 });
 type DeliveryStatus =
-  | "NOT_STARTED"
   | "DELIVERY_STARTED"
   | "DELIVERY_READY"
   | "DELIVERED"
