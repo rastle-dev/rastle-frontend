@@ -9,6 +9,7 @@ type ProductItem = {
   cartProductId?: boolean;
   title: string | undefined;
   price: string | undefined;
+  discountPrice?: string | undefined;
   count: number;
   size: string;
   color: string;
@@ -50,18 +51,22 @@ export default function useOrderConfirm() {
     parsedSelectedProducts.length === 0 ||
     !parsedSelectedProducts[0]?.cartProductId
   ) {
+    console.log("parsedSelectedProducts", parsedSelectedProducts);
     ProductList = parsedSelectedProducts?.map((product) => ({
       title: product.title,
       price: product.price,
+      discountPrice: product.discountPrice,
       count: product.count,
       size: product.size,
       color: product.color,
       mainThumbnailImage: product.mainThumbnailImage,
     }));
   } else {
+    console.log("parsedSelectedProducts", parsedSelectedProducts);
     ProductList = parsedSelectedProducts?.map((product) => ({
       title: product.productName,
       price: product.productPrice,
+      discountPrice: product.discountPrice,
       count: product.count,
       size: product.size,
       color: product.color,

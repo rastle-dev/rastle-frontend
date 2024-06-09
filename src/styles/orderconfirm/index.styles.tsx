@@ -78,7 +78,7 @@ export const ProductName = styled.div`
 `;
 export const NumPrice = styled.div`
   font-size: 1.333rem;
-  font-weight: 200;
+  font-weight: 400;
 `;
 export const SizeColor = styled.div`
   font-size: 1.333rem;
@@ -148,4 +148,27 @@ export const StyledBuyButton = styled(Button)`
   ${media.mobile} {
     width: 40%;
   }
+`;
+
+export const Price = styled.div`
+  font-size: 1.4rem;
+  padding-top: 1rem;
+  font-weight: 500;
+`;
+
+export const DiscountPrice = styled.span`
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-decoration: line-through;
+  color: ${COLORS.GREY.상세페이지};
+  padding-right: 0.5rem;
+`;
+
+export const DiscountedPrice = styled.span`
+  font-size: 1.4rem;
+  font-weight: 500;
+`;
+
+export const PriceDiv = styled.div`
+  padding-top: 1rem;
 `;

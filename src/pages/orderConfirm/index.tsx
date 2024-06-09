@@ -14,6 +14,7 @@ export default function OrderConfirm() {
   const { timedOut } = useLoadingWithTimeout();
   if (!receiverData && !timedOut) return <LoadingBar type={6} />;
 
+  console.log("productList", ProductList);
   return (
     <S.Temp>
       {errorMsg ? (
@@ -34,8 +35,21 @@ export default function OrderConfirm() {
                 <S.Info>
                   <S.ProductName>{item.title}</S.ProductName>
                   <S.NumPrice>
-                    {item.count}개 / {item.price}원
+                    {item.count}개
+                    {item.discountPrice !== undefined ? (
+                      <S.PriceDiv>
+                        <S.DiscountPrice>
+                          {item.price?.toLocaleString()}원
+                        </S.DiscountPrice>
+                        <S.DiscountedPrice>
+                          {item.discountPrice.toLocaleString()}원
+                        </S.DiscountedPrice>
+                      </S.PriceDiv>
+                    ) : (
+                      <S.Price>{item.price?.toLocaleString()}원</S.Price>
+                    )}
                   </S.NumPrice>
+
                   <S.SizeColor>
                     {item.size} / {item.color}
                   </S.SizeColor>
