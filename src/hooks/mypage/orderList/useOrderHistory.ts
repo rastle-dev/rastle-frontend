@@ -24,13 +24,14 @@ export default function useOrderHistory() {
     setOrderCurPage(page);
   };
   const deliveryStatusText = {
-    NOT_STARTED: "배송준비중",
+    NOT_STARTED: "상품준비중",
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
     PAID: "결제완료",
     CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
     PARTIALLY_CANCELLED: "부분취소완료",
+    DELIVERY_READY: "배송준비중",
   } as const;
 
   return {

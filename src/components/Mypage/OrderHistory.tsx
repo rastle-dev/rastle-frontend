@@ -17,6 +17,7 @@ const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
 type DeliveryStatus =
   | "NOT_STARTED"
   | "DELIVERY_STARTED"
+  | "DELIVERY_READY"
   | "DELIVERED"
   | "PAID"
   | "CANCELLED"

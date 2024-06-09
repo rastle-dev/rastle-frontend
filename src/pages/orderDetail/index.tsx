@@ -37,6 +37,7 @@ export default function OrderDetail() {
   type DeliveryStatus =
     | "NOT_STARTED"
     | "DELIVERY_STARTED"
+    | "DELIVERY_READY"
     | "DELIVERED"
     | "PAID"
     | "CANCELLED"
@@ -44,9 +45,10 @@ export default function OrderDetail() {
     | "PARTIALLY_CANCELLED";
 
   const deliveryStatusText = {
-    NOT_STARTED: "배송준비중",
+    NOT_STARTED: "상품준비중",
     DELIVERY_STARTED: "배송중",
     DELIVERED: "배송완료",
+    DELIVERY_READY: "배송준비중",
     PAID: "결제완료",
     CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
