@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateBundle from "@/components/Manager/bundle/CreateBundle";
-import UpdateBundle from "@/components/Manager/bundle/UpdateBundle";
 import COLORS from "@/constants/color";
 import CreateEvent from "@/components/Manager/event/CreateEvent";
 import UpdateEvent from "@/components/Manager/event/UpdateEvent";
