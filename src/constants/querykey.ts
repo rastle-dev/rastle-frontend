@@ -20,6 +20,7 @@ const QUERYKEYS = {
   LOAD_ME: "loadMe",
   ADMIN_LOAD_USERINFO: "adminGetUserInfo",
   ADMIN_LOAD_ORDERINFO: "adminGetOrderInfo",
+  ADMIN_LOAD_EVENTINFO: "adminGetEventInfo",
   LOAD_PRODUCT_IMAGE: "loadProductImage",
   LOAD_PRODUCT_DETAIL: "loadProductDetail",
   LOAD_PRODUCT_COLOR: "loadProductColor",

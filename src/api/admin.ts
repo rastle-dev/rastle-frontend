@@ -322,7 +322,12 @@ export const adminDeleteEvent = async (eventId: number | undefined) => {
   );
   return data;
 };
-
+export const adminGetEventInfo = async (productId: number | null) => {
+  const { data } = await authorizationClient.get(
+    `${API.LOAD_EVNET}/${productId}`,
+  );
+  return data;
+};
 export const adminGetOrderInfo = async (orderData: any) => {
   const { page, size } = orderData;
   const { data } = await authorizationClient.get(
