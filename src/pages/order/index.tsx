@@ -51,6 +51,7 @@ export default function Order() {
     onChangeDeliveryMsg,
     selectedCouponPrice,
     setIsDefaultAddress,
+    deliveryPrice,
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
@@ -263,7 +264,7 @@ export default function Order() {
                                   <S.CouponTextWrapper>
                                     <S.CouponText>{item.name}</S.CouponText>
                                     <S.CouponSubText>
-                                      2024/03/29까지 전상품 적용
+                                      2024/07/1까지 전상품 적용
                                     </S.CouponSubText>
                                   </S.CouponTextWrapper>
                                 </S.CouponWrapper>
@@ -305,8 +306,8 @@ export default function Order() {
               <S.TotalInfo>결제 금액</S.TotalInfo>
               <S.TotalPrice>
                 {totalPriceSum !== 0
-                  ? `${(totalPriceSum + 3000 - selectedCouponPrice).toLocaleString()}원`
-                  : `${(totalPriceSumDirect + 3000 - selectedCouponPrice).toLocaleString()}원`}
+                  ? `${(totalPriceSum + deliveryPrice - selectedCouponPrice).toLocaleString()}원`
+                  : `${(totalPriceSumDirect + deliveryPrice - selectedCouponPrice).toLocaleString()}원`}
               </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>
