@@ -21,7 +21,11 @@ type DeliveryStatus =
   | "PAID"
   | "CANCELLED"
   | "CANCEL_REQUESTED"
-  | "PARTIALLY_CANCELLED";
+  | "PARTIALLY_CANCELLED"
+  | "RETURN_REQUESTED"
+  | "PARTIALLY_RETURNED"
+  | "RETURNED";
+
 export default function OrderHistory() {
   const router = useRouter();
   const {
@@ -190,6 +194,7 @@ export default function OrderHistory() {
                                     product?.status as DeliveryStatus
                                   ]
                                 }
+                                <p>[배송조회]</p>
                               </div>
                             </S.DeskTopDeliveryStatus>
                           </S.BottomBox>
