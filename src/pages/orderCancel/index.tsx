@@ -60,12 +60,15 @@ export default function OrderCancel() {
   return (
     <S.Temp>
       <S.Container>
-        <S.MainTitle>주문 취소 및 반품 신청</S.MainTitle>
+        <S.MainTitle>주문 취소 신청</S.MainTitle>
         <S.InfoWrapper>
           <S.Title>주문 상품</S.Title>
           {selectedItems.map(
             (item: SelectedItem) =>
               item.status !== "CANCELED" &&
+              item.status !== "DELIVERY_READY" &&
+              item.status !== "DELIVERY_STARTED" &&
+              item.status !== "DELIVERED" &&
               item.prevCount -
                 ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)) >
                 0 && (
@@ -144,7 +147,7 @@ export default function OrderCancel() {
           )}
         </S.InfoWrapper>
         <S.CancelInfoWrapper>
-          <S.Title2>취소 및 반품 신청</S.Title2>
+          <S.Title2>취소 신청</S.Title2>
           <S.CancelReasonInput
             placeholder="사유를 입력해주세요. ex> 상품 불량"
             maxLength={40}
@@ -164,7 +167,7 @@ export default function OrderCancel() {
               mutateRequestUserCancel.mutate(cancelInfo);
             }
           }}
-          title="취소 및 반품 신청"
+          title="취소 신청"
         />
       </S.Container>
     </S.Temp>
