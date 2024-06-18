@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "@/styles/orderDetail/index.styles";
 import COLORS from "@/constants/color";
 import styled from "styled-components";
@@ -7,6 +7,8 @@ import { SelectedItem } from "@/interface/Cancel/SelectedItem";
 import useOrderCancel from "@/hooks/useOrderCancel";
 import errorMsg from "@/components/Toast/error";
 import { toast } from "react-toastify";
+import Modal from "@/components/Common/Modal";
+import EnterReturnOrderModal from "@/components/ReturnOrder/EnterReturnOrderModal";
 
 interface CheckBoxProps {
   isChecked?: boolean;
@@ -18,7 +20,7 @@ const CheckBox = styled.div<CheckBoxProps>`
     color: ${(props) => (props.isChecked ? "black" : "grey")};
   }
 `;
-export default function OrderCancel() {
+export default function OrderReturn() {
   const {
     handleProductCheckboxChange,
     selectedItems,
@@ -30,13 +32,12 @@ export default function OrderCancel() {
     handleIncrement,
     handleDecrement,
     handleDelete,
-    mutateRequestUserCancel,
     onChangeReason,
     reason,
-    cancelInfo,
     cancelCount,
-    setCancelInfo,
+    setReturnInfo,
   } = useOrderCancel();
+  const [returnOrderModalOpen, setReturnOrderModalOpen] = useState(false);
 
   useEffect(() => {
     // selectedCancelItems 상태가 변경될 때마다 선택된 항목들의 수량을 동기화
@@ -51,24 +52,34 @@ export default function OrderCancel() {
           return { ...selectedItem, prevCount: selectedItem.count };
         });
       });
-      setCancelInfo((info) => ({
+      setReturnInfo((info) => ({
         ...info,
         orderNumber: orderDetail?.data.orderNumber,
       }));
     }
   }, [orderDetail]);
+  const returnRequestButton = () => {
+    setReturnOrderModalOpen(true);
+  };
   return (
     <S.Temp>
+      {returnOrderModalOpen && (
+        <Modal
+          closeModal={() => {
+            setReturnOrderModalOpen(false);
+          }}
+          width={60}
+        >
+          <EnterReturnOrderModal />
+        </Modal>
+      )}
       <S.Container>
-        <S.MainTitle>주문 취소 신청</S.MainTitle>
+        <S.MainTitle>반품 신청</S.MainTitle>
         <S.InfoWrapper>
           <S.Title>주문 상품</S.Title>
           {selectedItems.map(
             (item: SelectedItem) =>
-              item.status !== "CANCELED" &&
-              item.status !== "DELIVERY_READY" &&
-              item.status !== "DELIVERY_STARTED" &&
-              item.status !== "DELIVERED" &&
+              item.status === "DELIVERY_READY" &&
               item.prevCount -
                 ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)) >
                 0 && (
@@ -147,7 +158,7 @@ export default function OrderCancel() {
           )}
         </S.InfoWrapper>
         <S.CancelInfoWrapper>
-          <S.Title2>취소 신청</S.Title2>
+          <S.Title2>반품 신청</S.Title2>
           <S.CancelReasonInput
             placeholder="사유를 입력해주세요. ex> 상품 불량"
             maxLength={40}
@@ -159,15 +170,15 @@ export default function OrderCancel() {
           onClick={() => {
             if (reason === "") {
               toast.dismiss();
-              errorMsg("취소 사유를 적어주세요!");
+              errorMsg("반품 사유를 적어주세요!");
             } else if (cancelCount === 0) {
               toast.dismiss();
               errorMsg("상품을 한 개 이상 선택해주세요!");
             } else {
-              mutateRequestUserCancel.mutate(cancelInfo);
+              returnRequestButton();
             }
           }}
-          title="취소 신청"
+          title="반품 신청"
         />
       </S.Container>
     </S.Temp>

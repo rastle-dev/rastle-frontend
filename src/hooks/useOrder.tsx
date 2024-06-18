@@ -105,7 +105,7 @@ export default function useOrder() {
   };
 
   const [totalPriceFinal, setTotalPriceFinal] = useState<number>(0);
-  const [deliveryPrice] = useState<number>(3000);
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(3000);
 
   useEffect(() => {
     let calculatedTotalPrice = 0;
@@ -123,6 +123,17 @@ export default function useOrder() {
     selectedCoupon,
     couponPrice,
   ]);
+  const [postalAddress, setAddress] = useState<Address>({
+    address: undefined,
+    zonecode: undefined,
+  });
+  useEffect(() => {
+    if (postalAddress.address && postalAddress.address.includes("제주")) {
+      setDeliveryPrice(6000);
+    } else {
+      setDeliveryPrice(3000);
+    }
+  }, [postalAddress.address]);
 
   const PriceInfo = [
     {
@@ -134,7 +145,10 @@ export default function useOrder() {
     },
     {
       meta: "배송비",
-      data: "3,000원",
+      data:
+        postalAddress.address && postalAddress.address.includes("제주")
+          ? "6,000원"
+          : "3,000원",
     },
     {
       meta: "쿠폰할인",
@@ -186,10 +200,6 @@ export default function useOrder() {
   const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
     useState<number>();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
-  const [postalAddress, setAddress] = useState<Address>({
-    address: undefined,
-    zonecode: undefined,
-  });
 
   const { data: defaultAddress, isLoading } = useQuery(
     [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
@@ -260,7 +270,6 @@ export default function useOrder() {
       }
     }
   }, [defaultAddress, isLoading]);
-
   useEffect(() => {
     if (clickedDeliveryButtonIndex === 1) {
       setAddress(() => ({
@@ -386,6 +395,7 @@ export default function useOrder() {
     let directPurchase;
 
     console.log(cartProduct);
+    console.log("주소확인", postalAddress);
 
     if (
       !receiver ||
@@ -535,6 +545,12 @@ export default function useOrder() {
     /* 1. 가맹점 식별하기 */
   }
 
+  console.log(
+    "defaultAddress",
+    defaultAddress?.data.roadAddress.includes("제주"),
+  );
+  console.log("defaultAddress", defaultAddress);
+
   return {
     clickedPaymentButtonIndex,
     clickedDeliveryButtonIndex,
@@ -569,5 +585,6 @@ export default function useOrder() {
     isCouponLoading: isLoading,
     couponPrice,
     selectedCouponPrice,
+    deliveryPrice,
   };
 }

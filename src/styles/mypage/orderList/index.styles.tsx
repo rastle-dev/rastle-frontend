@@ -269,7 +269,10 @@ export const DeskTopDeliveryStatus = styled.div`
   cursor: pointer;
   display: flex;
   padding-left: 2rem;
-  text-decoration: underline;
+  p {
+    font-weight: 400;
+    text-decoration: underline;
+  }
 `;
 export const DeskTopEventStatus = styled.div`
   @media (max-width: 769px) {

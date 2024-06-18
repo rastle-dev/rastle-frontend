@@ -21,7 +21,11 @@ type DeliveryStatus =
   | "PAID"
   | "CANCELLED"
   | "CANCEL_REQUESTED"
-  | "PARTIALLY_CANCELLED";
+  | "PARTIALLY_CANCELLED"
+  | "RETURN_REQUESTED"
+  | "PARTIALLY_RETURNED"
+  | "RETURNED";
+
 export default function OrderHistory() {
   const router = useRouter();
   const {
@@ -43,12 +47,17 @@ export default function OrderHistory() {
   if (orderLoading && !timedOut) return <LoadingBar type={6} />;
 
   const openPopup = (trackingNumber: number, status: string) => {
-    const url = `https://www.cjlogistics.com/ko/tool/parcel/tracking?gnbInvcNo=${trackingNumber}`;
+    const url = `https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=${trackingNumber}`;
     const width = 800;
     const height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    if (status === "DELIVERY_STARTED" || status === "DELIVERED") {
+    if (
+      status === "DELIVERY_STARTED" ||
+      status === "DELIVERED" ||
+      status === "PARTIALLY_RETURNED" ||
+      status === "RETURNED"
+    ) {
       window.open(
         url,
         "_blank",
@@ -190,6 +199,7 @@ export default function OrderHistory() {
                                     product?.status as DeliveryStatus
                                   ]
                                 }
+                                <p>[배송조회]</p>
                               </div>
                             </S.DeskTopDeliveryStatus>
                           </S.BottomBox>

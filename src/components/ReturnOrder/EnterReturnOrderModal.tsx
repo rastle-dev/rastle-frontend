@@ -1,16 +1,13 @@
 import styled from "styled-components";
-
 import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
-
 import React, { useState } from "react";
-
 import Icon from "@/components/Common/Icon";
-import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
+import useOrderCancel from "@/hooks/useOrderCancel";
 
 const Wrapper = styled.div`
   width: 100%;
-  padding: 2rem 3rem 2rem 3rem;
+  padding: 0.5rem 3rem 2rem 3rem;
   h2 {
     text-align: left;
     font-size: 2rem;
@@ -57,20 +54,18 @@ const EnterButton = styled(Button)`
     border: none;
   }
 `;
-export default function EnterDeleteUserModal() {
-  const { deleteUser } = useLoginInfo();
+
+export default function EnterReturnOrderModal() {
+  const { mutateRequestUserReturn, returnInfo } = useOrderCancel();
   const [isConfirmChecked, setIsConfirmChecked] = useState(false);
 
   return (
     <Wrapper>
-      <h2>탈퇴하기 전에 아래의 정보를 꼭 확인해주세요.</h2>
-      <p>• 탈퇴 시, 현재 사용 중인 계정을 더 이상 사용할 수 없게 됩니다.</p>
-      <p>
-        • 현재 사용 중이신 계정으로 로그인 되어 있던 모든 기기에서 자동으로
-        로그아웃 됩니다.
-      </p>
-      <p>• 한번 삭제된 계정은 이전 상태로 복구할 수 없습니다.</p>
-      <p>• 해당 이메일로는 3개월이 지난 이후에 다시 가입하실 수 있습니다</p>
+      <h2>반품 신청 전, 꼭 확인해주세요!</h2>
+      <p>•해당 제품은 반품 신청일 기준 다음날 14시에 수거할 예정이에요.</p>
+      <p>•그 전에 꼭 제품을 문 앞에 놔둬주세요!</p>
+      <p>•반품 신청하신 제품은 영업일 기준 2~3일 안에 환불될 예정이요.</p>
+      <p>•궁금하신 점은 010-9290-7140 으로 문의 주시면 감사하겠습니다.😊</p>
 
       <BottomWrapper>
         <ConfirmCheckBox
@@ -96,15 +91,11 @@ export default function EnterDeleteUserModal() {
               color={COLORS.GREY[400]}
             />
           )}
-          <span>
-            {isConfirmChecked
-              ? "위 내용을 모두 확인하였습니다."
-              : "위 내용을 모두 확인하였습니다."}
-          </span>
+          <span>위 내용을 모두 확인하였습니다.</span>
         </ConfirmCheckBox>
         <EnterButton
-          title="탈퇴하기"
-          onClick={deleteUser}
+          title="반품 신청하기"
+          onClick={() => mutateRequestUserReturn.mutate(returnInfo)}
           disabled={!isConfirmChecked}
         />
       </BottomWrapper>

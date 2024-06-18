@@ -259,12 +259,26 @@ export const OrderInnerLeft = styled.div`
   }
 `;
 
-export const CancelButton = styled(Button)`
+export const CancelButton = styled(Button)<{ return?: boolean }>`
   position: absolute;
   right: 0;
   top: 0;
   margin-top: 0.5rem;
-
+  margin-right: ${(props) => (props.return ? "7rem" : "")};
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 300;
+  border: 1px solid ${COLORS.GREY[400]};
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  &:hover {
+    font-weight: 500;
+  }
+`;
+export const ReturnButton = styled(Button)<{ cancel?: boolean }>`
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 0.5rem;
   border-radius: 0;
   font-size: 1rem;
   font-weight: 300;

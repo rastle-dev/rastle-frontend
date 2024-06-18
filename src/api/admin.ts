@@ -371,3 +371,11 @@ export const adminCancelOrder = async (cancelData: CancelData) => {
   );
   return data;
 };
+
+export const adminReturnOrder = async (cancelData: CancelData) => {
+  const { data } = await authorizationClient.post(
+    `${API.ADMIN_RETURN_ORDER}`,
+    cancelData,
+  );
+  return data;
+};

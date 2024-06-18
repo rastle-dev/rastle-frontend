@@ -6,6 +6,7 @@ import {
   adminCancelOrder,
   adminDeleteTrackingNumber,
   adminGetOrderInfo,
+  adminReturnOrder,
   adminUpdateTrackingNumber,
 } from "@/api/admin";
 import useDialog from "@/hooks/useDialog";
@@ -68,6 +69,7 @@ export default function OrderManagement() {
   const [cancelImpid, setCancelImpId] = useState<string>();
   const [cancelProductOrderNumber, setProductOrderNumber] = useState<number>();
   const [createdExcept, setCreatedExcept] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("");
 
   interface TrackingData {
     trackingNumber: string | undefined;
@@ -91,6 +93,8 @@ export default function OrderManagement() {
     "수량", // count
     "취소요청수량", // cancelRequestAmount
     "취소확정수량", // cancelAmount
+    "반품요청수량", // returnRequestAmount
+    "반품확정수량", // returnAmount
     "수령인 이름", // receiverName
     "수령인 전화번호", // receiverTel
     "수령인 이메일", // receiverEmail
@@ -119,6 +123,8 @@ export default function OrderManagement() {
     수량: "count",
     취소요청수량: "cancelRequestAmount",
     취소확정수량: "cancelAmount",
+    반품요청수량: "returnRequestAmount",
+    반품확정수량: "returnAmount",
     "수령인 이름": "receiverName",
     "수령인 전화번호": "receiverTel",
     "수령인 이메일": "receiverEmail",
@@ -222,21 +228,50 @@ export default function OrderManagement() {
       },
     },
   );
+  const mutateAdminReturnOrder = useMutation(
+    ["adminReturnOrder"],
+    adminReturnOrder,
+    {
+      onSuccess: async () => {
+        closeDialog();
+        queryClient.invalidateQueries([QUERYKEYS.ADMIN_LOAD_ORDERINFO]);
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
+  console.log("ddd", data);
   return (
     <Wrapper>
       {isDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            mutateAdminCancelOrder.mutate({
-              impId: cancelImpid,
-              productOrderNumber: cancelProductOrderNumber,
-            });
+            if (status.split("_").includes("RETURN")) {
+              mutateAdminReturnOrder.mutate({
+                impId: cancelImpid,
+                productOrderNumber: cancelProductOrderNumber,
+              });
+            } else {
+              mutateAdminCancelOrder.mutate({
+                impId: cancelImpid,
+                productOrderNumber: cancelProductOrderNumber,
+              });
+            }
           }}
           onClickConfirmButton={() => {
             closeDialog();
           }}
           visible
-          title="주문 취소를 수락하시겠습니까?"
+          title={
+            status.split("_").includes("RETURN")
+              ? "환불 요청을 수락하시겠습니까?"
+              : "주문 취소를 수락하시겠습니까?"
+          }
           refuse="확인"
           confirm="취소"
           size={42}
@@ -360,6 +395,7 @@ export default function OrderManagement() {
                           onClick={() => {
                             setCancelImpId(user.impId);
                             setProductOrderNumber(user.productOrderNumber);
+                            setStatus(user.orderStatus);
                             openDialog();
                           }}
                         >
