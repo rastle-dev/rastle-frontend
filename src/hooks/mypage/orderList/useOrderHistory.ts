@@ -31,6 +31,9 @@ export default function useOrderHistory() {
     CANCEL_REQUESTED: "취소요청",
     PARTIALLY_CANCELLED: "부분취소완료",
     DELIVERY_READY: "배송준비중",
+    RETURN_REQUESTED: "반품요청",
+    PARTIALLY_RETURNED: "부분반품완료",
+    RETURNED: "반품완료",
   } as const;
 
   return {
