@@ -10,8 +10,7 @@ import useLoginInfo from "@/hooks/mypage/loginInfo/useLoginInfo";
 
 const Wrapper = styled.div`
   width: 100%;
-  padding: 2rem 0 2rem 3rem;
-  height: 28rem;
+  padding: 2rem 3rem 2rem 3rem;
   h2 {
     text-align: left;
     font-size: 2rem;
@@ -43,7 +42,7 @@ interface ConfirmCheckBoxProps {
 const ConfirmCheckBox = styled.div<ConfirmCheckBoxProps>`
   cursor: pointer;
   span {
-    padding-left: 0.3rem;
+    padding-left: 0.6rem;
     color: ${(props) => (props.isChecked ? "black" : "grey")};
   }
 `;
@@ -53,13 +52,11 @@ const EnterButton = styled(Button)`
   padding: 0.5rem 1rem 0.5rem 1rem;
   font-size: 1.3rem;
   float: right; /* 오른쪽으로 이동 */
-  margin-right: 4rem;
   font-weight: 500;
   &:focus {
     border: none;
   }
 `;
-
 export default function EnterDeleteUserModal() {
   const { deleteUser } = useLoginInfo();
   const [isConfirmChecked, setIsConfirmChecked] = useState(false);
