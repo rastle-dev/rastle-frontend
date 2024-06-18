@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "@/styles/orderDetail/index.styles";
 import { useRouter } from "next/dist/client/router";
 import { useQuery } from "@tanstack/react-query";
@@ -11,6 +11,8 @@ import errorMsg from "@/components/Toast/error";
 interface ProductOrderInfoItem {
   cancelAmount: number;
   cancelRequestAmount: number;
+  returnAmount: number;
+  returnRequestAmount: number;
   count: number;
   // 다른 속성들...
 }
@@ -27,12 +29,19 @@ export default function OrderDetail() {
       cacheTime: 60000, // 캐시 유지 시간 (예: 60초)
     },
   );
-  const total = orderDetail?.data.productOrderInfos.reduce(
+  const cancelTotal = orderDetail?.data.productOrderInfos.reduce(
     (a: number, c: ProductOrderInfoItem) => {
       return a + c.count - c.cancelAmount - c.cancelRequestAmount;
     },
     0,
   );
+  const returnTotal = orderDetail?.data.productOrderInfos.reduce(
+    (a: number, c: ProductOrderInfoItem) => {
+      return a + c.count - c.returnAmount - c.returnRequestAmount;
+    },
+    0,
+  );
+  const [refundMethod, setRefundMethod] = useState<string>("");
   // 주문처리상태 타입 정의
   type DeliveryStatus =
     | "DELIVERY_STARTED"
@@ -41,7 +50,10 @@ export default function OrderDetail() {
     | "PAID"
     | "CANCELLED"
     | "CANCEL_REQUESTED"
-    | "PARTIALLY_CANCELLED";
+    | "PARTIALLY_CANCELLED"
+    | "RETURN_REQUESTED"
+    | "PARTIALLY_RETURNED"
+    | "RETURNED";
 
   const deliveryStatusText = {
     DELIVERY_STARTED: "배송중",
@@ -51,6 +63,9 @@ export default function OrderDetail() {
     CANCELLED: "취소완료",
     CANCEL_REQUESTED: "취소요청",
     PARTIALLY_CANCELLED: "부분취소완료",
+    RETURN_REQUESTED: "반품요청",
+    PARTIALLY_RETURNED: "부분반품완료",
+    RETURNED: "반품완료",
   } as const;
 
   const paymentInfoList = [
@@ -59,7 +74,8 @@ export default function OrderDetail() {
       label: "상품구매금액",
       value:
         (orderDetail?.data?.paymentAmount ?? 0) -
-        (orderDetail?.data?.deliveryPrice ?? 0),
+        (orderDetail?.data?.deliveryPrice ?? 0) +
+        orderDetail?.data.couponAmount,
     },
     { label: "배송비", value: orderDetail?.data.deliveryPrice },
     { label: "쿠폰할인금액", value: orderDetail?.data.couponAmount },
@@ -74,11 +90,21 @@ export default function OrderDetail() {
   ];
 
   const refundInfoList = [
-    { label: "환불일자", value: orderDetail?.data.refundInfo.cancelTime },
-    { label: "환불금액", value: orderDetail?.data.refundInfo.cancelAmount },
+    {
+      label: "환불일자",
+      value: orderDetail?.data.refundInfo.cancelTime.split("-").includes("1970")
+        ? ""
+        : orderDetail?.data.refundInfo.cancelTime.split("T").join(" "),
+    },
+    {
+      label: "환불금액",
+      value: orderDetail?.data.refundInfo.cancelAmount
+        ? `${orderDetail?.data.refundInfo.cancelAmount.toLocaleString()} 원`
+        : "",
+    },
     {
       label: "환불수단",
-      value: orderDetail?.data.refundInfo.paymentMethod,
+      value: orderDetail?.data.refundInfo.cancelAmount ? refundMethod : "",
     },
     {
       label: "쿠폰 복원 내역",
@@ -87,6 +113,16 @@ export default function OrderDetail() {
         : "",
     },
   ];
+
+  useEffect(() => {
+    if (orderDetail?.data.embPgProvider !== null) {
+      setRefundMethod(orderDetail?.data.embPgProvider);
+    } else if (orderDetail?.data.pgProvider !== "") {
+      setRefundMethod(orderDetail?.data.pgProvider);
+    } else {
+      setRefundMethod(orderDetail?.data.paymentMethod);
+    }
+  }, [orderDetail]);
 
   if (orderDetail === undefined) {
     return <LoadingBar type={6} />;
@@ -154,35 +190,51 @@ export default function OrderDetail() {
                 ]
               }
             </S.OrderInnerRight>
-            {["PAID", "CANCEL_REQUESTED", "PARTIALLY_CANCELLED"].includes(
-              orderDetail?.data.orderStatus,
-            ) ? (
-              <S.CancelButton
-                onClick={() => {
-                  if (total) {
-                    router.push({
-                      pathname: PATH.ORDERCANCEL,
-                      query: { orderId },
-                    });
-                  } else {
-                    errorMsg("취소 가능한 상품이 없습니다!");
-                  }
-                }}
-                title="취소 요청"
-              />
-            ) : (
-              orderDetail?.data.orderStatus === "DELIVERED" && (
-                <S.CancelButton
+            <>
+              {orderDetail?.data.productOrderInfos.filter(
+                (v: any) => v.status === "DELIVERY_READY",
+              ).length !== 0 && (
+                <S.ReturnButton
                   onClick={() => {
-                    router.push({
-                      pathname: PATH.ORDERCANCEL,
-                      query: { orderId },
-                    });
+                    if (returnTotal) {
+                      router.push({
+                        pathname: PATH.ORDERRETURN,
+                        query: { orderId },
+                      });
+                    } else {
+                      errorMsg("반품 가능한 상품이 없습니다!");
+                    }
                   }}
                   title="반품 요청"
                 />
-              )
-            )}
+              )}
+
+              {orderDetail?.data.productOrderInfos.filter(
+                (v: any) =>
+                  v.status === "PAID" ||
+                  v.status === "CANCEL_REQUESTED" ||
+                  v.status === "PARTIALLY_CANCELLED",
+              ).length !== 0 && (
+                <S.CancelButton
+                  return={
+                    orderDetail?.data.productOrderInfos.filter(
+                      (v: any) => v.status === "DELIVERY_READY",
+                    ).length > 0
+                  }
+                  onClick={() => {
+                    if (cancelTotal) {
+                      router.push({
+                        pathname: PATH.ORDERCANCEL,
+                        query: { orderId },
+                      });
+                    } else {
+                      errorMsg("취소 가능한 상품이 없습니다!");
+                    }
+                  }}
+                  title="취소 요청"
+                />
+              )}
+            </>
           </S.OrderTableDiv>
         </S.InfoWrapper>
         <S.InfoWrapper>

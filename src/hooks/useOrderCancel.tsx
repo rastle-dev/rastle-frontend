@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { SelectedItem } from "@/interface/Cancel/SelectedItem";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
-import { requestUserOrderCancel } from "@/api/cart";
+import { requestUserOrderCancel, requestUserOrderReturn } from "@/api/cart";
 import useInput from "@/hooks/useInput";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
@@ -14,11 +14,20 @@ import PATH from "@/constants/path";
 interface CancelInfo {
   orderNumber: number;
   productOrderCancelRequests: ProductOrderCancelRequest[];
-  reason: "string";
+  reason: string;
+}
+interface ReturnInfo {
+  orderNumber: number;
+  productReturnRequests: ProductReturnRequest[];
+  reason: string;
 }
 interface ProductOrderCancelRequest {
   productOrderNumber: number;
   cancelAmount: number;
+}
+interface ProductReturnRequest {
+  productOrderNumber: number;
+  returnAmount: number;
 }
 export default function useOrderCancel() {
   const router = useRouter();
@@ -168,12 +177,37 @@ export default function useOrderCancel() {
       },
     },
   );
-  console.log("cancel", selectedCancelItems);
-  // const [productOrderCancelRequests, setProductOrderCancelRequests] =
-  //   useState<ProductOrderCancelRequest[]>();
+
+  const mutateRequestUserReturn = useMutation(
+    ["requestUserOrderReturn"],
+    requestUserOrderReturn,
+    {
+      onSuccess: async () => {
+        queryClient.invalidateQueries([QUERYKEYS.LOAD_ORDER_LIST]);
+        toastMsg("반품 신청이 완료되었습니다!");
+        router.replace({
+          pathname: PATH.MYPAGE,
+          query: { tab: "주문내역" },
+        });
+      },
+      onError: ({
+        response: {
+          data: { errorCode, message },
+        },
+      }) => {
+        console.log(`${errorCode} / ${message}`);
+      },
+    },
+  );
+
   const [cancelInfo, setCancelInfo] = useState<CancelInfo>({
     orderNumber: orderDetail?.data.orderNumber,
     productOrderCancelRequests: [],
+    reason,
+  });
+  const [returnInfo, setReturnInfo] = useState<ReturnInfo>({
+    orderNumber: orderDetail?.data.orderNumber,
+    productReturnRequests: [],
     reason,
   });
   useEffect(() => {
@@ -190,6 +224,25 @@ export default function useOrderCancel() {
       productOrderCancelRequests,
     }));
   }, [selectedCancelItems]);
+
+  useEffect(() => {
+    setReturnInfo((info) => ({
+      ...info,
+      reason,
+    }));
+  }, [reason]);
+
+  useEffect(() => {
+    const productReturnRequests = selectedCancelItems.map((item) => ({
+      productOrderNumber: item.productOrderNumber,
+      returnAmount: item.count,
+    }));
+    setReturnInfo((info) => ({
+      ...info,
+      productReturnRequests,
+    }));
+  }, [selectedCancelItems]);
+
   return {
     handleProductCheckboxChange,
     selectedItems,
@@ -207,5 +260,8 @@ export default function useOrderCancel() {
     cancelInfo,
     cancelCount,
     setCancelInfo,
+    returnInfo,
+    setReturnInfo,
+    mutateRequestUserReturn,
   };
 }
