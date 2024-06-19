@@ -4,9 +4,7 @@ import media from "@/styles/media";
 import UserManagement from "@/components/Manager/UserManagement";
 import CategoryManagement from "@/components/Manager/CategoryManagement";
 import ProductManagement from "@/components/Manager/ProductManagement";
-import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
-import TotalManagement from "@/components/Manager/TotalManagement";
 import BundleManagement from "@/components/Manager/BundleManagement";
 import COLORS from "@/constants/color";
 import EventManagement from "@/components/Manager/EventManagement";
@@ -107,14 +105,12 @@ export default function Manager() {
             ))}
           </ManageList>
           <ManageMentDetail>
-            {selectedItem === "전체통계" && <TotalManagement />}
             {selectedItem === "회원관리" && <UserManagement />}
             {selectedItem === "카테고리 관리" && <CategoryManagement />}
             {selectedItem === "세트관리" && <BundleManagement />}
             {selectedItem === "이벤트관리" && <EventManagement />}
             {selectedItem === "상품관리" && <ProductManagement />}
             {selectedItem === "주문관리" && <OrderManagement />}
-            {selectedItem === "대시보드" && <Dashboard />}
           </ManageMentDetail>
         </Wrapper>
       ) : (
