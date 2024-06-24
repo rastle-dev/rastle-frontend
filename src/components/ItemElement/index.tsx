@@ -33,13 +33,29 @@ const EventInfo = styled.div`
   align-items: center;
 `;
 
-const StyledImage = styled(Image)<{ remainingTime: number | undefined }>`
+const SoldOutInfo = styled.div`
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 1;
+  margin-top: 45%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledImage = styled(Image)<{
+  remainingTime: number | undefined;
+  soldOut: boolean | undefined;
+}>`
   width: 100%;
   height: auto;
   aspect-ratio: 0.77; /* width의 1.25배에 해당하는 비율로 height 설정 */
   cursor: pointer;
-  filter: ${({ remainingTime }) => {
-    if (remainingTime === 0) {
+  filter: ${({ remainingTime, soldOut }) => {
+    if (remainingTime === 0 || soldOut === true) {
       return "brightness(0.5)";
     }
     return "brightness(1)";
@@ -94,6 +110,7 @@ function ItemElement({
   discountPrice,
   startDate,
   endDate,
+  soldOut,
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
@@ -175,6 +192,11 @@ function ItemElement({
             />
           </EventInfo>
         )}
+        {soldOut && (
+          <SoldOutInfo>
+            <p>SOLD OUT</p>
+          </SoldOutInfo>
+        )}
         <StyledImage
           src={thumbnailSrc}
           alt={name}
@@ -185,6 +207,7 @@ function ItemElement({
           onMouseLeave={isMobile ? undefined : handleMouseLeave}
           onTouchStart={isMobile ? undefined : handleTap}
           remainingTime={remainingTime}
+          soldOut={soldOut}
         />
       </ImageContainer>
       <ItemName onClick={handleClick}>{name}</ItemName>

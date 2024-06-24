@@ -71,6 +71,7 @@ export default function CategoryView({
                 discountPrice={finalDiscountPrice}
                 id={item.id}
                 isEvent={!!item.eventId}
+                soldOut={item.soldOut}
               />
             );
           })}
@@ -188,6 +189,7 @@ export default function CategoryView({
               discountPrice={finalDiscountPrice}
               id={item.id}
               isEvent={!!item.eventId}
+              soldOut={item.soldOut}
             />
           );
         })}
