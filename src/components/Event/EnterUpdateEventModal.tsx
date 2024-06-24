@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import React from "react";
+import React, { useState } from "react";
 import useInput from "@/hooks/useInput";
 import * as S from "@/components/Event/EnterEventModal";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,12 +11,12 @@ import toastMsg from "@/components/Toast";
 import QUERYKEYS from "@/constants/querykey";
 import { useRecoilState } from "recoil";
 import { eventModalState } from "@/stores/atom/recoilState";
+import dayjs from "dayjs";
 
 const Wrapper = styled.div`
   width: 89%;
+  padding-top: 2rem;
   h2 {
-    font-size: 2.5rem;
-    margin-top: 2rem;
     margin-bottom: 2rem;
   }
   p {
@@ -39,16 +39,21 @@ export default function EnterUpdateEventModal({
   productName,
   eventPhoneNumber,
   eventInstagramId,
+  endDate,
+  startDate,
 }: {
-  eventProductId?: number;
-  productName?: string;
-  eventPhoneNumber?: number;
-  eventInstagramId?: string;
+  eventProductId: number | undefined;
+  productName: string | undefined;
+  eventPhoneNumber: number | undefined;
+  eventInstagramId: string | undefined;
+  endDate: string | undefined;
+  startDate: string | undefined;
 }) {
   const [phoneNumber, onChangeEventPhoneNumber] = useInput(
     eventPhoneNumber?.toString().replace(/\D/g, "").slice(0, 11) || "",
   );
   const [instagramId, onChangeInstagramId] = useInput(eventInstagramId);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const [, setIsEventModalOpen] = useRecoilState(eventModalState);
   const queryClient = useQueryClient();
   const inputFields = [
@@ -100,15 +105,22 @@ export default function EnterUpdateEventModal({
         </S.InputBox>
       ))}
       <h3>* 해당번호와 아이디로 당첨 메시지가 전송될 예정이에요.</h3>
+      <h4>* 이벤트 종료 전까지만, 수정이 가능해요.</h4>
       <S.EnterButton
         title="수정하기"
         onClick={() => {
-          mutateUpdateApplyEvent.mutate({
-            instagramId,
-            eventPhoneNumber: phoneNumber,
-            eventProductId,
-          });
+          if (dayjs().isBefore(startDate) || dayjs().isAfter(endDate)) {
+            toastMsg("이벤트가 종료되었어요!");
+            setDisabled(true);
+          } else {
+            mutateUpdateApplyEvent.mutate({
+              instagramId,
+              eventPhoneNumber: phoneNumber,
+              eventProductId,
+            });
+          }
         }}
+        disabled={disabled}
       />
     </Wrapper>
   );

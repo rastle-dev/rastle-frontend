@@ -52,11 +52,14 @@ export const EnterButton = styled(Button)`
 
   &:hover {
     border: none;
+    background-color: transparent;
     font-weight: 600;
   }
   &:focus {
     border: none;
+    background-color: transparent;
   }
+  background-color: transparent;
 `;
 
 export default function EnterEventModal({

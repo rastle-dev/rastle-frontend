@@ -19,10 +19,12 @@ export default function EventHistory() {
   } = useEventHistory();
 
   interface EventData {
-    eventProductId?: number;
-    eventProductName?: string;
-    eventPhoneNumber?: number;
-    instagramId?: string;
+    eventProductId: number | undefined;
+    eventProductName: string | undefined;
+    eventPhoneNumber: number | undefined;
+    instagramId: string | undefined;
+    startDate: string | undefined;
+    endDate: string | undefined;
   }
   const router = useRouter();
   const [isEventModalOpen, setIsEventModalOpen] =
@@ -51,6 +53,8 @@ export default function EventHistory() {
             productName={eventData?.eventProductName}
             eventPhoneNumber={eventData?.eventPhoneNumber}
             eventInstagramId={eventData?.instagramId}
+            startDate={eventData?.startDate}
+            endDate={eventData?.endDate}
           />
         </Modal>
       )}
