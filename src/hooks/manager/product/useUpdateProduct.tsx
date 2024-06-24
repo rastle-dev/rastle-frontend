@@ -38,6 +38,7 @@ export default function useUpdateProduct() {
   const [detailImages, setDetailImages] = useState<string[]>([]);
   const [detailImageFiles, setDetailImageFiles] = useState<File[]>([]);
   const [visible, setVisible] = useState<boolean>();
+  const [soldOut, setSoldout] = useState<boolean>();
   const [discountState, setDiscountState] = useState<boolean>();
   const { discountPercent, discountedPrice } = calculateDiscountPercentAndPrice(
     price,
@@ -57,6 +58,7 @@ export default function useUpdateProduct() {
     visible: boolean;
     bundleId: string;
     categoryId: string;
+    soldOut: boolean;
     mainImage: {
       imageUrls: string[];
     };
@@ -128,6 +130,7 @@ export default function useUpdateProduct() {
 
   useEffect(() => {
     if (selectedProduct && showImageUpload) {
+      /* empty */
     }
   }, [selectedProduct]);
 
@@ -167,6 +170,7 @@ export default function useUpdateProduct() {
           productColor: { productColors },
           displayOrder,
           visible,
+          soldOut,
         });
         if (data) {
           alert("상품이 수정되었습니다. ");
@@ -488,6 +492,7 @@ export default function useUpdateProduct() {
     setVisible(product.visible);
     setCategoryId(product.categoryId);
     setProductId(product.id);
+    setSoldout(product.soldOut);
 
     // 세트가 구성되어있지 않음
     if (product.bundleId === null) {
@@ -504,6 +509,9 @@ export default function useUpdateProduct() {
 
   const handleVisibleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVisible(e.target.checked);
+  };
+  const handleSoldoutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSoldout(e.target.checked);
   };
 
   const handleDiscountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -608,5 +616,7 @@ export default function useUpdateProduct() {
     detailImageData,
     handleDiscountChange,
     discountState,
+    handleSoldoutChange,
+    soldOut,
   };
 }
