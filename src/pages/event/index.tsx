@@ -5,7 +5,6 @@ import ImageSliderPage from "@/components/Swiper/ImageSliderPage";
 import * as S from "@/styles/product/index.styles";
 import useProduct from "@/hooks/useProduct";
 import PATH from "@/constants/path";
-import toastMsg from "@/components/Toast";
 import IconButton from "@/components/Common/IconButton";
 import useScroll from "@/hooks/useScroll";
 import Modal from "@/components/Common/Modal";
@@ -45,6 +44,8 @@ export default function Event() {
   );
 
   const [token, setToken] = useState(false);
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
@@ -52,13 +53,31 @@ export default function Event() {
       }
     }
   }, []);
+
   return (
     <S.Wrapper>
+      {isLoginModalVisible && (
+        <Dialog
+          title="로그인 후에 이용 가능한 기능이에요!"
+          confirm="쇼핑 계속하기"
+          refuse="로그인 하기"
+          size={44}
+          onClickRefuseButton={() => {
+            setLoginModalVisible(false); // 모달 창 닫기
+            const returnUrl = `${router.pathname}?${router.asPath.split("?")[1]}`;
+            localStorage.setItem("returnUrl", returnUrl);
+            router.push({ pathname: PATH.LOGIN });
+          }}
+          onClickConfirmButton={() => {
+            setLoginModalVisible(false); // 모달 창 닫기
+          }}
+          visible
+        />
+      )}
       {isEventModalOpen && (
         <Modal
           closeModal={() => {
             setIsEventModalOpen(false);
-            // openDialog();
           }}
         >
           <EnterEventModal
@@ -70,9 +89,13 @@ export default function Event() {
       {isEventDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            // localStorage.clear();
+            router.push({
+              pathname: PATH.MYPAGE,
+              query: { tab: "주문 내역" },
+            });
+          }}
+          onClickConfirmButton={() => {
             setIsEventDialogOpen(false);
-            // router.push(PATH.LOGIN);
           }}
           visible
           title="응모가 완료되었어요! 🥳"
@@ -132,8 +155,7 @@ export default function Event() {
           ) : (
             <S.StyledEventButton
               onClick={() => {
-                toastMsg("로그인페이지로 이동합니다.");
-                router.push(PATH.LOGIN);
+                setLoginModalVisible(true);
               }}
               title="응모하기"
               type="shop"

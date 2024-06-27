@@ -6,6 +6,9 @@ import Image from "next/image";
 import useUpdateProduct from "@/hooks/manager/product/useUpdateProduct";
 
 import COLORS from "@/constants/color";
+import { Bundle } from "@/interface/manager/bundle";
+import { PRODUCT } from "@/interface/manager/product";
+import Category from "@/interface/category";
 
 const Title = styled.div`
   margin: 0;
@@ -168,36 +171,6 @@ const RedSpan = styled.span`
   color: red;
   margin-left: 0.5rem;
 `;
-interface Bundle {
-  id: number;
-  name: string;
-  imageUrls: string;
-  description: string;
-  saleStartTime: string;
-  visible: boolean;
-}
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface PRODUCT {
-  id: number;
-  name: string;
-  price: number;
-  discountPrice: number;
-  event: boolean;
-  mainThumbnail: string;
-  subThumbnail: string;
-  displayOrder: number;
-  visible: boolean;
-  bundleId: string;
-  categoryId: string;
-  mainImage: {
-    imageUrls: string[];
-  };
-}
 
 export default function UpdateProduct() {
   const {
@@ -253,8 +226,10 @@ export default function UpdateProduct() {
     detailImageData,
     handleDiscountChange,
     discountState,
+    handleSoldoutChange,
+    soldOut,
   } = useUpdateProduct();
-
+  console.log("sold", soldOut, visible);
   return (
     <div>
       <Title>상품 수정</Title>
@@ -396,6 +371,14 @@ export default function UpdateProduct() {
           사이즈 추가
         </button>
       </SizeInputs>
+      <ProductDetail>
+        품절:
+        <EventCheckbox
+          type="checkbox"
+          checked={soldOut}
+          onChange={(e) => handleSoldoutChange(e)}
+        />
+      </ProductDetail>
       <ApiButtonWrapper>
         <StyledButton type="button" onClick={createProduct}>
           상품 수정

@@ -25,7 +25,6 @@ export default function Cart() {
     setCartOrderProducts,
     handleHeaderCheckboxChange,
     handleProductCheckboxChange,
-    onClickSelectedOrderButton,
     totalPriceSum,
     onClickWholeOrderButton,
     onClickOrderButton,
@@ -35,6 +34,8 @@ export default function Cart() {
     cartProduct,
     totalPrice,
     isCartDataLoading,
+    triggerOrder,
+    setTriggerOrder,
   } = useCart();
   const { isDialogOpen, openDialog, closeDialog } = useDialog();
   const { timedOut } = useLoadingWithTimeout(isLoading, isCartDataLoading);
@@ -44,6 +45,12 @@ export default function Cart() {
       openDialog();
     }
   }, [timedOut]);
+  useEffect(() => {
+    if (triggerOrder) {
+      onClickOrderButton();
+      setTriggerOrder(false); // Reset trigger after execution
+    }
+  }, [triggerOrder]);
 
   if ((isCartDataLoading || isLoading) && !timedOut)
     return (
@@ -64,8 +71,7 @@ export default function Cart() {
           visible
           title="세션이 만료되어 로그아웃합니다."
           refuse="확인"
-          confirm=""
-          size={40}
+          size={42}
         />
       )}
       <h2>장바구니</h2>
@@ -128,9 +134,26 @@ export default function Cart() {
                         checked={selectedItems.includes(item)}
                         onChange={() => handleProductCheckboxChange(item)}
                       />
-                      <S.Img src={item.mainThumbnailImage} />
+                      <S.Img
+                        onClick={() => {
+                          const { productId } = item;
+                          router.push({
+                            pathname: PATH.PRODUCT,
+                            query: { productId },
+                          });
+                        }}
+                        src={item.mainThumbnailImage}
+                      />
                       <S.MobileTextInfo>
-                        <S.TextInfo>
+                        <S.TextInfo
+                          onClick={() => {
+                            const { productId } = item;
+                            router.push({
+                              pathname: PATH.PRODUCT,
+                              query: { productId },
+                            });
+                          }}
+                        >
                           <h4>{item.productName}</h4>
                           <h4>
                             {item.size}/{item.color}
@@ -156,8 +179,9 @@ export default function Cart() {
                         <S.MobileSelectButton
                           title="주문하기"
                           onClick={async () => {
+                            handleProductCheckboxChange(item);
                             try {
-                              await onClickSelectedOrderButton(item);
+                              if (triggerOrder) await onClickOrderButton();
                             } catch (error) {
                               console.error(error);
                             }
@@ -168,8 +192,9 @@ export default function Cart() {
                         <S.SelectButton
                           title="주문하기"
                           onClick={async () => {
+                            handleProductCheckboxChange(item);
                             try {
-                              await onClickSelectedOrderButton(item);
+                              if (triggerOrder) await onClickOrderButton();
                             } catch (error) {
                               console.error(error);
                             }

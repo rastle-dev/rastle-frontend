@@ -14,8 +14,9 @@ export default function useLoginInfo() {
   const logout = async () => {
     try {
       await authLogout();
-      // localStorage.clear();
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("returnUrl");
+
       router.push(PATH.HOME).then(() => router.reload());
     } catch (err) {
       console.log(err);

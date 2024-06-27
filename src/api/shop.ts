@@ -27,14 +27,14 @@ export const loadMarketProduct = async () => {
 export const loadMarketProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=true&sort=id,DESC`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
 export const loadMarketBestProduct = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=true&sort=soldCount,DESC&sort=id,DESC`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC&sort=id,DESC`,
   );
   return data;
 };
@@ -75,13 +75,20 @@ export const loadEventProduct = async () => {
 export const loadEventProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}${API.EVENT}?visible=TRUE&page=${page}&size=${size}&sort=id,DESC`,
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
 
 export const createOrder = async (orderData: object) => {
   const { data } = await authorizationClient.post(`${API.ORDERS}`, orderData);
+  return data;
+};
+export const createCartOrder = async (cartProductIds: object) => {
+  const { data } = await authorizationClient.post(
+    `${API.ORDERS}${API.CART}`,
+    cartProductIds,
+  );
   return data;
 };
 
@@ -105,6 +112,12 @@ export const paymentPrepare = async (paymentData: object) => {
   const { data } = await authorizationClient.post(
     `${API.PAYMENTPREPARE}`,
     paymentData,
+  );
+  return data;
+};
+export const loadReceiverInfo = async (merchantId: string) => {
+  const { data } = await authorizationClient.get(
+    `${API.MERCHANTID}/${merchantId}`,
   );
   return data;
 };

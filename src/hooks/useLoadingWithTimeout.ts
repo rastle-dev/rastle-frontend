@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useLoadingWithTimeout(
-  isLoading: boolean,
+  isLoading?: boolean,
   isSubLoading?: boolean,
 ) {
   const [timedOut, setTimedOut] = useState(false);

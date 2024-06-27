@@ -4,23 +4,18 @@ import media from "@/styles/media";
 import UserManagement from "@/components/Manager/UserManagement";
 import CategoryManagement from "@/components/Manager/CategoryManagement";
 import ProductManagement from "@/components/Manager/ProductManagement";
-import Dashboard from "@/components/Manager/Dashboard";
 import OrderManagement from "@/components/Manager/OrderManagement";
-import TotalManagement from "@/components/Manager/TotalManagement";
 import BundleManagement from "@/components/Manager/BundleManagement";
-
 import COLORS from "@/constants/color";
-import CreateEvent from "@/components/Manager/event/CreateEvent";
-import UpdateEvent from "@/components/Manager/event/UpdateEvent";
 import EventManagement from "@/components/Manager/EventManagement";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { adminCheckAuthority, adminGetBundle } from "@/api/admin";
+import { adminCheckAuthority } from "@/api/admin";
+import Custom404 from "@/pages/404";
 
 export const Wrapper = styled.div`
   padding-top: 9rem; /* header때문에 추가 */
   width: 88%;
-  //overflow: hidden;
   overflow-x: auto; /* 수평 스크롤을 추가합니다. */
 
   ${media.mobile} {
@@ -87,47 +82,40 @@ const managementList = [
 ];
 
 export default function Manager() {
-  const { data: authority, status } = useQuery(
+  const { data: authority } = useQuery(
     [QUERYKEYS.ADMIN_GET_AUTHORITY],
     adminCheckAuthority,
   );
 
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
-
   const onClickList = (name: string) => {
     setSelectedItem(name);
   };
 
-  if (status === "loading") {
-    // 데이터를 로딩 중일 때 표시할 내용
-    return <div>Loading...</div>;
-  }
-
-  if (!authority) {
-    // authority 값이 없을 때 표시할 내용
-    return <div>데이터를 불러올 수 없습니다.</div>;
-  }
-
   return (
-    <Wrapper>
-      <HeaderTitle>관리자 페이지</HeaderTitle>
-      <ManageList>
-        {managementList.map(({ name }) => (
-          <StyledButton key={name} onClick={() => onClickList(name)}>
-            {name}
-          </StyledButton>
-        ))}
-      </ManageList>
-      <ManageMentDetail>
-        {selectedItem === "전체통계" && <TotalManagement />}
-        {selectedItem === "회원관리" && <UserManagement />}
-        {selectedItem === "카테고리 관리" && <CategoryManagement />}
-        {selectedItem === "세트관리" && <BundleManagement />}
-        {selectedItem === "이벤트관리" && <EventManagement />}
-        {selectedItem === "상품관리" && <ProductManagement />}
-        {selectedItem === "주문관리" && <OrderManagement />}
-        {selectedItem === "대시보드" && <Dashboard />}
-      </ManageMentDetail>
-    </Wrapper>
+    <div style={{ width: "88%" }}>
+      {authority?.data === true ? (
+        <Wrapper>
+          <HeaderTitle>관리자 페이지</HeaderTitle>
+          <ManageList>
+            {managementList.map(({ name }) => (
+              <StyledButton key={name} onClick={() => onClickList(name)}>
+                {name}
+              </StyledButton>
+            ))}
+          </ManageList>
+          <ManageMentDetail>
+            {selectedItem === "회원관리" && <UserManagement />}
+            {selectedItem === "카테고리 관리" && <CategoryManagement />}
+            {selectedItem === "세트관리" && <BundleManagement />}
+            {selectedItem === "이벤트관리" && <EventManagement />}
+            {selectedItem === "상품관리" && <ProductManagement />}
+            {selectedItem === "주문관리" && <OrderManagement />}
+          </ManageMentDetail>
+        </Wrapper>
+      ) : (
+        <Custom404 />
+      )}
+    </div>
   );
 }

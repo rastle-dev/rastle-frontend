@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CreateBundle from "@/components/Manager/bundle/CreateBundle";
-import UpdateBundle from "@/components/Manager/bundle/UpdateBundle";
 import COLORS from "@/constants/color";
 import CreateEvent from "@/components/Manager/event/CreateEvent";
 import UpdateEvent from "@/components/Manager/event/UpdateEvent";
+import LoadEvent from "@/components/Manager/event/LoadEvent";
 
 const Title = styled.div`
   margin: 0;
@@ -55,7 +54,11 @@ export const ManageMentDetail = styled.div`
   padding-top: 3rem;
 `;
 
-const managementList = [{ name: "이벤트 추가" }, { name: "이벤트 수정" }];
+const managementList = [
+  { name: "이벤트 추가" },
+  { name: "이벤트 수정" },
+  { name: "이벤트 내역 조회" },
+];
 
 export default function EventManagement() {
   const [selectedItem, setSelectedItem] = useState<string>("전체통계");
@@ -77,6 +80,7 @@ export default function EventManagement() {
       <ManageMentDetail>
         {selectedItem === "이벤트 추가" && <CreateEvent />}
         {selectedItem === "이벤트 수정" && <UpdateEvent />}
+        {selectedItem === "이벤트 내역 조회" && <LoadEvent />}
       </ManageMentDetail>
     </div>
   );

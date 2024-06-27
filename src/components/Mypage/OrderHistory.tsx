@@ -15,12 +15,17 @@ const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
   ssr: false,
 });
 type DeliveryStatus =
-  | "NOT_STARTED"
   | "DELIVERY_STARTED"
+  | "DELIVERY_READY"
   | "DELIVERED"
   | "PAID"
-  | "CANCEL"
-  | "CANCEL_REQUESTED";
+  | "CANCELLED"
+  | "CANCEL_REQUESTED"
+  | "PARTIALLY_CANCELLED"
+  | "RETURN_REQUESTED"
+  | "PARTIALLY_RETURNED"
+  | "RETURNED";
+
 export default function OrderHistory() {
   const router = useRouter();
   const {
@@ -42,21 +47,28 @@ export default function OrderHistory() {
   if (orderLoading && !timedOut) return <LoadingBar type={6} />;
 
   const openPopup = (trackingNumber: number, status: string) => {
-    const url = `https://www.cjlogistics.com/ko/tool/parcel/tracking?gnbInvcNo=${trackingNumber}`;
+    const url = `https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=${trackingNumber}`;
     const width = 800;
     const height = 600;
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
-    if (status === "DELIVERY_STARTED" || status === "DELIVERED") {
+    if (
+      status === "DELIVERY_STARTED" ||
+      status === "DELIVERED" ||
+      status === "PARTIALLY_RETURNED" ||
+      status === "RETURNED"
+    ) {
       window.open(
         url,
         "_blank",
         `width=${width}, height=${height}, left=${left}, top=${top}`,
       );
-    } else if (status === "CANCEL") {
+    } else if (status === "CANCELLED") {
       toastMsg("주문 취소된 상품이에요!");
     } else if (status === "CANCEL_REQUESTED") {
       toastMsg("주문 취소 요청된 상품이에요!");
+    } else if (status === "DELIVERY_READY") {
+      toastMsg("배송을 준비중이에요!");
     } else {
       toastMsg("상품을 준비중이에요!");
     }
@@ -74,8 +86,7 @@ export default function OrderHistory() {
           visible
           title="세션이 만료되어 로그아웃합니다."
           refuse="확인"
-          confirm=""
-          size={40}
+          size={42}
         />
       )}
       <h2>주문내역</h2>
@@ -94,7 +105,7 @@ export default function OrderHistory() {
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>
-                      <div>{item.orderInfo.orderDate.split("T")[0]}</div>
+                      <div>{item.orderInfo.orderDate?.split("T")[0]}</div>
                       <S.OrderDetail
                         onClick={() => {
                           router.push({
@@ -120,9 +131,26 @@ export default function OrderHistory() {
                       {item.productOrderInfos.map((product: any) => (
                         <S.ProductBox>
                           <S.UpperBox>
-                            <S.Img src={product.thumbNailUrl} />
+                            <S.Img
+                              src={product.thumbnailUrl}
+                              onClick={() => {
+                                const { productId } = product;
+                                router.push({
+                                  pathname: PATH.PRODUCT,
+                                  query: { productId },
+                                });
+                              }}
+                            />
                             <S.MobileTextInfo>
-                              <S.TextInfo>
+                              <S.TextInfo
+                                onClick={() => {
+                                  const { productId } = product;
+                                  router.push({
+                                    pathname: PATH.PRODUCT,
+                                    query: { productId },
+                                  });
+                                }}
+                              >
                                 <h4>{product.name}</h4>
                                 <h4>
                                   {product.size}/{product.color}
@@ -171,6 +199,7 @@ export default function OrderHistory() {
                                     product?.status as DeliveryStatus
                                   ]
                                 }
+                                <p>[배송조회]</p>
                               </div>
                             </S.DeskTopDeliveryStatus>
                           </S.BottomBox>
@@ -193,6 +222,7 @@ export default function OrderHistory() {
             pageRangeDisplayed={2}
             onChange={onChangeOrderPage}
             prevPageText="<"
+            hideFirstLastPages
             nextPageText=">"
           />
         </S.PagingWrapper>

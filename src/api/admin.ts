@@ -322,7 +322,12 @@ export const adminDeleteEvent = async (eventId: number | undefined) => {
   );
   return data;
 };
-
+export const adminGetEventInfo = async (productId: number | null) => {
+  const { data } = await authorizationClient.get(
+    `${API.LOAD_EVNET}/${productId}`,
+  );
+  return data;
+};
 export const adminGetOrderInfo = async (orderData: any) => {
   const { page, size } = orderData;
   const { data } = await authorizationClient.get(
@@ -343,6 +348,34 @@ export const adminUpdateTrackingNumber = async (
   const { data } = await authorizationClient.patch(
     `${API.UPDATE_TRACKINGNUMBER}/${productOrderNumber}/trackingNumber`,
     { trackingNumber },
+  );
+  return data;
+};
+export const adminDeleteTrackingNumber = async (
+  productOrderNumber: number | undefined,
+) => {
+  const { data } = await authorizationClient.delete(
+    `${API.DELETE_TRACKINGNUMBER}/${productOrderNumber}/trackingNumber`,
+  );
+  return data;
+};
+
+interface CancelData {
+  impId: string | undefined;
+  productOrderNumber: number | undefined;
+}
+export const adminCancelOrder = async (cancelData: CancelData) => {
+  const { data } = await authorizationClient.post(
+    `${API.ADMIN_CANCEL_ORDER}`,
+    cancelData,
+  );
+  return data;
+};
+
+export const adminReturnOrder = async (cancelData: CancelData) => {
+  const { data } = await authorizationClient.post(
+    `${API.ADMIN_RETURN_ORDER}`,
+    cancelData,
   );
   return data;
 };

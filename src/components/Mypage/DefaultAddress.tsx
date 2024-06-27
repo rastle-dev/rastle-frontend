@@ -56,8 +56,7 @@ export default function DefaultAddress() {
           visible
           title="세션이 만료되어 로그아웃합니다."
           refuse="확인"
-          confirm=""
-          size={34}
+          size={42}
         />
       )}
       <h2>기본 배송지</h2>

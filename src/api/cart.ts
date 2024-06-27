@@ -75,3 +75,11 @@ export const requestUserOrderCancel = async (cancelProductData: any) => {
   );
   return data;
 };
+
+export const requestUserOrderReturn = async (returnProductData: any) => {
+  const { data } = await authorizationClient.post(
+    API.USER_ORDER_RETURN,
+    returnProductData,
+  );
+  return data;
+};

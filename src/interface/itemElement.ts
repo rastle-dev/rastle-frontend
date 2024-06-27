@@ -16,4 +16,5 @@ export default interface ItemElementProps {
   startDate?: string | undefined;
   endDate?: string | undefined;
   onTimeUpdate?: (time: number | undefined) => void; // onTimeUpdate 추가
+  soldOut?: boolean | undefined;
 }

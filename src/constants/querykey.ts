@@ -20,6 +20,7 @@ const QUERYKEYS = {
   LOAD_ME: "loadMe",
   ADMIN_LOAD_USERINFO: "adminGetUserInfo",
   ADMIN_LOAD_ORDERINFO: "adminGetOrderInfo",
+  ADMIN_LOAD_EVENTINFO: "adminGetEventInfo",
   LOAD_PRODUCT_IMAGE: "loadProductImage",
   LOAD_PRODUCT_DETAIL: "loadProductDetail",
   LOAD_PRODUCT_COLOR: "loadProductColor",
@@ -32,6 +33,7 @@ const QUERYKEYS = {
   LOAD_EVENT_HISTORY: "loadEventHistory",
   LOAD_ORDER_DETAIL: "loadOrderDetail",
   REQUEST_USER_CANCEL: "requestUserOrderCancel",
+  LOAD_RECEIVERINFO_MERCHANTID: "loadReceiverInfo",
 } as const;
 
 export default QUERYKEYS;

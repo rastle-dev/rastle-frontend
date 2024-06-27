@@ -40,7 +40,11 @@ const UPDATE_ADDRESS = "/updateMemberRecipientInfo";
 const APPLY = "/apply";
 const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";
 const CANCEL = "/cancel";
+const RETURN = "/return";
 const RESET = "resetPassword";
+const MERCHANTID = "merchantId";
+const CANCEL_ORDER = "cancelOrder";
+const RETURN_ORDER = "returnOrder";
 
 const API = {
   BASE_URL: `${BASE_URL}`,
@@ -79,8 +83,10 @@ const API = {
   ORDERSINFO: `${ADMIN}${ORDERS}`,
   CREATEEVENT: `${ADMIN}${EVENT}`,
   UPDATEEVENT: `${ADMIN}${EVENT}`,
+  LOAD_EVNET: `${ADMIN}${EVENT}${APPLY}`,
   DELETEEVENT: `${ADMIN}${EVENT}`,
   UPDATE_TRACKINGNUMBER: `${ADMIN}${ORDERS}`,
+  DELETE_TRACKINGNUMBER: `${ADMIN}${ORDERS}`,
   EVENT: `${EVENT}`,
   CART: `${CART}`,
   REMOVE: `${REMOVE}`,
@@ -99,6 +105,10 @@ const API = {
   APPLY: `${APPLY}`,
   UPDATE_PHONENUMBER: `${MEMBER}${UPDATE_PHONENUMBER}`,
   USER_ORDER_CANCEL: `${ORDERS}${CANCEL}`,
+  USER_ORDER_RETURN: `${ORDERS}${RETURN}`,
   INITIALIZE_PASSWORD: `${AUTH}${RESET}`,
+  MERCHANTID: `${ORDERS}/${MERCHANTID}`,
+  ADMIN_CANCEL_ORDER: `${ADMIN}/${CANCEL_ORDER}`,
+  ADMIN_RETURN_ORDER: `${ADMIN}/${RETURN_ORDER}`,
 };
 export default API;

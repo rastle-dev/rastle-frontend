@@ -13,6 +13,7 @@ import {
   updatePhoneNumber,
 } from "@/api/cart";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
+import errorMsg from "@/components/Toast/error";
 import { RequestPayResponse } from "../../portone";
 
 type Address = {
@@ -81,6 +82,8 @@ export default function useOrder() {
     );
   }
   const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null);
+  const [selectedCouponPrice, setSelectedCouponPrice] = useState<number>(0);
+
   // TODO: 쿠폰가격 변경
   const couponPrice = couponData?.data.couponInfos[0]?.discount ?? 0;
 
@@ -88,8 +91,10 @@ export default function useOrder() {
     // 쿠폰이 이미 선택된 경우 또는 선택 취소를 위해 동일한 쿠폰을 클릭한 경우
     if (selectedCoupon === couponId) {
       setSelectedCoupon(null); // 선택 취소
+      setSelectedCouponPrice(0);
     } else {
-      setSelectedCoupon(couponId); // 다른 쿠폰 선택
+      setSelectedCoupon(couponId);
+      setSelectedCouponPrice(3000);
     }
   };
 
@@ -100,7 +105,7 @@ export default function useOrder() {
   };
 
   const [totalPriceFinal, setTotalPriceFinal] = useState<number>(0);
-  const [deliveryPrice] = useState<number>(3000);
+  const [deliveryPrice, setDeliveryPrice] = useState<number>(3000);
 
   useEffect(() => {
     let calculatedTotalPrice = 0;
@@ -118,20 +123,36 @@ export default function useOrder() {
     selectedCoupon,
     couponPrice,
   ]);
+  const [postalAddress, setAddress] = useState<Address>({
+    address: undefined,
+    zonecode: undefined,
+  });
+  useEffect(() => {
+    if (postalAddress.address && postalAddress.address.includes("제주")) {
+      setDeliveryPrice(6000);
+    } else {
+      setDeliveryPrice(3000);
+    }
+  }, [postalAddress.address]);
 
   const PriceInfo = [
     {
       meta: "상품 금액",
       data:
-        totalPriceSum !== 0 ? `${totalPriceSum}원` : `${totalPriceSumDirect}원`,
+        totalPriceSum !== 0
+          ? `${totalPriceSum.toLocaleString()}원`
+          : `${totalPriceSumDirect.toLocaleString()}원`,
     },
     {
       meta: "배송비",
-      data: "3000원",
+      data:
+        postalAddress.address && postalAddress.address.includes("제주")
+          ? "6,000원"
+          : "3,000원",
     },
     {
       meta: "쿠폰할인",
-      data: selectedCoupon ? `-${couponPrice}원` : "-0원",
+      data: selectedCoupon ? `-${couponPrice}원` : "0원",
     },
     // Add other items in PriceInfo array as needed
   ];
@@ -179,10 +200,6 @@ export default function useOrder() {
   const [clickedDeliveryButtonIndex, setClickedDeliveryButtonIndex] =
     useState<number>();
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
-  const [postalAddress, setAddress] = useState<Address>({
-    address: undefined,
-    zonecode: undefined,
-  });
 
   const { data: defaultAddress, isLoading } = useQuery(
     [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
@@ -253,7 +270,6 @@ export default function useOrder() {
       }
     }
   }, [defaultAddress, isLoading]);
-
   useEffect(() => {
     if (clickedDeliveryButtonIndex === 1) {
       setAddress(() => ({
@@ -327,7 +343,10 @@ export default function useOrder() {
   /* 3. 콜백 함수 정의하기 */
   async function callback(response: RequestPayResponse) {
     if (response.error_msg) {
-      alert(`결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
+      alert(
+        `결제에 실패하였습니다. 결제를 다시 시도해주세요. ${response.error_msg}`,
+      );
+      console.log("response.error_msg", response.error_msg);
       router.replace(`/shop`);
       return;
     }
@@ -344,14 +363,16 @@ export default function useOrder() {
         if (paymentData.data.verified) {
           console.log(paymentData);
           try {
-            await router.push({
+            await router.replace({
               pathname: PATH.ORDERCONFIRM,
               query: {
                 selectedProducts,
                 orderInfo: JSON.stringify(response),
               },
             });
-          } catch (error) {}
+          } catch (error) {
+            /* empty */
+          }
         }
       } catch (err) {
         console.error(err);
@@ -374,6 +395,7 @@ export default function useOrder() {
     let directPurchase;
 
     console.log(cartProduct);
+    console.log("주소확인", postalAddress);
 
     if (
       !receiver ||
@@ -382,12 +404,12 @@ export default function useOrder() {
       !postalAddress.address ||
       !detailPostal
     ) {
-      alert("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
+      errorMsg("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
       return;
     }
 
     if (!pgMethod) {
-      alert("결제 방식을 선택해주세요.");
+      errorMsg("결제 방식을 선택해주세요.");
       return;
     }
 
@@ -445,13 +467,19 @@ export default function useOrder() {
         const additionalItems = parsedSelectedProducts.length - 1;
         name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
+      console.log(
+        "구매하기 동선",
+        totalPriceFinal - selectedCouponPrice,
+        selectedCoupon,
+      );
+
       values = {
         pg: pgMethod,
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
         custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
-        amount: totalPriceFinal,
+        amount: totalPriceFinal - selectedCouponPrice,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         buyer_tel: phoneNumber,
@@ -461,7 +489,7 @@ export default function useOrder() {
         m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     } else {
-      console.log("장바구니 동선");
+      console.log("장바구니 동선", totalPriceFinal - selectedCouponPrice);
       let name;
       if (selectedItems.length === 1) {
         name = selectedItems[0].productName;
@@ -474,7 +502,7 @@ export default function useOrder() {
         pay_method: pgData, // 생략가능
         merchant_uid: orderNumber, // 상점에서 생성한 고유 주문번호
         name,
-        amount: totalPriceFinal,
+        amount: totalPriceFinal - selectedCouponPrice,
         buyer_email: OrdererInfo.find((info) => info.meta === "이메일")?.data,
         buyer_name: receiver,
         custom_data: { couponId: selectedCoupon, deliveryPrice, deliveryMsg },
@@ -509,12 +537,19 @@ export default function useOrder() {
     } catch (error) {
       // Handle the error
       console.log(error);
-      alert(`(모바일)결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
+      alert("결제에 실패하였습니다. 결제를 다시 시도해주세요.");
+      router.replace(`/shop`);
     }
 
     // if (!window.IMP) return;
     /* 1. 가맹점 식별하기 */
   }
+
+  console.log(
+    "defaultAddress",
+    defaultAddress?.data.roadAddress.includes("제주"),
+  );
+  console.log("defaultAddress", defaultAddress);
 
   return {
     clickedPaymentButtonIndex,
@@ -535,7 +570,6 @@ export default function useOrder() {
     totalPriceFinal,
     PriceInfo,
     selectedProducts,
-    cartProduct,
     toggleCoupon,
     selectedCoupon,
     DefaultAddressInputs,
@@ -543,10 +577,14 @@ export default function useOrder() {
     isCouponVisible,
     handleCheckboxChange,
     isDefaultAddress,
+    setIsDefaultAddress,
     receiver,
     deliveryMsg,
     onChangeDeliveryMsg,
     couponData,
     isCouponLoading: isLoading,
+    couponPrice,
+    selectedCouponPrice,
+    deliveryPrice,
   };
 }

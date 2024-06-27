@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
-import { createOrder } from "@/api/shop";
+import { createCartOrder, createOrder } from "@/api/shop";
 import PATH from "@/constants/path";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -28,6 +28,7 @@ export default function useCart() {
   const queryClient = useQueryClient();
   const [timedOut, setTimedOut] = useState(false);
   const [loadingProps, setLoadingProps] = useState(false);
+  const [triggerOrder, setTriggerOrder] = useState(false);
   useEffect(() => {
     const currentPath = router.asPath;
     if (typeof window !== "undefined") {
@@ -129,6 +130,7 @@ export default function useCart() {
       setDeleteProducts([...deleteProducts, item.cartProductId]);
       setCartOrderProducts([...cartOrderProducts, item.cartProductId]);
     }
+    setTriggerOrder(true);
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
@@ -168,8 +170,11 @@ export default function useCart() {
       errorMsg("주문하실 상품을 선택해주세요");
     } else {
       try {
-        const data = await createOrder({
-          orderProducts,
+        const selectProductsCartId = selectedItems?.map(
+          (product: ProductItem) => product.cartProductId,
+        );
+        const data = await createCartOrder({
+          cartProductIds: selectProductsCartId,
         });
 
         if (data) {
@@ -209,10 +214,11 @@ export default function useCart() {
       (product: ProductItem) => product.cartProductId,
     );
     const wholeOrderList = whole.join(",");
-    console.log(orderProducts);
+    console.log("orderProducts", orderProducts);
+    console.log("car", whole);
     try {
-      const data = await createOrder({
-        orderProducts,
+      const data = await createCartOrder({
+        cartProductIds: whole,
       });
 
       if (data) {
@@ -306,5 +312,7 @@ export default function useCart() {
     setLoadingProps,
     loadingProps,
     isLoading,
+    setTriggerOrder,
+    triggerOrder,
   };
 }

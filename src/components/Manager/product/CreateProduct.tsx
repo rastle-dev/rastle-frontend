@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Input from "@/components/Common/Input";
 import useCreateProduct from "@/hooks/manager/product/useCreateProduct";
 import COLORS from "@/constants/color";
+import { PRODUCT } from "@/interface/manager/product";
+import { Bundle } from "@/interface/manager/bundle";
+import Category from "@/interface/category";
 
 const Title = styled.div`
   margin: 0;
@@ -170,37 +173,8 @@ export const StyledImgButton = styled.button`
   &:hover {
     font-weight: 500;
   }
-
-  /* 버튼이 클릭된 상태일 때의 스타일 */
 `;
 
-interface Bundle {
-  id: number;
-  name: string;
-  imageUrls: string;
-  description: string;
-  saleStartTime: string;
-  visible: boolean;
-}
-
-interface PRODUCT {
-  id: number;
-  name: string;
-  price: number;
-  discountPrice: number;
-  event: boolean;
-  mainThumbnail: string;
-  subThumbnail: string;
-  displayOrder: number;
-  visible: boolean;
-  bundleId: string;
-  categoryId: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-}
 export default function CreateProduct() {
   const {
     onChangeName,

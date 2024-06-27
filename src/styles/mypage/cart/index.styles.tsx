@@ -86,6 +86,7 @@ export const ProductInfo = styled.div`
   }
 `;
 export const Img = styled.img`
+  cursor: pointer;
   width: 7.5rem;
   height: auto;
   aspect-ratio: 0.77;
@@ -100,6 +101,7 @@ export const Img = styled.img`
 `;
 export const TextInfo = styled.div`
   width: 24rem;
+  cursor: pointer;
   padding-right: 1rem;
   h4 {
     font-weight: 500;

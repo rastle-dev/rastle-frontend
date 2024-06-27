@@ -7,6 +7,9 @@ import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadCartProduct } from "@/api/cart";
 import useOrder from "../../hooks/useOrder";
 
 type ProductItem = {
@@ -38,7 +41,6 @@ export default function Order() {
     totalPriceSumDirect,
     PriceInfo,
     selectedProducts,
-    cartProduct,
     toggleCoupon,
     selectedCoupon,
     handleCouponToggle,
@@ -47,10 +49,16 @@ export default function Order() {
     handleCheckboxChange,
     deliveryMsg,
     onChangeDeliveryMsg,
+    selectedCouponPrice,
+    setIsDefaultAddress,
+    deliveryPrice,
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
-
+  const { data: cartProduct } = useQuery(
+    [QUERYKEYS.LOAD_CART],
+    loadCartProduct,
+  );
   let parsedProducts;
   if (selectedProducts) {
     parsedProducts = JSON.parse(selectedProducts as string);
@@ -99,12 +107,6 @@ export default function Order() {
                         {item.count}개 /{" "}
                         {`${item.discountPrice.toLocaleString()}원`}
                       </S.NumPrice>
-                      {/* <S.DiscountPrice> */}
-                      {/*   {item.count}개 /{" "} */}
-                      {/*   {`${item.productPrice.toLocaleString()}원`} */}
-                      {/*   <span>10% </span> */}
-                      {/*   {item.discountPrice ? item.discountedPrice : ""}원 원 */}
-                      {/* </S.DiscountPrice> */}
                       <S.SizeColor>
                         {item.size} / {item.color}
                       </S.SizeColor>
@@ -120,7 +122,7 @@ export default function Order() {
                   <S.Info>
                     <S.ProductName>{item.title}</S.ProductName>
                     <S.NumPrice>
-                      {item.count}개 / {`${item?.price.toLocaleString()}원`}
+                      {item.count}개 / {`${item?.price?.toLocaleString()}원`}
                     </S.NumPrice>
                     <S.SizeColor>
                       {item.size} / {item.color}
@@ -186,7 +188,11 @@ export default function Order() {
               )}
             </S.DeliveryBox>
           ))}
-          <S.SettingDefaultAddress>
+          <S.SettingDefaultAddress
+            onClick={() => {
+              setIsDefaultAddress(!isDefaultAddress);
+            }}
+          >
             <Input
               type="checkbox"
               checked={isDefaultAddress}
@@ -258,7 +264,7 @@ export default function Order() {
                                   <S.CouponTextWrapper>
                                     <S.CouponText>{item.name}</S.CouponText>
                                     <S.CouponSubText>
-                                      2024/03/29까지 전상품 적용
+                                      2024/07/1까지 전상품 적용
                                     </S.CouponSubText>
                                   </S.CouponTextWrapper>
                                 </S.CouponWrapper>
@@ -300,8 +306,8 @@ export default function Order() {
               <S.TotalInfo>결제 금액</S.TotalInfo>
               <S.TotalPrice>
                 {totalPriceSum !== 0
-                  ? `${totalPriceSum + 3000}원`
-                  : `${totalPriceSumDirect + 3000}원`}
+                  ? `${(totalPriceSum + deliveryPrice - selectedCouponPrice).toLocaleString()}원`
+                  : `${(totalPriceSumDirect + deliveryPrice - selectedCouponPrice).toLocaleString()}원`}
               </S.TotalPrice>
             </S.Total>
           </S.PaymentInfoWrapper>

@@ -10,4 +10,6 @@ export interface SelectedItem {
   thumbnailUrl: string;
   totalPrice: number;
   status: string;
+  cancelAmount?: number | undefined;
+  cancelRequestAmount?: number | undefined;
 }

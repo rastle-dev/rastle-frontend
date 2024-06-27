@@ -153,6 +153,7 @@ export const EventBottomBox = styled.div`
   padding-top: 2rem;
 `;
 export const Img = styled.img`
+  cursor: pointer;
   width: 7.5rem;
   height: 8.2rem;
   margin-right: 1rem;
@@ -178,6 +179,7 @@ export const TextInfo = styled.div`
     gap: 0.7rem;
   }
   padding-bottom: 0.5rem;
+  cursor: pointer;
 `;
 export const Count = styled.div`
   @media (min-width: 769px) {
@@ -267,7 +269,10 @@ export const DeskTopDeliveryStatus = styled.div`
   cursor: pointer;
   display: flex;
   padding-left: 2rem;
-  text-decoration: underline;
+  p {
+    font-weight: 400;
+    text-decoration: underline;
+  }
 `;
 export const DeskTopEventStatus = styled.div`
   @media (max-width: 769px) {

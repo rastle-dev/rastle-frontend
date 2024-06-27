@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import LazyLink from "@/components/LazyLink";
 import PATH from "@/constants/path";
+import media from "@/styles/media";
 
 const Container = styled.div`
   width: 100%;
@@ -21,6 +22,9 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   background-color: transparent;
+  ${media.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const CompanyWrapper = styled.div`
@@ -46,6 +50,10 @@ const InformationDetail = styled.div`
     font-size: 1rem;
     padding: 0.2rem 0.2rem 0.2rem 0;
     font-weight: 400;
+    text-decoration: underline;
+  }
+  u {
+    font-weight: 400;
   }
 `;
 
@@ -53,13 +61,12 @@ const ReturnInformationWrapper = styled.div`
   font-size: 1.5rem;
   padding: 1rem 1rem 1rem 0;
   font-weight: 500;
-  //border: 1px solid red;
+  //text-decoration: underline;
 `;
 const ReturnInformationWrapperRIGHT = styled.div`
   font-size: 1.5rem;
   padding: 1rem 0 1rem 0;
   font-weight: 500;
-  //border: 1px solid red;
 `;
 
 function Footer() {
@@ -105,13 +112,19 @@ function Footer() {
         <ReturnInformationWrapper>
           <CompanyTitle>Links</CompanyTitle>
           <LazyLink href={PATH.GUIDE}>
-            <InformationDetail>이용안내</InformationDetail>
+            <InformationDetail>
+              <u>이용안내</u>
+            </InformationDetail>
           </LazyLink>
           <LazyLink href={PATH.AGREEMENT}>
-            <InformationDetail>이용약관</InformationDetail>
+            <InformationDetail>
+              <u>이용약관</u>
+            </InformationDetail>
           </LazyLink>
           <LazyLink href={PATH.PRIVACY}>
-            <InformationDetail>개인정보처리방침</InformationDetail>
+            <InformationDetail>
+              <u>개인정보처리방침</u>
+            </InformationDetail>
           </LazyLink>
         </ReturnInformationWrapper>
         <ReturnInformationWrapperRIGHT>
