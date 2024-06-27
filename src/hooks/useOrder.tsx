@@ -509,7 +509,7 @@ export default function useOrder() {
     } catch (error) {
       // Handle the error
       console.log(error);
-      alert(error);
+      alert(`(모바일)결제에 실패하였습니다. 결제를 다시 시도해주세요.`);
     }
 
     // if (!window.IMP) return;
