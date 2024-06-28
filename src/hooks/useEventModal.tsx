@@ -7,14 +7,21 @@ import QUERYKEYS from "@/constants/querykey";
 import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import useInput from "@/hooks/useInput";
+import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
 
 export default function useEventModal() {
   const [, setIsEventModalOpen] = useRecoilState(eventModalState);
   const [, setIsEventDialogOpen] = useRecoilState(eventDialogState);
-  const [eventPhoneNumber, onChangeEventPhoneNumber] = useInput("");
-  const [instagramId, onChangeInstagramId] = useInput("");
+  const { eventHistoryData } = useEventHistory();
+  const lastContentItem =
+    eventHistoryData?.data.content[eventHistoryData.data.content.length - 1];
+  const [eventPhoneNumber, onChangeEventPhoneNumber] = useInput(
+    lastContentItem.eventPhoneNumber,
+  );
+  const [instagramId, onChangeInstagramId] = useInput(
+    lastContentItem.instagramId,
+  );
   const queryClient = useQueryClient();
-
   const inputFields = [
     {
       label: "전화번호",
