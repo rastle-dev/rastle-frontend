@@ -9,12 +9,21 @@ import PATH from "@/constants/path";
 import errorMsg from "@/components/Toast/error";
 
 interface ProductOrderInfoItem {
+  productId: number;
+  color: string;
+  name: string;
+  price: number;
   cancelAmount: number;
   cancelRequestAmount: number;
   returnAmount: number;
   returnRequestAmount: number;
   count: number;
-  // 다른 속성들...
+  thumbnailUrl: string;
+  orderNumber: number;
+  productOrderNumber: number;
+  size: string;
+  status: string;
+  totalPrice: number;
 }
 
 export default function OrderDetail() {
@@ -71,11 +80,11 @@ export default function OrderDetail() {
   const paymentInfoList = [
     { label: "총 결제금액", value: orderDetail?.data.paymentAmount },
     {
-      label: "상품구매금액",
+      label: "상품금액",
       value:
         (orderDetail?.data?.paymentAmount ?? 0) -
         (orderDetail?.data?.deliveryPrice ?? 0) +
-        orderDetail?.data.couponAmount,
+        (orderDetail?.data?.couponAmount ?? 0),
     },
     { label: "배송비", value: orderDetail?.data.deliveryPrice },
     { label: "쿠폰할인금액", value: orderDetail?.data.couponAmount },
@@ -134,21 +143,10 @@ export default function OrderDetail() {
         <S.MainTitle>주문 상세조회</S.MainTitle>
         <S.InfoWrapper>
           <S.Title>주문 상품</S.Title>
-          {orderDetail?.data.productOrderInfos.map((item: any) => (
-            <S.Product>
-              <S.Thumbnail
-                onClick={() => {
-                  const { productId } = item;
-                  router.push({
-                    pathname: PATH.PRODUCT,
-                    query: { productId },
-                  });
-                }}
-                src={item.thumbnailUrl}
-                alt={item.thumbnailUrl}
-              />
-              <S.Info>
-                <S.ProductName
+          {orderDetail?.data.productOrderInfos.map(
+            (item: ProductOrderInfoItem) => (
+              <S.Product>
+                <S.Thumbnail
                   onClick={() => {
                     const { productId } = item;
                     router.push({
@@ -156,26 +154,38 @@ export default function OrderDetail() {
                       query: { productId },
                     });
                   }}
-                >
-                  <p>{item.name}</p>
-                </S.ProductName>
-                <S.NumPrice>
-                  {item.count}개 / {item.totalPrice}원
-                </S.NumPrice>
-                <S.SizeColor>
-                  {item.size} / {item.color}
-                </S.SizeColor>
-                <S.OrderInner>
-                  <p>{deliveryStatusText[item?.status as DeliveryStatus]}</p>
-                </S.OrderInner>
-              </S.Info>
-            </S.Product>
-          ))}
+                  src={item.thumbnailUrl}
+                  alt={item.thumbnailUrl}
+                />
+                <S.Info>
+                  <S.ProductName
+                    onClick={() => {
+                      const { productId } = item;
+                      router.push({
+                        pathname: PATH.PRODUCT,
+                        query: { productId },
+                      });
+                    }}
+                  >
+                    <p>{item.name}</p>
+                  </S.ProductName>
+                  <S.NumPrice>
+                    {item.count}개 / {item.totalPrice}원
+                  </S.NumPrice>
+                  <S.SizeColor>
+                    {item.size} / {item.color}
+                  </S.SizeColor>
+                  <S.OrderInner>
+                    <p>{deliveryStatusText[item?.status as DeliveryStatus]}</p>
+                  </S.OrderInner>
+                </S.Info>
+              </S.Product>
+            ),
+          )}
           <S.OrderTableDiv>
             <S.OrderInnerLeft>
               <p>주문일자 : </p>
             </S.OrderInnerLeft>
-            ㅁ{" "}
             <S.OrderInnerRight>
               {orderDetail?.data.orderDate.split("T")[0]}
             </S.OrderInnerRight>
