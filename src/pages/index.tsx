@@ -51,7 +51,6 @@ export default function Home() {
   const { productData, eventData, bestProductData } = useHome();
   const router = useRouter();
   const [isSignupPopupVisible, setSignupPopupVisible] = useState(false);
-  console.log("d", bestProductData);
   useEffect(() => {
     const currentPath = router.asPath;
     if (currentPath === "/?social=true") {
