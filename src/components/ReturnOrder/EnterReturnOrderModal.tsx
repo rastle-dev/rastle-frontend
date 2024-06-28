@@ -4,6 +4,7 @@ import Button from "@/components/Common/Button";
 import React, { useState } from "react";
 import Icon from "@/components/Common/Icon";
 import useOrderCancel from "@/hooks/useOrderCancel";
+import { ReturnInfo } from "@/interface/Return/returnInfo";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -55,10 +56,15 @@ const EnterButton = styled(Button)`
   }
 `;
 
-export default function EnterReturnOrderModal() {
-  const { mutateRequestUserReturn, returnInfo } = useOrderCancel();
-  const [isConfirmChecked, setIsConfirmChecked] = useState(false);
+type EnterReturnOrderModalProps = {
+  returnInfo: ReturnInfo;
+};
 
+export default function EnterReturnOrderModal({
+  returnInfo,
+}: EnterReturnOrderModalProps) {
+  const { mutateRequestUserReturn } = useOrderCancel();
+  const [isConfirmChecked, setIsConfirmChecked] = useState(false);
   return (
     <Wrapper>
       <h2>반품 신청 전, 꼭 확인해주세요!</h2>
