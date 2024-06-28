@@ -95,7 +95,7 @@ export default function OrderDetail() {
     { label: "주소", value: orderDetail?.data.receiverInfo.address },
     { label: "우편번호", value: orderDetail?.data.receiverInfo.postcode },
     { label: "휴대전화", value: orderDetail?.data.receiverInfo.tel },
-    { label: "배송메세지", value: orderDetail?.data.receiverInfo.msg },
+    { label: "배송메세지", value: orderDetail?.data.deliveryMsg },
   ];
 
   const refundInfoList = [
@@ -137,6 +137,7 @@ export default function OrderDetail() {
     return <LoadingBar type={6} />;
   }
 
+  console.log("order", orderDetail);
   return (
     <S.Temp>
       <S.Container>
