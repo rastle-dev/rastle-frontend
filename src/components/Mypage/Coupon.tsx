@@ -64,14 +64,12 @@ export default function Coupon() {
                     <S.MobileTextInfo>
                       <S.TextInfo>
                         <S.CouponWrapper>
-                          <CouponImage
-                            src="/image/coupon.png"
-                            alt="/image/coupon.png"
-                            layout="fill"
-                            objectFit="cover"
-                          />
+                          <CouponImage>
+                            <h3>RECORDY SLOW</h3>
+                            <h4>3,000</h4>
+                            <p>회원가입 할인쿠폰</p>
+                          </CouponImage>
                         </S.CouponWrapper>
-                        <h4>{item.name}</h4>
                       </S.TextInfo>
                       <p>전 상품 적용</p>
                       <p>{item.discount?.toLocaleString()}원 할인</p>

@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import COLORS from "@/constants/color";
 import IconButton from "@/components/Common/IconButton";
 import * as S from "@/components/Home/SignupPopup/index.styles";
-import CouponImage from "../../../../public/image/COUPON.png";
+import CouponImage from "../../../../public/image/coupon.png";
 import LOGO_WHITE from "../../../../public/image/LOGO_WHITE.png";
 
 interface SignupPopupProps {

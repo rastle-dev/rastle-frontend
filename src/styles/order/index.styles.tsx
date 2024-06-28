@@ -480,20 +480,40 @@ export const MobileDescription = styled.div`
 export const CouponText = styled.h4`
   margin: 0;
 `;
-export const CouponImgWrapper = styled.div`
-  width: 9.3rem;
-  height: 6rem;
-  position: relative;
-  margin-left: 1rem;
-`;
-export const CouponImage = styled.image`
-  width: 100%;
-`;
 
 export const CouponWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center; /* 추가 */
+`;
+export const CouponBox = styled.div`
+  position: relative;
+  width: 15rem;
+  height: 8rem;
+  border-radius: 5px;
+  margin-left: 1rem;
+  border: 1.5px solid black;
+  background-color: white;
+`;
+export const CouponImage = styled.div`
+  width: 100%;
+  height: 100%;
+  h3 {
+    text-align: left;
+    margin: 1rem 1rem 0 1rem;
+    font-size: 1.5rem;
+  }
+  h4 {
+    text-align: left;
+    margin: 0.5rem 1rem 0 1rem;
+    font-size: 1.5rem;
+  }
+  h5 {
+    text-align: left;
+    margin: 0.8rem 1rem 0 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+  }
 `;
 
 export const CouponTextWrapper = styled.div`

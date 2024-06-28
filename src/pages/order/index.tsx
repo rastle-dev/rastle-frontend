@@ -3,7 +3,6 @@ import Input from "@/components/Common/Input";
 import * as S from "@/styles/order/index.styles";
 import LoadingBar from "@/components/LoadingBar";
 import React from "react";
-import { CouponImage } from "@/styles/mypage/coupon/index.styles";
 import useCoupon from "@/hooks/mypage/coupon/useCoupon";
 import COLORS from "@/constants/color";
 import Icon from "@/components/Common/Icon";
@@ -253,16 +252,17 @@ export default function Order() {
                             <S.MobileTextInfo>
                               <S.TextInfo onClick={() => toggleCoupon(item.id)}>
                                 <S.CouponWrapper>
-                                  <S.CouponImgWrapper>
-                                    <CouponImage
-                                      src="/image/coupon.png"
-                                      alt="/image/coupon.png"
-                                      layout="fill"
-                                      objectFit="cover"
-                                    />
-                                  </S.CouponImgWrapper>
+                                  <S.CouponBox>
+                                    <S.CouponImage>
+                                      <h3>RECORDY SLOW</h3>
+                                      <h4>3,000</h4>
+                                      <h5>회원가입 할인쿠폰</h5>
+                                    </S.CouponImage>
+                                  </S.CouponBox>
                                   <S.CouponTextWrapper>
-                                    <S.CouponText>{item.name}</S.CouponText>
+                                    <S.CouponText>
+                                      회원가입 할인쿠폰
+                                    </S.CouponText>
                                     <S.CouponSubText>
                                       2024/07/1까지 전상품 적용
                                     </S.CouponSubText>

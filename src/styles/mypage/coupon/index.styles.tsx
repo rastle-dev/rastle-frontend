@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import COLORS from "@/constants/color";
-import Image from "next/image";
 
 export const Wrap = styled.div<{ isLoading?: boolean }>`
   height: ${({ isLoading }) => (isLoading ? "auto" : "auto")};
@@ -96,9 +95,9 @@ export const MobileTextInfo = styled.div`
     width: 100%;
     border: 1px solid ${COLORS.BLACK};
     border-radius: 10px;
-    padding: 1.5rem 0 1.5rem 0;
+    padding: 1.5rem 7rem 2rem 2rem;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     p {
       font-weight: 400;
       font-size: 1rem;
@@ -122,10 +121,27 @@ export const MobileDescription = styled.div`
   }
 `;
 export const CouponWrapper = styled.div`
-  width: 9.3rem;
-  height: 6rem;
   position: relative;
+  width: 15rem;
+  height: 9rem;
+  border-radius: 5px;
+  border: 1.5px solid black;
 `;
-export const CouponImage = styled(Image)`
+export const CouponImage = styled.div`
   width: 100%;
+  height: 100%;
+  h3 {
+    text-align: left;
+    margin: 1rem 1rem 0 1rem;
+  }
+  h4 {
+    text-align: left;
+    margin: 0.5rem 1rem 0 1rem;
+    font-size: 2rem;
+  }
+  p {
+    text-align: left;
+    margin: 1rem 1rem 0 1rem;
+    font-size: 1rem;
+  }
 `;
