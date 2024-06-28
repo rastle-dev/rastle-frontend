@@ -175,6 +175,7 @@ export default function OrderDetail() {
             <S.OrderInnerLeft>
               <p>주문일자 : </p>
             </S.OrderInnerLeft>
+            ㅁ{" "}
             <S.OrderInnerRight>
               {orderDetail?.data.orderDate.split("T")[0]}
             </S.OrderInnerRight>

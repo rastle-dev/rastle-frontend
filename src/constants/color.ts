@@ -21,6 +21,8 @@ const COLORS = {
   BLACK: "#000",
   BLUE: "#4395F6",
   RED: "#FF0000",
+  연청: "#87ceeb",
+  흑청: "#000",
 };
 
 export default COLORS;
