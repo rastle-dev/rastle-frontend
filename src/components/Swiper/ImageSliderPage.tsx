@@ -7,15 +7,17 @@ import ImageSwiper from "./index"; // ImageSwiper 컴포넌트 경로를 수정�
 interface ImageSliderPageProps {
   images: string[];
   alt: string;
+  soldOut?: boolean | undefined;
 }
 
 const ImageSliderPage: React.FC<ImageSliderPageProps> = function ({
   images,
   alt,
+  soldOut,
 }) {
   return (
     <div>
-      <ImageSwiper images={images} alt={alt} />
+      <ImageSwiper images={images} alt={alt} soldOut={soldOut} />
     </div>
   );
 };
