@@ -31,6 +31,7 @@ function ProductLayer({ productData }: { productData: ProductData }) {
               id={item.id}
               categoryId={item.categoryId}
               isEvent={!!item.eventId}
+              soldOut={item.soldOut}
             />
           );
         })}
