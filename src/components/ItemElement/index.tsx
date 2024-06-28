@@ -21,7 +21,7 @@ const EventInfo = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.7); /* 반투명 빨간 배경 */
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
