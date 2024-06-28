@@ -36,6 +36,7 @@ export default function OrderReturn() {
     reason,
     cancelCount,
     setReturnInfo,
+    returnInfo,
   } = useOrderCancel();
   const [returnOrderModalOpen, setReturnOrderModalOpen] = useState(false);
 
@@ -61,6 +62,7 @@ export default function OrderReturn() {
   const returnRequestButton = () => {
     setReturnOrderModalOpen(true);
   };
+  console.log("re", returnInfo);
   return (
     <S.Temp>
       {returnOrderModalOpen && (
@@ -70,7 +72,7 @@ export default function OrderReturn() {
           }}
           width={60}
         >
-          <EnterReturnOrderModal />
+          <EnterReturnOrderModal returnInfo={returnInfo} />
         </Modal>
       )}
       <S.Container>

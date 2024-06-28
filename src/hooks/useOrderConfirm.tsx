@@ -73,6 +73,7 @@ export default function useOrderConfirm() {
       mainThumbnailImage: product.mainThumbnailImage,
     }));
   }
+  console.log("receiverData", receiverData);
 
   const OrdererInfo = [
     { meta: "받는사람", data: receiverData?.data.receiverInfo.receiverName },
@@ -83,7 +84,7 @@ export default function useOrderConfirm() {
     },
     {
       meta: "배송요청사항",
-      data: "부재시 경비실에 맡겨주세요 !",
+      data: receiverData?.data.deliveryMsg ?? "부재시 경비실에 맡겨주세요 !",
     },
   ];
 

@@ -10,25 +10,18 @@ import { requestUserOrderCancel, requestUserOrderReturn } from "@/api/cart";
 import useInput from "@/hooks/useInput";
 import toastMsg from "@/components/Toast";
 import PATH from "@/constants/path";
+import { ReturnInfo } from "@/interface/Return/returnInfo";
 
 interface CancelInfo {
   orderNumber: number;
   productOrderCancelRequests: ProductOrderCancelRequest[];
   reason: string;
 }
-interface ReturnInfo {
-  orderNumber: number;
-  productReturnRequests: ProductReturnRequest[];
-  reason: string;
-}
 interface ProductOrderCancelRequest {
   productOrderNumber: number;
   cancelAmount: number;
 }
-interface ProductReturnRequest {
-  productOrderNumber: number;
-  returnAmount: number;
-}
+
 export default function useOrderCancel() {
   const router = useRouter();
   const { orderId } = router.query;
