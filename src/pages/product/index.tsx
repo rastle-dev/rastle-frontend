@@ -95,6 +95,7 @@ export default function Product() {
           <ImageSliderPage
             images={detailData?.data.mainImage.imageUrls}
             alt={detailData?.data.name}
+            soldOut={detailData?.data.soldOut}
           />
         </S.ImageLayer>
         <S.ProductContent>
@@ -177,10 +178,16 @@ export default function Product() {
 
             <S.StyledBuyButton
               onClick={async () => {
-                if (selectedProducts.length === 0) {
+                if (detailData?.data.soldOut) {
+                  toast.dismiss();
+                  toastMsg("품절된 상품이에요.🥲");
+                } else if (selectedProducts.length === 0) {
                   toast.dismiss();
                   toastMsg("구매하실 제품을 선택해주세요!");
-                } else if (localStorage.getItem("accessToken")) {
+                } else if (
+                  localStorage.getItem("accessToken") &&
+                  !detailData?.data.soldOut
+                ) {
                   try {
                     await onClickOrderButton();
                   } catch (error) {
@@ -198,7 +205,10 @@ export default function Product() {
             <S.StyledPayButton
               onClick={() => {
                 if (localStorage.getItem("accessToken")) {
-                  if (selectedProducts.length === 0) {
+                  if (detailData?.data.soldOut) {
+                    toast.dismiss();
+                    toastMsg("품절된 상품이에요.🥲");
+                  } else if (selectedProducts.length === 0) {
                     toastMsg("장바구니에 담을 제품을 선택해주세요!");
                   } else {
                     mutateAddCartProduct.mutate(cartProducts);

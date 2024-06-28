@@ -50,15 +50,23 @@ const StyledSwiper = styled(Swiper)`
 \` ;
 `;
 
-const StyledImage = styled(Image)`
+const StyledImage = styled(Image)<{
+  soldOut: boolean | undefined;
+}>`
   max-width: 100%; // 이미지의 최대 너비를 100%로 설정하여 부모 컨테이너에 맞게 조절
   height: auto; // 이미지의 높이를 자동으로 조절하여 비율을 유지
   aspect-ratio: 0.77;
+  filter: ${({ soldOut }) => {
+    if (soldOut) {
+      return "brightness(0.5)";
+    }
+    return "brightness(1)";
+  }};
 `;
 
 const CustomArrow = styled.div`
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background-color: rgba(255, 255, 255, 0.5); // 투명도 설정
   display: flex;
   justify-content: center;
@@ -67,19 +75,49 @@ const CustomArrow = styled.div`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); //그림자 설정
 `;
 
-const ArrowIcon = styled.div`
+const LeftArrowIcon = styled.div`
   font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.3rem;
+  padding-right: 0.1rem;
+`;
+
+const RightArrowIcon = styled.div`
+  font-size: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 0.3rem;
+  padding-left: 0.15rem;
+`;
+
+const SoldOutInfo = styled.div`
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 1;
+  margin-top: 55%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  ${media.mobile} {
+    font-size: 3rem;
 `;
 
 interface ImageGalleryProps {
   images: string[];
   alt: string;
+  soldOut?: boolean | undefined;
 }
 
-const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
+const ImageSwiper: React.FC<ImageGalleryProps> = function ({
+  images,
+  alt,
+  soldOut,
+}) {
   const swiperRef = useRef<SwiperCore | null>(null);
 
   const handlePrevClick = () => {
@@ -116,12 +154,18 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
     >
       {images?.map((image) => (
         <SwiperSlide key={image}>
+          {soldOut && (
+            <SoldOutInfo>
+              <p>SOLD OUT</p>
+            </SoldOutInfo>
+          )}
           <StyledImage
             src={image}
             alt={alt}
             layout="responsive"
             width={100}
             height={100}
+            soldOut={soldOut}
           />
         </SwiperSlide>
       ))}
@@ -129,26 +173,26 @@ const ImageSwiper: React.FC<ImageGalleryProps> = function ({ images, alt }) {
       {/* 커스텀 화살표 아이콘 */}
       <div className="swiper-button-prev">
         <CustomArrow onClick={handlePrevClick}>
-          <ArrowIcon>
+          <LeftArrowIcon>
             <Icon
               iconSize="1rem"
               iconName="arrowLeft"
               color={COLORS.블랙}
               opacity={0.7}
             />
-          </ArrowIcon>
+          </LeftArrowIcon>
         </CustomArrow>
       </div>
       <div className="swiper-button-next">
         <CustomArrow onClick={handleNextClick}>
-          <ArrowIcon>
+          <RightArrowIcon>
             <Icon
               iconSize="1rem"
               iconName="arrowRight"
               color={COLORS.블랙}
               opacity={0.7}
             />
-          </ArrowIcon>
+          </RightArrowIcon>
         </CustomArrow>
       </div>
     </StyledSwiper>

@@ -39,11 +39,12 @@ const SoldOutInfo = styled.div`
   font-size: 2rem;
   font-weight: bold;
   z-index: 1;
-  margin-top: 45%;
+  margin-top: 48%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const StyledImage = styled(Image)<{
@@ -193,7 +194,7 @@ function ItemElement({
           </EventInfo>
         )}
         {soldOut && (
-          <SoldOutInfo>
+          <SoldOutInfo onClick={handleClick}>
             <p>SOLD OUT</p>
           </SoldOutInfo>
         )}
