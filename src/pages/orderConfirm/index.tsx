@@ -14,7 +14,6 @@ export default function OrderConfirm() {
   const { timedOut } = useLoadingWithTimeout();
   if (!receiverData && !timedOut) return <LoadingBar type={6} />;
 
-  console.log("productList", ProductList);
   return (
     <S.Temp>
       {errorMsg ? (
