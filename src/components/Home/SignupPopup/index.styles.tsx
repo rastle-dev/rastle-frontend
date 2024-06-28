@@ -1,35 +1,34 @@
 import styled from "styled-components";
 import Image from "next/image";
-
-export const ModalBackground = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  //align-items: center;
-  //justify-content: center;
-  z-index: 999;
-`;
+import media from "@/styles/media";
 
 export const PopupContainer = styled.div`
-  margin: 7rem 0 0 5rem;
+  margin: 2rem;
+  opacity: 0.95;
+  position: fixed;
+  border-radius: 10px;
   background-color: #fff;
-  border: 1px solid black;
-  height: 36.6rem;
-  width: 40rem;
+  height: 39rem;
+  width: 35rem;
   display: flex;
+  ${media.mobile} {
+    width: 100%;
+    height: 56.6rem;
+    margin: 0;
+    border-radius: 0;
+  }
   flex-direction: column;
   text-align: center;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
   z-index: 10000; /* 더 높은 z-index 값 */
   p {
     font-size: 1.6rem;
     font-weight: 300;
   }
-  position: relative;
+  bottom: 0;
+  right: 0;
 `;
 export const DeleteIconWrapper = styled.div`
   position: absolute;
@@ -51,15 +50,17 @@ export const CloseButton = styled.button`
   padding-right: 1.5rem;
 `;
 export const CouponWrapper = styled.div`
-  width: 15.5rem;
-  height: 10rem;
+  width: 25rem;
+  height: 15rem;
   position: relative;
+  //border: 1px solid red;
 `;
 export const CouponImage = styled(Image)`
   width: 100%;
+  padding: 1rem;
 `;
 export const LOGOBOX = styled.div`
-  margin-top: 2.3rem;
+  //margin-top: 2.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
