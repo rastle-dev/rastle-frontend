@@ -116,7 +116,6 @@ export default function EventHistory() {
                               }}
                             >
                               <h4>{item.eventProductName}</h4>
-                              <h4>L/인디고</h4>
                             </S.TextInfo>
                             <S.Count>1개</S.Count>
                             <S.Price>
