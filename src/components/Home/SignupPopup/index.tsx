@@ -74,16 +74,26 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
             objectFit="cover"
           />
         </S.LOGOWrapper>
-        {messages.map((message) => (
-          <div>
-            {message.map((line) => (
-              <>
-                {line}
-                <br />
-              </>
-            ))}
-          </div>
-        ))}
+        <S.Intro>직접 개발한 자사몰에 와주셔서 감사합니다.</S.Intro>
+        <S.IntroMargin />
+        <S.Intro>개발자가 꿈이었던 저의 마지막 개발 프로젝트입니다.</S.Intro>
+        <S.Intro>진로를 패션쪽으로 전향하기 전에</S.Intro>
+        <S.Intro>공부했던 개발지식을 남김없이 발휘하고,</S.Intro>
+        <S.IntroMargin />
+        <S.Intro>인플루언서로 활동하며 브랜드에서 제공받은 제품들을</S.Intro>
+        <S.Intro>나눠드리기 위해 본 프로젝트를 기획했습니다.</S.Intro>
+        <S.IntroMargin />
+        <S.Intro>
+          해당 홈페이지는 단 4일간(7/1~7/4) 이벤트성으로 운영됩니다.
+        </S.Intro>
+        <S.Intro>
+          이 기간동안 하루마다 5개, 총 20개의 의류를 응모를 통해 나눠드리고,{" "}
+        </S.Intro>
+        <S.Intro>매일 11시에 인스타 스토리로 당첨자가 공지됩니다. </S.Intro>
+        <S.IntroMargin />
+        <S.Intro>추가적으로,</S.Intro>
+        <S.Intro>해당 홈페이지에 업로드된 RECORDY SLOW의 인기 상품들은</S.Intro>
+        <S.Intro>무료배송쿠폰과 5% 할인이 제공됩니다.</S.Intro>
       </S.LOGOBOX>
       <S.CouponWrapper>
         <S.CouponImage

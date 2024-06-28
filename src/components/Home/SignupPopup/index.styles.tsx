@@ -18,7 +18,7 @@ export const PopupContainer = styled.div`
   position: fixed;
   border-radius: 10px;
   background-color: #fff;
-  height: 40rem;
+  height: 55rem;
   width: 40rem;
   display: flex;
   bottom: 0;
@@ -45,7 +45,7 @@ export const PopupContainer = styled.div`
   ${media.mobile} {
     margin: 0;
     width: 100%;
-    height: 52rem;
+    height: 60rem;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     left: 0;
@@ -107,4 +107,19 @@ export const LOGOWrapper = styled.div`
 `;
 export const LOGOImage = styled(Image)`
   width: 100%;
+`;
+
+export const Intro = styled.div`
+  font-weight: 500;
+  padding-bottom: 0.2rem;
+  font-size: 1.2rem;
+  ${media.mobile} {
+    font-weight: 500;
+    padding-bottom: 0.4rem;
+    font-size: 1.5rem;
+  }
+`;
+
+export const IntroMargin = styled.div`
+  margin-bottom: 1rem;
 `;
