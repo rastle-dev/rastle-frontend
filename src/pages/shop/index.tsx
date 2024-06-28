@@ -18,38 +18,21 @@ import Head from "next/head";
 export async function getStaticProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
-  await queryClient.prefetchQuery(
-    [QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP],
-    () => loadMarketProductPaging({ page: 0, size: 100 }),
-    {
-      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
-      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
-    },
+  await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP], () =>
+    loadMarketProductPaging({ page: 0, size: 100 }),
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP],
     () => loadMarketBestProduct({ page: 0, size: 100 }),
-    {
-      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
-      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
-    },
   );
 
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING_SHOP],
     () => loadEventProductPaging({ page: 0, size: 100 }),
-    {
-      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
-      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
-    },
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
     adminGetCategory,
-    {
-      staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
-      cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
-    },
   );
   return {
     props: {
@@ -72,19 +55,18 @@ export default function Shop() {
   } = useShop();
 
   useEffect(() => {
-    setCategoryList(
-      categoryData?.data && [
+    if (categoryData?.data) {
+      setCategoryList([
         "전체",
         "코디상품",
         ...categoryData.data.map((v: Category) => v.name),
-      ],
-    );
-  }, []);
+      ]);
+    }
+  }, [categoryData]);
+
   useEffect(() => {
     const { tab } = router.query;
-    // 읽어오기: 세션 스토리지에서 저장된 값을 읽어옴
     const storedTab = sessionStorage.getItem("activeTab");
-    // tab이 없거나 세션 스토리지에 저장된 값이 없으면 기본값 사용
     const initialTab = tab || storedTab || "전체";
     categoryList?.forEach((item: string) => {
       if (tab && item === initialTab) {
@@ -98,9 +80,7 @@ export default function Shop() {
     if (typeof initialTab === "string") {
       sessionStorage.setItem("activeTab", initialTab);
     }
-    // 컴포넌트가 마운트될 때만 실행되는 코드
     return () => {
-      // 언마운트될 때 세션 스토리지에서 데이터 삭제
       sessionStorage.removeItem("activeTab");
     };
   }, [router.query.tab, categoryData, categoryList]);
