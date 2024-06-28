@@ -118,7 +118,7 @@ async function resetTokenAndReattemptRequest(error: any) {
     // 엑세스 토큰을 재발급하고 난 후 이전에 실패한 원래 요청을 재시도
     return await retryOriginalRequest;
   } catch (refreshError) {
-    toastMsg("(테스트)로그인 정보가 없어 메인 화면으로 이동합니다.");
+    toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
     handleUnauthorized();
     return Promise.reject(refreshError);
   }
