@@ -419,3 +419,16 @@ export const StyledEventButton = styled(Button)`
     width: 100%;
   }
 `;
+
+export const Link = styled.div`
+  display: flex;
+  flex-direction: row;
+  text-align: center; /* 텍스트를 수평으로 가운데 정렬합니다. */
+  align-items: center;
+  padding-top: 0.5rem;
+  color: dodgerblue;
+  font-size: 1.1rem;
+  ${media.mobile} {
+    font-size: 1.2rem;
+  }
+`;

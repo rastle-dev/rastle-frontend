@@ -172,6 +172,7 @@ export default function CreateEventProduct() {
     sizes,
     showImageUpload,
     onChangeDisplayOrder,
+    onChangeLink,
     createProduct,
     discountPercent,
     handleColorChange,
@@ -236,6 +237,13 @@ export default function CreateEventProduct() {
         size={30}
         placeholder="낮은 순서일수록 앞에 나타남"
         onChange={onChangeDisplayOrder}
+      />
+      <Input
+        type="string"
+        label="무신사 링크"
+        size={30}
+        placeholder="무신사 링크"
+        onChange={onChangeLink}
       />
       <ProductDetail>
         이벤트 선택:

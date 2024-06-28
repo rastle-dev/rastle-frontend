@@ -20,6 +20,7 @@ const ICONS: IconProps = {
   check: "bi bi-check-lg",
   circlePlus: "bi bi-plus-circle",
   circleMinus: "bi bi-dash-circle",
+  link: "bi bi-link-45deg",
 };
 
 export default ICONS;
