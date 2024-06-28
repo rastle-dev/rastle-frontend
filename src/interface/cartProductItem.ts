@@ -8,4 +8,5 @@ export type ProductItem = {
   size: string;
   productPrice: number;
   discountPrice: number;
+  soldOut?: boolean | undefined;
 };
