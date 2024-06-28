@@ -189,6 +189,7 @@ interface EventProduct {
   subThumbnail: string;
   bundleId: string;
   categoryId: string;
+  link: string;
 }
 
 interface Event {
@@ -214,6 +215,7 @@ export default function UpdateEventProduct() {
     sizes,
     showImageUpload,
     onChangeDisplayOrder,
+    onChangeLink,
     updateProduct,
     discountPercent,
     handleColorChange,
@@ -240,6 +242,7 @@ export default function UpdateEventProduct() {
     visible,
     name,
     price,
+    link,
     discountPrice,
     displayOrder,
     selectedProduct,
@@ -314,6 +317,14 @@ export default function UpdateEventProduct() {
         value={displayOrder}
         size={30}
         onChange={onChangeDisplayOrder}
+      />
+      <Input
+        type="string"
+        label="무신사 링크"
+        value={link}
+        size={30}
+        placeholder="무신사 링크"
+        onChange={onChangeLink}
       />
       <ProductDetail>
         이벤트 선택:

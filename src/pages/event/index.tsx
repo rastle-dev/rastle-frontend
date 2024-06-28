@@ -53,6 +53,7 @@ export default function Event() {
       }
     }
   }, []);
+  console.log(detailData);
 
   return (
     <S.Wrapper>
@@ -117,7 +118,25 @@ export default function Event() {
             <h4>{detailData?.data.price.toLocaleString()}원</h4>
             <span>10% </span>
             {detailData?.data.discountPrice.toLocaleString()}원
+            <div>
+              {" "}
+              <S.Link>
+                <a
+                  href={`${detailData?.data.link}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <IconButton
+                    iconName="link"
+                    color={COLORS.블루}
+                    iconSize="1.5rem"
+                  />
+                  무신사에서 확인하기
+                </a>
+              </S.Link>
+            </div>
           </S.DiscountPrice>
+          {/* <S.Link>{detailData?.data.link}무신사링</S.Link> */}
           <S.Script>
             <h3>
               지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요!

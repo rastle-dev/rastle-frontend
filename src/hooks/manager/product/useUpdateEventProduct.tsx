@@ -18,6 +18,7 @@ export default function useUpdateEventProduct() {
   const [price, onChangePrice, setPrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice, setDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder, setDisplayOrder] = useInput("");
+  const [link, onChangeLink, setLink] = useInput("");
   const [colors, setColors] = useState<string[]>([""]);
   const [sizes, setSizes] = useState<string[]>([""]);
   const [showImageUpload, setshowImageUpload] = useState(false);
@@ -62,12 +63,15 @@ export default function useUpdateEventProduct() {
     subThumbnail: string;
     bundleId: string;
     categoryId: string;
+    link: string;
   }
 
   const { data: eventProductListData } = useQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
     () => loadEventProductPaging({ page: 0, size: 10 }),
   );
+
+  console.log(eventProductListData);
 
   const { data: productData, refetch: refetchProductData } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_DETAIL],
@@ -138,6 +142,7 @@ export default function useUpdateEventProduct() {
           displayOrder,
           visible,
           eventId,
+          link,
         });
         if (data) {
           alert("상품이 수정되었습니다. ");
@@ -446,6 +451,7 @@ export default function useUpdateEventProduct() {
     setPrice(product.price);
     setDiscountPrice(product.discountPrice);
     setDisplayOrder(product.displayOrder);
+    setLink(product.link);
     setVisible(product.productVisible);
     setCategoryId(product.categoryId);
     setProductId(product.productId);
@@ -506,7 +512,9 @@ export default function useUpdateEventProduct() {
     showImageUpload,
     setshowImageUpload,
     displayOrder,
+    link,
     onChangeDisplayOrder,
+    onChangeLink,
     updateProduct,
     productId,
     discountPrice,

@@ -14,6 +14,7 @@ export default function useCreateEventProduct() {
   const [price, onChangePrice] = useInput("");
   const [discountPrice, onChangeDiscountPrice] = useInput("");
   const [displayOrder, onChangeDisplayOrder] = useInput("");
+  const [link, onChangeLink] = useInput("");
   const [eventId, setEventId] = useState("");
   const [bundleCategory, setBundleCategory] = useState(false);
   const [productId, setProductId] = useState<number>();
@@ -74,7 +75,8 @@ export default function useCreateEventProduct() {
       price !== null &&
       discountPrice !== null &&
       displayOrder !== null &&
-      categoryId !== null
+      categoryId !== null &&
+      link != null
     ) {
       console.log(eventId);
       try {
@@ -86,6 +88,7 @@ export default function useCreateEventProduct() {
           categoryId,
           productColor,
           displayOrder,
+          link,
           visible: false,
         });
         if (data) {
@@ -424,6 +427,7 @@ export default function useCreateEventProduct() {
     setshowImageUpload,
     displayOrder,
     onChangeDisplayOrder,
+    onChangeLink,
     createProduct,
     productId,
     discountPrice,
@@ -455,5 +459,6 @@ export default function useCreateEventProduct() {
     blockMainImagesButton,
     blockDetailImagesButton,
     blockCreateProductButton,
+    link,
   };
 }

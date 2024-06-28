@@ -23,6 +23,9 @@ const COLORS = {
   RED: "#FF0000",
   연청: "#87ceeb",
   흑청: "#000",
+  //나일론
+  카키: "#405F40",
+  그레이: "#525251",
 };
 
 export default COLORS;
