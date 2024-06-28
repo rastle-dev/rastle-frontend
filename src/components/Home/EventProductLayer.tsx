@@ -26,6 +26,8 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
             id={item.productId}
             categoryId={item.categoryId}
             isEvent={!!item.eventId}
+            startDate={item.startDate}
+            endDate={item.endDate}
           />
         ))}
       </S.ItemContainer>
