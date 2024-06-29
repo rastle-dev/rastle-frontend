@@ -10,7 +10,8 @@
         "size": "M",
         "count": 1,
         "mainThumbnailImage": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/1_MT_1.jpg",
-        "productId": 1
+        "productId": 1,
+        "soldOut" : false
       },
       {
         "cartProductId": 2,
@@ -21,7 +22,8 @@
         "size": "M",
         "count": 1,
         "mainThumbnailImage": "https://rastle-dev.s3.ap-northeast-2.amazonaws.com/2_MT_1.jpg",
-        "productId": 2
+        "productId": 2,
+        "soldOut" : false
       }
     ],
     "pageable": {

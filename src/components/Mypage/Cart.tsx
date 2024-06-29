@@ -10,6 +10,7 @@ import useDialog from "@/hooks/useDialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import dynamic from "next/dynamic";
+import toastMsg from "@/components/Toast";
 
 const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
   ssr: false,
@@ -134,16 +135,24 @@ export default function Cart() {
                         checked={selectedItems.includes(item)}
                         onChange={() => handleProductCheckboxChange(item)}
                       />
-                      <S.Img
-                        onClick={() => {
-                          const { productId } = item;
-                          router.push({
-                            pathname: PATH.PRODUCT,
-                            query: { productId },
-                          });
-                        }}
-                        src={item.mainThumbnailImage}
-                      />
+                      <S.ImgWrapper>
+                        {item.soldOut && (
+                          <S.SoldOutInfo>
+                            <p>SOLD OUT</p>
+                          </S.SoldOutInfo>
+                        )}
+                        <S.Img
+                          onClick={() => {
+                            const { productId } = item;
+                            router.push({
+                              pathname: PATH.PRODUCT,
+                              query: { productId },
+                            });
+                          }}
+                          src={item.mainThumbnailImage}
+                          soldOut={item.soldOut}
+                        />
+                      </S.ImgWrapper>
                       <S.MobileTextInfo>
                         <S.TextInfo
                           onClick={() => {
@@ -179,11 +188,16 @@ export default function Cart() {
                         <S.MobileSelectButton
                           title="주문하기"
                           onClick={async () => {
-                            handleProductCheckboxChange(item);
-                            try {
-                              if (triggerOrder) await onClickOrderButton();
-                            } catch (error) {
-                              console.error(error);
+                            if (item.soldOut) {
+                              toast.dismiss();
+                              toastMsg("해당 상품은 품절된 상품이에요.🥲");
+                            } else {
+                              handleProductCheckboxChange(item);
+                              try {
+                                if (triggerOrder) await onClickOrderButton();
+                              } catch (error) {
+                                console.error(error);
+                              }
                             }
                           }}
                         />
@@ -192,11 +206,17 @@ export default function Cart() {
                         <S.SelectButton
                           title="주문하기"
                           onClick={async () => {
-                            handleProductCheckboxChange(item);
-                            try {
-                              if (triggerOrder) await onClickOrderButton();
-                            } catch (error) {
-                              console.error(error);
+                            if (item.soldOut) {
+                              toast.dismiss();
+                              toastMsg("해당 상품은 품절된 상품이에요.🥲");
+                            } else {
+                              handleProductCheckboxChange(item);
+                              setTriggerOrder(true);
+                              try {
+                                if (triggerOrder) await onClickOrderButton();
+                              } catch (error) {
+                                console.error(error);
+                              }
                             }
                           }}
                           dataCy="purchase-button"

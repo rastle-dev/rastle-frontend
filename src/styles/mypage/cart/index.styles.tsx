@@ -85,7 +85,9 @@ export const ProductInfo = styled.div`
     align-items: unset;
   }
 `;
-export const Img = styled.img`
+
+export const ImgWrapper = styled.div`
+  position: relative;
   cursor: pointer;
   width: 7.5rem;
   height: auto;
@@ -99,6 +101,38 @@ export const Img = styled.img`
     margin: 0 1rem 0 0;
   }
 `;
+
+export const SoldOutInfo = styled.div`
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  z-index: 1;
+  margin-top: 52%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  p {
+    //display: flex;
+    margin: 0;
+    padding: 0;
+  }
+`;
+export const Img = styled.img<{
+  soldOut: boolean | undefined;
+}>`
+  width: 100%;
+  height: 100%;
+  filter: ${({ soldOut }) => {
+    if (soldOut === true) {
+      return "brightness(0.5)";
+    }
+    return "brightness(1)";
+  }};
+`;
+
 export const TextInfo = styled.div`
   width: 24rem;
   cursor: pointer;

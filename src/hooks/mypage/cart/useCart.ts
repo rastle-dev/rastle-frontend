@@ -14,6 +14,7 @@ import {
 import toastMsg from "@/components/Toast";
 import { useRouter } from "next/dist/client/router";
 import { ProductItem } from "@/interface/cartProductItem";
+import { AxiosError } from "axios";
 
 export default function useCart() {
   const router = useRouter();
@@ -130,7 +131,6 @@ export default function useCart() {
       setDeleteProducts([...deleteProducts, item.cartProductId]);
       setCartOrderProducts([...cartOrderProducts, item.cartProductId]);
     }
-    setTriggerOrder(true);
   };
   const handleHeaderCheckboxChange = () => {
     // 모든 항목이 이미 선택된 경우, selectedItems를 비웁니다. 그렇지 않으면 모든 항목을 선택합니다.
@@ -238,7 +238,17 @@ export default function useCart() {
         });
       }
     } catch (err) {
-      console.log(err);
+      if (err instanceof AxiosError) {
+        console.log(err.response?.data?.message);
+        if (
+          err.response?.data?.message ===
+          "품절된 상품 포함으로 주문이 불가합니다."
+        ) {
+          toastMsg("품절된 상품이 포함되어 있어요!");
+        }
+      } else {
+        console.log(err);
+      }
     }
   };
 
