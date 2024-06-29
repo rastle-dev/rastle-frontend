@@ -28,6 +28,7 @@ const COLORS = {
   그레이: "#525251",
   //오션블루
   오션블루: "#28639d",
+  중청: "#4395F6",
 };
 
 export default COLORS;

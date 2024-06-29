@@ -68,7 +68,7 @@ export default function useUpdateEventProduct() {
 
   const { data: eventProductListData } = useQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING],
-    () => loadEventProductPaging({ page: 0, size: 10 }),
+    () => loadEventProductPaging({ page: 0, size: 30 }),
   );
 
   console.log(eventProductListData);
