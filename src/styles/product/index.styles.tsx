@@ -429,6 +429,6 @@ export const Link = styled.div`
   color: dodgerblue;
   font-size: 1.1rem;
   ${media.mobile} {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 `;

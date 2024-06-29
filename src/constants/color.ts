@@ -26,6 +26,8 @@ const COLORS = {
   //나일론
   카키: "#405F40",
   그레이: "#525251",
+  //오션블루
+  오션블루: "#28639d",
 };
 
 export default COLORS;
