@@ -18,6 +18,7 @@ import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
+import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 
 export default function Event() {
   const router = useRouter();
@@ -46,6 +47,10 @@ export default function Event() {
   const [token, setToken] = useState(false);
   const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
+  const { discountPercent } = calculateDiscountPercentAndPrice(
+    detailData?.data.price,
+    detailData?.data.discountPrice,
+  );
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
@@ -116,7 +121,7 @@ export default function Event() {
           <S.Title>{detailData?.data.name}</S.Title>
           <S.DiscountPrice>
             <h4>{detailData?.data.price.toLocaleString()}원</h4>
-            <span>10% </span>
+            <span>{discountPercent}% </span>
             {detailData?.data.discountPrice.toLocaleString()}원
             <div>
               {" "}
