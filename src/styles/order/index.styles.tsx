@@ -510,10 +510,9 @@ export const CouponImage = styled.div`
   }
   h5 {
     text-align: left;
-    margin: 0.8rem 1rem 0 1rem;
+    margin: 0.5rem 1rem 0 1rem;
     font-size: 1rem;
     font-weight: 400;
-    margin-top: 0.5rem;
   }
 `;
 
