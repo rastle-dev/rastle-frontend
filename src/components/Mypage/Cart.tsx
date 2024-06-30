@@ -193,6 +193,7 @@ export default function Cart() {
                               toastMsg("해당 상품은 품절된 상품이에요.🥲");
                             } else {
                               handleProductCheckboxChange(item);
+                              setTriggerOrder(true);
                               try {
                                 if (triggerOrder) await onClickOrderButton();
                               } catch (error) {
