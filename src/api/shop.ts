@@ -31,7 +31,21 @@ export const loadMarketProductPaging = async (pageData: any) => {
   );
   return data;
 };
+export const loadMarketProductPagingShop = async (pageData: any) => {
+  const { page, size } = pageData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
+  );
+  return data;
+};
 export const loadMarketBestProduct = async (pageData: any) => {
+  const { page, size } = pageData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC&sort=id,DESC`,
+  );
+  return data;
+};
+export const loadMarketBestProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC&sort=id,DESC`,
@@ -73,6 +87,13 @@ export const loadEventProduct = async () => {
 };
 
 export const loadEventProductPaging = async (pageData: any) => {
+  const { page, size } = pageData;
+  const { data } = await unAuthorizationClient.get(
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
+  );
+  return data;
+};
+export const loadEventProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
     `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,

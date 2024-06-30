@@ -4,9 +4,9 @@ import ProductCategoryTabs from "@/components/Shop/CategoryTab";
 import * as S from "@/styles/shop/index.styles";
 import QUERYKEYS from "@/constants/querykey";
 import {
-  loadEventProductPaging,
-  loadMarketBestProduct,
-  loadMarketProductPaging,
+  loadEventProductPagingShop,
+  loadMarketBestProductPagingShop,
+  loadMarketProductPagingShop,
 } from "@/api/shop";
 import { adminGetCategory } from "@/api/admin";
 import { useRouter } from "next/dist/client/router";
@@ -15,20 +15,19 @@ import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
 import Head from "next/head";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP], () =>
-    loadMarketProductPaging({ page: 0, size: 100 }),
+    loadMarketProductPagingShop({ page: 0, size: 100 }),
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP],
-    () => loadMarketBestProduct({ page: 0, size: 100 }),
+    () => loadMarketBestProductPagingShop({ page: 0, size: 100 }),
   );
-
   await queryClient.prefetchQuery(
     [QUERYKEYS.LOAD_EVENTPRODUCT_PAGING_SHOP],
-    () => loadEventProductPaging({ page: 0, size: 100 }),
+    () => loadEventProductPagingShop({ page: 0, size: 100 }),
   );
   await queryClient.prefetchQuery(
     [QUERYKEYS.ADMIN_GET_CATEGORY],
@@ -38,6 +37,7 @@ export async function getServerSideProps() {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
+    revalidate: 10, // Set the revalidate time in seconds
   };
 }
 export default function Shop() {
