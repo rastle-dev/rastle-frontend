@@ -128,7 +128,7 @@ export default function useOrder() {
     zonecode: undefined,
   });
   useEffect(() => {
-    if (postalAddress.address && postalAddress.address.includes("제주")) {
+    if (postalAddress?.address && postalAddress?.address?.includes("제주")) {
       setDeliveryPrice(6000);
     } else {
       setDeliveryPrice(3000);
@@ -146,7 +146,7 @@ export default function useOrder() {
     {
       meta: "배송비",
       data:
-        postalAddress.address && postalAddress.address.includes("제주")
+        postalAddress?.address && postalAddress?.address?.includes("제주")
           ? "6,000원"
           : "3,000원",
     },
@@ -546,7 +546,7 @@ export default function useOrder() {
 
   console.log(
     "defaultAddress",
-    defaultAddress?.data.roadAddress.includes("제주"),
+    defaultAddress?.data?.roadAddress?.includes("제주"),
   );
   console.log("defaultAddress", defaultAddress);
 
