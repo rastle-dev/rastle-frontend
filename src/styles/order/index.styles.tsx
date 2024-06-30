@@ -492,7 +492,7 @@ export const CouponBox = styled.div`
   height: 8rem;
   border-radius: 5px;
   margin-left: 1rem;
-  border: 1.5px solid black;
+  border: 1.5px solid grey;
   background-color: white;
 `;
 export const CouponImage = styled.div`
@@ -513,6 +513,10 @@ export const CouponImage = styled.div`
     margin: 0.8rem 1rem 0 1rem;
     font-size: 1rem;
     font-weight: 400;
+    $media.mobile {
+      margin-top: 0.3rem;
+    }
+    margin-top: 0.3rem;
   }
 `;
 

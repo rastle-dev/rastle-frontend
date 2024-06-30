@@ -67,7 +67,7 @@ export default function Coupon() {
                           <CouponImage>
                             <h3>RECORDY SLOW</h3>
                             <h4>3,000</h4>
-                            <p>회원가입 할인쿠폰</p>
+                            <h5>회원가입 할인쿠폰</h5>
                           </CouponImage>
                         </S.CouponWrapper>
                       </S.TextInfo>

@@ -125,7 +125,7 @@ export const CouponWrapper = styled.div`
   width: 15rem;
   height: 9rem;
   border-radius: 5px;
-  border: 1.5px solid black;
+  border: 1.5px solid grey;
 `;
 export const CouponImage = styled.div`
   width: 100%;
@@ -139,9 +139,10 @@ export const CouponImage = styled.div`
     margin: 0.5rem 1rem 0 1rem;
     font-size: 2rem;
   }
-  p {
+  h5 {
     text-align: left;
-    margin: 1rem 1rem 0 1rem;
+    margin: 0.8rem 1rem 0 1rem;
     font-size: 1rem;
+    font-weight: 400;
   }
 `;
