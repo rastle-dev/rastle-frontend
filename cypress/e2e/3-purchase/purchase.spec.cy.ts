@@ -65,7 +65,7 @@ describe("purchase e2e test", () => {
     );
     cy.contains("전체상품 주문").click();
     cy.contains("사용가능한 쿠폰이 1장 있어요.").click();
-    cy.contains("테스트 쿠폰").click();
+    cy.contains("전상품").click();
     cy.contains("일반결제").click();
     cy.contains("결제하기").click();
     cy.wait("@paymentPrepare").then((interception) => {
@@ -95,7 +95,7 @@ describe("purchase e2e test", () => {
     cy.get("[data-cy='size-button']").eq(0).click();
     cy.contains("구매하기").click();
     cy.contains("사용가능한 쿠폰이 1장 있어요.").click();
-    cy.contains("테스트 쿠폰").click();
+    cy.contains("전상품 적용").click();
     cy.contains("일반결제").click();
     cy.contains("결제하기").click();
     cy.wait("@paymentPrepare").then((interception) => {

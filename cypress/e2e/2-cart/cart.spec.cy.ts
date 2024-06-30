@@ -53,6 +53,7 @@ describe("cart e2e test", () => {
     });
     cy.contains("장바구니로 이동하기").click();
     cy.contains("장바구니 비우기").click();
+    cy.contains("장바구니 비우기").click();
     cy.intercept(
       {
         method: "GET",

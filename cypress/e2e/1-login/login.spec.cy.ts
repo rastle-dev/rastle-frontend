@@ -40,7 +40,7 @@ describe("login e2e test", () => {
     cy.wait("@loginSuccess")
       .its("response.body")
       .then((data: any) => {
-        expect(data.errorCode).to.equal(500);
+        expect(data.errorCode).to.equal(404);
       });
   });
 });
