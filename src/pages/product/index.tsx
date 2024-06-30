@@ -18,6 +18,7 @@ import commonServerSideProps from "@/components/Product/commonServerSideProps";
 import Head from "next/head";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import CountTable from "@/components/Product/CountTable";
+import errorMsg from "@/components/Toast/error";
 
 export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
@@ -180,7 +181,7 @@ export default function Product() {
               onClick={async () => {
                 if (detailData?.data.soldOut) {
                   toast.dismiss();
-                  toastMsg("품절된 상품이에요.🥲");
+                  errorMsg("품절된 상품이에요.🥲");
                 } else if (selectedProducts.length === 0) {
                   toast.dismiss();
                   toastMsg("구매하실 제품을 선택해주세요!");
@@ -207,7 +208,7 @@ export default function Product() {
                 if (localStorage.getItem("accessToken")) {
                   if (detailData?.data.soldOut) {
                     toast.dismiss();
-                    toastMsg("품절된 상품이에요.🥲");
+                    errorMsg("품절된 상품이에요.🥲");
                   } else if (selectedProducts.length === 0) {
                     toastMsg("장바구니에 담을 제품을 선택해주세요!");
                   } else {

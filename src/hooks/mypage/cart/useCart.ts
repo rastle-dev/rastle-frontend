@@ -244,7 +244,7 @@ export default function useCart() {
           err.response?.data?.message ===
           "품절된 상품 포함으로 주문이 불가합니다."
         ) {
-          toastMsg("품절된 상품이 포함되어 있어요!");
+          errorMsg("품절된 상품이 포함되어 있어요!");
         }
       } else {
         console.log(err);
@@ -290,7 +290,17 @@ export default function useCart() {
         });
       }
     } catch (err) {
-      console.log(err);
+      if (err instanceof AxiosError) {
+        console.log(err.response?.data?.message);
+        if (
+          err.response?.data?.message ===
+          "품절된 상품 포함으로 주문이 불가합니다."
+        ) {
+          errorMsg("품절된 상품이 포함되어 있어요!");
+        }
+      } else {
+        console.log(err);
+      }
     }
   };
   return {
