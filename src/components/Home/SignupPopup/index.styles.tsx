@@ -48,8 +48,9 @@ export const PopupContainer = styled.div`
     height: 60rem;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
     left: 0;
-
     div {
       font-weight: 500;
       padding-bottom: 0.4rem;
@@ -62,6 +63,9 @@ export const DeleteIconWrapper = styled.div`
   top: 0;
   right: 0;
   margin: 0.7rem 0.7rem 0 0;
+  $media.mobile {
+    margin: 1rem 1rem 0 0;
+  }
 `;
 export const CloseButton = styled.button`
   border: none;
@@ -80,7 +84,7 @@ export const CouponWrapper = styled.div`
   width: 25rem;
   height: 15rem;
   position: relative;
-  //border: 1px solid red;
+  margin-bottom: 3rem;
 `;
 export const CouponImage = styled(Image)`
   width: 100%;
