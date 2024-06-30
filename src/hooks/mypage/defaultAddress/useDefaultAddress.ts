@@ -25,10 +25,10 @@ type CommonInputField = {
 
 export default function useDefaultAddress() {
   const queryClient = useQueryClient();
-  const [receiver, onChangeReceiver, setReceiver] = useInput("");
-  const [phoneNumber, onChangePhoneNumber, setPhoneNumber] = useInput("");
+  const [receiver, onChangeReceiver] = useInput("");
+  const [phoneNumber, onChangePhoneNumber] = useInput("");
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
-  const [isDataLoading, setIsDataLoading] = useState(true);
+  const [isDataLoading] = useState(true);
   const { data: defaultAddressData, isLoading } = useQuery(
     [QUERYKEYS.LOAD_DEFAULT_ADDRESS],
     loadDefaultAddress,
