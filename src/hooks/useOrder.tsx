@@ -299,7 +299,6 @@ export default function useOrder() {
   const PaymentOptionsButtons = [
     { id: 0, clicked: false, default: "카카오페이" },
     { id: 1, clicked: false, default: "일반결제" },
-    { id: 2, clicked: false, default: "무통장입금" },
   ];
 
   const commonInputFields: CommonInputField[] = [
