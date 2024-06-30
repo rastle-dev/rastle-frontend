@@ -46,8 +46,8 @@ export const PopupContainer = styled.div`
     margin: 0;
     width: 100%;
     height: 60rem;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     left: 0;
@@ -84,23 +84,21 @@ export const CouponWrapper = styled.div`
   width: 25rem;
   height: 15rem;
   position: relative;
-  margin-bottom: 3rem;
+  ${media.mobile} {
+    margin-bottom: 5.5rem;
+  }
 `;
 export const CouponImage = styled(Image)`
-  width: 100%;
-  padding: 1rem;
+  margin-bottom: 1rem;
 `;
 export const LOGOBOX = styled.div`
-  //margin-top: 2.3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  //gap: 0.7rem;
   h2 {
     margin: 0;
     font-size: 3rem;
     font-weight: 400;
-    font-family: Avenir;
   }
 `;
 export const LOGOWrapper = styled.div`
@@ -108,6 +106,9 @@ export const LOGOWrapper = styled.div`
   height: 6rem;
   position: relative;
   margin-bottom: 1rem;
+  ${media.mobile} {
+    margin-top: 5rem;
+  }
 `;
 export const LOGOImage = styled(Image)`
   width: 100%;
