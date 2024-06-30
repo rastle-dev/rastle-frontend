@@ -396,7 +396,12 @@ export default function OrderManagement() {
                             setCancelImpId(user.impId);
                             setProductOrderNumber(user.productOrderNumber);
                             setStatus(user.orderStatus);
-                            openDialog();
+                            if (
+                              user.orderStatus === "CANCEL_REQUESTED" ||
+                              user.orderStatus === "RETURN_REQUESTED"
+                            ) {
+                              openDialog();
+                            }
                           }}
                         >
                           {user[columnFieldMap[header]]}
