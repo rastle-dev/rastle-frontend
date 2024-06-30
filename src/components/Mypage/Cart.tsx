@@ -10,7 +10,6 @@ import useDialog from "@/hooks/useDialog";
 import PATH from "@/constants/path";
 import useLoadingWithTimeout from "@/hooks/useLoadingWithTimeout";
 import dynamic from "next/dynamic";
-import toastMsg from "@/components/Toast";
 
 const Dialog = dynamic(() => import("@/components/Common/Dialog/index"), {
   ssr: false,
@@ -137,7 +136,15 @@ export default function Cart() {
                       />
                       <S.ImgWrapper>
                         {item.soldOut && (
-                          <S.SoldOutInfo>
+                          <S.SoldOutInfo
+                            onClick={() => {
+                              const { productId } = item;
+                              router.push({
+                                pathname: PATH.PRODUCT,
+                                query: { productId },
+                              });
+                            }}
+                          >
                             <p>SOLD OUT</p>
                           </S.SoldOutInfo>
                         )}
@@ -190,7 +197,7 @@ export default function Cart() {
                           onClick={async () => {
                             if (item.soldOut) {
                               toast.dismiss();
-                              toastMsg("해당 상품은 품절된 상품이에요.🥲");
+                              errorMsg("해당 상품은 품절된 상품이에요.🥲");
                             } else {
                               handleProductCheckboxChange(item);
                               setTriggerOrder(true);
@@ -209,7 +216,7 @@ export default function Cart() {
                           onClick={async () => {
                             if (item.soldOut) {
                               toast.dismiss();
-                              toastMsg("해당 상품은 품절된 상품이에요.🥲");
+                              errorMsg("해당 상품은 품절된 상품이에요.🥲");
                             } else {
                               handleProductCheckboxChange(item);
                               setTriggerOrder(true);
