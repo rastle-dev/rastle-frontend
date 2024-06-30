@@ -15,7 +15,7 @@ import useShop from "@/hooks/useShop";
 import CategoryView from "@/components/Shop/CategoryView";
 import Head from "next/head";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const queryClient = new QueryClient();
   // Prefetch queries
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_PRODUCT_PAGING_SHOP], () =>
@@ -38,7 +38,6 @@ export async function getStaticProps() {
     props: {
       dehydratedState: dehydrate(queryClient),
     },
-    revalidate: 10, // Set the revalidate time in seconds
   };
 }
 export default function Shop() {
