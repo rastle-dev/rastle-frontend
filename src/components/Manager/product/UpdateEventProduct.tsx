@@ -290,7 +290,6 @@ export default function UpdateEventProduct() {
                 style={{ margin: "5px" }}
               />
             )}
-            {/* 상품 이름 */}
           </ProductItem>
         ))}
       </ProductList>

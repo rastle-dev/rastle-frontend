@@ -245,7 +245,6 @@ export default function OrderManagement() {
       },
     },
   );
-  console.log("ddd", data);
   return (
     <Wrapper>
       {isDialogOpen && (

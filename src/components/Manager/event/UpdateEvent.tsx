@@ -137,10 +137,6 @@ export default function UpdateEvent() {
   );
 
   console.log(eventData);
-  // const { data: eventProductData } = useQuery(
-  //   [QUERYKEYS.LOAD_EVENT_PRODUCT],
-  //   () => adminGetEventProduct(selectedEvent?.id), // 함수 래핑
-  // );
 
   console.log(selectedEvent);
 

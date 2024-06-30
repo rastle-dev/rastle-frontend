@@ -89,14 +89,6 @@ export default function useUpdateProduct() {
 
   console.log(productData);
 
-  // const { data: colorAndSizeData, refetch: refetchColorAndSizeData } = useQuery(
-  //   [QUERYKEYS.LOAD_PRODUCT_COLOR],
-  //   () => (selectedProduct ? loadProductCOLOR(selectedProduct.id) : null),
-  //   {
-  //     enabled: false, // 처음에 쿼리를 실행하지 않음
-  //   },
-  // );
-
   const loadColorAndSize = () => {
     if (selectedProduct) {
       const uniqueColors: string[] = [];
@@ -528,8 +520,6 @@ export default function useUpdateProduct() {
       setshowImageUpload(true);
       setMainImageData(productData.data.mainImage.imageUrls);
       setDetailImageData(productData.data.detailImage.imageUrls);
-      console.log(mainImageData);
-    } else {
       alert("수정할 상품을 선택해주세요");
     }
   };

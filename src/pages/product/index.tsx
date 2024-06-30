@@ -57,14 +57,10 @@ export default function Product() {
     };
   }, []);
 
-  // console.log(detailData);
-
   const { discountPercent } = calculateDiscountPercentAndPrice(
     detailData?.data.price,
     detailData?.data.discountPrice,
   );
-
-  console.log(selectedProduct);
 
   return (
     <S.Wrapper>

@@ -271,7 +271,6 @@ export default function CreateProduct() {
                   style={{ margin: "5px" }}
                 />
               }
-              {/* 상품 이름 */}
             </ProductItem>
           ))}
         </ProductList>

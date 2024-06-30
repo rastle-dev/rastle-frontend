@@ -1,4 +1,3 @@
-// import { unAuthorizationClient } from ".";
 // 관리자 api
 import API from "@/api/config";
 import { authorizationClient, unAuthorizationClient } from ".";

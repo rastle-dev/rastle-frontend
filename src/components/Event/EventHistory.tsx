@@ -36,8 +36,6 @@ export default function EventHistory() {
     setIsEventModalOpen(true);
   };
 
-  console.log(eventHistoryData);
-
   return (
     <S.Wrap>
       {isEventModalOpen && (

@@ -58,7 +58,6 @@ export default function Event() {
       }
     }
   }, []);
-  console.log(detailData);
 
   return (
     <S.Wrapper>
@@ -141,7 +140,6 @@ export default function Event() {
               </S.Link>
             </div>
           </S.DiscountPrice>
-          {/* <S.Link>{detailData?.data.link}무신사링</S.Link> */}
           <S.Script>
             <h3>
               지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요!

@@ -51,7 +51,6 @@ export default function useOrderConfirm() {
     parsedSelectedProducts.length === 0 ||
     !parsedSelectedProducts[0]?.cartProductId
   ) {
-    console.log("parsedSelectedProducts", parsedSelectedProducts);
     ProductList = parsedSelectedProducts?.map((product) => ({
       title: product.title,
       price: product.price,
@@ -62,7 +61,6 @@ export default function useOrderConfirm() {
       mainThumbnailImage: product.mainThumbnailImage,
     }));
   } else {
-    console.log("parsedSelectedProducts", parsedSelectedProducts);
     ProductList = parsedSelectedProducts?.map((product) => ({
       title: product.productName,
       price: product.productPrice,
@@ -73,7 +71,6 @@ export default function useOrderConfirm() {
       mainThumbnailImage: product.mainThumbnailImage,
     }));
   }
-  console.log("receiverData", receiverData);
 
   const OrdererInfo = [
     { meta: "받는사람", data: receiverData?.data.receiverInfo.receiverName },

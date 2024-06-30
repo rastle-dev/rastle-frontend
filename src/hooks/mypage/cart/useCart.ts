@@ -52,8 +52,6 @@ export default function useCart() {
       ?.map((v: ProductItem) => v.discountPrice * v.count)
       ?.reduce((a: number, c: number) => a + c, 0) || 0;
 
-  console.log(totalPrice);
-
   const deleteCart = async () => {
     try {
       await deleteAllCartProduct();
@@ -61,7 +59,6 @@ export default function useCart() {
       await queryClient.invalidateQueries([QUERYKEYS.LOAD_CART]);
     } catch (error) {
       errorMsg("전체 삭제 실패");
-      console.log(error);
     }
   };
   const mutateAddCartProduct = useMutation(["addCartProduct"], addCartProduct, {
@@ -200,22 +197,20 @@ export default function useCart() {
     }
   };
   const onClickWholeOrderButton = async () => {
-    const orderProducts = cartProduct?.data?.content?.map(
-      (product: ProductItem) => ({
-        productId: product.productId,
-        name: product.productName,
-        color: product.color,
-        size: product.size,
-        count: product.count,
-        totalPrice: product.discountPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
-      }),
-    );
+    // const orderProducts = cartProduct?.data?.content?.map(
+    //   (product: ProductItem) => ({
+    //     productId: product.productId,
+    //     name: product.productName,
+    //     color: product.color,
+    //     size: product.size,
+    //     count: product.count,
+    //     totalPrice: product.discountPrice, // totalPrice 값은 필요에 따라 설정해 주세요.
+    //   }),
+    // );
     const whole = cartProduct?.data?.content?.map(
       (product: ProductItem) => product.cartProductId,
     );
     const wholeOrderList = whole.join(",");
-    console.log("orderProducts", orderProducts);
-    console.log("car", whole);
     try {
       const data = await createCartOrder({
         cartProductIds: whole,
@@ -239,7 +234,6 @@ export default function useCart() {
       }
     } catch (err) {
       if (err instanceof AxiosError) {
-        console.log(err.response?.data?.message);
         if (
           err.response?.data?.message ===
           "품절된 상품 포함으로 주문이 불가합니다."
@@ -251,8 +245,6 @@ export default function useCart() {
       }
     }
   };
-
-  console.log(selectedItems);
   const onClickSelectedOrderButton = async (item: ProductItem) => {
     setSelectedItems([...selectedItems, item]);
 
@@ -291,7 +283,6 @@ export default function useCart() {
       }
     } catch (err) {
       if (err instanceof AxiosError) {
-        console.log(err.response?.data?.message);
         if (
           err.response?.data?.message ===
           "품절된 상품 포함으로 주문이 불가합니다."

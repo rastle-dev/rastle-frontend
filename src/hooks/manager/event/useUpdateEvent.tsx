@@ -23,9 +23,7 @@ export default function useUpdateEvent() {
   const [endSecond, onChangeEndSecond, setEndSecond] = useInput("");
   const [eventId, setEventId] = useState<number>();
   const [visible, setVisible] = useState(false);
-  // const [description, onChangeDescription] = useInput("");
 
-  console.log(previewImages);
   interface Event {
     id: number;
     name: string;

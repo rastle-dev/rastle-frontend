@@ -250,7 +250,6 @@ export default function UpdateProduct() {
                 style={{ margin: "5px" }}
               />
             )}
-            {/* 상품 이름 */}
           </ProductItem>
         ))}
       </ProductList>

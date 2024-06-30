@@ -26,7 +26,6 @@ export default function useProduct() {
       cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
     },
   );
-  // console.log("data2", detailData);
   const uniqueColors = [
     ...new Set(
       detailData?.data.productColor.productColors.map(
@@ -119,7 +118,6 @@ export default function useProduct() {
   const handleIncrement = (key: string | undefined | number) => {
     setSelectedProducts((prevProducts) => {
       return prevProducts.map((product) => {
-        console.log("key", key, product.key);
         if (product.key === key) {
           return {
             ...product,

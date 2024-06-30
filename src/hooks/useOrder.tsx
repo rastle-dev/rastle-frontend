@@ -164,7 +164,6 @@ export default function useOrder() {
     updateDefaultAddress,
     {
       onSuccess: async () => {
-        console.log("주소 업데이트 성공");
         queryClient.invalidateQueries([QUERYKEYS.LOAD_DEFAULT_ADDRESS]);
       },
       onError: ({
@@ -182,7 +181,6 @@ export default function useOrder() {
     updatePhoneNumber,
     {
       onSuccess: async () => {
-        console.log("핸드폰번호 업데이트 성공");
         queryClient.invalidateQueries([QUERYKEYS.UPDATE_DEFAULT_PHONENUMBER]);
       },
       onError: ({
@@ -279,7 +277,6 @@ export default function useOrder() {
       setDetailPostal("");
       setReceiver("");
       setPhoneNumber("");
-      console.log(receiver);
     } else if (clickedDeliveryButtonIndex === 0) {
       if (isSuccess && myInfo?.data) {
         setReceiver(myInfo.data.userName);
@@ -345,7 +342,6 @@ export default function useOrder() {
       alert(
         `결제에 실패하였습니다. 결제를 다시 시도해주세요. ${response.error_msg}`,
       );
-      console.log("response.error_msg", response.error_msg);
       router.replace(`/shop`);
       return;
     }
@@ -357,10 +353,7 @@ export default function useOrder() {
           merchant_uid: response.merchant_uid,
         });
 
-        console.log(paymentData);
-
         if (paymentData.data.verified) {
-          console.log(paymentData);
           try {
             await router.replace({
               pathname: PATH.ORDERCONFIRM,
@@ -385,16 +378,9 @@ export default function useOrder() {
   async function handlePaymentSubmit() {
     const { orderNumber } = router.query;
 
-    if (typeof selectedProducts === "string") {
-      console.log("selectedProducts", JSON.parse(selectedProducts));
-    }
-
     let selectedItems;
     let parsedSelectedProducts;
     let directPurchase;
-
-    console.log(cartProduct);
-    console.log("주소확인", postalAddress);
 
     if (
       !receiver ||
@@ -437,24 +423,17 @@ export default function useOrder() {
         )
         // eslint-disable-next-line array-callback-return
         .map((item: any) => {
-          console.log("장바구니에서 선택된 제품", item);
           return item;
         });
-
-      console.log("장바구니에서 선택된 제품 배열: ", selectedItems);
     } else {
       // If the condition is false
-      console.log("구매하기에서 선택된 제품");
       directPurchase = true;
 
       if (typeof selectedProducts === "string") {
         parsedSelectedProducts = JSON.parse(selectedProducts);
-        console.log("구매하기에서 선택된 제품:", parsedSelectedProducts);
       }
     }
     let values: any = {};
-    console.log(directPurchase);
-    console.log(totalPriceFinal);
 
     // 구매하기에서 온 동선
     if (directPurchase) {
@@ -466,11 +445,6 @@ export default function useOrder() {
         const additionalItems = parsedSelectedProducts.length - 1;
         name = `${parsedSelectedProducts[0].title} 외 ${additionalItems} 건`;
       }
-      console.log(
-        "구매하기 동선",
-        totalPriceFinal - selectedCouponPrice,
-        selectedCoupon,
-      );
 
       values = {
         pg: pgMethod,
@@ -488,7 +462,7 @@ export default function useOrder() {
         m_redirect_url: `https://api.recordyslow.com/payments/completeMobile`,
       };
     } else {
-      console.log("장바구니 동선", totalPriceFinal - selectedCouponPrice);
+      // 장바구니 동선
       let name;
       if (selectedItems.length === 1) {
         name = selectedItems[0].productName;
@@ -513,7 +487,6 @@ export default function useOrder() {
       };
     }
 
-    console.log(values);
     // //사전검증
     try {
       const paymentData = await paymentPrepare({
@@ -535,7 +508,6 @@ export default function useOrder() {
       // Rest of your code handling paymentData
     } catch (error) {
       // Handle the error
-      console.log(error);
       alert("결제에 실패하였습니다. 결제를 다시 시도해주세요.");
       router.replace(`/shop`);
     }
@@ -543,12 +515,6 @@ export default function useOrder() {
     // if (!window.IMP) return;
     /* 1. 가맹점 식별하기 */
   }
-
-  console.log(
-    "defaultAddress",
-    defaultAddress?.data?.roadAddress?.includes("제주"),
-  );
-  console.log("defaultAddress", defaultAddress);
 
   return {
     clickedPaymentButtonIndex,

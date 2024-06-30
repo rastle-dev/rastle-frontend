@@ -86,11 +86,9 @@ export default function useSignup() {
   const checkEmailCode = async () => {
     const data = await authCheckCode({ email, code });
     if (data.data) {
-      console.log("코드 일치");
       setCodeMatch(true);
       setCodeMessage("이메일 인증이 완료되었습니다!");
     } else {
-      console.log("코드 불일치");
       setCodeMatch(false);
       setCodeMessage("코드가 일치하지 않습니다");
     }
@@ -102,10 +100,8 @@ export default function useSignup() {
   };
 
   const signUp = async () => {
-    console.log(email, password, username, phoneNumber);
     const data = await authSignUp({ email, password, username, phoneNumber });
     if (data.data) {
-      console.log(data);
       toastMsg("회원가입이 완료되었습니다 !");
       router.push(PATH.LOGIN);
     } else {

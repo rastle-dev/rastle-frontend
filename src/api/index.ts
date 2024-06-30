@@ -9,7 +9,6 @@ axios.defaults.withCredentials = true;
 // 사용자가 인증되지 않은 상태로 간주되면, 로컬 스토리지를 비우고 메인 화면으로 리디렉션하는 역할 수행
 const handleUnauthorized = () => {
   localStorage.clear();
-  console.log("handleUnauthorized");
   window.location.href = PATH.LOGIN;
 };
 
@@ -77,7 +76,6 @@ function onAccessTokenFetched(accessToken: string) {
 async function resetTokenAndReattemptRequest(error: any) {
   try {
     const { response: errorResponse } = error; // 요청에 대한 에러 응답 정보 추출
-    console.log(error);
     // 엑세스 토큰을 얻었을 때, 원래의 요청을 재시도하는데 사용
     const retryOriginalRequest = new Promise((resolve, reject) => {
       addSubscriber(async (accessToken: string) => {
@@ -94,15 +92,12 @@ async function resetTokenAndReattemptRequest(error: any) {
 
     // 이미 엑세스 토큰을 가져오고 있는지 판단
     if (!isAlreadyFetchingAccessToken) {
-      console.log("리이슈ㅠ1");
       isAlreadyFetchingAccessToken = true;
       await unAuthorizationClient
         // 재발급 요청하고 새로 받은 액세스 토큰을 로컬 스토리지에 저장
         .post(API.REISSUE)
         .then(({ headers }: { headers: any }) => {
-          console.log("넘어왔나?", headers);
           const token = headers.authorization.replace("Bearer ", "");
-          console.log("리이슈 체킹", token);
           localStorage.setItem("accessToken", token);
           isAlreadyFetchingAccessToken = false;
           onAccessTokenFetched(token);
@@ -110,7 +105,6 @@ async function resetTokenAndReattemptRequest(error: any) {
         .catch((err) => {
           // 요청 실패시
           // toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
-          console.log("토큰 재발급 실패");
           handleUnauthorized();
           return Promise.reject(err);
         });
@@ -130,14 +124,9 @@ authorizationClient.interceptors.response.use(
   },
   // 서버로부터 받은 응답이 에러인 경우
   async function (error) {
-    console.log("error", error);
-    console.log("에러를 잡아줘", error.message);
-    console.log("에러를 잡아줘", error.message.includes("401"));
-    console.log("에러를 잡아줘", error.response.data.errorCode);
     if (error.response.data.errorCode === 403) {
       // 403 인증에러, 사용자가 개인정보 브라우저에서 강제 종료 후 api 요청할 경우
       // 엑세스 토큰이 없는데 요청을 보낸 경우
-      console.log("403error");
       toastMsg("로그인 정보가 없어 메인 화면으로 이동합니다.");
       handleUnauthorized();
     }

@@ -35,7 +35,6 @@ const COMPLETE = "/complete";
 const COUPON = "/coupon";
 const PREPARE = "/prepare";
 const LOAD_ADDRESS = "/getMemberRecipientInfo";
-// const UPDATE_ADDRESS = "/updateMemberAddress";
 const UPDATE_ADDRESS = "/updateMemberRecipientInfo";
 const APPLY = "/apply";
 const UPDATE_PHONENUMBER = "/updateMemberPhoneNumber";

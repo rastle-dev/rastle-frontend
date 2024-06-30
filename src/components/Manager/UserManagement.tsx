@@ -84,7 +84,6 @@ export const PageNumberContainer = styled.div`
 `;
 
 export default function UserManagement() {
-  // const { data } = useQuery([QUERYKEYS.ADMIN_LOAD_USERINFO], adminGetUserInfo);
   const {
     useLoadUserInfo,
     ITEM_SIZE,

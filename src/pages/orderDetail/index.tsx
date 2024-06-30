@@ -136,8 +136,6 @@ export default function OrderDetail() {
   if (orderDetail === undefined) {
     return <LoadingBar type={6} />;
   }
-
-  console.log("order", orderDetail);
   return (
     <S.Temp>
       <S.Container>

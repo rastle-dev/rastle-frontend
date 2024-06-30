@@ -10,7 +10,6 @@ import Head from "next/head";
 
 export default function Cody() {
   const { infiniteData, infiniteHandleScroll, isFetchingNextPage } = useShop();
-  console.log(infiniteData);
   // useEffect를 사용하여 스크롤 이벤트 리스너 등록
   useEffect(() => {
     window.addEventListener("scroll", infiniteHandleScroll);

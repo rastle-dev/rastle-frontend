@@ -24,8 +24,6 @@ export default function CountTable({
   handleDecrement,
   handleDelete,
 }: CountTableProps) {
-  console.log("product", product.count);
-
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const checkIsMobile = () => {

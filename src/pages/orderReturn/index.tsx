@@ -62,7 +62,6 @@ export default function OrderReturn() {
   const returnRequestButton = () => {
     setReturnOrderModalOpen(true);
   };
-  console.log("re", returnInfo);
   return (
     <S.Temp>
       {returnOrderModalOpen && (

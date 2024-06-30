@@ -25,13 +25,6 @@ export default function Signup() {
 
   return (
     <S.Wrapper>
-      {/* <style> */}
-      {/*   {` */}
-      {/*       html{ */}
-      {/*         font-size: 11px; */}
-      {/*       } */}
-      {/*   `} */}
-      {/* </style> */}
       <Head>
         <title>회원가입 - RECORDY SLOW</title>
       </Head>

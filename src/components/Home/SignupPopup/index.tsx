@@ -92,7 +92,6 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
           objectFit="cover"
         />
       </S.CouponWrapper>
-      {/* <p>회원가입 시 3,000원 할인 쿠폰을 드려요.</p> */}
       <S.CloseButton onClick={handleWeekClose}>
         x 하루 동안 보지 않기
       </S.CloseButton>
