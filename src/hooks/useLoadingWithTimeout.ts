@@ -12,7 +12,7 @@ export default function useLoadingWithTimeout(
     if (isLoading || isSubLoading) {
       timeoutId = setTimeout(() => {
         setTimedOut(true);
-      }, 5000);
+      }, 10000);
     } else {
       setTimedOut(false);
       clearTimeout(timeoutId);
