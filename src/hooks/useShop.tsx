@@ -72,7 +72,7 @@ export default function useShop() {
     isFetchingNextPage,
   } = useInfiniteQuery(
     [QUERYKEYS.LOAD_BUNDLE], // 쿼리 키
-    ({ pageParam = 0 }) => loadBundle({ page: pageParam, size: 1 }),
+    ({ pageParam = 0 }) => loadBundle({ page: pageParam, size: 5 }),
     {
       getNextPageParam: (lastPage) => {
         const nextPage = lastPage.data.pageable.pageNumber + 1;
