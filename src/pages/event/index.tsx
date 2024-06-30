@@ -141,16 +141,14 @@ export default function Event() {
             </div>
           </S.DiscountPrice>
           <S.Script>
-            <h3>
-              지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요!
-            </h3>
+            {/* <h3> */}
+            {/*   지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요! */}
+            {/* </h3> */}
             <h4>* 주의사항</h4>
-            <div>
-              응모하기전, 마이페이지에 등록된 전화번호를 확인해주세요!
-              해당번호로 당첨 메시지가 전송될 예정이에요.
-            </div>
+            <div>사이즈가 잘 맞으실지 확인후에 응모 해주세요!</div>
+            <div>응모횟수에는 제한이 없지만 중복당첨은 불가능합니다.</div>
             <p>
-              (소셜로그인시, 마이페이지에서 전화번호를 새로 등록할 수 있어요!)
+              (당첨결과는 다음날 오후 11시 인스타 스토리를 통해 공지드려요 !)
             </p>
           </S.Script>
           {token ? (

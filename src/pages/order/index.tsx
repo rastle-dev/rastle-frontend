@@ -139,21 +139,21 @@ export default function Order() {
             ))}
           </S.OrdererInfo>
           <h2>배송 주소</h2>
-          <S.AddressSettingBox>
-            {DeliveryButtons.map((button, index) => (
-              <S.AddressButton
-                key={button.id}
-                onClick={() => handleDeliveryButtonClick(index)}
-              >
-                <S.StyledCheckbox>
-                  <S.ClickBox
-                    isChecked={index === clickedDeliveryButtonIndex}
-                  />
-                </S.StyledCheckbox>
-                <p>{button.default}</p>
-              </S.AddressButton>
-            ))}
-          </S.AddressSettingBox>
+          {/* <S.AddressSettingBox> */}
+          {/*   {DeliveryButtons.map((button, index) => ( */}
+          {/*     <S.AddressButton */}
+          {/*       key={button.id} */}
+          {/*       onClick={() => handleDeliveryButtonClick(index)} */}
+          {/*     > */}
+          {/*       <S.StyledCheckbox> */}
+          {/*         <S.ClickBox */}
+          {/*           isChecked={index === clickedDeliveryButtonIndex} */}
+          {/*         /> */}
+          {/*       </S.StyledCheckbox> */}
+          {/*       <p>{button.default}</p> */}
+          {/*     </S.AddressButton> */}
+          {/*   ))} */}
+          {/* </S.AddressSettingBox> */}
           {deliveryInputs.map((input) => (
             <S.DeliveryBox key={input.label}>
               {input.size ? (
