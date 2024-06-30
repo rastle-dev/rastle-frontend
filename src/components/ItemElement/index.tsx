@@ -112,6 +112,7 @@ function ItemElement({
   startDate,
   endDate,
   soldOut,
+  fromHomeEvent,
 }: ItemElementProps) {
   const router = useRouter();
   const productId = id;
@@ -129,7 +130,7 @@ function ItemElement({
   };
 
   const handleClick = () => {
-    const pathname = isEvent ? PATH.EVENT : PATH.PRODUCT;
+    const pathname = isEvent || fromHomeEvent ? PATH.EVENT : PATH.PRODUCT;
     router.push({
       pathname,
       query: { productId },

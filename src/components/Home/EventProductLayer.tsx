@@ -25,6 +25,7 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
             discountPrice={item.discountPrice}
             id={item.productId}
             categoryId={item.categoryId}
+            fromHomeEvent
           />
         ))}
       </S.ItemContainer>
