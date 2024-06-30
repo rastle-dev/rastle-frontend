@@ -501,22 +501,19 @@ export const CouponImage = styled.div`
   h3 {
     text-align: left;
     margin: 1rem 1rem 0 1rem;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   h4 {
     text-align: left;
     margin: 0.5rem 1rem 0 1rem;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
   h5 {
     text-align: left;
     margin: 0.8rem 1rem 0 1rem;
     font-size: 1rem;
     font-weight: 400;
-    $media.mobile {
-      margin-top: 0.3rem;
-    }
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
   }
 `;
 

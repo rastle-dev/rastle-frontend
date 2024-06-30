@@ -98,6 +98,7 @@ export const MobileTextInfo = styled.div`
     padding: 1.5rem 7rem 2rem 2rem;
     flex-direction: row;
     justify-content: space-between;
+    gap: 5rem;
     p {
       font-weight: 400;
       font-size: 1rem;
