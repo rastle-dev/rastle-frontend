@@ -81,7 +81,7 @@ export default function OrderReturn() {
           <S.Title>주문 상품</S.Title>
           {selectedItems.map(
             (item: SelectedItem) =>
-              item.status === "DELIVERY_READY" &&
+              item.status === "DELIVERED" &&
               item.prevCount -
                 ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)) >
                 0 && (

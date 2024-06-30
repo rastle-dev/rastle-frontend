@@ -69,6 +69,9 @@ export default function OrderCancel() {
               item.status !== "DELIVERY_READY" &&
               item.status !== "DELIVERY_STARTED" &&
               item.status !== "DELIVERED" &&
+              item.status !== "PARTIALLY_RETURNED" &&
+              item.status !== "RETURN_REQUESTED" &&
+              item.status !== "RETURNED" &&
               item.prevCount -
                 ((item.cancelRequestAmount ?? 0) + (item.cancelAmount ?? 0)) >
                 0 && (
