@@ -53,7 +53,11 @@ function BestProductLayer({ productData }: { productData: ProductData }) {
           })}
       </S.BestItemContainer>
       <S.ViewMore>
-        <LazyLink href="/shop" title="레코디슬로우 전체 상품 페이지">
+        <LazyLink
+          href="/shop"
+          title="레코디슬로우 전체 상품 페이지"
+          onClick={() => sessionStorage.setItem("selectedFilter", "BEST")}
+        >
           {">"} 베스트 상품 더보기
         </LazyLink>
       </S.ViewMore>

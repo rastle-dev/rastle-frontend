@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { loadBundle, loadSelectBundle } from "@/api/shop";
 import QUERYKEYS from "@/constants/querykey";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Category from "@/interface/category";
 import { useRouter } from "next/dist/client/router";
 import ItemElementProps from "@/interface/itemElement";
@@ -94,6 +94,11 @@ export default function useShop() {
   const handleFilterClick = (menu: FilterButtonType) => {
     setSelectedFilter(menu);
   };
+  useEffect(() => {
+    const filter = sessionStorage.getItem("selectedFilter") || "NEW" || null;
+    if (filter === "BEST") setSelectedFilter(filter);
+    sessionStorage.removeItem("selectedFilter");
+  }, []);
   return {
     useLoadSelectBundle,
     infiniteData,
