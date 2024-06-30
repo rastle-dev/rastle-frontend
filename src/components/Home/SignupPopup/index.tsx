@@ -87,7 +87,8 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
         <S.CouponImage
           src={CouponImage}
           alt="쿠폰 이미지"
-          layout="fill"
+          width={170}
+          height={100}
           objectFit="cover"
         />
       </S.CouponWrapper>
