@@ -55,6 +55,7 @@ export default function OrderHistory() {
     if (
       status === "DELIVERY_STARTED" ||
       status === "DELIVERED" ||
+      status === "DELIVERED_READY" ||
       status === "PARTIALLY_RETURNED" ||
       status === "RETURNED"
     ) {
