@@ -335,3 +335,9 @@ export const FinalCancelButton = styled(Button)`
   background-color: black;
   color: white;
 `;
+export const ReturnInfo = styled.div`
+  padding-top: 1rem;
+  p {
+    font-weight: 400;
+  }
+`;

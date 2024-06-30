@@ -287,6 +287,18 @@ export default function OrderDetail() {
             </S.DeliveryTableDiv>
           ))}
         </S.InfoWrapper>
+        <S.InfoWrapper>
+          <S.DeliveryTitle>반품 시 주의 사항</S.DeliveryTitle>
+          <S.ReturnInfo>
+            <p>제품은 반품 신청일 기준 다음날 14시에 수거할 예정이에요.</p>
+            <p>그 전에 꼭 제품을 문 앞에 놔둬주세요!</p>
+            <p>반품 신청하신 제품은 영업일 기준 2~3일 안에 환불될 예정이요.</p>
+            <p>
+              궁금하신 점은 카카오 채널(레코디 슬로우)로 문의 주시면
+              감사하겠습니다.😊
+            </p>
+          </S.ReturnInfo>
+        </S.InfoWrapper>
       </S.Container>
     </S.Temp>
   );
