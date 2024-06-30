@@ -74,9 +74,7 @@ export default function Coupon() {
                       <p>전 상품 적용</p>
                       <p>{item.discount?.toLocaleString()}원 할인</p>
                       <p>~2024.04.17</p>
-                      <S.MobileDescription>
-                        2024.07.04까지 사용 가능
-                      </S.MobileDescription>
+                      <S.MobileDescription>2024.07.04까지</S.MobileDescription>
                     </S.MobileTextInfo>
                   </S.ProductInfo>
                 );

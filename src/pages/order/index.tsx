@@ -264,7 +264,7 @@ export default function Order() {
                                       회원가입 할인쿠폰
                                     </S.CouponText>
                                     <S.CouponSubText>
-                                      2024/07/1까지 전상품 적용
+                                      2024/07/04까지 전상품 적용
                                     </S.CouponSubText>
                                   </S.CouponTextWrapper>
                                 </S.CouponWrapper>
