@@ -17,7 +17,7 @@ export default function useHome() {
     data: Array<ItemElementProps>;
   };
   const bestProductData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_BEST_PRODUCT_PAGING_SHOP,
+    QUERYKEYS.LOAD_BEST_PRODUCT_PAGING,
   ]) as {
     data: {
       content: Array<ItemElementProps>;
