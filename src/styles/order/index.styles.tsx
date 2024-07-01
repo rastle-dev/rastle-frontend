@@ -16,6 +16,12 @@ export const Temp = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const Warning = styled.div`
+  margin-bottom: 2rem;
+  color: orangered;
+  font-size: 1.2rem;
+`;
 export const Container = styled.div`
   display: flex;
   align-items: center;
