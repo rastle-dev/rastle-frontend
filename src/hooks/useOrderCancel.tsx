@@ -240,7 +240,6 @@ export default function useOrderCancel() {
     handleProductCheckboxChange,
     selectedItems,
     setSelectedItems,
-    현,
     selectedCancelItems,
     syncItemCount,
     inputChangeHandler,
