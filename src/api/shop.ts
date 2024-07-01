@@ -27,28 +27,28 @@ export const loadMarketProduct = async () => {
 export const loadMarketProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE,ASC`,
   );
   return data;
 };
 export const loadMarketProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE,ASC`,
   );
   return data;
 };
 export const loadMarketBestProduct = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC`,
   );
   return data;
 };
 export const loadMarketBestProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount`,
+    `${API.PRODUCT}?page=${page}&size=${size}&visible=TRUE&sort=soldCount,DESC`,
   );
   return data;
 };
@@ -89,14 +89,14 @@ export const loadEventProduct = async () => {
 export const loadEventProductPaging = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE`,
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
 export const loadEventProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE`,
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=id,DESC`,
   );
   return data;
 };
