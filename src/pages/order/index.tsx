@@ -51,6 +51,7 @@ export default function Order() {
     selectedCouponPrice,
     setIsDefaultAddress,
     deliveryPrice,
+    isLoadingDeliveryIdx,
   } = useOrder();
 
   const { couponData, isCouponLoading } = useCoupon();
@@ -72,6 +73,9 @@ export default function Order() {
   }
 
   if (parsedProducts === undefined) {
+    return <LoadingBar type={6} />;
+  }
+  if (isLoadingDeliveryIdx) {
     return <LoadingBar type={6} />;
   }
 
