@@ -375,7 +375,6 @@ export default function useOrder() {
       alert("결제에 실패했습니다.");
     }
   }
-
   async function handlePaymentSubmit() {
     const { orderNumber } = router.query;
 
@@ -385,12 +384,14 @@ export default function useOrder() {
 
     if (
       !receiver ||
-      !phoneNumber ||
+      !(phoneNumber.length > 10) ||
       !postalAddress.zonecode ||
       !postalAddress.address ||
       !detailPostal
     ) {
-      errorMsg("입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.");
+      errorMsg(
+        "제대로 입력되지 않은 필드가 있습니다. 모든 필드를 입력해주세요.",
+      );
       return;
     }
 

@@ -14,11 +14,11 @@ import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
-import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
+import LoadingBar from "@/components/LoadingBar";
 
 export default function Event() {
   const router = useRouter();
@@ -29,28 +29,18 @@ export default function Event() {
 
   const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
     useScroll();
-  const { detailData } = useProduct();
+  const { detailData, isLoading } = useProduct();
+  const [token, setToken] = useState(false);
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+
   useEffect(() => {
     handleScroll();
     window.addEventListener("scroll", handleScroll);
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const { eventHistorySize } = useEventHistory();
-  const { data: eventHistoryData } = useQuery(
-    [QUERYKEYS.LOAD_EVENT_HISTORY],
-    () => loadEventHistory({ page: 0, size: eventHistorySize }),
-  );
 
-  const [token, setToken] = useState(false);
-  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
-
-  const { discountPercent } = calculateDiscountPercentAndPrice(
-    detailData?.data.price,
-    detailData?.data.discountPrice,
-  );
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
@@ -58,8 +48,23 @@ export default function Event() {
       }
     }
   }, []);
-  const queryClient = useQueryClient();
-  queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
+
+  const { discountPercent } = calculateDiscountPercentAndPrice(
+    detailData?.data.price,
+    detailData?.data.discountPrice,
+  );
+  const { data: eventHistoryData, refetch } = useQuery(
+    [QUERYKEYS.LOAD_EVENT_HISTORY],
+    () => loadEventHistory({ page: 0, size: 24 }),
+  );
+
+  useEffect(() => {
+    if (token) {
+      refetch(); // Manually fetch event history data if user is logged in
+    }
+  }, [token, refetch]);
+
+  if (isLoading) return <LoadingBar type={6} />;
 
   return (
     <S.Wrapper>
@@ -96,6 +101,8 @@ export default function Event() {
       {isEventDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
+            const queryClient = new QueryClient();
+            queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
             router.push({
               pathname: PATH.MYPAGE,
               query: { tab: "주문 내역" },
@@ -143,9 +150,6 @@ export default function Event() {
             </div>
           </S.DiscountPrice>
           <S.Script>
-            {/* <h3> */}
-            {/*   지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요! */}
-            {/* </h3> */}
             <h4>* 주의사항</h4>
             <div>사이즈가 잘 맞으실지 확인후에 응모 해주세요!</div>
             <div>응모횟수에는 제한이 없지만 중복당첨은 불가능합니다.</div>
@@ -183,10 +187,7 @@ export default function Event() {
               type="shop"
               disabled={
                 dayjs().isBefore(detailData?.data.eventStartDate) ||
-                dayjs().isAfter(detailData?.data.eventEndDate) ||
-                eventHistoryData?.data.content.filter(
-                  (v: any) => v.id === detailData?.data.id,
-                ).length
+                dayjs().isAfter(detailData?.data.eventEndDate)
               }
             />
           )}
@@ -201,6 +202,7 @@ export default function Event() {
       <S.ProductDetailList>
         {detailData?.data.detailImage.imageUrls?.map((img: string) => (
           <S.ProductDetail
+            key={img}
             src={img}
             alt={detailData?.data.name}
             layout="responsive"

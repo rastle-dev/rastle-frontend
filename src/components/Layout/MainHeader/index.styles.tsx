@@ -116,11 +116,12 @@ const MenuItem = styled.li`
   }
   @media (max-width: 769px) {
     list-style: none;
-    padding: 2rem 2rem 2rem 0;
     margin: 0;
     font-weight: 400;
     a {
       padding: 2rem 10rem 2rem 2rem;
+      width: 100%;
+      display: block;
     }
   }
   &:hover {

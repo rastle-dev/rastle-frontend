@@ -222,7 +222,8 @@ export default function OrderDetail() {
               {orderDetail?.data.productOrderInfos.filter(
                 (v: any) =>
                   v.status === "PAID" ||
-                  v.status === "CANCEL_REQUESTED" ||
+                  (v.status === "CANCEL_REQUESTED" &&
+                    v.count - v.cancelAmount - v.cancelRequestAmount !== 0) ||
                   v.status === "PARTIALLY_CANCELLED",
               ).length !== 0 && (
                 <S.CancelButton

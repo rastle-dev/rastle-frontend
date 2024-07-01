@@ -24,13 +24,10 @@ export default function Cody() {
         <meta name="description" content="제품을 활용한 코디 모음집" />
       </Head>
       <S.SetBox>
-        {infiniteData?.pages.flatMap((page: any, idx: number) =>
+        {infiniteData?.pages.flatMap((page: any) =>
           page.data.content.map((item: any) => (
             <S.CurrentMarketWrapper key={item.id}>
-              <S.FirstMarketDescription>
-                RECORDY {idx + 1}
-                <p>{item.name}</p>
-              </S.FirstMarketDescription>
+              <S.FirstMarketDescription>{item.name}</S.FirstMarketDescription>
               <S.MarketIMG
                 src={item.imageUrls.slice(0, -1)}
                 alt="ak"

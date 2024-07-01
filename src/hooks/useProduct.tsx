@@ -18,7 +18,7 @@ export default function useProduct() {
   const { productId } = router.query;
   const numericProductId = Number(productId);
 
-  const { data: detailData } = useQuery(
+  const { data: detailData, isLoading } = useQuery(
     [QUERYKEYS.LOAD_PRODUCT_DETAIL, numericProductId],
     () => loadProductDetail(numericProductId),
     {
@@ -226,5 +226,6 @@ export default function useProduct() {
     uniqueSizes,
     cartProducts,
     onClickOrderButton,
+    isLoading,
   };
 }

@@ -12,7 +12,7 @@ const navList = [
   { name: "SHOP", href: "/shop" },
   { name: "코디보기", href: "/cody" },
   { name: "공지사항", href: "/community" },
-  { name: "ABOUT", href: "/shopinfo/guide" },
+  { name: "고객센터", href: "https://pf.kakao.com/_jIZxlG" },
 ];
 
 const mobileNavList = [
@@ -20,7 +20,7 @@ const mobileNavList = [
   { name: "SHOP", href: "/shop" },
   { name: "코디보기", href: "/cody" },
   { name: "공지사항", href: "/community" },
-  { name: "ABOUT", href: "/shopinfo/guide" },
+  { name: "고객센터", href: "https://pf.kakao.com/_jIZxlG" },
 ];
 
 export default function MainHeader() {
