@@ -19,6 +19,7 @@ import Head from "next/head";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import CountTable from "@/components/Product/CountTable";
 import errorMsg from "@/components/Toast/error";
+import LoadingBar from "@/components/LoadingBar";
 
 export const getServerSideProps: GetServerSideProps = commonServerSideProps;
 
@@ -44,6 +45,7 @@ export default function Product() {
     uniqueSizes,
     cartProducts,
     onClickOrderButton,
+    isLoading,
   } = useProduct();
 
   const [isLoginModalVisible, setLoginModalVisible] = useState(false);
@@ -61,6 +63,7 @@ export default function Product() {
     detailData?.data.price,
     detailData?.data.discountPrice,
   );
+  if (isLoading) return <LoadingBar type={6} />;
 
   return (
     <S.Wrapper>
