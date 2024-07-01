@@ -21,6 +21,7 @@ export default function Signup() {
     handleLinkClick,
     isViewMoreModalOpen,
     setIsViewMoreModalOpen,
+    validatePassword,
   } = useSignup();
 
   return (
@@ -114,7 +115,7 @@ export default function Signup() {
               username.length > 0 &&
               codeMatch &&
               password === passwordCheck &&
-              password.length >= 8 &&
+              validatePassword(password) &&
               /^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/.test(phoneNumber) &&
               privateChecked
             )
