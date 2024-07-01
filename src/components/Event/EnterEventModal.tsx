@@ -4,6 +4,9 @@ import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
 import React from "react";
 import useEventModal from "@/hooks/useEventModal";
+import { useQuery } from "@tanstack/react-query";
+import QUERYKEYS from "@/constants/querykey";
+import { loadEventHistory } from "@/api/cart";
 
 export const Wrapper = styled.div`
   width: 89%;
