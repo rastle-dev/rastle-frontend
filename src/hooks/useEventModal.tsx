@@ -53,6 +53,7 @@ export default function useEventModal() {
       toast.dismiss();
       toastMsg("이벤트 응모가 완료되었습니다! 👏");
       queryClient.invalidateQueries([QUERYKEYS.LOAD_PRODUCT_DETAIL]);
+      queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
       setIsEventModalOpen(false);
       setIsEventDialogOpen(true);
     },

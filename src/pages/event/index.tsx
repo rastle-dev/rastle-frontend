@@ -15,7 +15,7 @@ import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
 import useEventHistory from "@/hooks/mypage/orderList/useEventHistory";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
@@ -58,6 +58,8 @@ export default function Event() {
       }
     }
   }, []);
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
 
   return (
     <S.Wrapper>
