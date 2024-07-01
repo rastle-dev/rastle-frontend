@@ -46,6 +46,7 @@ export default function useSignup() {
   const [codeMessage, setCodeMessage] = useState("");
   const [privateChecked, setPrivateChecked] = useState(false);
   const [isViewMoreModalOpen, setIsViewMoreModalOpen] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   const resetEmailMessage = () => {
     if (duplicateCheck) {
@@ -97,6 +98,25 @@ export default function useSignup() {
   /** 이메일 형태와 일치할 시에 true를 반환합니다 */
   const isValidEmail = (emailData: string) => {
     return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(emailData);
+  };
+
+  const validatePassword = (password: string) => {
+    const hasRequiredLength = password.length >= 8 && password.length <= 16;
+    const hasLetters = /[a-zA-Z]/.test(password);
+    const hasNumbers = /[0-9]/.test(password);
+    const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    return hasRequiredLength && hasLetters && hasNumbers && hasSpecialChars;
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    onChangePassword(e);
+    setPasswordMessage(
+      validatePassword(newPassword)
+        ? ""
+        : "비밀번호는 8자에서 16자 사이의 영문, 숫자, 특수문자를 조합하여 입력해주세요.",
+    );
   };
 
   const signUp = async () => {
@@ -169,12 +189,9 @@ export default function useSignup() {
       label: "비밀번호",
       type: "password",
       placeholder: "영문,숫자,특수문자 조합 8~16자",
-      onChange: onChangePassword,
-      message:
-        password.length > 0 && password.length < 8
-          ? "비밀번호를 8자리 이상 입력하세요 "
-          : "",
-      inValid: password.length > 0 && password.length < 8,
+      onChange: handlePasswordChange,
+      message: passwordMessage,
+      inValid: !!passwordMessage,
     },
     {
       label: "비밀번호 확인",
@@ -209,5 +226,7 @@ export default function useSignup() {
     handleLinkClick,
     isViewMoreModalOpen,
     setIsViewMoreModalOpen,
+    validatePassword,
+    passwordMessage,
   };
 }

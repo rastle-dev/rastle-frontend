@@ -105,6 +105,7 @@ export default function LoadEvent() {
     queryFn,
   );
   const [eventProductId, setEventProductId] = useState<number | null>(null);
+  const [selectedProductName, setSelectedProductName] = useState<string>("");
 
   const { data: eventApplyUserData, refetch } = useQuery(
     [QUERYKEYS.ADMIN_LOAD_EVENTINFO, eventProductId],
@@ -119,6 +120,11 @@ export default function LoadEvent() {
       refetch();
     }
   }, [eventProductId, refetch]);
+
+  const handleProductClick = (productId: any, productName: any) => {
+    setEventProductId(productId);
+    setSelectedProductName(productName);
+  };
 
   // 열(컬럼) 정보 배열
   const columnHeaders = [
@@ -140,11 +146,12 @@ export default function LoadEvent() {
   return (
     <div>
       <div>
+        <p>이벤트 제품 수: {eventData?.data.length || 0}개</p>
         {eventData?.data.map((item: any) => (
           <EventProductNameButton
             key={item.productId}
             type="button"
-            onClick={() => setEventProductId(item.productId)}
+            onClick={() => handleProductClick(item.productId, item.productName)}
           >
             {item.productName}
           </EventProductNameButton>
@@ -159,6 +166,8 @@ export default function LoadEvent() {
           </tr>
         </TableHead>
         <tbody>
+          <p>{selectedProductName || "제품명이 없습니다"}</p>
+          <p>이벤트 참여 수 : {eventApplyUserData?.data.length || 0}개</p>
           {eventApplyUserData?.data.map((user: any) => (
             <TableRow key={user.createdDate}>
               {columnHeaders.map((header) => (

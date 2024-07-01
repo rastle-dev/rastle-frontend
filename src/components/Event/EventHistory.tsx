@@ -73,7 +73,7 @@ export default function EventHistory() {
                 return (
                   <S.ProductInfo>
                     <S.OrderDateNum>
-                      <div>{item.eventApplyDate.split("T")[0]}</div>
+                      <div>{item?.eventApplyDate?.split("T")[0]}</div>
                       <S.OrderDetail
                         onClick={() => {
                           openEventDetailModal(item);
