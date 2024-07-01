@@ -4,13 +4,6 @@ import ItemElementProps from "@/interface/itemElement";
 
 export default function useHome() {
   const queryClient = useQueryClient();
-  const productData = queryClient.getQueryData([
-    QUERYKEYS.LOAD_PRODUCT_PAGING,
-  ]) as {
-    data: {
-      content: Array<ItemElementProps>;
-    };
-  };
   const eventData = queryClient.getQueryData([
     QUERYKEYS.LOAD_EVENTPRODUCT_PAGING,
   ]) as {
@@ -24,7 +17,6 @@ export default function useHome() {
     };
   };
   return {
-    productData,
     eventData,
     bestProductData,
   };
