@@ -24,7 +24,7 @@ export async function getStaticProps() {
     loadMarketProductPaging({ page: 0, size: 4 }),
   );
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_EVENTPRODUCT_PAGING], () =>
-    loadEventProductPaging({ page: 0, size: 4 }),
+    loadEventProductPaging({ page: 0, size: 6 }),
   );
   await queryClient.prefetchQuery([QUERYKEYS.LOAD_BEST_PRODUCT_PAGING], () =>
     loadMarketBestProduct({ page: 0, size: 6 }),

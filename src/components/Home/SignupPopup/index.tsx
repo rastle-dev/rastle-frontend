@@ -75,7 +75,7 @@ function SignupPopup({ onClose }: SignupPopupProps): React.ReactNode {
           해당 홈페이지는 단 4일간(7/1~7/4) 이벤트성으로 운영됩니다.
         </S.Intro>
         <S.Intro>
-          이 기간동안 하루마다 5개, 총 20개의 의류를 응모를 통해 나눠드리고,{" "}
+          이 기간동안 하루마다 6개, 총 25개의 의류를 응모를 통해 나눠드리고,{" "}
         </S.Intro>
         <S.Intro>매일 11시에 인스타 스토리로 당첨자가 공지됩니다. </S.Intro>
         <S.IntroMargin />

@@ -104,7 +104,7 @@ export default function EnterUpdateEventModal({
           />
         </S.InputBox>
       ))}
-      <h3>* 해당번호와 아이디로 당첨 메시지가 전송될 예정이에요.</h3>
+      <h3>* 인스타 아이디나 해당번호로 당첨 메시지가 전송될 예정이에요.</h3>
       <h4>* 이벤트 종료 전까지만, 수정이 가능해요.</h4>
       <S.EnterButton
         title="수정하기"
