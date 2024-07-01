@@ -19,6 +19,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
 import { loadEventHistory } from "@/api/cart";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
+import LoadingBar from "@/components/LoadingBar";
 
 export default function Event() {
   const router = useRouter();
@@ -29,7 +30,7 @@ export default function Event() {
 
   const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
     useScroll();
-  const { detailData } = useProduct();
+  const { detailData, isLoading } = useProduct();
   useEffect(() => {
     handleScroll();
     window.addEventListener("scroll", handleScroll);
@@ -60,6 +61,8 @@ export default function Event() {
   }, []);
   const queryClient = useQueryClient();
   queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
+
+  if (isLoading) return <LoadingBar type={6} />;
 
   return (
     <S.Wrapper>
