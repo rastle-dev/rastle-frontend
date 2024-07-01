@@ -65,12 +65,12 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     // You can use your own error logging service here
     console.log({ error, errorInfo });
-  }
 
-  // handleTryAgainClick = (): void => {
-  //   // Reset the error state when "Try again?" button is clicked
-  //   this.setState({ hasError: false });
-  // };
+    // Add event listener for 'popstate' to handle browser back navigation
+    window.onpopstate = () => {
+      this.setState({ hasError: false });
+    };
+  }
 
   handleGoHomeClick = (): void => {
     // Navigate to the home page when "Go home" button is clicked
