@@ -55,7 +55,7 @@ export default function CountdownTimer({
 
   return (
     <div>
-      {remainingTime >= 0 ? (
+      {remainingTime > 0 ? (
         <p>{`${days}일 ${hours}시간 ${minutes}분 ${seconds}초 남음`}</p>
       ) : (
         <p>이벤트가 종료되었습니다.</p>
