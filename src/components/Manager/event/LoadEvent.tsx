@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
@@ -33,52 +33,6 @@ const TableCell = styled.td`
   border: 1px solid #ddd;
 `;
 
-export const PageNumberContainer = styled.div`
-  margin-bottom: 5rem;
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  ul.pagination li {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid #e2e2e2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-  }
-  ul.pagination li:first-child {
-    border-radius: 5px 0 0 5px;
-  }
-  ul.pagination li:last-child {
-    border-radius: 0 5px 5px 0;
-  }
-  ul.pagination li {
-    cursor: pointer;
-  }
-  ul.pagination li a {
-    text-decoration: none;
-    color: #337ab7;
-    font-size: 1rem;
-  }
-  ul.pagination li.active a {
-    color: white;
-  }
-  ul.pagination li.active {
-    background-color: #337ab7;
-  }
-  ul.pagination li a:hover,
-  ul.pagination li a.active {
-    color: blue;
-  }
-`;
 const EventProductNameButton = styled.button`
   background-color: transparent;
   padding: 1rem 1rem 1rem 1rem;
@@ -94,6 +48,47 @@ const EventProductNameButton = styled.button`
   }
 `;
 
+const DrawButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const WinnerInfoContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const WinnerTable = styled.table`
+  border: 2px solid #007bff;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1.2rem;
+  background-color: #f9f9f9;
+  width: 50%;
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+const WinnerRow = styled.tr`
+  background-color: #007bff;
+  color: white;
+`;
+
+const WinnerCell = styled.td`
+  padding: 1rem;
+  border: 1px solid #ddd;
+`;
+
 export default function LoadEvent() {
   const queryFn = () =>
     loadEventProductPaging({
@@ -106,6 +101,9 @@ export default function LoadEvent() {
   );
   const [eventProductId, setEventProductId] = useState<number | null>(null);
   const [selectedProductName, setSelectedProductName] = useState<string>("");
+  const [winner, setWinner] = useState<any>(null);
+  const [displayWinner, setDisplayWinner] = useState<any>(null);
+  const animationRef = useRef<number | null>(null);
 
   const { data: eventApplyUserData, refetch } = useQuery(
     [QUERYKEYS.ADMIN_LOAD_EVENTINFO, eventProductId],
@@ -126,13 +124,47 @@ export default function LoadEvent() {
     setSelectedProductName(productName);
   };
 
+  const animateWinnerDisplay = (winners: any[], duration: number) => {
+    let startTime: number | null = null;
+    let lastUpdate = 0;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      if (elapsed - lastUpdate >= 50) {
+        lastUpdate = elapsed;
+        const currentWinner =
+          winners[Math.floor(Math.random() * winners.length)];
+        setDisplayWinner(currentWinner);
+      }
+
+      if (elapsed < duration) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        const finalWinner = winners[Math.floor(Math.random() * winners.length)];
+        setDisplayWinner(finalWinner);
+        setWinner(finalWinner);
+      }
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+  };
+
+  const handleDrawClick = () => {
+    if (!eventApplyUserData?.data.length) return;
+
+    const duration = 3000; // 애니메이션 시간 (3초)
+    animateWinnerDisplay(eventApplyUserData.data, duration);
+  };
+
   // 열(컬럼) 정보 배열
   const columnHeaders = [
-    "제품명",
+    "추첨번호",
     "이름",
+    "인스타그램ID",
     "응모일자",
     "휴대폰 번호",
-    "인스타그램ID",
   ];
 
   const columnFieldMap: { [key: string]: string } = {
@@ -141,6 +173,23 @@ export default function LoadEvent() {
     응모일자: "eventApplyDate",
     "휴대폰 번호": "eventPhoneNumber",
     인스타그램ID: "instagramId",
+  };
+
+  // 응모일자 변환 함수
+  const formatEventApplyDate = (dateString: any) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
+  // 휴대폰 번호 뒷자리 마스킹 함수
+  const maskPhoneNumber = (phoneNumber: string) => {
+    return phoneNumber?.replace(/(\d{3})(\d{4})(\d{4})/, "$1****$3");
   };
 
   return (
@@ -157,6 +206,32 @@ export default function LoadEvent() {
           </EventProductNameButton>
         ))}
       </div>
+      <p>{selectedProductName || "제품명이 없습니다"}</p>
+      <p>이벤트 참여 수 : {eventApplyUserData?.data.length || 0}개</p>
+      <DrawButton onClick={handleDrawClick}>추첨</DrawButton>
+      {displayWinner && (
+        <WinnerInfoContainer>
+          <WinnerTable>
+            <tbody>
+              <WinnerRow>
+                <WinnerCell colSpan={3}>🎉 축하합니다! 당첨자 🎉</WinnerCell>
+              </WinnerRow>
+              <TableRow>
+                <TableCell>이름</TableCell>
+                <TableCell>인스타그램ID</TableCell>
+                <TableCell>휴대폰 번호</TableCell>
+              </TableRow>
+              <TableRow>
+                <WinnerCell>{displayWinner.memberName}</WinnerCell>
+                <WinnerCell>{displayWinner.instagramId}</WinnerCell>
+                <WinnerCell>
+                  {maskPhoneNumber(displayWinner.eventPhoneNumber)}
+                </WinnerCell>
+              </TableRow>
+            </tbody>
+          </WinnerTable>
+        </WinnerInfoContainer>
+      )}
       <Table>
         <TableHead>
           <tr>
@@ -166,15 +241,25 @@ export default function LoadEvent() {
           </tr>
         </TableHead>
         <tbody>
-          <p>{selectedProductName || "제품명이 없습니다"}</p>
-          <p>이벤트 참여 수 : {eventApplyUserData?.data.length || 0}개</p>
-          {eventApplyUserData?.data.map((user: any) => (
+          {eventApplyUserData?.data.map((user: any, index: number) => (
             <TableRow key={user.createdDate}>
-              {columnHeaders.map((header) => (
-                <TableCell key={header}>
-                  {user[columnFieldMap[header]]}
-                </TableCell>
-              ))}
+              {columnHeaders.map((header) => {
+                let cellContent;
+
+                if (header === "추첨번호") {
+                  cellContent = index + 1;
+                } else if (header === "응모일자") {
+                  cellContent = formatEventApplyDate(
+                    user[columnFieldMap[header]],
+                  );
+                } else if (header === "휴대폰 번호") {
+                  cellContent = maskPhoneNumber(user[columnFieldMap[header]]);
+                } else {
+                  cellContent = user[columnFieldMap[header]];
+                }
+
+                return <TableCell key={header}>{cellContent}</TableCell>;
+              })}
             </TableRow>
           ))}
         </tbody>

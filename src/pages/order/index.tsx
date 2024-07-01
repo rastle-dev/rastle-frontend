@@ -84,10 +84,6 @@ export default function Order() {
       <S.Container>
         <S.Header>
           <h1>배송/결제</h1>
-          <S.Warning>
-            *현재 일시적인 결제 오류로 인해 주문이 어렵습니다. <br />
-            *최대한 빠른 시간안에 복구 하도록 하겠습니다.
-          </S.Warning>
         </S.Header>
         <S.InfoWrapper>
           <h2>제품 정보</h2>
