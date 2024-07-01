@@ -15,7 +15,6 @@ export default function useUpdateCategory() {
 
   const handleCategoryClick = (category: Category) => {
     setSelectedCategory(category); // 목록에서 카테고리 선택
-    console.log(selectedCategory);
   };
 
   const updateCategory = async () => {

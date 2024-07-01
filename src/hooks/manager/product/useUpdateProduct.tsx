@@ -87,8 +87,6 @@ export default function useUpdateProduct() {
     },
   );
 
-  console.log(productData);
-
   const loadColorAndSize = () => {
     if (selectedProduct) {
       const uniqueColors: string[] = [];
