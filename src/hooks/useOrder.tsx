@@ -40,6 +40,7 @@ export default function useOrder() {
   const [deliveryMsg, onChangeDeliveryMsg] = useInput("");
   const [isDefaultAddress, setIsDefaultAddress] = useState(true);
   const { couponData } = useCoupon();
+  const [isLoadingDeliveryIdx, setIsLoadingDeliveryIdx] = useState(true); // 로딩 상태 추가
 
   const handleCheckboxChange = () => {
     setIsDefaultAddress(!isDefaultAddress);
@@ -515,10 +516,15 @@ export default function useOrder() {
     // if (!window.IMP) return;
     /* 1. 가맹점 식별하기 */
   }
+  useEffect(() => {
+    if (clickedDeliveryButtonIndex === 0 || clickedDeliveryButtonIndex === 1) {
+      setIsLoadingDeliveryIdx(false); // 로딩 완료
+    }
+  }, [clickedDeliveryButtonIndex]);
 
   return {
-    clickedPaymentButtonIndex,
     clickedDeliveryButtonIndex,
+    clickedPaymentButtonIndex,
     openPostcode,
     postalAddress,
     handleDeliveryButtonClick,
@@ -551,5 +557,6 @@ export default function useOrder() {
     couponPrice,
     selectedCouponPrice,
     deliveryPrice,
+    isLoadingDeliveryIdx,
   };
 }
