@@ -1,7 +1,6 @@
 const QUERYKEYS = {
   LOAD_MARKET_IMAGES: "getMarketImages",
   LOAD_CURRENT_MARKET: "loadCurrentMarket",
-  LOAD_BUNDLE_PRODUCT: "loadBundleProduct",
   LOAD_PRODUCT: "loadMarketProduct",
   LOAD_PRODUCT_PAGING: "loadMarketProductPaging",
   LOAD_PRODUCT_PAGING_SHOP: "loadMarketProductPagingShop",
