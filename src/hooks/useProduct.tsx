@@ -24,6 +24,7 @@ export default function useProduct() {
     {
       staleTime: Infinity, // 데이터가 만료되기 전까지의 시간 (무한대로 설정)
       cacheTime: Infinity, // 데이터가 캐시에 유지되는 시간 (무한대로 설정)
+      enabled: !Number.isNaN(numericProductId) && numericProductId > 0, // productId가 유효한 숫자일 때만 실행
     },
   );
   const uniqueColors = [
