@@ -8,9 +8,9 @@ const commonServerSideProps: GetServerSideProps = async (
 ) => {
   const queryClient = new QueryClient();
   const { productId } = context.query; // context에서 productId를 가져옵니다.
+  const numericProductId = Number(productId);
   // Prefetch queries
-  if (productId) {
-    const numericProductId = Number(productId);
+  if (!Number.isNaN(numericProductId) && numericProductId > 0) {
     await queryClient.prefetchQuery(
       [QUERYKEYS.LOAD_PRODUCT_DETAIL, numericProductId],
       () => loadProductDetail(numericProductId),
