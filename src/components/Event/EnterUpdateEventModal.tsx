@@ -87,6 +87,7 @@ export default function EnterUpdateEventModal({
       toast.dismiss();
       toastMsg("수정되었습니다! 👏");
       queryClient.invalidateQueries([QUERYKEYS.LOAD_PRODUCT_DETAIL]);
+      queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
       setIsEventModalOpen(false);
     },
   });
