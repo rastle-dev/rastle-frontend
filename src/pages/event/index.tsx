@@ -56,6 +56,11 @@ export default function Event() {
   const { data: eventHistoryData, refetch } = useQuery(
     [QUERYKEYS.LOAD_EVENT_HISTORY],
     () => loadEventHistory({ page: 0, size: 24 }),
+    {
+      staleTime: 5 * 60 * 1000, // 데이터가 신선한 상태로 유지될 시간 (5분)
+      cacheTime: 10 * 60 * 1000, // 캐시가 유지될 시간 (10분)
+      refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리패치 비활성화
+    },
   );
 
   useEffect(() => {
