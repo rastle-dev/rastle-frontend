@@ -1,10 +1,6 @@
 import { authorizationClient, unAuthorizationClient } from ".";
 import API from "./config";
 
-export const loadBundleProduct = async () => {
-  const { data } = await unAuthorizationClient.get(API.BUNDLE_PRODUCT);
-  return data;
-};
 export const loadBundle = async (bundleData: any) => {
   const { page, size } = bundleData;
   const { data } = await unAuthorizationClient.get(
