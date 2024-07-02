@@ -4,6 +4,7 @@ import COLORS from "@/constants/color";
 import Button from "@/components/Common/Button";
 import React from "react";
 import useEventModal from "@/hooks/useEventModal";
+import createThrottledFunction from "@/utils/throttle";
 
 export const Wrapper = styled.div`
   width: 89%;
@@ -71,6 +72,13 @@ export default function EnterEventModal({
 }) {
   const { mutateApplyEvent, inputFields, eventPhoneNumber, instagramId } =
     useEventModal();
+
+  // 쓰로틀링된 함수 생성 (2초 간격)
+  const throttledMutateApplyEvent = createThrottledFunction(
+    (variables: any) => mutateApplyEvent.mutate(variables),
+    2000,
+  );
+
   return (
     <Wrapper>
       <h2>응모하기</h2>
@@ -90,7 +98,7 @@ export default function EnterEventModal({
       <EnterButton
         title="응모하기"
         onClick={() => {
-          mutateApplyEvent.mutate({
+          throttledMutateApplyEvent({
             instagramId,
             eventPhoneNumber,
             eventProductId,
