@@ -150,6 +150,9 @@ export default function Event() {
             </div>
           </S.DiscountPrice>
           <S.Script>
+            <h3>
+              지금까지 총 {detailData?.data.eventApplyCount}명 참여했어요!
+            </h3>
             <h4>* 주의사항</h4>
             <div>사이즈가 잘 맞으실지 확인후에 응모 해주세요!</div>
             <div>응모횟수에는 제한이 없지만 중복당첨은 불가능합니다.</div>
