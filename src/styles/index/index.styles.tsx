@@ -115,13 +115,23 @@ export const ProductWrapper = styled.div`
 
 export const ProductTitle = styled.div`
   font-size: 2.5rem;
-  padding: 9.63rem 0 7.75rem 0;
+  padding: 9.63rem 0 5.75rem 0;
   font-weight: 400;
 
   span {
     color: ${COLORS.레드};
     font-weight: 700;
   }
+
+  h4 {
+    font-size: 1.4rem;
+  }
+`;
+
+export const Link = styled.a`
+  color: dodgerblue;
+  padding: 2rem;
+  font-size: 1.5rem;
 `;
 export const BestProductTitle = styled.div`
   font-size: 2.5rem;

@@ -12,7 +12,9 @@ function EventProductLayer({ eventData }: { eventData: EventData }) {
     <S.ProductWrapper>
       <S.ProductTitle>
         회원가입하고 <span>EVENT</span> 참여 !!
+        <br />
       </S.ProductTitle>
+      <S.Link href="/shop?tab=이벤트">더 많은 상품 응모하기👈</S.Link>
       <S.ItemContainer>
         {eventData?.data?.map((item: ItemElementProps) => (
           <ItemElement
