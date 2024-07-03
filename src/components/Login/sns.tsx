@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import * as S from "@/styles/login/index.styles";
-import PATH from "@/constants/path";
-import { useRouter } from "next/router";
+import API from "@/api/config";
 
 export default function SNSLogin() {
-  const router = useRouter();
+  const [currentURL] = useState("");
 
   return (
     <S.SNSLogin>
       <S.NAVERLogo
         onClick={() => {
-          router.push(PATH.ERROR);
+          window.location.href = currentURL.includes("localhost:3000")
+            ? API.NAVER_AUTH_URL
+            : API.NAVER_AUTH_URL;
         }}
       >
         <img src="/naver.png" alt="네이버 로고" />
@@ -18,7 +19,9 @@ export default function SNSLogin() {
       </S.NAVERLogo>
       <S.KAKAOLogo
         onClick={() => {
-          router.push(PATH.ERROR);
+          window.location.href = currentURL.includes("localhost:3000")
+            ? API.KAKAO_AUTH_URL
+            : API.KAKAO_AUTH_URL;
         }}
       >
         <img
