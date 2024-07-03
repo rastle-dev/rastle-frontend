@@ -98,8 +98,8 @@ export default function CategoryView({
             return (
               <ItemElement
                 key={item.productId}
-                mainThumbnail={item.mainThumbnail}
-                subThumbnail={item.subThumbnail}
+                mainThumbnail={item?.mainThumbnail}
+                subThumbnail={item?.subThumbnail}
                 name={item.productName}
                 productName={item.productName}
                 price={item.price}
