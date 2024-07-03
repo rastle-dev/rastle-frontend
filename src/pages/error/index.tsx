@@ -58,8 +58,9 @@ export default function Error() {
       </S.LOGOWrapper>
       <h2>R E C O R D Y&nbsp;&nbsp; S L O W</h2>
       <h3>
-        예상치 못한 오류가 발생하였습니다. 서버의 일시적인 장애이거나, 네트워크
-        문제일 수 있습니다.관리자에게 요청하여 빠른 시 안에 해결하겠습니다.
+        서비스 이용에 불편을 드려 대단히 죄송합니다. 서버의 일시적인 장애이거나,
+        네트워크 문제일 수 있습니다.관리자에게 요청하여 빠른 시일 안에
+        해결하겠습니다.
       </h3>
       <StyledButton
         type="default"
