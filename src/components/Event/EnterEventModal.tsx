@@ -5,9 +5,12 @@ import Button from "@/components/Common/Button";
 import React from "react";
 import useEventModal from "@/hooks/useEventModal";
 import createThrottledFunction from "@/utils/throttle";
+import LoadingBar from "@/components/LoadingBar";
 
 export const Wrapper = styled.div`
   width: 89%;
+  height: 35rem;
+
   h2 {
     text-align: center;
     font-size: 2.5rem;
@@ -63,6 +66,11 @@ export const EnterButton = styled(Button)`
   background-color: transparent;
 `;
 
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 35rem;
+`;
+
 export default function EnterEventModal({
   eventProductId,
   productName,
@@ -70,14 +78,25 @@ export default function EnterEventModal({
   eventProductId: number;
   productName: string;
 }) {
-  const { mutateApplyEvent, inputFields, eventPhoneNumber, instagramId } =
-    useEventModal();
+  const {
+    mutateApplyEvent,
+    inputFields,
+    eventPhoneNumber,
+    instagramId,
+    isLoading,
+  } = useEventModal();
 
   // 쓰로틀링된 함수 생성 (2초 간격)
   const throttledMutateApplyEvent = createThrottledFunction(
     (variables: any) => mutateApplyEvent.mutate(variables),
     2000,
   );
+  if (isLoading)
+    return (
+      <LoadingWrapper>
+        <LoadingBar type={6} />
+      </LoadingWrapper>
+    );
 
   return (
     <Wrapper>

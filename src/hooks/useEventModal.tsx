@@ -7,12 +7,13 @@ import QUERYKEYS from "@/constants/querykey";
 import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import useInput from "@/hooks/useInput";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { loadEventHistory } from "@/api/cart";
 
 export default function useEventModal() {
   const [, setIsEventModalOpen] = useRecoilState(eventModalState);
   const [, setIsEventDialogOpen] = useRecoilState(eventDialogState);
+  const [isLoading, setIsLoading] = useState(false);
   const { data: eventHistoryData } = useQuery(
     [QUERYKEYS.LOAD_EVENT_HISTORY],
     () => loadEventHistory({ page: 0, size: 24 }),
@@ -47,6 +48,7 @@ export default function useEventModal() {
   const mutateApplyEvent = useMutation(["applyEvent"], applyEvent, {
     onMutate: () => {
       // 뮤테이션이 시작될 때 로딩을 true로 설정합니다.
+      setIsLoading(true);
     },
     onError: ({
       response: {
@@ -73,10 +75,12 @@ export default function useEventModal() {
       setInstagramId(lastContentItem?.instagramId);
     }
   }, [lastContentItem, setIsEventModalOpen]);
+
   return {
     mutateApplyEvent,
     inputFields,
     instagramId,
     eventPhoneNumber,
+    isLoading,
   };
 }
