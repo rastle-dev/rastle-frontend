@@ -12,6 +12,7 @@ import QUERYKEYS from "@/constants/querykey";
 import { useRecoilState } from "recoil";
 import { eventModalState } from "@/stores/atom/recoilState";
 import dayjs from "dayjs";
+import LoadingBar from "@/components/LoadingBar";
 
 const Wrapper = styled.div`
   width: 89%;
@@ -33,6 +34,12 @@ const Wrapper = styled.div`
     font-size: 1.2rem;
     color: ${COLORS.RED};
   }
+  height: 30.3rem;
+`;
+
+const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 30.3rem;
 `;
 export default function EnterUpdateEventModal({
   eventProductId,
@@ -56,6 +63,8 @@ export default function EnterUpdateEventModal({
   const [disabled, setDisabled] = useState<boolean>(false);
   const [, setIsEventModalOpen] = useRecoilState(eventModalState);
   const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+
   const inputFields = [
     {
       label: "전화번호",
@@ -73,6 +82,7 @@ export default function EnterUpdateEventModal({
   const mutateUpdateApplyEvent = useMutation(["applyEvent"], applyEvent, {
     onMutate: () => {
       // 뮤테이션이 시작될 때 로딩을 true로 설정합니다.
+      setIsLoading(true);
     },
     onError: ({
       response: {
@@ -91,6 +101,12 @@ export default function EnterUpdateEventModal({
       setIsEventModalOpen(false);
     },
   });
+  if (isLoading)
+    return (
+      <LoadingWrapper>
+        <LoadingBar type={6} />
+      </LoadingWrapper>
+    );
   return (
     <Wrapper>
       <h2>응모 내역</h2>
