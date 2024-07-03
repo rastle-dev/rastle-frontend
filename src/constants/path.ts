@@ -17,6 +17,7 @@ const PATH = {
   ORDERDETAIL: "/orderDetail",
   ORDERCANCEL: "/orderCancel",
   ORDERRETURN: "/orderReturn",
+  ERROR: "/error",
 } as const;
 
 export default PATH;
