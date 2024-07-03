@@ -23,8 +23,6 @@ export default function OrderCancel() {
     handleProductCheckboxChange,
     selectedItems,
     setSelectedItems,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     orderDetail,
     selectedCancelItems,
     syncItemCount,
@@ -59,6 +57,7 @@ export default function OrderCancel() {
       }));
     }
   }, [orderDetail]);
+  console.log("order", orderDetail);
   return (
     <S.Temp>
       <S.Container>

@@ -25,8 +25,6 @@ export default function OrderReturn() {
     handleProductCheckboxChange,
     selectedItems,
     setSelectedItems,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     orderDetail,
     selectedCancelItems,
     syncItemCount,
