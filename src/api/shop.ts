@@ -92,7 +92,7 @@ export const loadEventProductPaging = async (pageData: any) => {
 export const loadEventProductPagingShop = async (pageData: any) => {
   const { page, size } = pageData;
   const { data } = await unAuthorizationClient.get(
-    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=TRUE&sort=displayOrder,asc`,
+    `${API.PRODUCT}${API.EVENT}?page=${page}&size=${size}&visible=FALSE&sort=displayOrder,asc`,
   );
   return data;
 };

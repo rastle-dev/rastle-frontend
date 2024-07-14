@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { loadEventHistory } from "@/api/cart";
+import { throttledLoadEventHistory } from "@/api/cart";
 import { useState } from "react";
 
 export default function useEventHistory() {
@@ -15,7 +15,11 @@ export default function useEventHistory() {
   const EVENT_ITEM_SIZE = 3;
   const { data: eventHistoryData, isLoading: eventLoading } = useQuery(
     [QUERYKEYS.LOAD_EVENT_HISTORY, eventCurPage],
-    () => loadEventHistory({ page: eventCurPage - 1, size: EVENT_ITEM_SIZE }),
+    () =>
+      throttledLoadEventHistory({
+        page: eventCurPage - 1,
+        size: EVENT_ITEM_SIZE,
+      }),
     {
       keepPreviousData: true,
     },

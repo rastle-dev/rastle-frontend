@@ -14,9 +14,9 @@ import { useRecoilState } from "recoil";
 import { eventDialogState, eventModalState } from "@/stores/atom/recoilState";
 import CountDownTimer from "@/components/Event/CountDownTimer";
 import dayjs from "dayjs";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import QUERYKEYS from "@/constants/querykey";
-import { loadEventHistory } from "@/api/cart";
+import { throttledLoadEventHistory } from "@/api/cart";
 import calculateDiscountPercentAndPrice from "@/utils/calculateDiscountedPrice";
 import LoadingBar from "@/components/LoadingBar";
 
@@ -30,8 +30,6 @@ export default function Event() {
   const { scrollToTop, scrollToBottom, showScrollButton, handleScroll } =
     useScroll();
   const { detailData, isLoading } = useProduct();
-  const [token, setToken] = useState(false);
-  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
   useEffect(() => {
     handleScroll();
@@ -40,7 +38,19 @@ export default function Event() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const { data: eventHistoryData, refetch } = useQuery(
+    [QUERYKEYS.LOAD_EVENT_HISTORY],
+    () => throttledLoadEventHistory({ page: 0, size: 24 }),
+    { refetchOnWindowFocus: false },
+  );
 
+  const [token, setToken] = useState(false);
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
+
+  const { discountPercent } = calculateDiscountPercentAndPrice(
+    detailData?.data.price,
+    detailData?.data.discountPrice,
+  );
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (localStorage.getItem("accessToken")) {
@@ -49,28 +59,7 @@ export default function Event() {
     }
   }, []);
 
-  const { discountPercent } = calculateDiscountPercentAndPrice(
-    detailData?.data.price,
-    detailData?.data.discountPrice,
-  );
-  const { data: eventHistoryData, refetch } = useQuery(
-    [QUERYKEYS.LOAD_EVENT_HISTORY],
-    () => loadEventHistory({ page: 0, size: 24 }),
-    {
-      staleTime: 5 * 60 * 1000, // 데이터가 신선한 상태로 유지될 시간 (5분)
-      cacheTime: 10 * 60 * 1000, // 캐시가 유지될 시간 (10분)
-      refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 리패치 비활성화
-    },
-  );
-
-  useEffect(() => {
-    if (token) {
-      refetch(); // Manually fetch event history data if user is logged in
-    }
-  }, [token, refetch]);
-
   if (isLoading) return <LoadingBar type={6} />;
-
   return (
     <S.Wrapper>
       {isLoginModalVisible && (
@@ -106,15 +95,15 @@ export default function Event() {
       {isEventDialogOpen && (
         <Dialog
           onClickRefuseButton={() => {
-            const queryClient = new QueryClient();
-            queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
             router.push({
               pathname: PATH.MYPAGE,
               query: { tab: "주문 내역" },
             });
           }}
           onClickConfirmButton={() => {
-            setIsEventDialogOpen(false);
+            refetch().then(() => {
+              setIsEventDialogOpen(false);
+            });
           }}
           visible
           title="응모가 완료되었어요! 🥳"

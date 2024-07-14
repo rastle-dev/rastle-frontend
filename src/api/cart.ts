@@ -1,4 +1,6 @@
+import { throttle } from "lodash";
 import { authorizationClient } from ".";
+
 import API from "./config";
 
 export const addCartProduct = async (productData: object) => {
@@ -67,6 +69,7 @@ export const loadEventHistory = async (bundleData: any) => {
   );
   return data;
 };
+export const throttledLoadEventHistory = throttle(loadEventHistory, 1000); //
 export const requestUserOrderCancel = async (cancelProductData: any) => {
   const { data } = await authorizationClient.post(
     API.USER_ORDER_CANCEL,

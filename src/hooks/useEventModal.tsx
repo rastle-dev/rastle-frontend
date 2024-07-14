@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { applyEvent } from "@/api/shop";
 import { toast } from "react-toastify";
 import errorMsg from "@/components/Toast/error";
@@ -30,7 +30,6 @@ export default function useEventModal() {
   const [instagramId, onChangeInstagramId, setInstagramId] = useInput(
     lastContentItem?.instagramId,
   );
-  const queryClient = useQueryClient();
   const inputFields = [
     {
       label: "전화번호",
@@ -62,8 +61,6 @@ export default function useEventModal() {
     onSuccess: async () => {
       toast.dismiss();
       toastMsg("이벤트 응모가 완료되었습니다! 👏");
-      queryClient.invalidateQueries([QUERYKEYS.LOAD_PRODUCT_DETAIL]);
-      queryClient.invalidateQueries([QUERYKEYS.LOAD_EVENT_HISTORY]);
       setIsEventModalOpen(false);
       setIsEventDialogOpen(true);
     },
