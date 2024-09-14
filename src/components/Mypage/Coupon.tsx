@@ -66,14 +66,14 @@ export default function Coupon() {
                         <S.CouponWrapper>
                           <CouponImage>
                             <h3>RECORDY SLOW</h3>
-                            <h4>3,000</h4>
+                            <h4>{item.discount?.toLocaleString()}</h4>
                             <h5>회원가입 할인쿠폰</h5>
                           </CouponImage>
                         </S.CouponWrapper>
                       </S.TextInfo>
                       <p>전 상품 적용</p>
                       <p>{item.discount?.toLocaleString()}원 할인</p>
-                      <p>~2024.04.17</p>
+                      <p>~2024.07.04</p>
                       <S.MobileDescription>2024.07.04까지</S.MobileDescription>
                     </S.MobileTextInfo>
                   </S.ProductInfo>
