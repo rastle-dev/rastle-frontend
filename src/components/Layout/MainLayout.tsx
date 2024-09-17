@@ -1,7 +1,6 @@
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import React, { ReactNode } from "react";
 import MainHeader from "@/components/Layout/MainHeader";
-// import Footer from "@/components/Layout/Footer";
 import dynamic from "next/dynamic";
 
 const Full = styled.div`
@@ -12,26 +11,51 @@ const Full = styled.div`
   font-size: 1.5rem;
   flex-direction: column;
   background-color: white;
-  //padding-top: 5.5rem; /* header때문에 추가 */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  //height: 100vh;
   display: flex;
   justify-content: center;
 `;
+
 interface MainLayoutProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
-const Footer = dynamic(() => import("@/components/Layout/Footer/index"));
+const Footer = dynamic(() => import("@/components/Layout/Footer"), {
+  ssr: false,
+});
 
 function MainLayout({ children }: MainLayoutProps) {
+  const [loadFooter, setLoadFooter] = useState(false);
+
+  useEffect(() => {
+    const footerPlaceholder = document.getElementById("footer-placeholder");
+
+    if (footerPlaceholder) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setLoadFooter(true);
+            observer.disconnect();
+          }
+        },
+        { rootMargin: "100px" }, // 이 설정으로 footer가 뷰포트에 들어오기 100px 전에 로드됩니다.
+      );
+
+      observer.observe(footerPlaceholder);
+
+      // 컴포넌트가 unmount될 때 observer 해제
+      return () => observer.disconnect();
+    }
+    return undefined;
+  }, []);
+
   return (
     <Full>
       <MainHeader />
       <Inner>{children}</Inner>
-      <Footer />
+      <div id="footer-placeholder">{loadFooter && <Footer />}</div>
     </Full>
   );
 }
