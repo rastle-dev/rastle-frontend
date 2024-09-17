@@ -53,5 +53,4 @@ Cypress.Commands.add("login", () => {
     .parent()
     .type(`${Cypress.env("CYPRESS_TEST_PASSWORD")}`);
   cy.contains("로그인").click();
-  cy.contains("하루 동안 보지 않기").click();
 });
