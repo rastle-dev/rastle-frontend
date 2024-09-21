@@ -2,11 +2,20 @@
 # RECORDY SLOW
 
 > @rastle__fashion 팔로워들이 주 고객층인 쇼핑몰 레코디 슬로우의 프로토타입 버전 쇼핑몰입니다.
+> 
+
 
 ## 배포 링크 
 > www.recordyslow.com
 
 **서비스 종료 후 배포 링크를 www.rastle.site로 변경하였습니다!**
+
+
+## 테스트 계정
+
+> **이메일** : test@email.com
+> <br/>
+> **비밀번호** : 12341234~
 
 ## 목차
 - **[고객 이용 페이지 주요 기능](#고객-이용-페이지-주요-기능)** 
@@ -148,6 +157,8 @@
 
 
 ## 시스템 아키텍쳐
+(서비스 종료 후 비용 문제로 백엔드 서버를 인스턴스 하나로 축소하였습니다)
+
 ![system](https://github.com/rastle-dev/rastle-frontend/assets/97940568/2f55d60e-c43a-4280-9274-04f91bd7f8d1)
 
 
