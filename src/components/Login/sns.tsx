@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import * as S from "@/styles/login/index.styles";
 import API from "@/api/config";
+import errorMsg from "@/components/Toast/error";
 
 export default function SNSLogin() {
-  const [currentURL] = useState("");
-
   return (
     <S.SNSLogin>
       <S.NAVERLogo
         onClick={() => {
-          window.location.href = currentURL.includes("localhost:3000")
-            ? API.NAVER_AUTH_URL
-            : API.NAVER_AUTH_URL;
+          errorMsg("서비스 종료로 네이버 로그인은 사용이 불가능합니다.");
         }}
       >
         <img src="/naver.png" alt="네이버 로고" />
@@ -19,9 +16,7 @@ export default function SNSLogin() {
       </S.NAVERLogo>
       <S.KAKAOLogo
         onClick={() => {
-          window.location.href = currentURL.includes("localhost:3000")
-            ? API.KAKAO_AUTH_URL
-            : API.KAKAO_AUTH_URL;
+          window.location.href = API.KAKAO_AUTH_URL;
         }}
       >
         <img
