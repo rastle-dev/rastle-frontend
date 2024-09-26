@@ -8,7 +8,7 @@
 ## 배포 링크 
 > www.recordyslow.com
 
-**서비스 종료 후 배포 링크를 www.rastle.site로 변경하였습니다!**
+**서비스 종료 후 배포 링크를 www.rastle.site 로 변경하였습니다!**
 
 
 ## 테스트 계정
